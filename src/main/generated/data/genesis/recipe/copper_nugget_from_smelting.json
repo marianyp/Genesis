@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": [
+    "genesis:copper_sword",
+    "genesis:copper_shovel",
+    "genesis:copper_pickaxe",
+    "genesis:copper_axe",
+    "genesis:copper_hoe",
+    "genesis:copper_helmet",
+    "genesis:copper_chestplate",
+    "genesis:copper_leggings",
+    "genesis:copper_boots"
+  ],
+  "result": {
+    "id": "genesis:copper_nugget"
+  }
+}

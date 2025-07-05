@@ -1,0 +1,18 @@
+{
+  "item.armor.equip_copper": {
+    "subtitle": "subtitles.item.armor.equip_copper",
+    "sounds": [
+      "genesis:item/armor/equip_copper1",
+      "genesis:item/armor/equip_copper2",
+      "genesis:item/armor/equip_copper3",
+      "genesis:item/armor/equip_copper4",
+      "genesis:item/armor/equip_copper5"
+    ]
+  },
+  "item.flints": {
+    "subtitle": "subtitles.item.flints",
+    "sounds": [
+      "genesis:item/flints"
+    ]
+  }
+}
