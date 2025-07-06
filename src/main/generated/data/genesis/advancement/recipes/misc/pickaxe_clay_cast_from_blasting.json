@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pickaxe_clay_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:pickaxe_clay_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:pickaxe_clay_cast_from_blasting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pickaxe_clay_cast"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:pickaxe_clay_cast_from_blasting"
+    ]
+  }
+}

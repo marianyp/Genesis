@@ -1,3 +1,7 @@
 // 1.21.7	-999999999-01-01T00:00:00	Genesis/Tags for minecraft:item
 6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/genesis/tags/item/copper_tool_materials.json
 6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/genesis/tags/item/repairs_copper_armor.json
+0c49b8f0a6baa61ad5118a28c2420c6ff9426055 data/minecraft/tags/item/chest_armor.json
+087f66b61eda621b4a9718f5fa33144069cd92b9 data/minecraft/tags/item/foot_armor.json
+4edc28ada7e3286f18422b0912fd22b438674c5a data/minecraft/tags/item/head_armor.json
+190ff792e7eb2fedd5228176c75ce952b9635fa8 data/minecraft/tags/item/leg_armor.json

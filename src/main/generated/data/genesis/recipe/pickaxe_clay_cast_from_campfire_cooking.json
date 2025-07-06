@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 1200,
+  "experience": 0.3,
+  "ingredient": "genesis:pickaxe_clay_cast",
+  "result": {
+    "id": "genesis:pickaxe_cast"
+  }
+}
