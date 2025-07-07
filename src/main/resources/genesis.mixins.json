@@ -1,13 +1,15 @@
 {
-	"required": true,
-	"package": "dev.mariany.genesis.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "dev.mariany.genesis.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ServerRecipeManagerMixin",
+    "accessor.ShapedRecipeAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

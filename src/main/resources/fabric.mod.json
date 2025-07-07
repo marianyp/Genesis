@@ -25,13 +25,11 @@
 	"mixins": [
 		"genesis.mixins.json"
 	],
+	"accessWidener": "genesis.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.21.7",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

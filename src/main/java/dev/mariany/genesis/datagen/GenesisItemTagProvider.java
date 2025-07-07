@@ -17,6 +17,12 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+        valueLookupBuilder(ItemTags.SWORDS).add(GenesisItems.COPPER_SWORD);
+        valueLookupBuilder(ItemTags.SHOVELS).add(GenesisItems.COPPER_SHOVEL);
+        valueLookupBuilder(ItemTags.PICKAXES).add(GenesisItems.COPPER_PICKAXE);
+        valueLookupBuilder(ItemTags.AXES).add(GenesisItems.COPPER_AXE);
+        valueLookupBuilder(ItemTags.HOES).add(GenesisItems.COPPER_HOE);
+
         valueLookupBuilder(ItemTags.HEAD_ARMOR).add(GenesisItems.COPPER_HELMET);
         valueLookupBuilder(ItemTags.CHEST_ARMOR).add(GenesisItems.COPPER_CHESTPLATE);
         valueLookupBuilder(ItemTags.LEG_ARMOR).add(GenesisItems.COPPER_LEGGINGS);
