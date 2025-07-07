@@ -42,6 +42,19 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.registerCopperGearCooking();
                 this.registerClayCasts();
                 this.registerCasts();
+                this.registerSpecialCastRecipes();
+            }
+
+            private void registerSpecialCastRecipes() {
+                this.createShaped(RecipeCategory.MISC, Items.TOTEM_OF_UNDYING)
+                        .pattern("BBB")
+                        .pattern("ECE")
+                        .pattern("BBB")
+                        .input('B', Items.GOLD_BLOCK)
+                        .input('E', Items.EMERALD)
+                        .input('C', GenesisItems.TOTEM_CAST)
+                        .criterion(hasItem(GenesisItems.TOTEM_CAST), conditionsFromItem(GenesisItems.TOTEM_CAST))
+                        .offerTo(this.exporter);
             }
 
             private void registerCasts() {

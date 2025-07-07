@@ -1,9 +1,6 @@
 package dev.mariany.genesis;
 
-import dev.mariany.genesis.datagen.GenesisEquipmentAssetProvider;
-import dev.mariany.genesis.datagen.GenesisItemTagProvider;
-import dev.mariany.genesis.datagen.GenesisModelProvider;
-import dev.mariany.genesis.datagen.GenesisRecipeProvider;
+import dev.mariany.genesis.datagen.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -14,6 +11,7 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenesisItemTagProvider::new);
         pack.addProvider(GenesisModelProvider::new);
         pack.addProvider(GenesisRecipeProvider::new);
+        pack.addProvider(GenesisRecipeOverrideProvider::new);
 
         FabricDataGenerator.Pack secondaryPack = fabricDataGenerator.createPack();
         secondaryPack.addProvider((FabricDataGenerator.Pack.Factory<GenesisEquipmentAssetProvider>) GenesisEquipmentAssetProvider::new);

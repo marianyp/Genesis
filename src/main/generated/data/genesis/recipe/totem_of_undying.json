@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:gold_block",
+    "C": "genesis:totem_cast",
+    "E": "minecraft:emerald"
+  },
+  "pattern": [
+    "BBB",
+    "ECE",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:totem_of_undying"
+  }
+}
