@@ -32,7 +32,8 @@ import java.util.Map;
 public class KilnBlockEntity extends LockableContainerBlockEntity implements RecipeUnlocker, RecipeInputProvider, SidedInventory {
     private static final Codec<Map<RegistryKey<Recipe<?>>, Integer>> CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
 
-    private static final int DEFAULT_COOK_TIME = 800;
+    private static final int DEFAULT_COOK_SECONDS = 45;
+    private static final int DEFAULT_COOK_TICKS = DEFAULT_COOK_SECONDS * 20;
 
     private final ServerRecipeManager.MatchGetter<SingleStackRecipeInput, ? extends AbstractCookingRecipe> matchGetter;
     private final Reference2IntOpenHashMap<RegistryKey<Recipe<?>>> recipesUsed = new Reference2IntOpenHashMap<>();
@@ -270,8 +271,8 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
         int cookTime = kiln.matchGetter
                 .getFirstMatch(singleStackRecipeInput, world)
                 .map(recipe -> recipe.value().getCookingTime())
-                .orElse(DEFAULT_COOK_TIME);
+                .orElse(DEFAULT_COOK_TICKS);
 
-        return Math.max(cookTime, DEFAULT_COOK_TIME);
+        return Math.max(cookTime, DEFAULT_COOK_TICKS);
     }
 }
