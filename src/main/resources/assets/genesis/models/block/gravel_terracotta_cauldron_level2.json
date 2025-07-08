@@ -1,10 +1,11 @@
 {
-  "parent": "genesis:block/template_terracotta_cauldron",
+  "parent": "genesis:block/template_terracotta_cauldron_level2",
   "textures": {
     "all": "genesis:block/terracotta_cauldron_side",
     "particle": "genesis:block/terracotta_cauldron_side",
     "side": "genesis:block/terracotta_cauldron_side",
     "top": "genesis:block/terracotta_cauldron_top",
-    "inside": "genesis:block/terracotta_cauldron_inner"
+    "inside": "genesis:block/terracotta_cauldron_inner",
+    "contents": "minecraft:block/gravel"
   }
 }

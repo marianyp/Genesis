@@ -65,7 +65,7 @@ public class FlintsItem extends Item {
                     if (stickCount >= 4) {
                         if (shouldLight && aboveState.isReplaceable()) {
                             sticks.forEach(itemEntity -> itemEntity.remove(Entity.RemovalReason.DISCARDED));
-                            serverWorld.setBlockState(abovePos, Blocks.CAMPFIRE.getDefaultState());
+                            serverWorld.setBlockState(abovePos, Blocks.CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, true));
                             lit = true;
                         }
                     } else if (state.getBlock() instanceof CampfireBlock) {

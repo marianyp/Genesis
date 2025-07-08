@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_clay_cauldron": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:clay_cauldron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:terracotta_cauldron_from_blasting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_clay_cauldron"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:terracotta_cauldron_from_blasting"
+    ]
+  }
+}

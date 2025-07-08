@@ -1,5 +1,6 @@
 package dev.mariany.genesis.screen;
 
+import dev.mariany.genesis.screen.slot.KilnOutputSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -11,7 +12,6 @@ import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
@@ -22,8 +22,6 @@ import java.util.List;
 public class KilnScreenHandler extends AbstractRecipeScreenHandler {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
-    private static final int PLAYER_INVENTORY_START = 3;
-    private static final int PLAYER_HOTBAR_START = 30;
 
     final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
@@ -50,7 +48,7 @@ public class KilnScreenHandler extends AbstractRecipeScreenHandler {
         this.world = playerInventory.player.getWorld();
         this.recipePropertySet = this.world.getRecipeManager().getPropertySet(RecipePropertySet.FURNACE_INPUT);
         this.addSlot(new Slot(inventory, 0, 56, 34));
-        this.addSlot(new FurnaceOutputSlot(playerInventory.player, inventory, 1, 116, 35));
+        this.addSlot(new KilnOutputSlot(playerInventory.player, inventory, 1, 116, 35));
         this.addPlayerSlots(playerInventory, 8, 84);
         this.addProperties(propertyDelegate);
     }

@@ -1,0 +1,10 @@
+{
+  "parent": "genesis:block/template_terracotta_cauldron",
+  "textures": {
+    "all": "genesis:block/clay_cauldron_side",
+    "particle": "genesis:block/clay_cauldron_side",
+    "side": "genesis:block/clay_cauldron_side",
+    "top": "genesis:block/clay_cauldron_top",
+    "inside": "genesis:block/clay_cauldron_inner"
+  }
+}

@@ -36,6 +36,6 @@ public class GenesisSoundEvents {
     }
 
     public static void bootstrap() {
-        Genesis.LOGGER.info("Registering Mod Sound Events for " + Genesis.MOD_ID);
+        Genesis.LOGGER.info("Registering Sound Events for " + Genesis.MOD_ID);
     }
 }

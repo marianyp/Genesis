@@ -81,7 +81,7 @@ public class GenesisItems {
     }
 
     public static void bootstrap() {
-        Genesis.LOGGER.info("Registering items for " + Genesis.MOD_ID);
+        Genesis.LOGGER.info("Registering Items for " + Genesis.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.addAfter(Items.IRON_NUGGET, COPPER_NUGGET);

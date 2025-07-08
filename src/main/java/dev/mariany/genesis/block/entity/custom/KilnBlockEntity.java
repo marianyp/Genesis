@@ -1,12 +1,16 @@
 package dev.mariany.genesis.block.entity.custom;
 
+import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.screen.KilnScreenHandler;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.ExperienceOrbEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
@@ -17,6 +21,7 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -25,8 +30,10 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 
 public class KilnBlockEntity extends LockableContainerBlockEntity implements RecipeUnlocker, RecipeInputProvider, SidedInventory {
@@ -128,6 +135,14 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
     }
 
     @Override
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+        super.onBlockReplaced(pos, oldState);
+        if (this.world instanceof ServerWorld serverWorld) {
+            this.getRecipesUsedAndDropExperience(serverWorld, Vec3d.ofCenter(pos));
+        }
+    }
+
+    @Override
     public void setLastRecipe(@Nullable RecipeEntry<?> recipe) {
         if (recipe != null) {
             RegistryKey<Recipe<?>> registryKey = recipe.id();
@@ -138,6 +153,48 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
     @Override
     public @Nullable RecipeEntry<?> getLastRecipe() {
         return null;
+    }
+
+    @Override
+    public void unlockLastRecipe(PlayerEntity player, List<ItemStack> ingredients) {
+    }
+
+    public void dropExperienceForRecipesUsed(ServerPlayerEntity player) {
+        List<RecipeEntry<?>> usedRecipes = this.getRecipesUsedAndDropExperience(player.getWorld(), player.getPos());
+        player.unlockRecipes(usedRecipes);
+
+        for (RecipeEntry<?> recipeEntry : usedRecipes) {
+            if (recipeEntry != null) {
+                player.onRecipeCrafted(recipeEntry, this.inventory);
+            }
+        }
+
+        this.recipesUsed.clear();
+    }
+
+    private List<RecipeEntry<?>> getRecipesUsedAndDropExperience(ServerWorld world, Vec3d pos) {
+        List<RecipeEntry<?>> usedRecipes = Lists.<RecipeEntry<?>>newArrayList();
+
+        for (Reference2IntMap.Entry<RegistryKey<Recipe<?>>> recipeUsageEntry : this.recipesUsed.reference2IntEntrySet()) {
+            world.getRecipeManager().get(recipeUsageEntry.getKey()).ifPresent(recipe -> {
+                usedRecipes.add(recipe);
+                dropExperience(world, pos, recipeUsageEntry.getIntValue(), ((AbstractCookingRecipe) recipe.value()).getExperience());
+            });
+        }
+
+        return usedRecipes;
+    }
+
+    private static void dropExperience(ServerWorld world, Vec3d pos, int multiplier, float baseExperience) {
+        float totalExperience = multiplier * baseExperience;
+        int experienceToDrop = MathHelper.floor(totalExperience);
+        float fractionalPart = MathHelper.fractionalPart(totalExperience);
+
+        if (fractionalPart != 0.0F && Math.random() < fractionalPart) {
+            experienceToDrop++;
+        }
+
+        ExperienceOrbEntity.spawn(world, pos, experienceToDrop);
     }
 
     @Override

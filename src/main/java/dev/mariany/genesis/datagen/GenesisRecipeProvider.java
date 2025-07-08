@@ -51,6 +51,39 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.registerSpecialCastRecipes();
                 this.registerKilnRecipes();
                 this.registerRawOreRecipes();
+                this.registerCauldronRecipes();
+            }
+
+            private void registerCauldronRecipes() {
+                // Craft Clay Cauldron
+                this.createShaped(RecipeCategory.DECORATIONS, GenesisBlocks.CLAY_CAULDRON)
+                        .pattern("# #")
+                        .pattern("###")
+                        .input('#', Items.CLAY_BALL)
+                        .criterion(hasItem(Items.CLAY_BALL), conditionsFromItem(Items.CLAY_BALL))
+                        .offerTo(this.exporter);
+
+                // Cook Clay Cauldron in Campfire
+                CookingRecipeJsonBuilder.createCampfireCooking(
+                                Ingredient.ofItem(GenesisBlocks.CLAY_CAULDRON),
+                                RecipeCategory.MISC,
+                                GenesisBlocks.TERRACOTTA_CAULDRON,
+                                0.3F,
+                                1200
+                        )
+                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON), this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
+                        .offerTo(this.exporter, getCampfireItemPath(GenesisBlocks.TERRACOTTA_CAULDRON));
+
+                // Cook Clay Cauldron in Blast Furnace
+                CookingRecipeJsonBuilder.createBlasting(
+                                Ingredient.ofItem(GenesisBlocks.CLAY_CAULDRON),
+                                RecipeCategory.MISC,
+                                GenesisBlocks.TERRACOTTA_CAULDRON,
+                                0.3F,
+                                300
+                        )
+                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON), this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
+                        .offerTo(this.exporter, getBlastingItemPath(GenesisBlocks.TERRACOTTA_CAULDRON));
             }
 
             private void registerRawOreRecipes() {

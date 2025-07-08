@@ -1,6 +1,7 @@
 package dev.mariany.genesis;
 
 import dev.mariany.genesis.block.GenesisBlocks;
+import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.item.GenesisItems;
@@ -22,6 +23,7 @@ public class Genesis implements ModInitializer {
         GenesisScreenHandlers.bootstrap();
         GenesisBlocks.bootstrap();
         GenesisBlockEntities.bootstrap();
+        PrimitiveCauldronBehavior.registerBehavior();
     }
 
     public static Identifier id(String resource) {

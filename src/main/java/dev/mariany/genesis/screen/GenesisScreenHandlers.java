@@ -15,6 +15,6 @@ public class GenesisScreenHandlers {
     }
 
     public static void bootstrap() {
-        Genesis.LOGGER.info("Registering screen Handlers for " + Genesis.MOD_ID);
+        Genesis.LOGGER.info("Registering Screen Handlers for " + Genesis.MOD_ID);
     }
 }

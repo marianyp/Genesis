@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:block/terracotta_cauldron_filled",
+  "parent": "genesis:block/template_terracotta_cauldron_level1",
   "textures": {
     "all": "genesis:block/terracotta_cauldron_side",
     "particle": "genesis:block/terracotta_cauldron_side",
@@ -7,6 +7,5 @@
     "top": "genesis:block/terracotta_cauldron_top",
     "inside": "genesis:block/terracotta_cauldron_inner",
     "contents": "minecraft:block/gravel"
-  },
-  "render_type": "cutout"
+  }
 }
