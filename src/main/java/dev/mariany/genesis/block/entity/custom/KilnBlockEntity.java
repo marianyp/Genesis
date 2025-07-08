@@ -101,6 +101,26 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
     }
 
     @Override
+    public void setStack(int slot, ItemStack stack) {
+        ItemStack previousStack = this.inventory.get(slot);
+        boolean isSameItemType = !stack.isEmpty() && ItemStack.areItemsAndComponentsEqual(previousStack, stack);
+
+        this.inventory.set(slot, stack);
+        stack.capCount(this.getMaxCount(stack));
+
+        if (slot == 0 && !isSameItemType && this.world instanceof ServerWorld serverWorld) {
+            this.cookingTotalTime = getCookTime(serverWorld, this);
+            this.cookingTimeSpent = 0;
+            this.markDirty();
+        }
+    }
+
+    @Override
+    public boolean isValid(int slot, ItemStack stack) {
+        return slot == 0;
+    }
+
+    @Override
     public void provideRecipeInputs(RecipeFinder finder) {
         for (ItemStack itemStack : this.inventory) {
             finder.addInput(itemStack);
