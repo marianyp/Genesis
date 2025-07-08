@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_coal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:raw_coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:coal_from_blasting_raw_coal"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_coal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:coal_from_blasting_raw_coal"
+    ]
+  }
+}

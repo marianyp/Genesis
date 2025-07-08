@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_emerald": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:raw_emerald"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:emerald_from_blasting_raw_emerald"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_emerald"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:emerald_from_blasting_raw_emerald"
+    ]
+  }
+}

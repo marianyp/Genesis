@@ -1,7 +1,7 @@
 package dev.mariany.genesis.mixin;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.recipe.ToolRecipeOverrider;
+import dev.mariany.genesis.recipe.override.ToolRecipeOverrider;
 import net.minecraft.recipe.PreparedRecipes;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.registry.RegistryWrapper;

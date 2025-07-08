@@ -1,7 +1,9 @@
 package dev.mariany.genesis.item.custom;
 
 import dev.mariany.genesis.sound.GenesisSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -23,6 +25,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -43,22 +46,43 @@ public class FlintsItem extends Item {
                 int progress = maxUseTime - remainingUseTicks + 1;
 
                 if (progress == middlePoint) {
-                    BlockPos pos = blockHitResult.getBlockPos().up();
-                    List<ItemEntity> sticks = getSticks(serverWorld, pos);
-                    int stickCount = sticks.stream().map(stick -> stick.getStack().getCount()).mapToInt(Integer::intValue).sum();
-
-                    serverWorld.playSound(null, pos, GenesisSoundEvents.FLINTS, SoundCategory.BLOCKS, 1F, random.nextFloat() * 0.4F + 0.8F);
-                    serverWorld.spawnParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, 2, 0, 0, 0, 0.04);
+                    BlockPos pos = blockHitResult.getBlockPos();
+                    BlockPos abovePos = pos.up();
+                    BlockState state = serverWorld.getBlockState(pos);
+                    BlockState aboveState = serverWorld.getBlockState(abovePos);
+                    List<ItemEntity> sticks = getSticks(serverWorld, abovePos);
+                    int stickCount = sticks.stream()
+                            .map(stick -> stick.getStack().getCount())
+                            .mapToInt(Integer::intValue)
+                            .sum();
+                    VoxelShape shape = state.getCollisionShape(world, pos);
+                    Box box = shape.getBoundingBox();
+                    double smokePosition = abovePos.getY() - 1 + box.maxY + 0.25;
+                    int damage = stack.getDamage();
+                    boolean shouldLight = playerEntity.isCreative() || damage > 0 && (random.nextBoolean() || (damage + 1) >= stack.getMaxDamage());
+                    boolean lit = false;
 
                     if (stickCount >= 4) {
-                        int damage = stack.getDamage();
-                        boolean createCampfire = playerEntity.isCreative() || damage > 0 && (random.nextBoolean() || (damage + 1) >= stack.getMaxDamage());
-                        if (createCampfire && serverWorld.getBlockState(pos).isReplaceable()) {
+                        if (shouldLight && aboveState.isReplaceable()) {
                             sticks.forEach(itemEntity -> itemEntity.remove(Entity.RemovalReason.DISCARDED));
-                            serverWorld.setBlockState(pos, Blocks.CAMPFIRE.getDefaultState());
-                            serverWorld.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.35F, 1F);
+                            serverWorld.setBlockState(abovePos, Blocks.CAMPFIRE.getDefaultState());
+                            lit = true;
+                        }
+                    } else if (state.getBlock() instanceof CampfireBlock) {
+                        boolean isCampfireLit = state.get(CampfireBlock.LIT, false);
+
+                        if (!isCampfireLit && shouldLight) {
+                            serverWorld.setBlockState(pos, state.with(CampfireBlock.LIT, true));
+                            lit = true;
                         }
                     }
+
+                    if (lit) {
+                        serverWorld.playSound(null, abovePos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.35F, 1F);
+                    }
+
+                    serverWorld.spawnParticles(ParticleTypes.SMOKE, abovePos.getX() + 0.5, smokePosition, abovePos.getZ() + 0.5, 2, 0, 0, 0, 0.04);
+                    serverWorld.playSound(null, abovePos, GenesisSoundEvents.FLINTS, SoundCategory.BLOCKS, 1F, random.nextFloat() * 0.4F + 0.8F);
 
                     stack.damage(1, playerEntity, playerEntity.getActiveHand());
                 }
@@ -71,7 +95,7 @@ public class FlintsItem extends Item {
     }
 
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 100;
+        return 175;
     }
 
     public UseAction getUseAction(ItemStack stack) {

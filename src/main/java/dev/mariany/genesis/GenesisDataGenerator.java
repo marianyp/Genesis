@@ -9,9 +9,11 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(GenesisItemTagProvider::new);
+        pack.addProvider(GenesisBlockTagProvider::new);
         pack.addProvider(GenesisModelProvider::new);
         pack.addProvider(GenesisRecipeProvider::new);
         pack.addProvider(GenesisRecipeOverrideProvider::new);
+        pack.addProvider(GenesisLootTableProvider::new);
 
         FabricDataGenerator.Pack secondaryPack = fabricDataGenerator.createPack();
         secondaryPack.addProvider((FabricDataGenerator.Pack.Factory<GenesisEquipmentAssetProvider>) GenesisEquipmentAssetProvider::new);

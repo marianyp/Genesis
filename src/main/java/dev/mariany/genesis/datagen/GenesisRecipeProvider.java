@@ -1,5 +1,6 @@
 package dev.mariany.genesis.datagen;
 
+import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -12,8 +13,13 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.Identifier;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisRecipeProvider extends FabricRecipeProvider {
@@ -43,6 +49,63 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.registerClayCasts();
                 this.registerCasts();
                 this.registerSpecialCastRecipes();
+                this.registerKilnRecipes();
+                this.registerRawOreRecipes();
+            }
+
+            private void registerRawOreRecipes() {
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_NETHERITE, Items.NETHERITE_SCRAP);
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_COAL, Items.COAL);
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_EMERALD, Items.EMERALD);
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_LAPIS_LAZULI, Items.LAPIS_LAZULI);
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_DIAMOND, Items.DIAMOND);
+                this.offerSmeltingAndBlasting(GenesisItems.RAW_REDSTONE, Items.REDSTONE);
+            }
+
+            private void offerSmeltingAndBlasting(ItemConvertible input, ItemConvertible output) {
+                Item outputItem = output.asItem();
+                RegistryEntry.Reference<Item> outputReference = outputItem.getRegistryEntry();
+                Optional<RegistryKey<Item>> optionalReferenceKey = outputReference.getKey();
+
+                if (optionalReferenceKey.isPresent()) {
+                    Identifier outputId = optionalReferenceKey.get().getValue();
+                    String group = outputId.getPath();
+                    this.offerSmelting(List.of(input), RecipeCategory.MISC, output, 0.7F, 200, group);
+                    this.offerBlasting(List.of(input), RecipeCategory.MISC, output, 0.7F, 100, group);
+                }
+            }
+
+            private void registerKilnRecipes() {
+                // Craft Clay Kiln
+                this.createShaped(RecipeCategory.DECORATIONS, GenesisBlocks.CLAY_KILN)
+                        .pattern("###")
+                        .pattern("# #")
+                        .pattern("###")
+                        .input('#', Items.CLAY_BALL)
+                        .criterion(hasItem(Items.CLAY_BALL), conditionsFromItem(Items.CLAY_BALL))
+                        .offerTo(this.exporter);
+
+                // Cook Clay Kiln in Campfire
+                CookingRecipeJsonBuilder.createCampfireCooking(
+                                Ingredient.ofItem(GenesisBlocks.CLAY_KILN),
+                                RecipeCategory.MISC,
+                                GenesisBlocks.KILN,
+                                0.3F,
+                                1200
+                        )
+                        .criterion(hasItem(GenesisBlocks.CLAY_KILN), this.conditionsFromItem(GenesisBlocks.CLAY_KILN))
+                        .offerTo(this.exporter, getCampfireItemPath(GenesisBlocks.KILN));
+
+                // Cook Clay Kiln in Blast Furnace
+                CookingRecipeJsonBuilder.createBlasting(
+                                Ingredient.ofItem(GenesisBlocks.CLAY_KILN),
+                                RecipeCategory.MISC,
+                                GenesisBlocks.KILN,
+                                0.3F,
+                                300
+                        )
+                        .criterion(hasItem(GenesisBlocks.CLAY_KILN), this.conditionsFromItem(GenesisBlocks.CLAY_KILN))
+                        .offerTo(this.exporter, getBlastingItemPath(GenesisBlocks.KILN));
             }
 
             private void registerSpecialCastRecipes() {
@@ -77,7 +140,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 1200
                         )
                         .criterion(hasItem(input), this.conditionsFromItem(input))
-                        .offerTo(this.exporter, getCampfireItemPath(input));
+                        .offerTo(this.exporter, getCampfireItemPath(output));
 
                 CookingRecipeJsonBuilder.createBlasting(
                                 Ingredient.ofItem(input),
@@ -87,7 +150,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 300
                         )
                         .criterion(hasItem(input), this.conditionsFromItem(input))
-                        .offerTo(this.exporter, getBlastingItemPath(input));
+                        .offerTo(this.exporter, getBlastingItemPath(output));
             }
 
             private void registerClayCasts() {

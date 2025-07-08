@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:totem_cast_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_totem_clay_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:totem_clay_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_totem_clay_cast"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:totem_cast_from_campfire_cooking"
+    ]
+  }
+}

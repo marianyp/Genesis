@@ -1,0 +1,8 @@
+{
+	"parent": "genesis:block/template_kiln",
+	"textures": {
+		"side": "genesis:block/clay_kiln_side",
+		"base": "genesis:block/clay_kiln_base",
+		"particle": "genesis:block/clay_kiln_side"
+	}
+}
