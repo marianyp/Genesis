@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:tools/stone",
+  "category": "tools",
+  "criteria": {
+    "broken_stone": {
+      "conditions": {
+        "item": "#genesis:stone_tools"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.copper.tools_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:copper_pickaxe"
+    },
+    "title": {
+      "translate": "age.genesis.copper"
+    }
+  },
+  "unlocks": [
+    "#genesis:copper_tools"
+  ]
+}

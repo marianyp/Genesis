@@ -30,5 +30,75 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
         valueLookupBuilder(GenesisTags.Items.COPPER_TOOL_MATERIALS).add(Items.COPPER_INGOT);
         valueLookupBuilder(GenesisTags.Items.REPAIRS_COPPER_ARMOR).add(Items.COPPER_INGOT);
+
+        valueLookupBuilder(GenesisTags.Items.LEATHER_ARMOR).add(
+                Items.LEATHER_HELMET,
+                Items.LEATHER_CHESTPLATE,
+                Items.LEATHER_LEGGINGS,
+                Items.LEATHER_BOOTS
+        );
+
+        valueLookupBuilder(GenesisTags.Items.COPPER_ARMOR).add(
+                GenesisItems.COPPER_HELMET,
+                GenesisItems.COPPER_CHESTPLATE,
+                GenesisItems.COPPER_LEGGINGS,
+                GenesisItems.COPPER_BOOTS
+        );
+
+        valueLookupBuilder(GenesisTags.Items.IRON_ARMOR).add(
+                Items.IRON_HELMET,
+                Items.IRON_CHESTPLATE,
+                Items.IRON_LEGGINGS,
+                Items.IRON_BOOTS
+        );
+
+        valueLookupBuilder(GenesisTags.Items.DIAMOND_ARMOR).add(
+                Items.DIAMOND_HELMET,
+                Items.DIAMOND_CHESTPLATE,
+                Items.DIAMOND_LEGGINGS,
+                Items.DIAMOND_BOOTS
+        );
+
+        valueLookupBuilder(GenesisTags.Items.WOODEN_TOOLS).add(
+                Items.WOODEN_SWORD,
+                Items.WOODEN_SHOVEL,
+                Items.WOODEN_PICKAXE,
+                Items.WOODEN_AXE,
+                Items.WOODEN_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.STONE_TOOLS).add(
+                Items.STONE_SWORD,
+                Items.STONE_SHOVEL,
+                Items.STONE_PICKAXE,
+                Items.STONE_AXE,
+                Items.STONE_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.COPPER_TOOLS).add(
+                GenesisItems.COPPER_SWORD,
+                GenesisItems.COPPER_SHOVEL,
+                GenesisItems.COPPER_PICKAXE,
+                GenesisItems.COPPER_AXE,
+                GenesisItems.COPPER_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.IRON_TOOLS).add(
+                Items.IRON_SWORD,
+                Items.IRON_SHOVEL,
+                Items.IRON_PICKAXE,
+                Items.IRON_AXE,
+                Items.IRON_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.DIAMOND_TOOLS).add(
+                Items.DIAMOND_SWORD,
+                Items.DIAMOND_SHOVEL,
+                Items.DIAMOND_PICKAXE,
+                Items.DIAMOND_AXE,
+                Items.DIAMOND_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.FURNACES).add(Items.FURNACE, Items.SMOKER, Items.BLAST_FURNACE);
     }
 }

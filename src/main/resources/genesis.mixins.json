@@ -4,7 +4,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BrushItemMixin",
+    "ItemStackMixin",
+    "PlayerAdvancementTrackerMixin",
+    "RecipeUnlockerMixin",
+    "ServerAdvancementLoaderMixin",
     "ServerRecipeManagerMixin",
+    "accessor.AdvancementManagerAccesor",
     "accessor.ShapedRecipeAccessor"
   ],
   "injectors": {

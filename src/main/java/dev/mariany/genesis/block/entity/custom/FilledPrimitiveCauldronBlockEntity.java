@@ -36,7 +36,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.WorldEvents;
 import org.jetbrains.annotations.Nullable;
 
 public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
@@ -142,16 +141,14 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
     }
 
     private void finishBrushing(ServerWorld world, LivingEntity brusher, ItemStack brush) {
-        this.spawnItem(world, brusher, brush);
-        BlockState blockState = this.getCachedState();
-        world.syncWorldEvent(WorldEvents.BLOCK_FINISHED_BRUSHING, this.getPos(), Block.getRawIdFromState(blockState));
         Block baseBlock = Blocks.AIR;
 
         if (this.getCachedState().getBlock() instanceof BrushableBlock brushableBlock) {
             baseBlock = brushableBlock.getBaseBlock();
         }
 
-        world.setBlockState(this.pos, baseBlock.getDefaultState(), Block.NOTIFY_LISTENERS | Block.FORCE_STATE_AND_SKIP_CALLBACKS_AND_DROPS);
+        world.setBlockState(this.pos, baseBlock.getDefaultState(), Block.NOTIFY_ALL);
+        this.spawnItem(world, brusher, brush);
     }
 
     private void spawnItem(ServerWorld world, LivingEntity brusher, ItemStack brush) {

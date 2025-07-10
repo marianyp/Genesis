@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:armor/copper",
+  "category": "armor",
+  "criteria": {
+    "broken_copper": {
+      "conditions": {
+        "item": "#genesis:copper_armor"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.iron.armor_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_chestplate"
+    },
+    "title": {
+      "translate": "age.genesis.iron"
+    }
+  },
+  "unlocks": [
+    "#genesis:iron_armor"
+  ]
+}

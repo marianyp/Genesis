@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:tools/iron",
+  "category": "tools",
+  "criteria": {
+    "broken_iron": {
+      "conditions": {
+        "item": "#genesis:iron_tools"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.diamond.tools_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:diamond_pickaxe"
+    },
+    "title": {
+      "translate": "age.genesis.diamond"
+    }
+  },
+  "unlocks": [
+    "#genesis:diamond_tools"
+  ]
+}

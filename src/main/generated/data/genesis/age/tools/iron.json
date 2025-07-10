@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:tools/copper",
+  "category": "tools",
+  "criteria": {
+    "broken_copper": {
+      "conditions": {
+        "item": "#genesis:copper_tools"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.iron.tools_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_pickaxe"
+    },
+    "title": {
+      "translate": "age.genesis.iron"
+    }
+  },
+  "unlocks": [
+    "#genesis:iron_tools"
+  ]
+}

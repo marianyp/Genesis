@@ -1,0 +1,15 @@
+{
+  "category": "blocks",
+  "criteria": {},
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "genesis:clay_cauldron"
+    },
+    "title": {
+      "translate": "age.genesis.clay"
+    }
+  },
+  "unlocks": []
+}

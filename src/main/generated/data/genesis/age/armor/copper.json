@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:armor/leather",
+  "category": "armor",
+  "criteria": {
+    "broken_leather": {
+      "conditions": {
+        "item": "#genesis:leather_armor"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.copper.armor_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:copper_chestplate"
+    },
+    "title": {
+      "translate": "age.genesis.copper"
+    }
+  },
+  "unlocks": [
+    "#genesis:copper_armor"
+  ]
+}

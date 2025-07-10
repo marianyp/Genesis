@@ -1,0 +1,33 @@
+{
+  "parent": "genesis:blocks/clay",
+  "category": "blocks",
+  "criteria": {
+    "has_iron_armor_age": {
+      "conditions": {
+        "advancement": "genesis:ages/armor/iron"
+      },
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_iron_tools_age": {
+      "conditions": {
+        "advancement": "genesis:ages/tools/iron"
+      },
+      "trigger": "genesis:obtain_advancement"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.furnace.blocks_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:furnace"
+    },
+    "title": {
+      "translate": "age.genesis.furnace"
+    }
+  },
+  "unlocks": [
+    "#genesis:furnaces"
+  ]
+}

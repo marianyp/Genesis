@@ -1,6 +1,16 @@
 // 1.21.7	-999999999-01-01T00:00:00	Genesis/Tags for minecraft:item
+e8c0332cbd9514cef4cee1351662c6b80c05435d data/genesis/tags/item/copper_armor.json
 6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/genesis/tags/item/copper_tool_materials.json
+4438b4ed271ea47f03b38b675d0cdbda43a7fd9b data/genesis/tags/item/copper_tools.json
+27e204902976d8fe13a30a245c402b63e03d3ab5 data/genesis/tags/item/diamond_armor.json
+c39377d96054448921776c922204995aaa982eee data/genesis/tags/item/diamond_tools.json
+3e67d9e150dea7489e20cc8b4c599e7c66054ac3 data/genesis/tags/item/furnaces.json
+742d0809ac433cd781625e58646a272e91f056a5 data/genesis/tags/item/iron_armor.json
+c9ca25f3061a81b67672a995702ebb2b60d4c7a1 data/genesis/tags/item/iron_tools.json
+36993ba55cda15eac9dcc20de8261cb27ac1ec9d data/genesis/tags/item/leather_armor.json
 6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/genesis/tags/item/repairs_copper_armor.json
+a9e3ed45c2a64afe0152108fb2ec71fc1ff432d8 data/genesis/tags/item/stone_tools.json
+d6b197e7a7febaafdeaaac2d73051f9d119200f4 data/genesis/tags/item/wooden_tools.json
 e082cc6d2765543013c375c1b9096fd4a19b0256 data/minecraft/tags/item/axes.json
 0c49b8f0a6baa61ad5118a28c2420c6ff9426055 data/minecraft/tags/item/chest_armor.json
 087f66b61eda621b4a9718f5fa33144069cd92b9 data/minecraft/tags/item/foot_armor.json

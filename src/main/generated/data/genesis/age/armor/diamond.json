@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:armor/iron",
+  "category": "armor",
+  "criteria": {
+    "broken_iron": {
+      "conditions": {
+        "item": "#genesis:iron_armor"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.diamond.armor_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:diamond_chestplate"
+    },
+    "title": {
+      "translate": "age.genesis.diamond"
+    }
+  },
+  "unlocks": [
+    "#genesis:diamond_armor"
+  ]
+}

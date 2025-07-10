@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:tools/wood",
+  "category": "tools",
+  "criteria": {
+    "broken_wood": {
+      "conditions": {
+        "item": "#genesis:wooden_tools"
+      },
+      "trigger": "genesis:item_broken"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.stone.tools_description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:stone_pickaxe"
+    },
+    "title": {
+      "translate": "age.genesis.stone"
+    }
+  },
+  "unlocks": [
+    "#genesis:stone_tools"
+  ]
+}

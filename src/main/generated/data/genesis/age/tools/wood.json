@@ -1,0 +1,15 @@
+{
+  "category": "tools",
+  "criteria": {},
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wooden_pickaxe"
+    },
+    "title": {
+      "translate": "age.genesis.wood"
+    }
+  },
+  "unlocks": []
+}
