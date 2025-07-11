@@ -1,4 +1,4 @@
-package dev.mariany.genesis.event.server;
+package dev.mariany.genesis.event.server.advancement;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.age.AgeEntry;

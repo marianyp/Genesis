@@ -9,6 +9,7 @@
     "PlayerAdvancementTrackerMixin",
     "RecipeUnlockerMixin",
     "ServerAdvancementLoaderMixin",
+    "ServerPlayNetworkHandlerMixin",
     "ServerRecipeManagerMixin",
     "accessor.ShapedRecipeAccessor"
   ],
@@ -19,6 +20,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "RecipeBookWidgetMixin",
     "accessor.GhostRecipeAccessor"
   ]
 }

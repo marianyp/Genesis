@@ -2,6 +2,7 @@ package dev.mariany.genesis.age;
 
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,12 @@ public class AgeManager {
 
     public static AgeManager getInstance() {
         return INSTANCE;
+    }
+
+    public List<AgeEntry> find(AdvancementEntry advancementEntry) {
+        return ages.values().stream().filter(
+                ageEntry -> ageEntry.getAdvancementEntry().id().equals(advancementEntry.id())
+        ).toList();
     }
 
     public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
@@ -58,6 +65,14 @@ public class AgeManager {
 
     public Collection<AgeEntry> getAges(Age.Category category) {
         return this.categories.getOrDefault(category, new Object2ObjectOpenHashMap<>()).values();
+    }
+
+    public List<Ingredient> getAllUnlocks(ServerPlayerEntity player) {
+        return getAges()
+                .stream()
+                .filter(ageEntry -> !ageEntry.isDone(player))
+                .flatMap(ageEntry -> ageEntry.getAge().unlocks().stream())
+                .toList();
     }
 
     protected void add(AgeEntry age) {

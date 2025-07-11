@@ -5,12 +5,15 @@ import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.event.block.UseBlockHandler;
-import dev.mariany.genesis.event.server.BeforeAdvancementsLoadHandler;
+import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
+import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
 import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
 import dev.mariany.genesis.item.GenesisItems;
+import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -22,6 +25,7 @@ public class Genesis implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        GenesisPackets.register();
         GenesisSoundEvents.bootstrap();
         GenesisItems.bootstrap();
         GenesisScreenHandlers.bootstrap();
@@ -33,6 +37,7 @@ public class Genesis implements ModInitializer {
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);
 
         ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::onAdvancementsLoad);
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
     }
 
     public static Identifier id(String resource) {
