@@ -22,7 +22,6 @@ public class AgeEntry {
     }
 
     private AdvancementEntry createAdvancementEntry(Age age) {
-        Genesis.LOGGER.info("advancement id: {}", getAdvancementId(this));
         return new AdvancementEntry(getAdvancementId(this), age.createAdvancement());
     }
 

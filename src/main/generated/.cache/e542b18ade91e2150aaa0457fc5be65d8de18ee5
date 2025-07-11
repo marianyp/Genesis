@@ -1,3 +1,7 @@
 // 1.21.7	-999999999-01-01T00:00:00	Genesis/Block Loot Tables
+36cd2a5e6fad4b1050d2614637f5e0e346a5c9b3 data/genesis/loot_table/blocks/clay_cauldron.json
 bf042b4f5d9d374967dfa14f560cdc0af3095cd6 data/genesis/loot_table/blocks/clay_kiln.json
+5c13fab4019536dcc2c466988ad9133ae5460272 data/genesis/loot_table/blocks/dirt_terracotta_cauldron.json
+26469738e0065845dba7bf5afc12cd6a37cfec5b data/genesis/loot_table/blocks/gravel_terracotta_cauldron.json
 a2e8a35e79ce9c1904420e8accc9a0c7a5097225 data/genesis/loot_table/blocks/kiln.json
+f3dda5f2ff4901ba872943679060fee2b7c71d6a data/genesis/loot_table/blocks/terracotta_cauldron.json

@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class ItemStackMixin {
     @Inject(
             method = "onDurabilityChange",
-            at = @At("TAIL")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;shouldBreak()Z")
     )
     private void injectOnDurabilityChange(int damage, @Nullable ServerPlayerEntity player, Consumer<Item> breakCallback, CallbackInfo ci) {
         ItemStack stack = ((ItemStack) (Object) this);

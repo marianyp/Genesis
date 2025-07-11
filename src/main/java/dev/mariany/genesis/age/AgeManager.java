@@ -60,7 +60,7 @@ public class AgeManager {
         return this.categories.getOrDefault(category, new Object2ObjectOpenHashMap<>()).values();
     }
 
-    private boolean tryAdd(AgeEntry age) {
+    protected void add(AgeEntry age) {
         Identifier id = age.getId();
 
         Age.Category category = age.getAge().category();
@@ -69,45 +69,6 @@ public class AgeManager {
         categoryAges.put(id, age);
         this.categories.put(category, categoryAges);
         this.ages.put(id, age);
-
-        return true;
-    }
-
-    private void remove(AgeEntry ageEntry) {
-        Identifier id = ageEntry.getId();
-        Age.Category category = ageEntry.getAge().category();
-        Map<Identifier, AgeEntry> categoryAges = this.categories.getOrDefault(category, new Object2ObjectOpenHashMap<>());
-
-        categoryAges.remove(id);
-        this.categories.put(category, categoryAges);
-        this.ages.remove(id);
-
-        LOGGER.info("Forgot about age {}", ageEntry);
-    }
-
-    public void addAll(Collection<AgeEntry> ages) {
-        List<AgeEntry> list = new ArrayList<>(ages);
-
-        while (!list.isEmpty()) {
-            if (!list.removeIf(this::tryAdd)) {
-                LOGGER.error("Couldn't load ages: {}", list);
-                break;
-            }
-        }
-
-        LOGGER.info("Loaded {} ages", this.ages.size());
-    }
-
-    public void removeAll(Set<Identifier> ages) {
-        for (Identifier identifier : ages) {
-            AgeEntry ageEntry = this.ages.get(identifier);
-
-            if (ageEntry == null) {
-                LOGGER.warn("Told to remove age {} but I don't know what that is", identifier);
-            } else {
-                this.remove(ageEntry);
-            }
-        }
     }
 
     protected void clear() {

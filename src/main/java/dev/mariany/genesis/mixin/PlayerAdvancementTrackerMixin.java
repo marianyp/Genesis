@@ -18,5 +18,6 @@ public class PlayerAdvancementTrackerMixin {
     @WrapOperation(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/PlayerAdvancementTracker;onStatusUpdate(Lnet/minecraft/advancement/AdvancementEntry;)V"))
     public void wrapOnStatusUpdate(PlayerAdvancementTracker instance, AdvancementEntry advancement, Operation<Void> original) {
         GenesisCriteria.OBTAIN_ADVANCEMENT.trigger(owner, advancement);
+        original.call(instance, advancement);
     }
 }

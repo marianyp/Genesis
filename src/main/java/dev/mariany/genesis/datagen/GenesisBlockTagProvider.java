@@ -15,6 +15,13 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(GenesisBlocks.CLAY_KILN, GenesisBlocks.KILN);
+        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(
+                GenesisBlocks.CLAY_KILN,
+                GenesisBlocks.KILN,
+                GenesisBlocks.CLAY_CAULDRON,
+                GenesisBlocks.TERRACOTTA_CAULDRON,
+                GenesisBlocks.DIRT_TERRACOTTA_CAULDRON,
+                GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON
+        );
     }
 }

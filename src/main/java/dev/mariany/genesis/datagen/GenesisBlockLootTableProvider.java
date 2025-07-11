@@ -16,5 +16,10 @@ public class GenesisBlockLootTableProvider extends FabricBlockLootTableProvider 
     public void generate() {
         addDrop(GenesisBlocks.CLAY_KILN);
         addDrop(GenesisBlocks.KILN, this::nameableContainerDrops);
+
+        addDrop(GenesisBlocks.CLAY_CAULDRON);
+        addDrop(GenesisBlocks.TERRACOTTA_CAULDRON);
+        addDrop(GenesisBlocks.DIRT_TERRACOTTA_CAULDRON);
+        addDrop(GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON);
     }
 }

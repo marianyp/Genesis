@@ -4,13 +4,13 @@
   "criteria": {
     "has_iron_armor_age": {
       "conditions": {
-        "advancement": "genesis:ages/armor/iron"
+        "advancement": "genesis:age/armor/iron"
       },
       "trigger": "genesis:obtain_advancement"
     },
     "has_iron_tools_age": {
       "conditions": {
-        "advancement": "genesis:ages/tools/iron"
+        "advancement": "genesis:age/tools/iron"
       },
       "trigger": "genesis:obtain_advancement"
     }

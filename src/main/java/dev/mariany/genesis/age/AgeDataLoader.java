@@ -1,73 +1,31 @@
 package dev.mariany.genesis.age;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
-import dev.mariany.genesis.Genesis;
+import com.google.common.collect.ImmutableMap;
 import dev.mariany.genesis.registry.GenesisRegistryKeys;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.registry.RegistryOps;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.resource.Resource;
+import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.profiler.Profiler;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-public class AgeDataLoader implements SimpleSynchronousResourceReloadListener {
-    public static final Identifier ID = Genesis.id("ages");
-
-    private final RegistryWrapper.WrapperLookup wrapperLookup;
-
-    public AgeDataLoader(RegistryWrapper.WrapperLookup wrapperLookup) {
-        this.wrapperLookup = wrapperLookup;
+public class AgeDataLoader extends JsonDataLoader<Age> {
+    public AgeDataLoader(RegistryWrapper.WrapperLookup registries) {
+        super(registries, Age.CODEC, GenesisRegistryKeys.AGE);
     }
 
     @Override
-    public Identifier getFabricId() {
-        return ID;
-    }
-
-    @Override
-    public void reload(ResourceManager manager) {
+    protected void apply(Map<Identifier, Age> map, ResourceManager manager, Profiler profiler) {
         AgeManager ageManager = AgeManager.getInstance();
         ageManager.clear();
 
-        List<AgeEntry> loadedAges = new ArrayList<>();
+        ImmutableMap.Builder<Identifier, AgeEntry> builder = ImmutableMap.builder();
 
-        RegistryOps<JsonElement> ops = this.wrapperLookup.getOps(JsonOps.INSTANCE);
+        map.forEach((id, age) -> {
+            builder.put(id, new AgeEntry(id, age));
+        });
 
-        String resourceId = GenesisRegistryKeys.AGE.getValue().getPath();
-
-        for (Map.Entry<Identifier, Resource> entry : manager.findResources(resourceId, path -> path.toString().endsWith(".json")).entrySet()) {
-            Resource resource = entry.getValue();
-            Identifier key = entry.getKey();
-            String path = key.getPath();
-            String strippedPath = StringUtils.removeEnd(path, ".json");
-            Identifier id = Identifier.of(
-                    key.getNamespace(),
-                    StringUtils.removeStart(strippedPath, resourceId + "/")
-            );
-
-            try (InputStreamReader reader = new InputStreamReader(resource.getInputStream())) {
-                JsonElement json = JsonParser.parseReader(reader);
-
-                DataResult<Age> result = Age.CODEC.parse(ops, json);
-
-                result.resultOrPartial(error -> Genesis.LOGGER.error("Failed to parse {}: {}", id, error))
-                        .ifPresent(age -> loadedAges.add(new AgeEntry(id, age)));
-
-            } catch (IOException error) {
-                Genesis.LOGGER.error("Error occurred while loading resource json: {}", id, error);
-            }
-        }
-
-        ageManager.addAll(loadedAges);
+        builder.buildOrThrow().values().forEach(ageManager::add);
     }
 }

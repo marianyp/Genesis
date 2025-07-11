@@ -156,7 +156,7 @@ public class GenesisAgesProvider extends AgesProvider {
     private void generateBlockAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
         Age.Builder.create(Age.Category.BLOCKS)
                 .display(
-                        GenesisBlocks.CLAY_CAULDRON.asItem(),
+                        GenesisBlocks.CLAY_KILN.asItem(),
                         Text.translatable("age.genesis.clay"),
                         Text.empty()
                 )

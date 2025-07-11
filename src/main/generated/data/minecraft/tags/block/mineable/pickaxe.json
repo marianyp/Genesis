@@ -1,6 +1,10 @@
 {
   "values": [
     "genesis:clay_kiln",
-    "genesis:kiln"
+    "genesis:kiln",
+    "genesis:clay_cauldron",
+    "genesis:terracotta_cauldron",
+    "genesis:dirt_terracotta_cauldron",
+    "genesis:gravel_terracotta_cauldron"
   ]
 }

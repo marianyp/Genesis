@@ -2,7 +2,6 @@ package dev.mariany.genesis.age;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.ObtainAdvancementCriterion;
 import net.minecraft.advancement.*;
 import net.minecraft.advancement.criterion.Criteria;
@@ -40,8 +39,6 @@ public record Age(
         Identifier parent = this.parent
                 .map(AgeEntry::getAdvancementId)
                 .orElse(AgeEntry.ROOT_ADVANCEMENT_ID);
-
-        Genesis.LOGGER.info("parent: {}", parent);
 
         boolean alert = true;
 

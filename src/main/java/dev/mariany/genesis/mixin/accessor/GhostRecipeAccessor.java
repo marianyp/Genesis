@@ -9,8 +9,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(GhostRecipe.class)
 public interface GhostRecipeAccessor {
-    @Invoker("addItems")
-    void genesis$addItems(Slot slot, ContextParameterMap context, SlotDisplay display, boolean resultSlot);
 
     @Invoker("addInputs")
     void genesis$addInputs(Slot slot, ContextParameterMap context, SlotDisplay display);

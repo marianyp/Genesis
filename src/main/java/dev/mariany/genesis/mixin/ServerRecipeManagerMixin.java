@@ -26,6 +26,6 @@ public class ServerRecipeManagerMixin {
     public void initialize(FeatureSet features, CallbackInfo ci) {
         ToolRecipeOverrider toolRecipeOverrider = new ToolRecipeOverrider(this.registries);
         this.preparedRecipes = toolRecipeOverrider.override(preparedRecipes.recipes());
-        Genesis.LOGGER.info("Recipe override completed successfully");
+        Genesis.LOGGER.info("Recipe override completed successfully!");
     }
 }

@@ -36,11 +36,13 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         ItemStack stack = player.getMainHandStack();
 
-        if (stack.isEmpty() && hit.getSide() == Direction.UP && world instanceof ServerWorld serverWorld) {
-            if (serverWorld.getBlockEntity(pos) instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                filledPrimitiveCauldronBlockEntity.brush(serverWorld, player, stack, true);
+        if (hit.getSide() == Direction.UP) {
+            if (world.getBlockEntity(pos) instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
+                if (world instanceof ServerWorld serverWorld) {
+                    filledPrimitiveCauldronBlockEntity.brush(serverWorld, player, stack, true);
+                }
 
-                return ActionResult.SUCCESS_SERVER;
+                return ActionResult.SUCCESS;
             }
         }
 
