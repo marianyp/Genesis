@@ -74,6 +74,7 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR)))
+                .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR)))
                 .parent(COPPER)
                 .build(consumer, IRON);
 
@@ -136,6 +137,7 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS)))
+                .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_TOOLS)))
                 .parent(COPPER)
                 .build(consumer, IRON);
 

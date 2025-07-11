@@ -12,12 +12,14 @@ public class GenesisTags {
 
         public static TagKey<Item> LEATHER_ARMOR = createTag("leather_armor");
         public static TagKey<Item> COPPER_ARMOR = createTag("copper_armor");
+        public static TagKey<Item> GOLDEN_ARMOR = createTag("golden_armor");
         public static TagKey<Item> IRON_ARMOR = createTag("iron_armor");
         public static TagKey<Item> DIAMOND_ARMOR = createTag("diamond_armor");
 
         public static TagKey<Item> WOODEN_TOOLS = createTag("wooden_tools");
         public static TagKey<Item> STONE_TOOLS = createTag("stone_tools");
         public static TagKey<Item> COPPER_TOOLS = createTag("copper_tools");
+        public static TagKey<Item> GOLDEN_TOOLS = createTag("golden_tools");
         public static TagKey<Item> IRON_TOOLS = createTag("iron_tools");
         public static TagKey<Item> DIAMOND_TOOLS = createTag("diamond_tools");
 

@@ -22,6 +22,7 @@
     }
   },
   "unlocks": [
-    "#genesis:iron_armor"
+    "#genesis:iron_armor",
+    "#genesis:golden_armor"
   ]
 }

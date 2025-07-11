@@ -22,6 +22,7 @@
     }
   },
   "unlocks": [
-    "#genesis:iron_tools"
+    "#genesis:iron_tools",
+    "#genesis:golden_tools"
   ]
 }

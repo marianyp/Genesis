@@ -45,6 +45,13 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 GenesisItems.COPPER_BOOTS
         );
 
+        valueLookupBuilder(GenesisTags.Items.GOLDEN_ARMOR).add(
+                Items.GOLDEN_HELMET,
+                Items.GOLDEN_CHESTPLATE,
+                Items.GOLDEN_LEGGINGS,
+                Items.GOLDEN_BOOTS
+        );
+
         valueLookupBuilder(GenesisTags.Items.IRON_ARMOR).add(
                 Items.IRON_HELMET,
                 Items.IRON_CHESTPLATE,
@@ -81,6 +88,14 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 GenesisItems.COPPER_PICKAXE,
                 GenesisItems.COPPER_AXE,
                 GenesisItems.COPPER_HOE
+        );
+
+        valueLookupBuilder(GenesisTags.Items.GOLDEN_TOOLS).add(
+                Items.GOLDEN_SWORD,
+                Items.GOLDEN_SHOVEL,
+                Items.GOLDEN_PICKAXE,
+                Items.GOLDEN_AXE,
+                Items.GOLDEN_HOE
         );
 
         valueLookupBuilder(GenesisTags.Items.IRON_TOOLS).add(
