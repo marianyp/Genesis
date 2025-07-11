@@ -1,5 +1,6 @@
 package dev.mariany.genesis.packet;
 
+import dev.mariany.genesis.packet.clientbound.NotifyAgeLockedPayload;
 import dev.mariany.genesis.packet.clientbound.UpdateAgeUnlocksPayload;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.RegistryByteBuf;
@@ -12,6 +13,7 @@ public class GenesisPackets {
 
     private static void clientbound(PayloadTypeRegistry<RegistryByteBuf> registry) {
         registry.register(UpdateAgeUnlocksPayload.ID, UpdateAgeUnlocksPayload.CODEC);
+        registry.register(NotifyAgeLockedPayload.ID, NotifyAgeLockedPayload.CODEC);
     }
 
     private static void serverbound(PayloadTypeRegistry<RegistryByteBuf> registry) {
