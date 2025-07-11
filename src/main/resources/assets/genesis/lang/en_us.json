@@ -19,7 +19,7 @@
   "age.genesis.copper.tools_description": "Break a stone tool to unlock",
   "age.genesis.iron.tools_description": "Break a copper tool to unlock",
   "age.genesis.diamond.tools_description": "Break a iron tool to unlock",
-  "age.genesis.furnace.blocks_description": "Enter both the Iron Armor and Tool ages to unlock",
+  "age.genesis.furnace.blocks_description": "Enter the Iron Armor age and Tool age to unlock",
   "advancements.ages.title": "Ages",
   "block.genesis.clay_cauldron": "Clay Cauldron",
   "block.genesis.terracotta_cauldron": "Terracotta Cauldron",

@@ -38,7 +38,7 @@ public class BeforeAdvancementsLoadHandler {
                 new Advancement(
                         Optional.empty(),
                         Optional.of(new AdvancementDisplay(
-                                Blocks.SMITHING_TABLE.asItem().getDefaultStack(),
+                                Blocks.CAMPFIRE.asItem().getDefaultStack(),
                                 Text.translatable("advancements.ages.title"),
                                 Text.empty(),
                                 Optional.of(new AssetInfo(Identifier.ofVanilla("block/dark_oak_planks"))),

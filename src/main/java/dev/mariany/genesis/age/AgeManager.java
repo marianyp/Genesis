@@ -24,12 +24,6 @@ public class AgeManager {
         return INSTANCE;
     }
 
-    public List<AgeEntry> find(AdvancementEntry advancementEntry) {
-        return ages.values().stream().filter(
-                ageEntry -> ageEntry.getAdvancementEntry().id().equals(advancementEntry.id())
-        ).toList();
-    }
-
     public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
         List<AgeEntry> requiredAges = getRequiredAges(stack);
         return requiredAges.isEmpty() || requiredAges.stream().allMatch(placedAge -> placedAge.isDone(player));
@@ -57,6 +51,16 @@ public class AgeManager {
         }
 
         return requiredAges;
+    }
+
+    public Optional<AgeEntry> find(AdvancementEntry advancementEntry) {
+        return ages.values().stream().filter(
+                ageEntry -> ageEntry.getAdvancementEntry().id().equals(advancementEntry.id())
+        ).findAny();
+    }
+
+    public Optional<AgeEntry> get(Identifier id) {
+        return Optional.ofNullable(this.ages.get(id));
     }
 
     public Collection<AgeEntry> getAges() {

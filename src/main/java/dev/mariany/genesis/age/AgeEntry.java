@@ -53,7 +53,7 @@ public class AgeEntry {
         return player.getAdvancementTracker().getProgress(this.advancementEntry).isDone();
     }
 
-    public Optional<Identifier> getParent() {
+    public Optional<Identifier> getParentAdvancementId() {
         return this.advancementEntry.value().parent();
     }
 }
