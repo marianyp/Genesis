@@ -39,7 +39,7 @@ public class BeforeAdvancementsLoadHandler {
                         Optional.empty(),
                         Optional.of(new AdvancementDisplay(
                                 Blocks.CAMPFIRE.asItem().getDefaultStack(),
-                                Text.translatable("advancements.ages.title"),
+                                Text.translatable("advancements.genesis.ages.title"),
                                 Text.empty(),
                                 Optional.of(new AssetInfo(Identifier.ofVanilla("block/dark_oak_planks"))),
                                 AdvancementFrame.TASK,
