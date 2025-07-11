@@ -3,3 +3,4 @@ accessWidener v2 named
 accessible field net/minecraft/recipe/RawShapedRecipe data Ljava/util/Optional;
 
 accessible class net/minecraft/client/gui/screen/recipebook/AnimatedResultButton$Result
+accessible class net/minecraft/client/toast/ToastManager$Entry
