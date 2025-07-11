@@ -7,6 +7,7 @@
     "DataPackContentsMixin",
     "ItemStackMixin",
     "PlayerAdvancementTrackerMixin",
+    "RecipeDisplayEntryMixin",
     "RecipeUnlockerMixin",
     "ServerAdvancementLoaderMixin",
     "ServerPlayNetworkHandlerMixin",
@@ -20,6 +21,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "AnimatedResultButtonMixin",
     "RecipeBookWidgetMixin",
     "accessor.GhostRecipeAccessor"
   ]

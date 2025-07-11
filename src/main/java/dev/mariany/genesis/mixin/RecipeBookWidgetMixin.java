@@ -1,8 +1,10 @@
 package dev.mariany.genesis.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.client.age.ClientAgeManager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.recipebook.RecipeBookResults;
 import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
 import net.minecraft.client.gui.screen.recipebook.RecipeResultCollection;
 import net.minecraft.item.ItemStack;
@@ -12,10 +14,7 @@ import net.minecraft.util.context.ContextParameterMap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class RecipeBookWidgetMixin {
     @Shadow
     protected MinecraftClient client;
 
-    @Inject(
+    @WrapOperation(
             method = "refreshResults",
             at = @At(
                     value = "INVOKE",
@@ -32,31 +31,23 @@ public class RecipeBookWidgetMixin {
             )
     )
     private void filterLockedRecipes(
-            boolean resetCurrentPage,
-            boolean filteringCraftable,
-            CallbackInfo ci,
-            @Local(ordinal = 1) List<RecipeResultCollection> filteredResults
+            RecipeBookResults recipeBookResults, List<RecipeResultCollection> resultCollections, boolean resetCurrentPage, boolean filteringCraftable, Operation<Void> original
     ) {
+        ClientAgeManager clientAgeManager = ClientAgeManager.getInstance();
         ContextParameterMap contextParameterMap = SlotDisplayContexts.createParameters(
                 Objects.requireNonNull(this.client.world)
         );
 
-        Iterator<RecipeResultCollection> iterator = filteredResults.iterator();
-
-        while (iterator.hasNext()) {
-            RecipeResultCollection resultCollection = iterator.next();
-
+        List<RecipeResultCollection> filteredRecipes = resultCollections.stream().filter(resultCollection -> {
             for (RecipeDisplayEntry recipe : resultCollection.getAllRecipes()) {
                 List<ItemStack> stacks = recipe.getStacks(contextParameterMap);
-                boolean shouldRemove = stacks.stream().anyMatch(stack ->
-                        !ClientAgeManager.getInstance().isUnlocked(stack)
-                );
-
-                if (shouldRemove) {
-                    iterator.remove();
-                    break;
+                if (stacks.stream().filter(clientAgeManager::isUnlocked).findAny().isEmpty()) {
+                    return false;
                 }
             }
-        }
+            return true;
+        }).toList();
+
+        original.call(recipeBookResults, filteredRecipes, resetCurrentPage, filteringCraftable);
     }
 }
