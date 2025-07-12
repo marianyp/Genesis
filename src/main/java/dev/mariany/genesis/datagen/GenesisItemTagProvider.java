@@ -115,5 +115,21 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         );
 
         valueLookupBuilder(GenesisTags.Items.FURNACES).add(Items.FURNACE, Items.SMOKER, Items.BLAST_FURNACE);
+
+        valueLookupBuilder(GenesisTags.Items.HEALTHY_STEW_CONTENTS).add(
+                Items.ALLIUM,
+                Items.APPLE,
+                Items.BEETROOT,
+                Items.BLUE_ORCHID,
+                Items.CARROT,
+                Items.CORNFLOWER,
+                Items.DANDELION,
+                Items.GLOW_BERRIES,
+                Items.MELON_SLICE,
+                Items.OXEYE_DAISY,
+                Items.POPPY,
+                Items.PUMPKIN,
+                Items.SWEET_BERRIES
+        );
     }
 }

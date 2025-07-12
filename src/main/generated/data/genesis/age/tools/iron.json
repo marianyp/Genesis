@@ -1,6 +1,5 @@
 {
   "parent": "genesis:tools/copper",
-  "category": "tools",
   "criteria": {
     "broken_copper": {
       "conditions": {

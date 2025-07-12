@@ -1,6 +1,5 @@
 {
   "parent": "genesis:tools/wood",
-  "category": "tools",
   "criteria": {
     "broken_wood": {
       "conditions": {

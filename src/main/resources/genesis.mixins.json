@@ -5,6 +5,8 @@
   "mixins": [
     "BrushItemMixin",
     "DataPackContentsMixin",
+    "GameRulesMixin",
+    "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "PlayerAdvancementTrackerMixin",
     "RecipeDisplayEntryMixin",

@@ -1,6 +1,5 @@
 {
   "parent": "genesis:tools/iron",
-  "category": "tools",
   "criteria": {
     "broken_iron": {
       "conditions": {

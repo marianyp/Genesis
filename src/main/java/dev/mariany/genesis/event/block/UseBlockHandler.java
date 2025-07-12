@@ -21,7 +21,7 @@ public class UseBlockHandler {
             AgeManager ageManager = AgeManager.getInstance();
             BlockState state = world.getBlockState(result.getBlockPos());
 
-            if (!ageManager.isUnlocked(serverPlayerEntity, state)) {
+            if (!ageManager.isUnlocked(serverPlayerEntity, state) && !player.isCreative()) {
                 String itemTranslation = state.getBlock().getName().getString();
                 List<AgeEntry> incompleteAges = ageManager.getAges()
                         .stream()

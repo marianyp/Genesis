@@ -21,6 +21,7 @@ public class GenesisModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(GenesisItems.COPPER_NUGGET, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.HEALTHY_STEW, Models.GENERATED);
 
         this.registerCopperTools(itemModelGenerator);
         this.registerCopperArmor(itemModelGenerator);

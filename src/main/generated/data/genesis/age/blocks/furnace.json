@@ -1,6 +1,5 @@
 {
   "parent": "genesis:blocks/clay",
-  "category": "blocks",
   "criteria": {
     "has_iron_armor_age": {
       "conditions": {

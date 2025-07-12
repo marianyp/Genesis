@@ -15,6 +15,7 @@ f1f511f3cf7db40340635af2f2ba78e3eeb8c394 assets/genesis/items/copper_pickaxe.jso
 561d7438d3cd46da3fa04fcaa409effc5b3c58ac assets/genesis/items/copper_shovel.json
 3fa58e5318ead8b159d86ddae3717f11ddd89647 assets/genesis/items/copper_sword.json
 194fdac3902cab6842d50015eefa558a4c5f07a5 assets/genesis/items/flints.json
+6ebdf0ada7805711624fd258bba65dbd273c920c assets/genesis/items/healthy_stew.json
 bfee30481ef696e86dbcda94cf45db6b1cea8394 assets/genesis/items/hoe_cast.json
 cd161669270baebf5609a5d283a0f144d351b814 assets/genesis/items/hoe_clay_cast.json
 eb1dbe45543070dfba80b5ae001ab253fa82805f assets/genesis/items/pickaxe_cast.json
@@ -92,6 +93,7 @@ d71002692a0451cc15309a85eea229aee8285731 assets/genesis/models/item/copper_nugge
 2f316b7543a363d09b4ccb444e1eeba295fb2ddb assets/genesis/models/item/copper_pickaxe.json
 27a7c3676a58b00ac6835711e87c06df08cf98df assets/genesis/models/item/copper_shovel.json
 d5671ff0a386abd1e3972348647a374fe1fb8173 assets/genesis/models/item/copper_sword.json
+4a6550e44affd98657282b69de22c560ec758ebe assets/genesis/models/item/healthy_stew.json
 5de3dd1d74185862c3646342d186a2aaa18e120f assets/genesis/models/item/hoe_cast.json
 b7a8b03bc75fcf56e4602f128548b34570d8b06b assets/genesis/models/item/hoe_clay_cast.json
 197a3db8d25dcb4ae8a4f272fe7cdd618fdc5e9a assets/genesis/models/item/pickaxe_cast.json

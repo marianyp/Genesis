@@ -5,6 +5,7 @@ import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.event.block.UseBlockHandler;
+import dev.mariany.genesis.event.item.ModifyItemComponentsHandler;
 import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
 import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
 import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
@@ -15,6 +16,7 @@ import dev.mariany.genesis.sound.GenesisSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +36,9 @@ public class Genesis implements ModInitializer {
         PrimitiveCauldronBehavior.registerBehavior();
         GenesisCriteria.bootstrap();
 
+        DefaultItemComponentEvents.MODIFY.register(ModifyItemComponentsHandler::modify);
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);
-
-        ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::onAdvancementsLoad);
+        ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::beforeAdvancementsLoad);
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
     }
 

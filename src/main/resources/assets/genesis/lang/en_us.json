@@ -1,6 +1,6 @@
 {
   "age.genesis.age": "Age",
-  "age.genesis.title": "%s: %s %s",
+  "age.genesis.title": "%s: %s",
   "age.genesis.category.armor": "Armor",
   "age.genesis.category.tools": "Tools",
   "age.genesis.category.blocks": "Blocks",
@@ -66,8 +66,9 @@
   "item.genesis.sword_clay_cast": "Sword Clay Cast",
   "item.genesis.totem_cast": "Totem Cast",
   "item.genesis.totem_clay_cast": "Totem Clay Cast",
+  "item.genesis.healthy_stew": "Healthy Stew",
   "subtitles.item.armor.equip_copper": "Copper armor clanks",
   "subtitles.item.flints": "Flints click",
   "tutorial.ageLocked.title": "Age not yet reached",
-  "tutorial.ageLocked.description": "%s %s required for %s"
+  "tutorial.ageLocked.description": "%s %s Required For %s"
 }

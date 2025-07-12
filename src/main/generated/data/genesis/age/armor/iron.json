@@ -1,6 +1,5 @@
 {
   "parent": "genesis:armor/copper",
-  "category": "armor",
   "criteria": {
     "broken_copper": {
       "conditions": {

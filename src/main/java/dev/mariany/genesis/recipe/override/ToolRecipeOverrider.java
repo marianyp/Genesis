@@ -1,5 +1,6 @@
 package dev.mariany.genesis.recipe.override;
 
+import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.mixin.accessor.ShapedRecipeAccessor;
 import net.minecraft.item.Item;
@@ -62,6 +63,8 @@ public class ToolRecipeOverrider {
 
             newRecipes.add(entry);
         }
+
+        Genesis.LOGGER.info("Recipe override completed successfully!");
 
         return PreparedRecipes.of(newRecipes);
     }

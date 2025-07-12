@@ -3,6 +3,7 @@ package dev.mariany.genesis.datagen;
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.ItemBrokenCriterion;
 import dev.mariany.genesis.age.Age;
+import dev.mariany.genesis.age.AgeCategory;
 import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
@@ -20,14 +21,23 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class GenesisAgesProvider extends AgesProvider {
-    private static final Identifier WOOD = Genesis.id("wood");
-    private static final Identifier STONE = Genesis.id("stone");
-    private static final Identifier COPPER = Genesis.id("copper");
-    private static final Identifier IRON = Genesis.id("iron");
-    private static final Identifier DIAMOND = Genesis.id("diamond");
-    private static final Identifier LEATHER = Genesis.id("leather");
-    private static final Identifier CLAY = Genesis.id("clay");
-    private static final Identifier FURNACE = Genesis.id("furnace");
+    private static final Identifier ARMOR_LEATHER = of(AgeCategory.ARMOR, "leather");
+    private static final Identifier ARMOR_COPPER = of(AgeCategory.ARMOR, "copper");
+    private static final Identifier ARMOR_IRON = of(AgeCategory.ARMOR, "iron");
+    private static final Identifier ARMOR_DIAMOND = of(AgeCategory.ARMOR, "diamond");
+
+    private static final Identifier TOOLS_WOOD = of(AgeCategory.TOOLS, "wood");
+    private static final Identifier TOOLS_STONE = of(AgeCategory.TOOLS, "stone");
+    private static final Identifier TOOLS_COPPER = of(AgeCategory.TOOLS, "copper");
+    private static final Identifier TOOLS_IRON = of(AgeCategory.TOOLS, "iron");
+    private static final Identifier TOOLS_DIAMOND = of(AgeCategory.TOOLS, "diamond");
+
+    private static final Identifier BLOCKS_CLAY = of(AgeCategory.BLOCKS, "clay");
+    private static final Identifier BLOCKS_FURNACE = of(AgeCategory.BLOCKS, "furnace");
+
+    private static Identifier of(AgeCategory category, String key) {
+        return Genesis.id(category.asString() + "/" + key);
+    }
 
     public GenesisAgesProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(output, registryLookup);
@@ -43,15 +53,15 @@ public class GenesisAgesProvider extends AgesProvider {
     }
 
     private void generateArmorAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
-        Age.Builder.create(Age.Category.ARMOR)
+        Age.Builder.create()
                 .display(
                         Items.LEATHER_CHESTPLATE,
                         Text.translatable("age.genesis.leather"),
                         Text.empty()
                 )
-                .build(consumer, LEATHER);
+                .build(consumer, ARMOR_LEATHER);
 
-        Age.Builder.create(Age.Category.ARMOR)
+        Age.Builder.create()
                 .display(
                         GenesisItems.COPPER_CHESTPLATE,
                         Text.translatable("age.genesis.copper"),
@@ -61,10 +71,10 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.LEATHER_ARMOR))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR)))
-                .parent(LEATHER)
-                .build(consumer, COPPER);
+                .parent(ARMOR_LEATHER)
+                .build(consumer, ARMOR_COPPER);
 
-        Age.Builder.create(Age.Category.ARMOR)
+        Age.Builder.create()
                 .display(
                         Items.IRON_CHESTPLATE,
                         Text.translatable("age.genesis.iron"),
@@ -75,10 +85,10 @@ public class GenesisAgesProvider extends AgesProvider {
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR)))
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR)))
-                .parent(COPPER)
-                .build(consumer, IRON);
+                .parent(ARMOR_COPPER)
+                .build(consumer, ARMOR_IRON);
 
-        Age.Builder.create(Age.Category.ARMOR)
+        Age.Builder.create()
                 .display(
                         Items.DIAMOND_CHESTPLATE,
                         Text.translatable("age.genesis.diamond"),
@@ -88,20 +98,20 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_ARMOR)))
-                .parent(IRON)
-                .build(consumer, DIAMOND);
+                .parent(ARMOR_IRON)
+                .build(consumer, ARMOR_DIAMOND);
     }
 
     private void generateToolAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
-        Age.Builder.create(Age.Category.TOOLS)
+        Age.Builder.create()
                 .display(
                         Items.WOODEN_PICKAXE,
                         Text.translatable("age.genesis.wood"),
                         Text.empty()
                 )
-                .build(consumer, WOOD);
+                .build(consumer, TOOLS_WOOD);
 
-        Age.Builder.create(Age.Category.TOOLS)
+        Age.Builder.create()
                 .display(
                         Items.STONE_PICKAXE,
                         Text.translatable("age.genesis.stone"),
@@ -111,10 +121,10 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.WOODEN_TOOLS))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS)))
-                .parent(WOOD)
-                .build(consumer, STONE);
+                .parent(TOOLS_WOOD)
+                .build(consumer, TOOLS_STONE);
 
-        Age.Builder.create(Age.Category.TOOLS)
+        Age.Builder.create()
                 .display(
                         GenesisItems.COPPER_PICKAXE,
                         Text.translatable("age.genesis.copper"),
@@ -124,10 +134,10 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS)))
-                .parent(STONE)
-                .build(consumer, COPPER);
+                .parent(TOOLS_STONE)
+                .build(consumer, TOOLS_COPPER);
 
-        Age.Builder.create(Age.Category.TOOLS)
+        Age.Builder.create()
                 .display(
                         Items.IRON_PICKAXE,
                         Text.translatable("age.genesis.iron"),
@@ -138,10 +148,10 @@ public class GenesisAgesProvider extends AgesProvider {
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS)))
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_TOOLS)))
-                .parent(COPPER)
-                .build(consumer, IRON);
+                .parent(TOOLS_COPPER)
+                .build(consumer, TOOLS_IRON);
 
-        Age.Builder.create(Age.Category.TOOLS)
+        Age.Builder.create()
                 .display(
                         Items.DIAMOND_PICKAXE,
                         Text.translatable("age.genesis.diamond"),
@@ -151,29 +161,29 @@ public class GenesisAgesProvider extends AgesProvider {
                         itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
                 )
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS)))
-                .parent(IRON)
-                .build(consumer, DIAMOND);
+                .parent(TOOLS_IRON)
+                .build(consumer, TOOLS_DIAMOND);
     }
 
     private void generateBlockAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
-        Age.Builder.create(Age.Category.BLOCKS)
+        Age.Builder.create()
                 .display(
                         GenesisBlocks.KILN.asItem(),
                         Text.translatable("age.genesis.clay"),
                         Text.empty()
                 )
-                .build(consumer, CLAY);
+                .build(consumer, BLOCKS_CLAY);
 
-        Age.Builder.create(Age.Category.BLOCKS)
+        Age.Builder.create()
                 .display(
                         Items.FURNACE,
                         Text.translatable("age.genesis.furnace"),
                         Text.translatable("age.genesis.furnace.blocks_description")
                 )
-                .requireAge(Age.Category.ARMOR, IRON)
-                .requireAge(Age.Category.TOOLS, IRON)
+                .requireAge(TOOLS_IRON)
+                .requireAge(ARMOR_IRON)
                 .addUnlock(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.FURNACES)))
-                .parent(CLAY)
-                .build(consumer, FURNACE);
+                .parent(BLOCKS_CLAY)
+                .build(consumer, BLOCKS_FURNACE);
     }
 }

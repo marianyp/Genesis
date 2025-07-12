@@ -1,6 +1,9 @@
 package dev.mariany.genesis.item;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.GenesisConstants;
+import dev.mariany.genesis.component.type.GenesisConsumableComponents;
+import dev.mariany.genesis.component.type.GenesisFoodComponents;
 import dev.mariany.genesis.item.custom.FlintsItem;
 import dev.mariany.genesis.item.equipment.GenesisArmorMaterials;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -56,6 +59,13 @@ public class GenesisItems {
     public static final Item SHIELD_CAST = register("shield_cast", CAST_SETTINGS);
     public static final Item ANVIL_CAST = register("anvil_cast", CAST_SETTINGS);
     public static final Item TOTEM_CAST = register("totem_cast", CAST_SETTINGS);
+
+    public static final Item HEALTHY_STEW = register("healthy_stew", (
+            new Item.Settings()
+                    .maxCount(GenesisConstants.STEW_STACK_SIZE)
+                    .food(GenesisFoodComponents.HEALTHY_STEW, GenesisConsumableComponents.HEALTHY_STEW)
+                    .useRemainder(Items.BOWL))
+    );
 
     private static RegistryKey<Item> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.ITEM, Genesis.id(id));
@@ -130,6 +140,10 @@ public class GenesisItems {
             entries.addAfter(COPPER_AXE, COPPER_HOE);
 
             entries.addAfter(Items.FLINT_AND_STEEL, FLINTS);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
+            entries.addAfter(Items.RABBIT_STEW, HEALTHY_STEW);
         });
     }
 }

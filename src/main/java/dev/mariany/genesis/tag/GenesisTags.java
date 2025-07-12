@@ -25,6 +25,8 @@ public class GenesisTags {
 
         public static TagKey<Item> FURNACES = createTag("furnaces");
 
+        public static TagKey<Item> HEALTHY_STEW_CONTENTS = createTag("healthy_stew_contents");
+
         private static TagKey<Item> createTag(String name) {
             return TagKey.of(RegistryKeys.ITEM, Genesis.id(name));
         }

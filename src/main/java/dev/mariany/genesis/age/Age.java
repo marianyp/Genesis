@@ -3,21 +3,17 @@ package dev.mariany.genesis.age;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.mariany.genesis.advancement.criterion.ObtainAdvancementCriterion;
-import net.minecraft.advancement.*;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.advancement.criterion.TickCriterion;
+import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.item.Item;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.StringIdentifiable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 public record Age(
-        Category category,
         List<Ingredient> unlocks,
         Optional<Identifier> parent,
         Map<String, AdvancementCriterion<?>> criteria,
@@ -26,7 +22,6 @@ public record Age(
     private static final Codec<Map<String, AdvancementCriterion<?>>> CRITERIA_CODEC = Codec.unboundedMap(Codec.STRING, AdvancementCriterion.CODEC);
     public static final Codec<Age> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                            Category.CODEC.fieldOf("category").forGetter(Age::category),
                             Ingredient.CODEC.listOf().fieldOf("unlocks").forGetter(Age::unlocks),
                             Identifier.CODEC.optionalFieldOf("parent").forGetter(Age::parent),
                             CRITERIA_CODEC.fieldOf("criteria").forGetter(Age::criteria),
@@ -35,63 +30,18 @@ public record Age(
                     .apply(instance, Age::new)
     );
 
-    public Advancement createAdvancement() {
-        Identifier parent = this.parent
-                .map(AgeEntry::getAdvancementId)
-                .orElse(AgeEntry.ROOT_ADVANCEMENT_ID);
-
-        boolean alert = true;
-
-        Map<String, AdvancementCriterion<?>> advancementCriteria = new HashMap<>(this.criteria);
-
-        if (advancementCriteria.isEmpty()) {
-            advancementCriteria.put("root", new AdvancementCriterion<>(Criteria.TICK, TickCriterion.Conditions.createTick().conditions()));
-            alert = false;
-        }
-
-        return new Advancement(
-                Optional.of(parent),
-                Optional.of(createAdvancementDisplay(this.display, alert)),
-                AdvancementRewards.NONE,
-                advancementCriteria,
-                AdvancementRequirements.allOf(advancementCriteria.keySet()),
-                false
-        );
-    }
-
-    private AdvancementDisplay createAdvancementDisplay(AgeDisplay ageDisplay, boolean alert) {
-        Text title = Text.translatable("age.genesis.title",
-                Text.translatable("age.genesis.category." + this.category.name),
-                ageDisplay.title(),
-                Text.translatable("age.genesis.age")
-        );
-
-        return new AdvancementDisplay(
-                ageDisplay.icon(),
-                title,
-                ageDisplay.description(),
-                Optional.empty(),
-                AdvancementFrame.GOAL,
-                alert,
-                alert,
-                false
-        );
-    }
-
     public static class Builder {
-        private final Category category;
         private final List<Ingredient> unlocks = new ArrayList<>();
         @Nullable
         private Identifier parent = null;
         private final Map<String, AdvancementCriterion<?>> criteria = new HashMap<>();
         private AgeDisplay display;
 
-        private Builder(Category category) {
-            this.category = category;
+        private Builder() {
         }
 
-        public static Age.Builder create(Category category) {
-            return new Age.Builder(category);
+        public static Age.Builder create() {
+            return new Age.Builder();
         }
 
         public Builder addUnlock(Ingredient ingredient) {
@@ -106,7 +56,7 @@ public record Age(
         }
 
         public Builder parent(Identifier parent) {
-            this.parent = getNestedId(parent);
+            this.parent = parent;
             return this;
         }
 
@@ -115,9 +65,17 @@ public record Age(
             return this;
         }
 
-        public Builder requireAge(Age.Category category, Identifier id) {
-            String name = "has_" + id.getPath() + "_" + category.name + "_age";
-            return criterion(name, ObtainAdvancementCriterion.Conditions.create(AgeEntry.getAdvancementId(category, id)));
+        public Builder requireAge(Identifier id) {
+            Optional<String> categoryOpt = AgeEntry.getCategory(id);
+            Optional<String> subpathOpt = AgeEntry.getSubPath(id);
+
+            String name = subpathOpt.map(
+                    subpath -> categoryOpt
+                            .map(category -> "has_" + subpath + "_" + category + "_age")
+                            .orElse("has_" + subpath + "_age")
+            ).orElse("has_age");
+
+            return criterion(name, ObtainAdvancementCriterion.Conditions.create(AgeEntry.getAdvancementId(id)));
         }
 
         public Builder criterion(String name, AdvancementCriterion<?> criterion) {
@@ -137,35 +95,12 @@ public record Age(
 
         public AgeEntry build(Identifier id) {
             Map<String, AdvancementCriterion<?>> map = new HashMap<>(this.criteria);
-            return new AgeEntry(id, new Age(this.category, this.unlocks, Optional.ofNullable(this.parent), map, this.display));
+            return new AgeEntry(id, new Age(this.unlocks, Optional.ofNullable(this.parent), map, this.display));
         }
 
         public void build(Consumer<AgeEntry> exporter, Identifier id) {
-            AgeEntry ageEntry = this.build(getNestedId(id));
+            AgeEntry ageEntry = this.build(id);
             exporter.accept(ageEntry);
-        }
-
-        private Identifier getNestedId(Identifier id) {
-            return id.withPrefixedPath(category.asString() + "/");
-        }
-    }
-
-    public enum Category implements StringIdentifiable {
-        ARMOR("armor"),
-        BLOCKS("blocks"),
-        TOOLS("tools");
-
-        public static final Codec<Category> CODEC = StringIdentifiable.createCodec(Category::values);
-
-        private final String name;
-
-        Category(final String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String asString() {
-            return this.name;
         }
     }
 }

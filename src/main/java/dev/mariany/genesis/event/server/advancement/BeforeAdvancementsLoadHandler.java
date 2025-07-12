@@ -14,13 +14,19 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class BeforeAdvancementsLoadHandler {
-    public static void onAdvancementsLoad(Map<Identifier, Advancement> advancementMap) {
+    public static void beforeAdvancementsLoad(
+            Map<Identifier, Advancement> advancementMap
+    ) {
+        loadAgeAdvancements(advancementMap);
+    }
+
+    private static void loadAgeAdvancements(Map<Identifier, Advancement> advancementMap) {
         AgeManager ageManager = AgeManager.getInstance();
 
         Collection<AgeEntry> ages = ageManager.getAges();
         List<AdvancementEntry> advancements = new ArrayList<>();
 
-        advancements.add(getRootAdvancement());
+        advancements.add(getRootAgeAdvancement());
 
         for (AgeEntry ageEntry : ages) {
             advancements.add(ageEntry.getAdvancementEntry());
@@ -33,7 +39,7 @@ public class BeforeAdvancementsLoadHandler {
         Genesis.LOGGER.info("Dynamically added {} age advancements successfully!", advancements.size());
     }
 
-    public static AdvancementEntry getRootAdvancement() {
+    private static AdvancementEntry getRootAgeAdvancement() {
         return new AdvancementEntry(AgeEntry.ROOT_ADVANCEMENT_ID,
                 new Advancement(
                         Optional.empty(),

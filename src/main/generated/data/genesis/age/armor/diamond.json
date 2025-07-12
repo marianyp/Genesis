@@ -1,6 +1,5 @@
 {
   "parent": "genesis:armor/iron",
-  "category": "armor",
   "criteria": {
     "broken_iron": {
       "conditions": {

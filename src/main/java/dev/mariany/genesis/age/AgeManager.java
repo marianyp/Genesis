@@ -18,7 +18,6 @@ public class AgeManager {
     private static final AgeManager INSTANCE = new AgeManager();
 
     private final Map<Identifier, AgeEntry> ages = new Object2ObjectOpenHashMap<>();
-    private final Map<Age.Category, Map<Identifier, AgeEntry>> categories = new Object2ObjectOpenHashMap<>();
 
     public static AgeManager getInstance() {
         return INSTANCE;
@@ -67,10 +66,6 @@ public class AgeManager {
         return this.ages.values();
     }
 
-    public Collection<AgeEntry> getAges(Age.Category category) {
-        return this.categories.getOrDefault(category, new Object2ObjectOpenHashMap<>()).values();
-    }
-
     public List<Ingredient> getAllUnlocks(ServerPlayerEntity player) {
         return getAges()
                 .stream()
@@ -80,18 +75,10 @@ public class AgeManager {
     }
 
     protected void add(AgeEntry age) {
-        Identifier id = age.getId();
-
-        Age.Category category = age.getAge().category();
-        Map<Identifier, AgeEntry> categoryAges = this.categories.getOrDefault(category, new Object2ObjectOpenHashMap<>());
-
-        categoryAges.put(id, age);
-        this.categories.put(category, categoryAges);
-        this.ages.put(id, age);
+        this.ages.put(age.getId(), age);
     }
 
     protected void clear() {
         this.ages.clear();
-        this.categories.clear();
     }
 }

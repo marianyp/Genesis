@@ -1,6 +1,5 @@
 {
   "parent": "genesis:tools/stone",
-  "category": "tools",
   "criteria": {
     "broken_stone": {
       "conditions": {

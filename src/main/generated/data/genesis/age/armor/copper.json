@@ -1,6 +1,5 @@
 {
   "parent": "genesis:armor/leather",
-  "category": "armor",
   "criteria": {
     "broken_leather": {
       "conditions": {

@@ -1,12 +1,12 @@
 // 1.21.7	-999999999-01-01T00:00:00	Genesis/Genesis Ages
-1df0d017a2e2199e4fa01be5c15926b8a9c159ca data/genesis/age/armor/copper.json
-533d27e16a8957e30d397c5255751e0263e3893c data/genesis/age/armor/diamond.json
-8460f717c22ccd1871fcb795277b486c387be27c data/genesis/age/armor/iron.json
-89a4a65c93eb476b29da7bbeb98b6d9667497c8b data/genesis/age/armor/leather.json
-d7972ac03d9b088078747b81b9e507fb2517b5a0 data/genesis/age/blocks/clay.json
-288fcfb511fe1c31e4b8c64ea383c998184f51ed data/genesis/age/blocks/furnace.json
-61bb0455bc6c6cdca9cee563296e034c89110149 data/genesis/age/tools/copper.json
-6f2d4a91e22258753b5f0c19e4667a37201dbfd3 data/genesis/age/tools/diamond.json
-209c3da86bc4beeca423b1012a1d55e97487de6f data/genesis/age/tools/iron.json
-aee245c21f3a7074a0722e1feafe385f04cd0af4 data/genesis/age/tools/stone.json
-c8665080b336dab4574ad1fdc63eb46cd948841d data/genesis/age/tools/wood.json
+304aa26ca6da2b1d897b6a5224e7e617a1f46b9e data/genesis/age/armor/copper.json
+c3a36e898f86f9bbf45334323f5407764edaca82 data/genesis/age/armor/diamond.json
+f676524072b1bd4b94e476a426b547abf4d0bd19 data/genesis/age/armor/iron.json
+8edb055a704e05fcc145868daab443ff27e6e47b data/genesis/age/armor/leather.json
+30a4d0a6ae8c82bf90501a06ad8ab9e498a64e33 data/genesis/age/blocks/clay.json
+c8fd31f0ee4d8ccb684b8977b8b2e7d48f431f2c data/genesis/age/blocks/furnace.json
+80c326cd6924907d4fa7c4d0236e7331b0961257 data/genesis/age/tools/copper.json
+e38be8210cf8511060bbe48f6a1148bab6390afb data/genesis/age/tools/diamond.json
+741d36bd7141fbf4d1581d7ea6327b5db12d115e data/genesis/age/tools/iron.json
+732738196a56b777a83b8111c22e7d05e46d242a data/genesis/age/tools/stone.json
+4c7b9346f1ea1578a711674673bdf2a4cb3a4206 data/genesis/age/tools/wood.json
