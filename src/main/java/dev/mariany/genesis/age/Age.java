@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 public record Age(
         List<Ingredient> unlocks,
         Optional<Identifier> parent,
+        boolean requiresParent,
         Map<String, AdvancementCriterion<?>> criteria,
         AgeDisplay display
 ) {
@@ -24,6 +25,9 @@ public record Age(
             instance -> instance.group(
                             Ingredient.CODEC.listOf().fieldOf("unlocks").forGetter(Age::unlocks),
                             Identifier.CODEC.optionalFieldOf("parent").forGetter(Age::parent),
+                            Codec.BOOL.optionalFieldOf("requires_parent")
+                                    .xmap(opt -> opt.orElse(true), Optional::of)
+                                    .forGetter(Age::requiresParent),
                             CRITERIA_CODEC.fieldOf("criteria").forGetter(Age::criteria),
                             AgeDisplay.CODEC.fieldOf("display").forGetter(Age::display)
                     )
@@ -34,6 +38,7 @@ public record Age(
         private final List<Ingredient> unlocks = new ArrayList<>();
         @Nullable
         private Identifier parent = null;
+        private boolean requiresParent = true;
         private final Map<String, AdvancementCriterion<?>> criteria = new HashMap<>();
         private AgeDisplay display;
 
@@ -60,8 +65,8 @@ public record Age(
             return this;
         }
 
-        public Builder noParent() {
-            this.parent = null;
+        public Builder parentOptional() {
+            this.requiresParent = false;
             return this;
         }
 
@@ -95,7 +100,13 @@ public record Age(
 
         public AgeEntry build(Identifier id) {
             Map<String, AdvancementCriterion<?>> map = new HashMap<>(this.criteria);
-            return new AgeEntry(id, new Age(this.unlocks, Optional.ofNullable(this.parent), map, this.display));
+            return new AgeEntry(id, new Age(
+                    this.unlocks,
+                    Optional.ofNullable(this.parent),
+                    this.requiresParent,
+                    map,
+                    this.display
+            ));
         }
 
         public void build(Consumer<AgeEntry> exporter, Identifier id) {

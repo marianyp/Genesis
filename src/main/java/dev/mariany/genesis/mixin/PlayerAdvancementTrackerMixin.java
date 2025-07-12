@@ -3,6 +3,7 @@ package dev.mariany.genesis.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
+import dev.mariany.genesis.age.Age;
 import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.age.AgeManager;
 import dev.mariany.genesis.packet.clientbound.UpdateAgeUnlocksPayload;
@@ -31,9 +32,10 @@ public class PlayerAdvancementTrackerMixin {
 
         if (optionalAgeEntry.isPresent()) {
             AgeEntry ageEntry = optionalAgeEntry.get();
-            Optional<Identifier> parentIdentifier = ageEntry.getAge().parent();
+            Age age = ageEntry.getAge();
+            Optional<Identifier> parentIdentifier = age.parent();
 
-            if (parentIdentifier.isPresent()) {
+            if (age.requiresParent() && parentIdentifier.isPresent()) {
                 Optional<AgeEntry> parent = ageManager.get(parentIdentifier.get());
 
                 if (parent.isPresent() && !parent.get().isDone(owner)) {

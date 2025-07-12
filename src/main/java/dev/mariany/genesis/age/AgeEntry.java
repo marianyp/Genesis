@@ -47,7 +47,7 @@ public class AgeEntry {
 
         return new Advancement(
                 Optional.of(parent),
-                Optional.of(createAdvancementDisplay(id, age.display(), alert)),
+                Optional.of(createAdvancementDisplay(id, age, alert)),
                 AdvancementRewards.NONE,
                 advancementCriteria,
                 AdvancementRequirements.allOf(advancementCriteria.keySet()),
@@ -55,7 +55,9 @@ public class AgeEntry {
         );
     }
 
-    private static AdvancementDisplay createAdvancementDisplay(Identifier id, AgeDisplay ageDisplay, boolean alert) {
+    private static AdvancementDisplay createAdvancementDisplay(Identifier id, Age age, boolean alert) {
+        AgeDisplay ageDisplay = age.display();
+
         MutableText title = getCategory(id)
                 .map(category -> Text.translatable("age.genesis.category." + category)
                         .append(Text.literal(": "))
@@ -66,12 +68,14 @@ public class AgeEntry {
                         ageDisplay.title(),
                         Text.translatable("age.genesis.age")));
 
+        AdvancementFrame frame = age.requiresParent() ? AdvancementFrame.GOAL : AdvancementFrame.CHALLENGE;
+
         return new AdvancementDisplay(
                 ageDisplay.icon(),
                 title,
                 ageDisplay.description(),
                 Optional.empty(),
-                AdvancementFrame.GOAL,
+                frame,
                 alert,
                 alert,
                 false
