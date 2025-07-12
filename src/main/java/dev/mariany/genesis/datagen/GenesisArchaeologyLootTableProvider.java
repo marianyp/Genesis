@@ -42,17 +42,19 @@ public class GenesisArchaeologyLootTableProvider extends SimpleFabricLootTablePr
 
             lootTableBiConsumer.accept(lootTable, LootTable.builder()
                     .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1F))
-                            .with(ItemEntry.builder(drop)
-                                    .conditionally(
-                                            MatchToolLootCondition.builder(
-                                                    ItemPredicate.Builder.create().tag(itemRegistry, ConventionalItemTags.BRUSH_TOOLS)
+                            .with(ItemEntry.builder(drop).apply(
+                                                    SetCountLootFunction.builder(UniformLootNumberProvider.create(1F, 2F))
                                             )
-                                    )
-                                    .alternatively(
-                                            ItemEntry.builder(drop).apply(
-                                                    SetCountLootFunction.builder(UniformLootNumberProvider.create(0F, 1F))
+                                            .conditionally(
+                                                    MatchToolLootCondition.builder(
+                                                            ItemPredicate.Builder.create().tag(itemRegistry, ConventionalItemTags.BRUSH_TOOLS)
+                                                    )
                                             )
-                                    )
+                                            .alternatively(
+                                                    ItemEntry.builder(drop).apply(
+                                                            SetCountLootFunction.builder(UniformLootNumberProvider.create(0F, 2F))
+                                                    )
+                                            )
                             )
                     )
             );

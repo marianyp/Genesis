@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:block/template_terracotta_cauldron_level1",
+  "parent": "genesis:block/template_primitive_cauldron_level1",
   "textures": {
     "all": "genesis:block/terracotta_cauldron_side",
     "particle": "genesis:block/terracotta_cauldron_side",

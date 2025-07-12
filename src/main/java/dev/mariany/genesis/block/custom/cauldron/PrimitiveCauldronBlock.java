@@ -51,8 +51,11 @@ public class PrimitiveCauldronBlock extends Block {
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (this.behaviorMap != null) {
-            PrimitiveCauldronBehavior cauldronBehavior = this.behaviorMap.map().get(stack.getItem());
-            return cauldronBehavior.interact(state, world, pos, player, hand, stack);
+            for (PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorEntry entry : behaviorMap.entries()) {
+                if (entry.ingredient().test(stack)) {
+                    return entry.behavior().interact(state, world, pos, player, hand, stack);
+                }
+            }
         }
 
         return super.onUseWithItem(stack, state, world, pos, player, hand, hit);

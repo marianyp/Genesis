@@ -4,6 +4,7 @@ import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.age.AgeManager;
 import dev.mariany.genesis.packet.clientbound.NotifyAgeLockedPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,9 +21,10 @@ public class UseBlockHandler {
         if (player instanceof ServerPlayerEntity serverPlayerEntity) {
             AgeManager ageManager = AgeManager.getInstance();
             BlockState state = world.getBlockState(result.getBlockPos());
+            Block block = state.getBlock();
 
-            if (!ageManager.isUnlocked(serverPlayerEntity, state) && !player.isCreative()) {
-                String itemTranslation = state.getBlock().getName().getString();
+            if (!ageManager.isUnlocked(serverPlayerEntity, block)) {
+                String itemTranslation = block.getName().getString();
                 List<AgeEntry> incompleteAges = ageManager.getAges()
                         .stream()
                         .filter(ageEntry -> !ageEntry.isDone(serverPlayerEntity))
@@ -33,7 +35,7 @@ public class UseBlockHandler {
                         .filter(ageEntry -> ageEntry.getAge().unlocks()
                                 .stream()
                                 .anyMatch(ingredient -> ingredient.test(
-                                        state.getBlock().asItem().getDefaultStack())
+                                        block.asItem().getDefaultStack())
                                 ))
                         .findAny();
 

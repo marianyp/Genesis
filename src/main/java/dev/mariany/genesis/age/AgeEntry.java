@@ -58,6 +58,8 @@ public class AgeEntry {
     private static AdvancementDisplay createAdvancementDisplay(Identifier id, AgeDisplay ageDisplay, boolean alert) {
         MutableText title = getCategory(id)
                 .map(category -> Text.translatable("age.genesis.category." + category)
+                        .append(Text.literal(": "))
+                        .append(ageDisplay.title())
                         .append(Text.literal(" "))
                         .append(Text.translatable("age.genesis.age")))
                 .orElseGet(() -> Text.translatable("age.genesis.title",

@@ -1,20 +1,16 @@
 package dev.mariany.genesis.age;
 
-import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
 
 import java.util.*;
 
 public class AgeManager {
-    private static final Logger LOGGER = LogUtils.getLogger();
     private static final AgeManager INSTANCE = new AgeManager();
 
     private final Map<Identifier, AgeEntry> ages = new Object2ObjectOpenHashMap<>();
@@ -23,17 +19,17 @@ public class AgeManager {
         return INSTANCE;
     }
 
-    public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
-        List<AgeEntry> requiredAges = getRequiredAges(stack);
-        return requiredAges.isEmpty() || requiredAges.stream().allMatch(placedAge -> placedAge.isDone(player));
-    }
-
-    public boolean isUnlocked(ServerPlayerEntity player, BlockState state) {
-        return isUnlocked(player, state.getBlock().asItem().getDefaultStack());
-    }
-
     public boolean isUnlocked(ServerPlayerEntity player, Block block) {
         return isUnlocked(player, block.asItem().getDefaultStack());
+    }
+
+    public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
+        if (player.isCreative()) {
+            return true;
+        }
+
+        List<AgeEntry> requiredAges = getRequiredAges(stack);
+        return requiredAges.isEmpty() || requiredAges.stream().allMatch(placedAge -> placedAge.isDone(player));
     }
 
     public List<AgeEntry> getRequiredAges(ItemStack stack) {

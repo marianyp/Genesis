@@ -100,8 +100,6 @@ public class HealthyStewRecipeGenerator {
         String group = "healthy_stew_";
         group += data.primaryItem().getRegistryEntry().registryKey().getValue().getPath();
 
-        Genesis.LOGGER.info("group: {}", group);
-
         return new ShapelessRecipe(
                 group,
                 CraftingRecipeCategory.MISC,

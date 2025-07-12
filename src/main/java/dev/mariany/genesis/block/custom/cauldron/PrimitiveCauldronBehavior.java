@@ -2,12 +2,16 @@ package dev.mariany.genesis.block.custom.cauldron;
 
 import dev.mariany.genesis.block.GenesisBlocks;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -18,6 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface PrimitiveCauldronBehavior {
@@ -26,19 +32,31 @@ public interface PrimitiveCauldronBehavior {
     PrimitiveCauldronBehaviorMap EMPTY_CAULDRON_BEHAVIOR = createMap("empty");
 
     static PrimitiveCauldronBehaviorMap createMap(String name) {
-        Object2ObjectOpenHashMap<Item, PrimitiveCauldronBehavior> object2ObjectOpenHashMap = new Object2ObjectOpenHashMap<>();
-        object2ObjectOpenHashMap.defaultReturnValue((state, world, pos, player, hand, stack) -> ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION);
-        PrimitiveCauldronBehaviorMap cauldronBehaviorMap = new PrimitiveCauldronBehaviorMap(name, object2ObjectOpenHashMap);
-        BEHAVIOR_MAPS.put(name, cauldronBehaviorMap);
-        return cauldronBehaviorMap;
+        List<PrimitiveCauldronBehaviorEntry> entries = new ArrayList<>();
+        return new PrimitiveCauldronBehaviorMap(name, entries);
     }
 
     ActionResult interact(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack);
 
     static void registerBehavior() {
-        Map<Item, PrimitiveCauldronBehavior> behavior = EMPTY_CAULDRON_BEHAVIOR.map();
-        behavior.put(Items.DIRT, PrimitiveCauldronBehavior::tryFillWithDirt);
-        behavior.put(Items.GRAVEL, PrimitiveCauldronBehavior::tryFillWithGravel);
+        RegistryEntryLookup<Item> registryEntryLookup = Registries.createEntryLookup(Registries.ITEM);
+
+        RegistryEntryList.Named<Item> dirtItems = registryEntryLookup.getOrThrow(ItemTags.DIRT);
+        RegistryEntryList.Named<Item> gravelItems = registryEntryLookup.getOrThrow(ConventionalItemTags.GRAVELS);
+
+        EMPTY_CAULDRON_BEHAVIOR.entries().add(
+                new PrimitiveCauldronBehaviorEntry(
+                        Ingredient.ofTag(dirtItems),
+                        PrimitiveCauldronBehavior::tryFillWithDirt
+                )
+        );
+
+        EMPTY_CAULDRON_BEHAVIOR.entries().add(
+                new PrimitiveCauldronBehaviorEntry(
+                        Ingredient.ofTag(gravelItems),
+                        PrimitiveCauldronBehavior::tryFillWithGravel
+                )
+        );
     }
 
     static ActionResult fillCauldron(World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack, BlockState state, SoundEvent soundEvent) {
@@ -78,6 +96,9 @@ public interface PrimitiveCauldronBehavior {
         );
     }
 
-    record PrimitiveCauldronBehaviorMap(String name, Map<Item, PrimitiveCauldronBehavior> map) {
+    record PrimitiveCauldronBehaviorEntry(Ingredient ingredient, PrimitiveCauldronBehavior behavior) {
+    }
+
+    record PrimitiveCauldronBehaviorMap(String name, List<PrimitiveCauldronBehaviorEntry> entries) {
     }
 }

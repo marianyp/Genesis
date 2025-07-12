@@ -7,6 +7,7 @@ import net.minecraft.block.BrushableBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BrushItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.registry.RegistryKey;
@@ -36,14 +37,16 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         ItemStack stack = player.getMainHandStack();
 
-        if (hit.getSide() == Direction.UP) {
-            if (world.getBlockEntity(pos) instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                if (world instanceof ServerWorld serverWorld) {
+        if (!(stack.getItem() instanceof BrushItem) && hit.getSide() == Direction.UP) {
+            if (world instanceof ServerWorld serverWorld) {
+                BlockEntity blockEntity = world.getBlockEntity(pos);
+
+                if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
                     filledPrimitiveCauldronBlockEntity.brush(serverWorld, player, stack, true);
                 }
-
-                return ActionResult.SUCCESS;
             }
+
+            return ActionResult.SUCCESS;
         }
 
         return ActionResult.PASS;
