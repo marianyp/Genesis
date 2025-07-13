@@ -21,6 +21,30 @@ public class AgeManager {
         return INSTANCE;
     }
 
+    public boolean isUnlocked(ServerPlayerEntity player, RegistryKey<World> worldRegistryKey) {
+        return allUnlocked(player, getRequiredAges(worldRegistryKey));
+    }
+
+    public boolean isUnlocked(ServerPlayerEntity player, Block block) {
+        return isUnlocked(player, block.asItem().getDefaultStack());
+    }
+
+    public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
+        return allUnlocked(player, getRequiredAges(stack));
+    }
+
+    public boolean allUnlocked(ServerPlayerEntity player, Collection<AgeEntry> ages) {
+        if (player.isCreative()) {
+            return true;
+        }
+
+        if (ages.isEmpty()) {
+            return true;
+        }
+
+        return ages.stream().allMatch(placedAge -> isDoneRecursively(placedAge, player));
+    }
+
     public boolean isDoneRecursively(AgeEntry ageEntry, ServerPlayerEntity player) {
         if (!ageEntry.getAge().requiresParent()) {
             return ageEntry.isDone(player);
@@ -42,32 +66,6 @@ public class AgeManager {
         }
 
         return false;
-    }
-
-    public boolean isUnlocked(ServerPlayerEntity player, RegistryKey<World> worldRegistryKey) {
-        if (player.isCreative()) {
-            return true;
-        }
-
-        List<AgeEntry> requiredAges = getRequiredAges(worldRegistryKey);
-
-        return requiredAges.isEmpty() ||
-                requiredAges.stream().allMatch(placedAge -> isDoneRecursively(placedAge, player));
-    }
-
-    public boolean isUnlocked(ServerPlayerEntity player, Block block) {
-        return isUnlocked(player, block.asItem().getDefaultStack());
-    }
-
-    public boolean isUnlocked(ServerPlayerEntity player, ItemStack stack) {
-        if (player.isCreative()) {
-            return true;
-        }
-
-        List<AgeEntry> requiredAges = getRequiredAges(stack);
-
-        return requiredAges.isEmpty() ||
-                requiredAges.stream().allMatch(placedAge -> isDoneRecursively(placedAge, player));
     }
 
     public List<AgeEntry> getRequiredAges(ItemStack stack) {
