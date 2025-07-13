@@ -25,7 +25,9 @@ public class ClientboundPackets {
             ) {
                 toastManager.add(new TutorialToast(
                         client.textRenderer,
-                        TutorialToast.Type.RIGHT_CLICK,
+                        payload.clickInteraction() ?
+                                TutorialToast.Type.RIGHT_CLICK :
+                                TutorialToast.Type.SOCIAL_INTERACTIONS,
                         Text.translatable(
                                 "tutorial.ageLocked",
                                 Text.translatable(payload.ageTranslation()),

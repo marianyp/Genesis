@@ -29,7 +29,7 @@ public class UseBlockHandler {
                         .findAny();
 
                 optionalAgeEntry.ifPresent(ageEntry ->
-                        AgeHelpers.notifyAgeLocked(itemTranslation, ageEntry.getAge(), serverPlayer)
+                        AgeHelpers.notifyAgeLockedClick(itemTranslation, ageEntry.getAge(), serverPlayer)
                 );
 
                 return ActionResult.FAIL;

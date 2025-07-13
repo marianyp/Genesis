@@ -6,6 +6,14 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class AgeHelpers {
     public static void notifyAgeLocked(String locked, Age age, ServerPlayerEntity serverPlayer) {
-        ServerPlayNetworking.send(serverPlayer, new NotifyAgeLockedPayload(locked, age.display().title().getString()));
+        notifyAgeLocked(locked, age, false, serverPlayer);
+    }
+
+    public static void notifyAgeLockedClick(String locked, Age age, ServerPlayerEntity serverPlayer) {
+        notifyAgeLocked(locked, age, true, serverPlayer);
+    }
+
+    private static void notifyAgeLocked(String locked, Age age, boolean clickInteraction, ServerPlayerEntity serverPlayer) {
+        ServerPlayNetworking.send(serverPlayer, new NotifyAgeLockedPayload(locked, age.display().title().getString(), clickInteraction));
     }
 }
