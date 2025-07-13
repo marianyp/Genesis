@@ -11,7 +11,7 @@ import java.util.List;
 public class ClientAgeManager {
     private static final ClientAgeManager INSTANCE = new ClientAgeManager();
 
-    private final List<Ingredient> unlocks = new ArrayList<>();
+    private final List<Ingredient> itemUnlocks = new ArrayList<>();
 
     private ClientAgeManager() {
     }
@@ -20,16 +20,16 @@ public class ClientAgeManager {
         return INSTANCE;
     }
 
-    public void updateLocked(Collection<Ingredient> collection) {
-        int oldSize = unlocks.size();
+    public void updateItemUnlocks(Collection<Ingredient> collection) {
+        int oldSize = itemUnlocks.size();
 
-        unlocks.clear();
-        unlocks.addAll(collection);
+        itemUnlocks.clear();
+        itemUnlocks.addAll(collection);
 
-        Genesis.LOGGER.info("Updated age unlocks. Old Size: {} | New Size: {}", oldSize, unlocks.size());
+        Genesis.LOGGER.info("Updated age items. Old Size: {} | New Size: {}", oldSize, itemUnlocks.size());
     }
 
     public boolean isUnlocked(ItemStack stack) {
-        return unlocks.stream().noneMatch(ingredient -> ingredient.test(stack));
+        return itemUnlocks.stream().noneMatch(ingredient -> ingredient.test(stack));
     }
 }

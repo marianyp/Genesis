@@ -6,6 +6,7 @@
     "BrushItemMixin",
     "CrafterScreenHandlerMixin",
     "DataPackContentsMixin",
+    "EntityMixin",
     "GameRulesMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
@@ -15,7 +16,9 @@
     "ServerAdvancementLoaderMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerRecipeManagerMixin",
-    "accessor.ShapedRecipeAccessor"
+    "TrialSpawnerStateMixin",
+    "accessor.ShapedRecipeAccessor",
+    "accessor.TrialSpawnerDataAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

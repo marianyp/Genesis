@@ -52,6 +52,27 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.registerKilnRecipes();
                 this.registerRawOreRecipes();
                 this.registerCauldronRecipes();
+                this.registerVanillaRecipes();
+            }
+
+            private void registerVanillaRecipes() {
+                this.createShaped(RecipeCategory.COMBAT, Items.TRIDENT)
+                        .pattern(" II")
+                        .pattern(" PI")
+                        .pattern("P  ")
+                        .input('I', Items.IRON_INGOT)
+                        .input('P', Items.PRISMARINE_SHARD)
+                        .criterion(hasItem(Items.PRISMARINE_SHARD), conditionsFromItem(Items.PRISMARINE_SHARD))
+                        .offerTo(this.exporter);
+
+                this.createShaped(RecipeCategory.FOOD, Items.ENCHANTED_GOLDEN_APPLE)
+                        .pattern("GGG")
+                        .pattern("GAG")
+                        .pattern("GGG")
+                        .input('G', Items.GOLD_BLOCK)
+                        .input('A', Items.APPLE)
+                        .criterion(hasItem(Items.APPLE), conditionsFromItem(Items.APPLE))
+                        .offerTo(this.exporter);
             }
 
             private void registerCauldronRecipes() {
@@ -231,6 +252,24 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.createShaped(RecipeCategory.MISC, GenesisItems.HOE_CLAY_CAST)
                         .pattern("FF")
                         .pattern(" C")
+                        .input('F', Items.FLINT)
+                        .input('C', GenesisItems.BLANK_CLAY_CAST)
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .offerTo(this.exporter);
+
+                this.createShaped(RecipeCategory.MISC, GenesisItems.SHIELD_CLAY_CAST)
+                        .pattern(" FF")
+                        .pattern("CFF")
+                        .pattern(" FF")
+                        .input('F', Items.FLINT)
+                        .input('C', GenesisItems.BLANK_CLAY_CAST)
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .offerTo(this.exporter);
+
+                this.createShaped(RecipeCategory.MISC, GenesisItems.ANVIL_CLAY_CAST)
+                        .pattern("FFF")
+                        .pattern(" C ")
+                        .pattern("FFF")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))

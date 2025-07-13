@@ -1,0 +1,51 @@
+{
+  "parent": "genesis:story/trial",
+  "criteria": {
+    "killed_three_guardians": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:elder_guardian"
+            }
+          }
+        ],
+        "killing_blow": {
+          "source_entity": {
+            "type_specific": {
+              "type": "minecraft:player",
+              "stats": [
+                {
+                  "type": "minecraft:killed",
+                  "stat": "minecraft:elder_guardian",
+                  "value": {
+                    "min": 2
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.ocean.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:prismarine_bricks"
+    },
+    "title": {
+      "translate": "age.genesis.ocean"
+    }
+  },
+  "items": [
+    "minecraft:trident"
+  ],
+  "requires_parent": false
+}

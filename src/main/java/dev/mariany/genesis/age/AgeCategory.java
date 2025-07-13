@@ -5,7 +5,8 @@ import net.minecraft.util.StringIdentifiable;
 public enum AgeCategory implements StringIdentifiable {
     ARMOR("armor"),
     BLOCKS("blocks"),
-    TOOLS("tools");
+    TOOLS("tools"),
+    STORY("story");
 
     private final String name;
 

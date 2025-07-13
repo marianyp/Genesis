@@ -10,7 +10,7 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.iron.armor_description"
+      "translate": "age.genesis.armor.iron.description"
     },
     "icon": {
       "count": 1,
@@ -20,7 +20,7 @@
       "translate": "age.genesis.iron"
     }
   },
-  "unlocks": [
+  "items": [
     "#genesis:iron_armor",
     "#genesis:golden_armor"
   ]

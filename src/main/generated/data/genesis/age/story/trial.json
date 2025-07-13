@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:story/nether",
+  "criteria": {
+    "complete_ominous_trial_spawner": {
+      "conditions": {
+        "ominous": true
+      },
+      "trigger": "genesis:complete_trial_spawner"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.trial.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:copper_block"
+    },
+    "title": {
+      "translate": "age.genesis.trial"
+    }
+  },
+  "items": [
+    "genesis:anvil_clay_cast"
+  ],
+  "requires_parent": false
+}

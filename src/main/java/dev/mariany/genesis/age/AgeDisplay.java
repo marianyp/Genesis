@@ -11,7 +11,7 @@ public record AgeDisplay(ItemStack icon, Text title, Text description) {
             instance -> instance.group(
                             ItemStack.VALIDATED_CODEC.fieldOf("icon").forGetter(AgeDisplay::icon),
                             TextCodecs.CODEC.fieldOf("title").forGetter(AgeDisplay::title),
-                            TextCodecs.CODEC.fieldOf("description").forGetter(AgeDisplay::description)
+                            TextCodecs.CODEC.optionalFieldOf("description", Text.empty()).forGetter(AgeDisplay::description)
                     )
                     .apply(instance, AgeDisplay::new)
     );

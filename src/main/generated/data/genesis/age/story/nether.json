@@ -1,0 +1,26 @@
+{
+  "parent": "genesis:story/survival",
+  "criteria": {
+    "has_diamond_tools_age": {
+      "conditions": {
+        "advancement": "genesis:age/tools/diamond"
+      },
+      "trigger": "genesis:obtain_advancement"
+    }
+  },
+  "dimensions": [
+    "minecraft:the_nether"
+  ],
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.nether.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:netherrack"
+    },
+    "title": {
+      "translate": "age.genesis.nether"
+    }
+  }
+}

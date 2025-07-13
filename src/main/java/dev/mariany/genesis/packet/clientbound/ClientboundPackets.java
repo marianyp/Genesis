@@ -10,8 +10,8 @@ import net.minecraft.text.Text;
 
 public class ClientboundPackets {
     public static void init() {
-        ClientPlayNetworking.registerGlobalReceiver(UpdateAgeUnlocksPayload.ID, (payload, context) -> {
-            ClientAgeManager.getInstance().updateLocked(payload.unlocks());
+        ClientPlayNetworking.registerGlobalReceiver(UpdateAgeItemUnlocksPayload.ID, (payload, context) -> {
+            ClientAgeManager.getInstance().updateItemUnlocks(payload.items());
         });
 
         ClientPlayNetworking.registerGlobalReceiver(NotifyAgeLockedPayload.ID, (payload, context) -> {
@@ -27,7 +27,7 @@ public class ClientboundPackets {
                         client.textRenderer,
                         TutorialToast.Type.RIGHT_CLICK,
                         Text.translatable(
-                                "tutorial.ageLocked.description",
+                                "tutorial.ageLocked",
                                 Text.translatable(payload.ageTranslation()),
                                 Text.translatable("age.genesis.age"),
                                 Text.translatable(payload.itemTranslation())

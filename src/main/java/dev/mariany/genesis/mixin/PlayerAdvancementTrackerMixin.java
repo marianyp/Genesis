@@ -6,7 +6,7 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.age.Age;
 import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.age.AgeManager;
-import dev.mariany.genesis.packet.clientbound.UpdateAgeUnlocksPayload;
+import dev.mariany.genesis.packet.clientbound.UpdateAgeItemUnlocksPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.PlayerAdvancementTracker;
@@ -58,7 +58,7 @@ public class PlayerAdvancementTrackerMixin {
         Optional<AgeEntry> age = ageManager.find(advancement);
 
         if (age.isPresent()) {
-            ServerPlayNetworking.send(owner, new UpdateAgeUnlocksPayload(ageManager.getAllUnlocks(owner)));
+            ServerPlayNetworking.send(owner, new UpdateAgeItemUnlocksPayload(ageManager.getAllItemUnlocks(owner)));
         }
 
         original.call(playerAdvancementTracker, advancement);

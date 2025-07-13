@@ -10,7 +10,7 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.copper.tools_description"
+      "translate": "age.genesis.tools.copper.description"
     },
     "icon": {
       "count": 1,
@@ -20,7 +20,7 @@
       "translate": "age.genesis.copper"
     }
   },
-  "unlocks": [
+  "items": [
     "#genesis:copper_tools"
   ]
 }

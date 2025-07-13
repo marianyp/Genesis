@@ -1,0 +1,39 @@
+{
+  "parent": "genesis:story/ocean",
+  "criteria": {
+    "loot_ancient_city": {
+      "conditions": {
+        "loot_table": "minecraft:chests/ancient_city"
+      },
+      "trigger": "minecraft:player_generates_container_loot"
+    },
+    "loot_ancient_city_ice_box": {
+      "conditions": {
+        "loot_table": "minecraft:chests/ancient_city_ice_box"
+      },
+      "trigger": "minecraft:player_generates_container_loot"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.sculk.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:sculk"
+    },
+    "title": {
+      "translate": "age.genesis.sculk"
+    }
+  },
+  "items": [
+    "genesis:shield_clay_cast"
+  ],
+  "requirements": [
+    [
+      "loot_ancient_city",
+      "loot_ancient_city_ice_box"
+    ]
+  ],
+  "requires_parent": false
+}

@@ -16,7 +16,7 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.furnace.blocks_description"
+      "translate": "age.genesis.blocks.furnace.description"
     },
     "icon": {
       "count": 1,
@@ -26,7 +26,7 @@
       "translate": "age.genesis.furnace"
     }
   },
-  "unlocks": [
+  "items": [
     "#genesis:furnaces"
   ]
 }

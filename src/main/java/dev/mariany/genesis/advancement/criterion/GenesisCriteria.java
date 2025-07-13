@@ -7,7 +7,13 @@ import net.minecraft.registry.Registry;
 
 public class GenesisCriteria {
     public static final ItemBrokenCriterion ITEM_BROKEN = register("item_broken", new ItemBrokenCriterion());
-    public static final ObtainAdvancementCriterion OBTAIN_ADVANCEMENT = register("obtain_advancement", new ObtainAdvancementCriterion());
+    public static final ObtainAdvancementCriterion OBTAIN_ADVANCEMENT = register("obtain_advancement",
+            new ObtainAdvancementCriterion()
+    );
+    public static final CompleteTrialSpawnerCriteria COMPLETE_TRIAL_SPAWNER_ADVANCEMENT = register(
+            "complete_trial_spawner",
+            new CompleteTrialSpawnerCriteria()
+    );
 
     public static <T extends Criterion<?>> T register(String name, T criterion) {
         return Registry.register(Registries.CRITERION, Genesis.id(name), criterion);

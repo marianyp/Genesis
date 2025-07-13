@@ -45,12 +45,16 @@ public class AgeEntry {
             alert = false;
         }
 
+        AdvancementRequirements requirements = age.requirements().isEmpty() ?
+                AdvancementRequirements.allOf(advancementCriteria.keySet()) :
+                age.requirements();
+
         return new Advancement(
                 Optional.of(parent),
                 Optional.of(createAdvancementDisplay(id, age, alert)),
                 AdvancementRewards.NONE,
                 advancementCriteria,
-                AdvancementRequirements.allOf(advancementCriteria.keySet()),
+                requirements,
                 false
         );
     }

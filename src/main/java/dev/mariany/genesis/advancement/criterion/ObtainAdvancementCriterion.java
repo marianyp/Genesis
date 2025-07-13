@@ -45,5 +45,4 @@ public class ObtainAdvancementCriterion extends AbstractCriterion<ObtainAdvancem
             return this.advancementId.equals(advancementEntry.id());
         }
     }
-
 }

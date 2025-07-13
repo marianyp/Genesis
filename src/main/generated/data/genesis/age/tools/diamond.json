@@ -10,7 +10,7 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.diamond.tools_description"
+      "translate": "age.genesis.tools.diamond.description"
     },
     "icon": {
       "count": 1,
@@ -20,7 +20,7 @@
       "translate": "age.genesis.diamond"
     }
   },
-  "unlocks": [
+  "items": [
     "#genesis:diamond_tools"
   ]
 }

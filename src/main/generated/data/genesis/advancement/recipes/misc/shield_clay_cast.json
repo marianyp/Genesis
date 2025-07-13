@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blank_clay_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:blank_clay_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:shield_clay_cast"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blank_clay_cast"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:shield_clay_cast"
+    ]
+  }
+}

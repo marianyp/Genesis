@@ -1,9 +1,8 @@
 package dev.mariany.genesis.event.block;
 
 import dev.mariany.genesis.age.AgeEntry;
+import dev.mariany.genesis.age.AgeHelpers;
 import dev.mariany.genesis.age.AgeManager;
-import dev.mariany.genesis.packet.clientbound.NotifyAgeLockedPayload;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,34 +12,24 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Optional;
 
 public class UseBlockHandler {
     public static ActionResult onUseBlock(PlayerEntity player, World world, Hand hand, BlockHitResult result) {
-        if (player instanceof ServerPlayerEntity serverPlayerEntity) {
+        if (player instanceof ServerPlayerEntity serverPlayer) {
             AgeManager ageManager = AgeManager.getInstance();
             BlockState state = world.getBlockState(result.getBlockPos());
             Block block = state.getBlock();
 
-            if (!ageManager.isUnlocked(serverPlayerEntity, block)) {
+            if (!ageManager.isUnlocked(serverPlayer, block)) {
                 String itemTranslation = block.getName().getString();
-                List<AgeEntry> incompleteAges = ageManager.getAges()
-                        .stream()
-                        .filter(ageEntry -> !ageEntry.isDone(serverPlayerEntity))
-                        .toList();
 
-                Optional<AgeEntry> optionalAgeEntry = incompleteAges
+                Optional<AgeEntry> optionalAgeEntry = ageManager.getRequiredAges(block.asItem().getDefaultStack())
                         .stream()
-                        .filter(ageEntry -> ageEntry.getAge().unlocks()
-                                .stream()
-                                .anyMatch(ingredient -> ingredient.test(
-                                        block.asItem().getDefaultStack())
-                                ))
                         .findAny();
 
-                optionalAgeEntry.ifPresent(ageEntry -> ServerPlayNetworking.send(serverPlayerEntity,
-                        new NotifyAgeLockedPayload(itemTranslation, ageEntry.getAge().display().title().getString()))
+                optionalAgeEntry.ifPresent(ageEntry ->
+                        AgeHelpers.notifyAgeLocked(itemTranslation, ageEntry.getAge(), serverPlayer)
                 );
 
                 return ActionResult.FAIL;

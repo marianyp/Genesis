@@ -2,10 +2,10 @@
   "display": {
     "icon": {
       "count": 1,
-      "id": "genesis:kiln"
+      "id": "minecraft:grass_block"
     },
     "title": {
-      "translate": "age.genesis.clay"
+      "translate": "age.genesis.survival"
     }
   }
 }

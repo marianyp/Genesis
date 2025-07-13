@@ -1,0 +1,38 @@
+{
+  "parent": "genesis:story/sculk",
+  "criteria": {
+    "killed_wither": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:wither"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "dimensions": [
+    "minecraft:the_end"
+  ],
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.wither.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "age.genesis.wither"
+    }
+  },
+  "items": [
+    "minecraft:ender_eye"
+  ],
+  "requires_parent": false
+}
