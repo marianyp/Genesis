@@ -24,6 +24,7 @@ import net.minecraft.predicate.entity.PlayerPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -50,6 +51,7 @@ public class GenesisAgesProvider extends AgesProvider {
 
     private static final Identifier STORY_SURVIVAL = of(AgeCategory.STORY, "survival");
     private static final Identifier STORY_NETHER = of(AgeCategory.STORY, "nether");
+    private static final Identifier STORY_NIGHT = of(AgeCategory.STORY, "night");
     private static final Identifier STORY_TRIAL = of(AgeCategory.STORY, "trial");
     private static final Identifier STORY_OCEAN = of(AgeCategory.STORY, "ocean");
     private static final Identifier STORY_SCULK = of(AgeCategory.STORY, "sculk");
@@ -74,11 +76,12 @@ public class GenesisAgesProvider extends AgesProvider {
     @Override
     public void generateAges(RegistryWrapper.WrapperLookup registries, Consumer<AgeEntry> consumer) {
         RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
+        RegistryWrapper.Impl<EntityType<?>> entityLookup = registries.getOrThrow(RegistryKeys.ENTITY_TYPE);
 
         generateArmorAges(itemLookup, consumer);
         generateToolAges(itemLookup, consumer);
         generateBlockAges(itemLookup, consumer);
-        generateStoryAges(registries, consumer);
+        generateStoryAges(itemLookup, entityLookup, consumer);
     }
 
     private void generateArmorAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
@@ -216,12 +219,15 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, BLOCKS_FURNACE);
     }
 
-    private void generateStoryAges(RegistryWrapper.WrapperLookup registries, Consumer<AgeEntry> consumer) {
-        RegistryWrapper.Impl<EntityType<?>> entityLookup = registries.getOrThrow(RegistryKeys.ENTITY_TYPE);
+    private void generateStoryAges(
+            RegistryWrapper.Impl<Item> itemLookup,
+            RegistryWrapper.Impl<EntityType<?>> entityLookup,
+            Consumer<AgeEntry> consumer
+    ) {
 
         Age.Builder.create()
                 .display(
-                        Items.GRASS_BLOCK,
+                        Items.CREEPER_SPAWN_EGG,
                         Text.translatable("age.genesis.survival"),
                         Text.empty()
                 )
@@ -230,21 +236,38 @@ public class GenesisAgesProvider extends AgesProvider {
         Age.Builder.create()
                 .dimensionUnlocks(World.NETHER)
                 .parent(STORY_SURVIVAL)
+                .parentOptional()
                 .requireAge(TOOLS_DIAMOND)
                 .display(
-                        Items.NETHERRACK,
+                        Items.ZOMBIFIED_PIGLIN_SPAWN_EGG,
                         Text.translatable("age.genesis.nether"),
                         Text.translatable("age.genesis.story.nether.description")
                 )
                 .build(consumer, STORY_NETHER);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.ANVIL_CLAY_CAST))
+                .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(ItemTags.BEDS)))
                 .parent(STORY_NETHER)
+                .parentOptional()
+                .criterion("killed_creaking",
+                        OnKilledCriterion.Conditions.createPlayerKilledEntity(
+                                EntityPredicate.Builder.create().type(entityLookup, EntityType.CREAKING)
+                        )
+                )
+                .display(
+                        Items.CREAKING_SPAWN_EGG,
+                        Text.translatable("age.genesis.night"),
+                        Text.translatable("age.genesis.story.night.description")
+                )
+                .build(consumer, STORY_NIGHT);
+
+        Age.Builder.create()
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.ANVIL_CLAY_CAST))
+                .parent(STORY_NIGHT)
                 .parentOptional()
                 .criterion("complete_ominous_trial_spawner", CompleteTrialSpawnerCriteria.Conditions.create(true))
                 .display(
-                        Items.COPPER_BLOCK,
+                        Items.BREEZE_SPAWN_EGG,
                         Text.translatable("age.genesis.trial"),
                         Text.translatable("age.genesis.story.trial.description")
                 )
@@ -268,7 +291,7 @@ public class GenesisAgesProvider extends AgesProvider {
                         )
                 )
                 .display(
-                        Items.PRISMARINE_BRICKS,
+                        Items.ELDER_GUARDIAN_SPAWN_EGG,
                         Text.translatable("age.genesis.ocean"),
                         Text.translatable("age.genesis.story.ocean.description")
                 )
@@ -276,11 +299,6 @@ public class GenesisAgesProvider extends AgesProvider {
 
         Age.Builder.create()
                 .itemUnlocks(Ingredient.ofItem(GenesisItems.SHIELD_CLAY_CAST))
-                .display(
-                        Items.SCULK,
-                        Text.translatable("age.genesis.sculk"),
-                        Text.translatable("age.genesis.story.sculk.description")
-                )
                 .parent(STORY_OCEAN)
                 .parentOptional()
                 .criterion(LOOT_ANCIENT_CITY_REQUIREMENT,
@@ -290,34 +308,40 @@ public class GenesisAgesProvider extends AgesProvider {
                         PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.ANCIENT_CITY_ICE_BOX_CHEST)
                 )
                 .requirements(AdvancementRequirements.anyOf(ANCIENT_CITY_REQUIREMENTS))
+                .display(
+                        Items.WARDEN_SPAWN_EGG,
+                        Text.translatable("age.genesis.sculk"),
+                        Text.translatable("age.genesis.story.sculk.description")
+                )
                 .build(consumer, STORY_SCULK);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(Items.ENDER_EYE))
+                .itemUnlocks(Ingredient.ofItem(Items.ENCHANTED_GOLDEN_APPLE))
                 .dimensionUnlocks(World.END)
                 .parent(STORY_SCULK)
+                .parentOptional()
                 .criterion("killed_wither",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
                                 EntityPredicate.Builder.create().type(entityLookup, EntityType.WITHER)
                         )
                 )
                 .display(
-                        Items.WITHER_SKELETON_SKULL,
+                        Items.WITHER_SPAWN_EGG,
                         Text.translatable("age.genesis.wither"),
                         Text.translatable("age.genesis.story.wither.description")
                 )
                 .build(consumer, STORY_WITHER);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(Items.ENCHANTED_GOLDEN_APPLE))
                 .parent(STORY_WITHER)
-                .criterion("killed_ender_dragon",
-                        OnKilledCriterion.Conditions.createPlayerKilledEntity(
-                                EntityPredicate.Builder.create().type(entityLookup, EntityType.ENDER_DRAGON)
-                        )
-                )
+                .requireAge(STORY_NETHER)
+                .requireAge(STORY_NIGHT)
+                .requireAge(STORY_TRIAL)
+                .requireAge(STORY_OCEAN)
+                .requireAge(STORY_SCULK)
+                .requireAge(STORY_WITHER)
                 .display(
-                        Items.DRAGON_EGG,
+                        Items.ENDER_DRAGON_SPAWN_EGG,
                         Text.translatable("age.genesis.end"),
                         Text.translatable("age.genesis.story.end.description")
                 )

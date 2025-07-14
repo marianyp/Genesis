@@ -2,7 +2,7 @@
   "display": {
     "icon": {
       "count": 1,
-      "id": "minecraft:grass_block"
+      "id": "minecraft:creeper_spawn_egg"
     },
     "title": {
       "translate": "age.genesis.survival"

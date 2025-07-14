@@ -1,14 +1,14 @@
 {
-  "parent": "genesis:story/sculk",
+  "parent": "genesis:story/nether",
   "criteria": {
-    "killed_wither": {
+    "killed_creaking": {
       "conditions": {
         "entity": [
           {
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "minecraft:wither"
+              "type": "minecraft:creaking"
             }
           }
         ]
@@ -16,23 +16,20 @@
       "trigger": "minecraft:player_killed_entity"
     }
   },
-  "dimensions": [
-    "minecraft:the_end"
-  ],
   "display": {
     "description": {
-      "translate": "age.genesis.story.wither.description"
+      "translate": "age.genesis.story.night.description"
     },
     "icon": {
       "count": 1,
-      "id": "minecraft:wither_spawn_egg"
+      "id": "minecraft:creaking_spawn_egg"
     },
     "title": {
-      "translate": "age.genesis.wither"
+      "translate": "age.genesis.night"
     }
   },
   "items": [
-    "minecraft:enchanted_golden_apple"
+    "#minecraft:beds"
   ],
   "requires_parent": false
 }

@@ -20,7 +20,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "minecraft:sculk"
+      "id": "minecraft:warden_spawn_egg"
     },
     "title": {
       "translate": "age.genesis.sculk"

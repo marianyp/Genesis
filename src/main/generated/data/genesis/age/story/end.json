@@ -1,19 +1,41 @@
 {
   "parent": "genesis:story/wither",
   "criteria": {
-    "killed_ender_dragon": {
+    "has_nether_story_age": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "minecraft:ender_dragon"
-            }
-          }
-        ]
+        "advancement": "genesis:age/story/nether"
       },
-      "trigger": "minecraft:player_killed_entity"
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_night_story_age": {
+      "conditions": {
+        "advancement": "genesis:age/story/night"
+      },
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_ocean_story_age": {
+      "conditions": {
+        "advancement": "genesis:age/story/ocean"
+      },
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_sculk_story_age": {
+      "conditions": {
+        "advancement": "genesis:age/story/sculk"
+      },
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_trial_story_age": {
+      "conditions": {
+        "advancement": "genesis:age/story/trial"
+      },
+      "trigger": "genesis:obtain_advancement"
+    },
+    "has_wither_story_age": {
+      "conditions": {
+        "advancement": "genesis:age/story/wither"
+      },
+      "trigger": "genesis:obtain_advancement"
     }
   },
   "display": {
@@ -22,13 +44,10 @@
     },
     "icon": {
       "count": 1,
-      "id": "minecraft:dragon_egg"
+      "id": "minecraft:ender_dragon_spawn_egg"
     },
     "title": {
       "translate": "age.genesis.end"
     }
-  },
-  "items": [
-    "minecraft:enchanted_golden_apple"
-  ]
+  }
 }
