@@ -3,6 +3,7 @@
   "package": "dev.mariany.genesis.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AdvancementDisplaysMixin",
     "BrushItemMixin",
     "CrafterScreenHandlerMixin",
     "DataPackContentsMixin",
