@@ -10,9 +10,12 @@ import net.minecraft.text.Text;
 
 public class ClientboundPackets {
     public static void init() {
-        ClientPlayNetworking.registerGlobalReceiver(UpdateAgeItemUnlocksPayload.ID, (payload, context) -> {
-            ClientAgeManager.getInstance().updateItemUnlocks(payload.items());
-        });
+        ClientPlayNetworking.registerGlobalReceiver(UpdateAgeItemUnlocksPayload.ID,
+                (payload, context) ->
+                        context.client().executeSync(
+                                () -> ClientAgeManager.getInstance().updateItemUnlocks(payload.items())
+                        )
+        );
 
         ClientPlayNetworking.registerGlobalReceiver(NotifyAgeLockedPayload.ID, (payload, context) -> {
             MinecraftClient client = context.client();

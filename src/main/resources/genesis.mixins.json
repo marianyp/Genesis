@@ -30,6 +30,7 @@
   "client": [
     "AnimatedResultButtonMixin",
     "RecipeBookWidgetMixin",
+    "RecipeToastMixin",
     "accessor.GhostRecipeAccessor",
     "accessor.ToastManagerAccessor"
   ]
