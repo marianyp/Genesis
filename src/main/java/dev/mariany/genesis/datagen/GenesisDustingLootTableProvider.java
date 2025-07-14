@@ -22,21 +22,21 @@ import net.minecraft.registry.RegistryWrapper;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class GenesisArchaeologyLootTableProvider extends SimpleFabricLootTableProvider {
+public class GenesisDustingLootTableProvider extends SimpleFabricLootTableProvider {
     private final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture;
 
-    public GenesisArchaeologyLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public GenesisDustingLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(dataOutput, registryLookup, LootContextTypes.ARCHAEOLOGY);
         this.registryLookupFuture = registryLookup;
     }
 
     @Override
     public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
-        addSiftingDrop(lootTableBiConsumer, GenesisLootTables.CLAY_SIFTING, Items.CLAY_BALL);
-        addSiftingDrop(lootTableBiConsumer, GenesisLootTables.FLINT_SIFTING, Items.FLINT);
+        addDustingDrop(lootTableBiConsumer, GenesisLootTables.DIRT_DUSTING, Items.CLAY_BALL);
+        addDustingDrop(lootTableBiConsumer, GenesisLootTables.GRAVEL_DUSTING, Items.FLINT);
     }
 
-    private void addSiftingDrop(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer, RegistryKey<LootTable> lootTable, Item drop) {
+    private void addDustingDrop(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer, RegistryKey<LootTable> lootTable, Item drop) {
         this.registryLookupFuture.thenAccept(registries -> {
             RegistryWrapper.Impl<Item> itemRegistry = registries.getOrThrow(RegistryKeys.ITEM);
 

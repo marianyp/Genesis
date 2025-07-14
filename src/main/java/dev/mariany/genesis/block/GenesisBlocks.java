@@ -58,7 +58,7 @@ public class GenesisBlocks {
                     Blocks.DIRT,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
-                    GenesisLootTables.CLAY_SIFTING,
+                    GenesisLootTables.DIRT_DUSTING,
                     settings
             ),
             AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)
@@ -70,7 +70,7 @@ public class GenesisBlocks {
                     Blocks.GRAVEL,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
-                    GenesisLootTables.FLINT_SIFTING,
+                    GenesisLootTables.GRAVEL_DUSTING,
                     settings
             ),
             AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)

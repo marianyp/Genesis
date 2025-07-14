@@ -15,7 +15,7 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenesisRecipeOverrideProvider::new);
         pack.addProvider(GenesisBlockLootTableProvider::new);
         pack.addProvider(GenesisBlockLootTableOverrideProvider::new);
-        pack.addProvider(GenesisArchaeologyLootTableProvider::new);
+        pack.addProvider(GenesisDustingLootTableProvider::new);
         pack.addProvider(GenesisAgesProvider::new);
 
         FabricDataGenerator.Pack secondaryPack = fabricDataGenerator.createPack();
