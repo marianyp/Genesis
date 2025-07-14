@@ -296,7 +296,6 @@ public class GenesisAgesProvider extends AgesProvider {
                 .itemUnlocks(Ingredient.ofItem(Items.ENDER_EYE))
                 .dimensionUnlocks(World.END)
                 .parent(STORY_SCULK)
-                .parentOptional()
                 .criterion("killed_wither",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
                                 EntityPredicate.Builder.create().type(entityLookup, EntityType.WITHER)

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_diamond": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:raw_diamond"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:raw_diamond_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_diamond"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:raw_diamond_block"
+    ]
+  }
+}

@@ -52,10 +52,55 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                 this.registerKilnRecipes();
                 this.registerRawOreRecipes();
                 this.registerCauldronRecipes();
-                this.registerVanillaRecipes();
+                this.registerSpecialVanillaRecipes();
+                this.registerRawBlockRecipes();
             }
 
-            private void registerVanillaRecipes() {
+            private void registerRawBlockRecipes() {
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_COAL,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_COAL_BLOCK
+                );
+
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_DIAMOND,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_DIAMOND_BLOCK
+                );
+
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_EMERALD,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_EMERALD_BLOCK
+                );
+
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_LAPIS_LAZULI,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK
+                );
+
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_NETHERITE,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_NETHERITE_BLOCK
+                );
+
+                this.offerReversibleCompactingRecipes(
+                        RecipeCategory.MISC,
+                        GenesisItems.RAW_REDSTONE,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        GenesisBlocks.RAW_REDSTONE_BLOCK
+                );
+            }
+
+            private void registerSpecialVanillaRecipes() {
                 this.createShaped(RecipeCategory.COMBAT, Items.TRIDENT)
                         .pattern(" II")
                         .pattern(" PI")

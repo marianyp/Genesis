@@ -1,5 +1,6 @@
 package dev.mariany.genesis.datagen;
 
+import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.item.equipment.GenesisEquipmentAssets;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -16,6 +17,12 @@ public class GenesisModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_COAL_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_DIAMOND_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_EMERALD_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_NETHERITE_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_REDSTONE_BLOCK);
     }
 
     @Override

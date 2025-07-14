@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "genesis:raw_diamond_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "genesis:raw_diamond"
+  }
+}

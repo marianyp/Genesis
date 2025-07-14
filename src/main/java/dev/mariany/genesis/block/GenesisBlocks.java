@@ -11,6 +11,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
@@ -75,6 +76,37 @@ public class GenesisBlocks {
             AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)
     );
 
+    public static final Block RAW_COAL_BLOCK = register(
+            "raw_coal_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BLACK)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresTool()
+                    .strength(5F, 6F)
+    );
+
+    public static final Block RAW_DIAMOND_BLOCK = register(
+            "raw_diamond_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.DIAMOND_BLUE)
+    );
+
+    public static final Block RAW_EMERALD_BLOCK = register(
+            "raw_emerald_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.EMERALD_GREEN)
+    );
+
+    public static final Block RAW_LAPIS_LAZULI_BLOCK = register(
+            "raw_lapis_lazuli_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.LAPIS_BLUE)
+    );
+
+    public static final Block RAW_NETHERITE_BLOCK = register(
+            "raw_netherite_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK)
+                    .strength(30.0F, 1200.0F)
+                    .sounds(BlockSoundGroup.ANCIENT_DEBRIS)
+    );
+
+    public static final Block RAW_REDSTONE_BLOCK = register(
+            "raw_redstone_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.BRIGHT_RED)
+    );
+
     private static Block register(String name,
                                   AbstractBlock.Settings settings) {
         return register(name, Block::new, settings);
@@ -101,6 +133,15 @@ public class GenesisBlocks {
             entries.addAfter(DIRT_TERRACOTTA_CAULDRON, GRAVEL_TERRACOTTA_CAULDRON);
             entries.addAfter(GRAVEL_TERRACOTTA_CAULDRON, CLAY_KILN);
             entries.addAfter(CLAY_KILN, KILN);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
+            entries.addBefore(Items.RAW_IRON_BLOCK, RAW_COAL_BLOCK);
+            entries.addAfter(RAW_COAL_BLOCK, RAW_DIAMOND_BLOCK);
+            entries.addAfter(RAW_DIAMOND_BLOCK, RAW_EMERALD_BLOCK);
+            entries.addAfter(RAW_EMERALD_BLOCK, RAW_LAPIS_LAZULI_BLOCK);
+            entries.addAfter(RAW_LAPIS_LAZULI_BLOCK, RAW_NETHERITE_BLOCK);
+            entries.addAfter(RAW_NETHERITE_BLOCK, RAW_REDSTONE_BLOCK);
         });
     }
 }

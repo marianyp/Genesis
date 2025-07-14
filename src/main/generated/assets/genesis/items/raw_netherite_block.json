@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "genesis:block/raw_netherite_block"
+  }
+}

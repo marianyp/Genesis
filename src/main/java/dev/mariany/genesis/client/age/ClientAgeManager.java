@@ -1,6 +1,8 @@
 package dev.mariany.genesis.client.age;
 
 import dev.mariany.genesis.Genesis;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 public class ClientAgeManager {
     private static final ClientAgeManager INSTANCE = new ClientAgeManager();
 

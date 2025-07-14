@@ -33,6 +33,5 @@
   },
   "items": [
     "minecraft:ender_eye"
-  ],
-  "requires_parent": false
+  ]
 }

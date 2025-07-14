@@ -2,6 +2,8 @@ package dev.mariany.genesis.client.gui.screen.recipebook;
 
 import dev.mariany.genesis.mixin.accessor.GhostRecipeAccessor;
 import dev.mariany.genesis.screen.KilnScreenHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
@@ -16,6 +18,7 @@ import net.minecraft.util.context.ContextParameterMap;
 
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 public class KilnRecipeBookWidget extends RecipeBookWidget<KilnScreenHandler> {
     private static final ButtonTextures TEXTURES = new ButtonTextures(
             Identifier.ofVanilla("recipe_book/furnace_filter_enabled"),

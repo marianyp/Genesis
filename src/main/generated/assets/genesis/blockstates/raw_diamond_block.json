@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "genesis:block/raw_diamond_block"
+    }
+  }
+}

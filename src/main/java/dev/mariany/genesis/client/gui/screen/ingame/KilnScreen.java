@@ -3,6 +3,8 @@ package dev.mariany.genesis.client.gui.screen.ingame;
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.client.gui.screen.recipebook.KilnRecipeBookWidget;
 import dev.mariany.genesis.screen.KilnScreenHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.ScreenPos;
@@ -18,6 +20,7 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 public class KilnScreen extends RecipeBookScreen<KilnScreenHandler> {
     private static final Identifier LIT_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/lit_progress");
     private static final Identifier BURN_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/burn_progress");

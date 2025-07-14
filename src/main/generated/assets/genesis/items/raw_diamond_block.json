@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "genesis:block/raw_diamond_block"
+  }
+}
