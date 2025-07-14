@@ -36,7 +36,7 @@ public class ClientboundPackets {
                         ),
                         null,
                         true,
-                        3000
+                        5000
                 ));
             }
         });
