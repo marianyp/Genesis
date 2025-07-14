@@ -5,6 +5,12 @@
     "genesis:clay_cauldron",
     "genesis:terracotta_cauldron",
     "genesis:dirt_terracotta_cauldron",
-    "genesis:gravel_terracotta_cauldron"
+    "genesis:gravel_terracotta_cauldron",
+    "genesis:raw_coal_block",
+    "genesis:raw_diamond_block",
+    "genesis:raw_emerald_block",
+    "genesis:raw_lapis_lazuli_block",
+    "genesis:raw_netherite_block",
+    "genesis:raw_redstone_block"
   ]
 }

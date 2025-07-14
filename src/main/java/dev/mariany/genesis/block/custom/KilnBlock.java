@@ -3,6 +3,7 @@ package dev.mariany.genesis.block.custom;
 import com.mojang.serialization.MapCodec;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.block.entity.custom.KilnBlockEntity;
+import dev.mariany.genesis.stat.GenesisStats;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -55,7 +56,7 @@ public class KilnBlock extends BlockWithEntity {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof KilnBlockEntity) {
             player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
-//            player.incrementStat(Stats.INTERACT_WITH_FURNACE);
+            player.incrementStat(GenesisStats.INTERACT_WITH_KILN);
         }
     }
 

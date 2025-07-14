@@ -126,7 +126,6 @@ public record Age(
         }
 
         public AgeEntry build(Identifier id) {
-//            Map<String, AdvancementCriterion<?>> map = new HashMap<>(this.criteria);
             return new AgeEntry(id, new Age(
                     this.items,
                     this.dimensions,

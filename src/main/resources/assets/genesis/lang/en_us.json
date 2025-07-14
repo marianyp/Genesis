@@ -87,6 +87,7 @@
   "item.genesis.totem_cast": "Totem Cast",
   "item.genesis.totem_clay_cast": "Totem Clay Cast",
   "item.genesis.healthy_stew": "Healthy Stew",
+  "stat.genesis.interact_with_kiln": "Interactions with Kiln",
   "subtitles.item.armor.equip_copper": "Copper armor clanks",
   "subtitles.item.flints": "Flints click",
   "tutorial.ageLocked": "%s %s Required For %s",

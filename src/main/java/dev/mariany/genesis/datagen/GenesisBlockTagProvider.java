@@ -21,7 +21,13 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
                 GenesisBlocks.CLAY_CAULDRON,
                 GenesisBlocks.TERRACOTTA_CAULDRON,
                 GenesisBlocks.DIRT_TERRACOTTA_CAULDRON,
-                GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON
+                GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON,
+                GenesisBlocks.RAW_COAL_BLOCK,
+                GenesisBlocks.RAW_DIAMOND_BLOCK,
+                GenesisBlocks.RAW_EMERALD_BLOCK,
+                GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK,
+                GenesisBlocks.RAW_NETHERITE_BLOCK,
+                GenesisBlocks.RAW_REDSTONE_BLOCK
         );
     }
 }

@@ -13,6 +13,7 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
+import dev.mariany.genesis.stat.GenesisStats;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -35,6 +36,7 @@ public class Genesis implements ModInitializer {
         GenesisBlockEntities.bootstrap();
         PrimitiveCauldronBehavior.registerBehavior();
         GenesisCriteria.bootstrap();
+        GenesisStats.bootstrap();
 
         DefaultItemComponentEvents.MODIFY.register(ModifyItemComponentsHandler::modify);
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);

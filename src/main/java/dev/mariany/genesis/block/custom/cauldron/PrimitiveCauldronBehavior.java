@@ -62,7 +62,7 @@ public interface PrimitiveCauldronBehavior {
     static ActionResult fillCauldron(World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack, BlockState state, SoundEvent soundEvent) {
         if (!world.isClient) {
             stack.decrementUnlessCreative(1, player);
-//            player.incrementStat(Stats.FILL_CAULDRON);
+            player.incrementStat(Stats.FILL_CAULDRON);
             player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
             world.setBlockState(pos, state);
             world.playSound(null, pos, soundEvent, SoundCategory.BLOCKS, 1F, 1F);

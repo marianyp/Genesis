@@ -21,5 +21,12 @@ public class GenesisBlockLootTableProvider extends FabricBlockLootTableProvider 
         addDrop(GenesisBlocks.TERRACOTTA_CAULDRON);
         addDrop(GenesisBlocks.DIRT_TERRACOTTA_CAULDRON);
         addDrop(GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON);
+
+        addDrop(GenesisBlocks.RAW_COAL_BLOCK);
+        addDrop(GenesisBlocks.RAW_DIAMOND_BLOCK);
+        addDrop(GenesisBlocks.RAW_EMERALD_BLOCK);
+        addDrop(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
+        addDrop(GenesisBlocks.RAW_NETHERITE_BLOCK);
+        addDrop(GenesisBlocks.RAW_REDSTONE_BLOCK);
     }
 }
