@@ -13,17 +13,23 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class FilledPrimitiveCauldronBlock extends BrushableBlock {
+    private static final VoxelShape[] SHAPES_BY_DUSTED = Block.createShapeArray(3,
+            FilledPrimitiveCauldronBlock::createShape
+    );
+
     private final Block particleBlock;
     private final RegistryKey<LootTable> lootTable;
 
@@ -31,6 +37,17 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
         super(baseBlock, brushingSound, brushingCompleteSound, settings);
         this.particleBlock = particleBlock;
         this.lootTable = lootTable;
+    }
+
+    private static VoxelShape createShape(float dusted) {
+        return VoxelShapes.union(
+                VoxelShapes.cuboid(0, 0, 0, 0.125, 0.8125, 1),
+                VoxelShapes.cuboid(0.125, 0, 0.125, 0.875, 0.0625, 0.875),
+                VoxelShapes.cuboid(0.875, 0, 0, 1, 0.8125, 1),
+                VoxelShapes.cuboid(0.125, 0, 0, 0.875, 0.8125, 0.125),
+                VoxelShapes.cuboid(0.125, 0, 0.875, 0.875, 0.8125, 1),
+                VoxelShapes.cuboid(0.125, 0.0625, 0.125, 0.875, 0.75 - (0.1875 * dusted), 0.875)
+        );
     }
 
     @Override
@@ -54,7 +71,7 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
 
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return PrimitiveCauldronBlock.SHAPE;
+        return SHAPES_BY_DUSTED[state.get(Properties.DUSTED)];
     }
 
     @Override
