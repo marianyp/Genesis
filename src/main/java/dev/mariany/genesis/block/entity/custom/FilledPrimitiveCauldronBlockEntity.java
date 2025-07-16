@@ -33,9 +33,7 @@ import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
@@ -176,41 +174,17 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
 
     private void addBlockBreakParticles(ServerWorld world, BlockPos pos, BlockState state) {
         if (!state.isAir() && state.hasBlockBreakParticles()) {
-            VoxelShape voxelShape = state.getOutlineShape(this.world, pos);
-            double sampleStep = 0.45;
-
-            voxelShape.forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> {
-                double boxWidth = Math.min(1, maxX - minX);
-                double boxHeight = Math.min(1, maxY - minY);
-                double boxDepth = Math.min(1, maxZ - minZ);
-                int samplesX = Math.max(2, MathHelper.ceil(boxWidth / sampleStep));
-                int samplesY = Math.max(2, MathHelper.ceil(boxHeight / sampleStep));
-                int samplesZ = Math.max(2, MathHelper.ceil(boxDepth / sampleStep));
-
-                for (int xIndex = 0; xIndex < samplesX; xIndex++) {
-                    for (int yIndex = 0; yIndex < samplesY; yIndex++) {
-                        for (int zIndex = 0; zIndex < samplesZ; zIndex++) {
-                            double normalizedX = (xIndex + 0.5) / samplesX;
-                            double normalizedY = (yIndex + 0.5) / samplesY;
-                            double normalizedZ = (zIndex + 0.5) / samplesZ;
-                            double localX = normalizedX * boxWidth + minX;
-                            double localY = normalizedY * boxHeight + minY;
-                            double localZ = normalizedZ * boxDepth + minZ;
-
-                            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, state),
-                                    pos.getX() + localX,
-                                    pos.getY() + localY,
-                                    pos.getZ() + localZ,
-                                    1,
-                                    normalizedX,
-                                    normalizedY,
-                                    normalizedZ,
-                                    0.5D
-                            );
-                        }
-                    }
-                }
-            });
+            world.spawnParticles(
+                    new BlockStateParticleEffect(ParticleTypes.BLOCK, state),
+                    pos.getX() + 0.5,
+                    pos.getY() + 0.7,
+                    pos.getZ() + 0.5,
+                    15,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+            );
         }
     }
 
