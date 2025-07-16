@@ -10,6 +10,7 @@ import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
 import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
 import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
 import dev.mariany.genesis.item.GenesisItems;
+import dev.mariany.genesis.loot.LootTableModifiers;
 import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
@@ -37,6 +38,7 @@ public class Genesis implements ModInitializer {
         PrimitiveCauldronBehavior.registerBehavior();
         GenesisCriteria.bootstrap();
         GenesisStats.bootstrap();
+        LootTableModifiers.modifyLootTables();
 
         DefaultItemComponentEvents.MODIFY.register(ModifyItemComponentsHandler::modify);
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);

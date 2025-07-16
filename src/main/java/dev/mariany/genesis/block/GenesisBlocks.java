@@ -136,12 +136,12 @@ public class GenesisBlocks {
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
-            entries.addBefore(Items.RAW_IRON_BLOCK, RAW_COAL_BLOCK);
+            entries.addBefore(Items.RAW_IRON_BLOCK, RAW_NETHERITE_BLOCK);
+            entries.addAfter(RAW_NETHERITE_BLOCK, RAW_COAL_BLOCK);
             entries.addAfter(RAW_COAL_BLOCK, RAW_DIAMOND_BLOCK);
             entries.addAfter(RAW_DIAMOND_BLOCK, RAW_EMERALD_BLOCK);
             entries.addAfter(RAW_EMERALD_BLOCK, RAW_LAPIS_LAZULI_BLOCK);
-            entries.addAfter(RAW_LAPIS_LAZULI_BLOCK, RAW_NETHERITE_BLOCK);
-            entries.addAfter(RAW_NETHERITE_BLOCK, RAW_REDSTONE_BLOCK);
+            entries.addAfter(RAW_LAPIS_LAZULI_BLOCK, RAW_REDSTONE_BLOCK);
         });
     }
 }
