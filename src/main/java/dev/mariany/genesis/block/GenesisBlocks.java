@@ -110,11 +110,15 @@ public class GenesisBlocks {
     );
 
     public static final Block RAW_DIAMOND_BLOCK = register(
-            "raw_diamond_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.DIAMOND_BLUE)
+            "raw_diamond_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK)
+                    .mapColor(MapColor.DIAMOND_BLUE)
+                    .sounds(BlockSoundGroup.NETHER_ORE)
     );
 
     public static final Block RAW_EMERALD_BLOCK = register(
-            "raw_emerald_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.EMERALD_GREEN)
+            "raw_emerald_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK)
+                    .sounds(BlockSoundGroup.NETHER_ORE)
+                    .mapColor(MapColor.EMERALD_GREEN)
     );
 
     public static final Block RAW_LAPIS_LAZULI_BLOCK = register(
@@ -123,7 +127,7 @@ public class GenesisBlocks {
 
     public static final Block RAW_NETHERITE_BLOCK = register(
             "raw_netherite_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK)
-                    .strength(30.0F, 1200.0F)
+                    .strength(30, 1200)
                     .sounds(BlockSoundGroup.ANCIENT_DEBRIS)
     );
 
