@@ -17,7 +17,9 @@ public class GenesisBlockEntities {
             FabricBlockEntityTypeBuilder.create(
                     FilledPrimitiveCauldronBlockEntity::new,
                     GenesisBlocks.DIRT_TERRACOTTA_CAULDRON,
-                    GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON
+                    GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON,
+                    GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON,
+                    GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON
             ).build()
     );
 

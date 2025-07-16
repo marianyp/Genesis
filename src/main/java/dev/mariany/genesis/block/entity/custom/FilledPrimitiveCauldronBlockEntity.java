@@ -28,6 +28,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.property.Properties;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -81,17 +82,19 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
         if (currentState.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
             BlockState particleBlockState = filledPrimitiveCauldronBlock.getParticleBlock().getDefaultState();
             this.addBlockBreakParticles(world, pos, particleBlockState);
-
-            if (sound) {
-                world.playSound(null, pos, filledPrimitiveCauldronBlock.getBrushingSound(), SoundCategory.BLOCKS);
-            }
         }
 
         int delay = brush.getItem() instanceof BrushItem ? BRUSH_DELAY : BRUSH_DELAY * 10;
         this.nextBrushTime = worldTime + delay;
         int previousDustedLevel = this.getDustedLevel();
 
-        if (++this.brushesCount >= MAX_BRUSHES) {
+        boolean finished = ++this.brushesCount >= MAX_BRUSHES;
+
+        if (finished || sound) {
+            playSound(finished);
+        }
+
+        if (finished) {
             this.finishBrushing(world, brusher, brush);
             return true;
         }
@@ -107,6 +110,18 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
         }
 
         return false;
+    }
+
+    private void playSound(boolean finished) {
+        Block block = this.getCachedState().getBlock();
+
+        if (
+                this.world != null && block instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock
+        ) {
+            SoundEvent soundEvent = finished ? filledPrimitiveCauldronBlock.getBrushingCompleteSound() :
+                    filledPrimitiveCauldronBlock.getBrushingSound();
+            this.world.playSound(null, pos, soundEvent, SoundCategory.BLOCKS);
+        }
     }
 
     private void generateItem(ServerWorld world, LivingEntity brusher, ItemStack brush) {

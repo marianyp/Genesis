@@ -34,9 +34,35 @@ public class GenesisDustingLootTableProvider extends SimpleFabricLootTableProvid
     public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
         addDustingDrop(lootTableBiConsumer, GenesisLootTables.DIRT_DUSTING, Items.CLAY_BALL);
         addDustingDrop(lootTableBiConsumer, GenesisLootTables.GRAVEL_DUSTING, Items.FLINT);
+        addComplexDustingDrop(lootTableBiConsumer, GenesisLootTables.SOUL_SEDIMENT_DUSTING, Items.BONE);
     }
 
     private void addDustingDrop(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer, RegistryKey<LootTable> lootTable, Item drop) {
+        this.registryLookupFuture.thenAccept(registries -> {
+            RegistryWrapper.Impl<Item> itemRegistry = registries.getOrThrow(RegistryKeys.ITEM);
+
+            lootTableBiConsumer.accept(lootTable, LootTable.builder()
+                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1F))
+                            .with(ItemEntry.builder(drop).apply(
+                                                    SetCountLootFunction.builder(UniformLootNumberProvider.create(1F, 2F))
+                                            )
+                                            .conditionally(
+                                                    MatchToolLootCondition.builder(
+                                                            ItemPredicate.Builder.create().tag(itemRegistry, ConventionalItemTags.BRUSH_TOOLS)
+                                                    )
+                                            )
+                                            .alternatively(
+                                                    ItemEntry.builder(drop).apply(
+                                                            SetCountLootFunction.builder(UniformLootNumberProvider.create(0F, 2F))
+                                                    )
+                                            )
+                            )
+                    )
+            );
+        });
+    }
+
+    private void addComplexDustingDrop(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer, RegistryKey<LootTable> lootTable, Item drop) {
         this.registryLookupFuture.thenAccept(registries -> {
             RegistryWrapper.Impl<Item> itemRegistry = registries.getOrThrow(RegistryKeys.ITEM);
 

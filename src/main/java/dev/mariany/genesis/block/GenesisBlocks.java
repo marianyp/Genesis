@@ -57,7 +57,7 @@ public class GenesisBlocks {
                     TERRACOTTA_CAULDRON,
                     Blocks.DIRT,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
-                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL_COMPLETE,
                     GenesisLootTables.DIRT_DUSTING,
                     settings
             ),
@@ -69,8 +69,32 @@ public class GenesisBlocks {
                     TERRACOTTA_CAULDRON,
                     Blocks.GRAVEL,
                     SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
-                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL_COMPLETE,
                     GenesisLootTables.GRAVEL_DUSTING,
+                    settings
+            ),
+            AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)
+    );
+
+    public static final Block SOUL_SAND_TERRACOTTA_CAULDRON = register("soul_sand_terracotta_cauldron",
+            settings -> new FilledPrimitiveCauldronBlock(
+                    TERRACOTTA_CAULDRON,
+                    Blocks.SOUL_SAND,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_SAND,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_SAND_COMPLETE,
+                    GenesisLootTables.SOUL_SEDIMENT_DUSTING,
+                    settings
+            ),
+            AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)
+    );
+
+    public static final Block SOUL_SOIL_TERRACOTTA_CAULDRON = register("soul_soil_terracotta_cauldron",
+            settings -> new FilledPrimitiveCauldronBlock(
+                    TERRACOTTA_CAULDRON,
+                    Blocks.SOUL_SAND,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL,
+                    SoundEvents.ITEM_BRUSH_BRUSHING_GRAVEL_COMPLETE,
+                    GenesisLootTables.SOUL_SEDIMENT_DUSTING,
                     settings
             ),
             AbstractBlock.Settings.copy(TERRACOTTA_CAULDRON)
@@ -131,7 +155,9 @@ public class GenesisBlocks {
             entries.addAfter(CLAY_CAULDRON, TERRACOTTA_CAULDRON);
             entries.addAfter(TERRACOTTA_CAULDRON, DIRT_TERRACOTTA_CAULDRON);
             entries.addAfter(DIRT_TERRACOTTA_CAULDRON, GRAVEL_TERRACOTTA_CAULDRON);
-            entries.addAfter(GRAVEL_TERRACOTTA_CAULDRON, CLAY_KILN);
+            entries.addAfter(GRAVEL_TERRACOTTA_CAULDRON, SOUL_SAND_TERRACOTTA_CAULDRON);
+            entries.addAfter(SOUL_SAND_TERRACOTTA_CAULDRON, SOUL_SOIL_TERRACOTTA_CAULDRON);
+            entries.addAfter(SOUL_SOIL_TERRACOTTA_CAULDRON, CLAY_KILN);
             entries.addAfter(CLAY_KILN, KILN);
         });
 

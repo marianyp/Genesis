@@ -1,0 +1,11 @@
+{
+  "parent": "genesis:block/template_primitive_cauldron_level1",
+  "textures": {
+    "all": "genesis:block/terracotta_cauldron_side",
+    "particle": "genesis:block/terracotta_cauldron_side",
+    "side": "genesis:block/terracotta_cauldron_side",
+    "top": "genesis:block/terracotta_cauldron_top",
+    "inside": "genesis:block/terracotta_cauldron_inner",
+    "contents": "minecraft:block/soul_sand"
+  }
+}
