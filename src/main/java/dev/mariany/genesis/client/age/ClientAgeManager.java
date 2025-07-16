@@ -28,6 +28,11 @@ public class ClientAgeManager {
         return INSTANCE;
     }
 
+    public void reset() {
+        itemUnlocks.clear();
+        initiatedItemUnlocks = false;
+    }
+
     public boolean isUnlocked(ItemStack stack) {
         return itemUnlocks.stream().noneMatch(ingredient -> ingredient.test(stack));
     }
