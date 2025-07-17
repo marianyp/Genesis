@@ -15,6 +15,7 @@ import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
 import dev.mariany.genesis.stat.GenesisStats;
+import dev.mariany.genesis.village.GenesisTradeOffers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -44,6 +45,8 @@ public class Genesis implements ModInitializer {
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);
         ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::beforeAdvancementsLoad);
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
+
+        GenesisTradeOffers.registerVillagerOffers();
     }
 
     public static Identifier id(String resource) {

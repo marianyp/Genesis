@@ -54,6 +54,8 @@
   "block.genesis.raw_redstone_block": "Raw Redstone Block",
   "block.minecraft.cauldron": "Iron Cauldron",
   "container.genesis.kiln": "Kiln",
+  "filled_map.ancient_city": "Deep Dark Explorer Map",
+  "filled_map.pale_garden": "Pale Garden Explorer Map",
   "item.genesis.anvil_cast": "Anvil Cast",
   "item.genesis.anvil_clay_cast": "Anvil Clay Cast",
   "item.genesis.axe_cast": "Axe Cast",
