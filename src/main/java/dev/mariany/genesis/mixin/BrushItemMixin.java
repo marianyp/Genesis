@@ -61,6 +61,7 @@ public abstract class BrushItemMixin {
                             ItemStack offhandStack = playerEntity.getEquippedStack(EquipmentSlot.OFFHAND);
                             EquipmentSlot equipmentSlot = stack.equals(offhandStack) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
                             stack.damage(1, playerEntity, equipmentSlot);
+                            user.stopUsingItem();
                         }
                     }
                 }

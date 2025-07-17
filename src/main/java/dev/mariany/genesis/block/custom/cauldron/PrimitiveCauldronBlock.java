@@ -15,6 +15,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class PrimitiveCauldronBlock extends Block {
     public static final VoxelShape SHAPE = VoxelShapes.union(
             VoxelShapes.cuboid(0, 0, 0, 0.125, 0.8125, 1),
@@ -50,14 +52,32 @@ public class PrimitiveCauldronBlock extends Block {
 
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        Optional<ActionResult> result = attemptInteract(state, world, pos, player, Hand.MAIN_HAND);
+
+        if (result.isEmpty()) {
+            result = attemptInteract(state, world, pos, player, Hand.OFF_HAND);
+        }
+
+        return result.orElseGet(() -> super.onUseWithItem(stack, state, world, pos, player, hand, hit));
+    }
+
+    private Optional<ActionResult> attemptInteract(
+            BlockState state,
+            World world,
+            BlockPos pos,
+            PlayerEntity player,
+            Hand hand
+    ) {
+        ItemStack stack = player.getStackInHand(hand);
+
         if (this.behaviorMap != null) {
             for (PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorEntry entry : behaviorMap.entries()) {
                 if (entry.ingredient().test(stack)) {
-                    return entry.behavior().interact(state, world, pos, player, hand, stack);
+                    return Optional.ofNullable(entry.behavior().interact(state, world, pos, player, hand, stack));
                 }
             }
         }
 
-        return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+        return Optional.empty();
     }
 }

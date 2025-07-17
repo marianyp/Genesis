@@ -1,9 +1,11 @@
 package dev.mariany.genesis.block.custom.cauldron;
 
+import com.mojang.serialization.Codec;
 import dev.mariany.genesis.block.GenesisBlocks;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,12 +30,17 @@ import java.util.Map;
 
 public interface PrimitiveCauldronBehavior {
     Map<String, PrimitiveCauldronBehaviorMap> BEHAVIOR_MAPS = new Object2ObjectArrayMap<>();
+    Codec<PrimitiveCauldronBehaviorMap> CODEC = Codec.stringResolver(
+            PrimitiveCauldronBehaviorMap::name, BEHAVIOR_MAPS::get
+    );
 
     PrimitiveCauldronBehaviorMap EMPTY_CAULDRON_BEHAVIOR = createMap("empty");
 
     static PrimitiveCauldronBehaviorMap createMap(String name) {
         List<PrimitiveCauldronBehaviorEntry> entries = new ArrayList<>();
-        return new PrimitiveCauldronBehaviorMap(name, entries);
+        PrimitiveCauldronBehaviorMap primitiveCauldronBehaviorMap = new PrimitiveCauldronBehaviorMap(name, entries);
+        BEHAVIOR_MAPS.put(name, primitiveCauldronBehaviorMap);
+        return primitiveCauldronBehaviorMap;
     }
 
     ActionResult interact(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack);
@@ -55,6 +62,20 @@ public interface PrimitiveCauldronBehavior {
                 new PrimitiveCauldronBehaviorEntry(
                         Ingredient.ofTag(gravelItems),
                         PrimitiveCauldronBehavior::tryFillWithGravel
+                )
+        );
+
+        EMPTY_CAULDRON_BEHAVIOR.entries().add(
+                new PrimitiveCauldronBehaviorEntry(
+                        Ingredient.ofItem(Blocks.SOUL_SAND),
+                        PrimitiveCauldronBehavior::tryFillWithSoulSand
+                )
+        );
+
+        EMPTY_CAULDRON_BEHAVIOR.entries().add(
+                new PrimitiveCauldronBehaviorEntry(
+                        Ingredient.ofItem(Blocks.SOUL_SOIL),
+                        PrimitiveCauldronBehavior::tryFillWithSoulSoil
                 )
         );
     }
@@ -93,6 +114,30 @@ public interface PrimitiveCauldronBehavior {
                 stack,
                 GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON.getDefaultState(),
                 SoundEvents.BLOCK_GRAVEL_PLACE
+        );
+    }
+
+    private static ActionResult tryFillWithSoulSand(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack) {
+        return fillCauldron(
+                world,
+                pos,
+                player,
+                hand,
+                stack,
+                GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON.getDefaultState(),
+                SoundEvents.BLOCK_SOUL_SAND_PLACE
+        );
+    }
+
+    private static ActionResult tryFillWithSoulSoil(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack) {
+        return fillCauldron(
+                world,
+                pos,
+                player,
+                hand,
+                stack,
+                GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON.getDefaultState(),
+                SoundEvents.BLOCK_SOUL_SOIL_PLACE
         );
     }
 
