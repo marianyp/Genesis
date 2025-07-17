@@ -129,7 +129,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.OXEYE_DAISY,
                 Items.POPPY,
                 Items.PUMPKIN,
-                Items.SWEET_BERRIES
+                Items.SWEET_BERRIES,
+                Items.CACTUS_FLOWER
         );
     }
 }
