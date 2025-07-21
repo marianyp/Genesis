@@ -1,7 +1,7 @@
 package dev.mariany.genesis.event.block;
 
 import dev.mariany.genesis.age.AgeEntry;
-import dev.mariany.genesis.age.AgeHelpers;
+import dev.mariany.genesis.age.AgeLockNotifier;
 import dev.mariany.genesis.age.AgeManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,7 +29,7 @@ public class UseBlockHandler {
                         .findAny();
 
                 optionalAgeEntry.ifPresent(ageEntry ->
-                        AgeHelpers.notifyAgeLockedClick(itemTranslation, ageEntry.getAge(), serverPlayer)
+                        AgeLockNotifier.notifyAgeLockedClick(itemTranslation, ageEntry.getAge(), serverPlayer)
                 );
 
                 return ActionResult.FAIL;

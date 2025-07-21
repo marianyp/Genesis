@@ -3,7 +3,7 @@ package dev.mariany.genesis.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.age.AgeEntry;
-import dev.mariany.genesis.age.AgeHelpers;
+import dev.mariany.genesis.age.AgeLockNotifier;
 import dev.mariany.genesis.age.AgeManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.Ownable;
@@ -59,7 +59,7 @@ public class EntityMixin {
 
                 if (notify) {
                     optionalAgeEntry.ifPresent(ageEntry ->
-                            AgeHelpers.notifyAgeLocked(
+                            AgeLockNotifier.notifyAgeLocked(
                                     "tutorial.ageLocked.dimension",
                                     ageEntry.getAge(),
                                     player

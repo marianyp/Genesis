@@ -4,7 +4,7 @@ import dev.mariany.genesis.packet.clientbound.NotifyAgeLockedPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class AgeHelpers {
+public class AgeLockNotifier {
     public static void notifyAgeLocked(String locked, Age age, ServerPlayerEntity serverPlayer) {
         notifyAgeLocked(locked, age, false, serverPlayer);
     }
