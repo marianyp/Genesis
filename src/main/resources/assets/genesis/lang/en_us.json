@@ -57,6 +57,8 @@
   "container.genesis.kiln": "Kiln",
   "filled_map.ancient_city": "Deep Dark Explorer Map",
   "filled_map.pale_garden": "Pale Garden Explorer Map",
+  "gamerule.sharedAgeProgression": "Shared Age Progression",
+  "gamerule.sharedAgeProgression.description": "Players earn age's at the same time.",
   "item.genesis.anvil_cast": "Anvil Cast",
   "item.genesis.anvil_clay_cast": "Anvil Clay Cast",
   "item.genesis.axe_cast": "Axe Cast",

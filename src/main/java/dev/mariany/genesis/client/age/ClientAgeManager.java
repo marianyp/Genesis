@@ -42,10 +42,6 @@ public class ClientAgeManager {
         int oldSize = itemUnlocks.size();
         List<Ingredient> difference = getDifference(itemUnlocks, changes);
 
-        if (!initial) {
-            Genesis.LOGGER.info(difference.getFirst().toString());
-        }
-
         itemUnlocks.clear();
         itemUnlocks.addAll(changes);
         initiatedItemUnlocks = true;

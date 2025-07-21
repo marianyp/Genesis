@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.List;
 
 @Mixin(RecipeDisplayEntry.class)
-public class RecipeDisplayEntryMixin {
+public class ClientRecipeDisplayEntryMixin {
     @WrapOperation(
             method = "getStacks",
             at = @At(

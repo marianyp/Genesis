@@ -6,10 +6,14 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.age.Age;
 import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.age.AgeManager;
+import dev.mariany.genesis.age.AgeShareManager;
+import dev.mariany.genesis.config.ConfigHandler;
+import dev.mariany.genesis.gamerule.GenesisGamerules;
 import dev.mariany.genesis.packet.clientbound.UpdateAgeItemUnlocksPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,10 +59,24 @@ public class PlayerAdvancementTrackerMixin {
         GenesisCriteria.OBTAIN_ADVANCEMENT.trigger(owner, advancement);
 
         AgeManager ageManager = AgeManager.getInstance();
-        Optional<AgeEntry> age = ageManager.find(advancement);
+        Optional<AgeEntry> optionalAge = ageManager.find(advancement);
 
-        if (age.isPresent()) {
+        if (optionalAge.isPresent()) {
             ServerPlayNetworking.send(owner, new UpdateAgeItemUnlocksPayload(ageManager.getAllItemUnlocks(owner)));
+
+            MinecraftServer server = owner.getServer();
+
+            if (server != null) {
+                if (server.getGameRules().getBoolean(GenesisGamerules.SHARED_AGE_PROGRESSION)) {
+                    AgeShareManager ageShareManager = AgeShareManager.getServerState(server);
+
+                    if (ConfigHandler.getConfig().teamBasedAgeSharing) {
+                        ageShareManager.shareWithTeam(owner, optionalAge.get());
+                    } else {
+                        ageShareManager.shareWithServer(server, optionalAge.get());
+                    }
+                }
+            }
         }
 
         original.call(playerAdvancementTracker, advancement);

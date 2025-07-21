@@ -12,7 +12,6 @@
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "PlayerAdvancementTrackerMixin",
-    "RecipeDisplayEntryMixin",
     "RecipeUnlockerMixin",
     "ServerAdvancementLoaderMixin",
     "ServerPlayNetworkHandlerMixin",
@@ -30,6 +29,7 @@
   "client": [
     "AnimatedResultButtonMixin",
     "RecipeBookWidgetMixin",
+    "ClientRecipeDisplayEntryMixin",
     "RecipeToastMixin",
     "accessor.GhostRecipeAccessor",
     "accessor.ToastManagerAccessor"

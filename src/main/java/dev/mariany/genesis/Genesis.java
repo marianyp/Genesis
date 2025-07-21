@@ -4,11 +4,14 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
+import dev.mariany.genesis.config.ConfigHandler;
 import dev.mariany.genesis.event.block.UseBlockHandler;
 import dev.mariany.genesis.event.item.ModifyItemComponentsHandler;
+import dev.mariany.genesis.event.server.ServerPlayConnectionHandler;
 import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
 import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
 import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
+import dev.mariany.genesis.gamerule.GenesisGamerules;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.loot.LootTableModifiers;
 import dev.mariany.genesis.packet.GenesisPackets;
@@ -20,6 +23,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +34,8 @@ public class Genesis implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ConfigHandler.loadConfig();
+
         GenesisPackets.register();
         GenesisSoundEvents.bootstrap();
         GenesisItems.bootstrap();
@@ -45,8 +51,10 @@ public class Genesis implements ModInitializer {
         UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);
         ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::beforeAdvancementsLoad);
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
+        ServerPlayConnectionEvents.JOIN.register(ServerPlayConnectionHandler::onJoin);
 
         GenesisTradeOffers.registerVillagerOffers();
+        GenesisGamerules.bootstrap();
     }
 
     public static Identifier id(String resource) {
