@@ -1,0 +1,28 @@
+{
+  "parent": "genesis:cook_terracotta_cauldron",
+  "criteria": {
+    "dusted_terracotta_cauldron": {
+      "conditions": {
+        "whitelist": []
+      },
+      "trigger": "genesis:brush_primitive_cauldron"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.dust_terracotta_cauldron.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:dirt_terracotta_cauldron"
+    },
+    "title": {
+      "translate": "instruction.genesis.dust_terracotta_cauldron"
+    }
+  },
+  "requirements": [
+    [
+      "dusted_terracotta_cauldron"
+    ]
+  ]
+}

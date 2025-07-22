@@ -1,6 +1,7 @@
 package dev.mariany.genesis.packet.clientbound;
 
 import dev.mariany.genesis.client.age.ClientAgeManager;
+import dev.mariany.genesis.client.instruction.ClientInstructionManager;
 import dev.mariany.genesis.mixin.accessor.ToastManagerAccessor;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -14,6 +15,15 @@ public class ClientboundPackets {
                 (payload, context) ->
                         context.client().executeSync(
                                 () -> ClientAgeManager.getInstance().updateItemUnlocks(payload.items())
+                        )
+        );
+
+        ClientPlayNetworking.registerGlobalReceiver(UpdateInstructionsPayload.ID,
+                (payload, context) ->
+                        context.client().executeSync(
+                                () -> ClientInstructionManager.getInstance().updateInstructionAdvancements(
+                                        payload.instructions()
+                                )
                         )
         );
 

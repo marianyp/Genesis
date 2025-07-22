@@ -1,8 +1,8 @@
 package dev.mariany.genesis.client;
 
-import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.client.age.ClientAgeManager;
 import dev.mariany.genesis.client.gui.screen.ingame.KilnScreen;
+import dev.mariany.genesis.client.instruction.ClientInstructionManager;
 import dev.mariany.genesis.packet.clientbound.ClientboundPackets;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
@@ -20,19 +20,19 @@ public class GenesisClient implements ClientModInitializer {
         registerScreenHandlers();
         ClientboundPackets.init();
 
-        ClientPlayConnectionEvents.INIT.register(GenesisClient::cleanupAges);
-        ClientPlayConnectionEvents.DISCONNECT.register(GenesisClient::cleanupAges);
+        ClientPlayConnectionEvents.INIT.register(GenesisClient::cleanup);
+        ClientPlayConnectionEvents.DISCONNECT.register(GenesisClient::cleanup);
     }
 
     private static void registerScreenHandlers() {
         HandledScreens.register(GenesisScreenHandlers.KILN, KilnScreen::new);
     }
 
-    private static void cleanupAges(
+    private static void cleanup(
             ClientPlayNetworkHandler clientPlayNetworkHandler,
             MinecraftClient minecraftClient
     ) {
-        Genesis.LOGGER.info("Resetting Client Age Manager");
         ClientAgeManager.getInstance().reset();
+        ClientInstructionManager.getInstance().reset();
     }
 }

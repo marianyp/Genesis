@@ -22,9 +22,7 @@ public class AgeDataLoader extends JsonDataLoader<Age> {
 
         ImmutableMap.Builder<Identifier, AgeEntry> builder = ImmutableMap.builder();
 
-        map.forEach((id, age) -> {
-            builder.put(id, new AgeEntry(id, age));
-        });
+        map.forEach((id, age) -> builder.put(id, new AgeEntry(id, age)));
 
         builder.buildOrThrow().values().forEach(ageManager::add);
     }

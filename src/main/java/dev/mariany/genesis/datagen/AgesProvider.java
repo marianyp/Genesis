@@ -54,8 +54,11 @@ public abstract class AgesProvider implements DataProvider {
                     throw new IllegalStateException("Duplicate age " + ageEntry.getId());
                 }
 
-                JsonObject advancementJson = Age.CODEC.encodeStart(ops, ageEntry.getAge()).getOrThrow(IllegalStateException::new).getAsJsonObject();
+                JsonObject advancementJson = Age.CODEC.encodeStart(ops, ageEntry.getAge())
+                        .getOrThrow(IllegalStateException::new).getAsJsonObject();
+
                 FabricDataGenHelper.addConditions(advancementJson, FabricDataGenHelper.consumeConditions(ageEntry));
+
                 futures.add(DataProvider.writeToPath(writer, advancementJson, getOutputPath(ageEntry)));
             }
 
@@ -65,10 +68,5 @@ public abstract class AgesProvider implements DataProvider {
 
     private Path getOutputPath(AgeEntry age) {
         return pathResolver.resolveJson(age.getId());
-    }
-
-    @Override
-    public String getName() {
-        return "Genesis Ages";
     }
 }

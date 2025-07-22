@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:dust_terracotta_cauldron",
+  "criteria": {
+    "obtained_blank_clay_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:blank_clay_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_blank_clay_cast.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:blank_clay_cast"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_blank_clay_cast"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_blank_clay_cast"
+    ]
+  ]
+}

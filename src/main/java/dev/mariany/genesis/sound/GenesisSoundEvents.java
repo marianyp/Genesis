@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 public class GenesisSoundEvents {
     public static final RegistryEntry<SoundEvent> ITEM_ARMOR_EQUIP_COPPER = registerReference("item.armor.equip_copper");
     public static final SoundEvent FLINTS = register("item.flints");
+    public static final SoundEvent UI_TOAST_INSTRUCTIONS_COMPLETE = register("ui.toast.instructions_complete");
 
     private static SoundEvent register(String id) {
         return register(Genesis.id(id));

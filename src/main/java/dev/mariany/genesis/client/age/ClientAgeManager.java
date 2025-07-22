@@ -29,6 +29,8 @@ public class ClientAgeManager {
     }
 
     public void reset() {
+        Genesis.LOGGER.info("Resetting Client Age Manager");
+
         itemUnlocks.clear();
         initiatedItemUnlocks = false;
     }
@@ -46,7 +48,7 @@ public class ClientAgeManager {
         itemUnlocks.addAll(changes);
         initiatedItemUnlocks = true;
 
-        Genesis.LOGGER.info("Updated age items. Old Size: {} | New Size: {}", oldSize, itemUnlocks.size());
+        Genesis.LOGGER.info("Updated age instructions. Old Size: {} | New Size: {}", oldSize, itemUnlocks.size());
 
         if (!initial) {
             afterUpdateItemUnlocks(difference);

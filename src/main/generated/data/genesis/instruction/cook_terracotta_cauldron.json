@@ -1,0 +1,29 @@
+{
+  "parent": "genesis:craft_clay_cauldron",
+  "criteria": {
+    "obtained_terracotta_cauldron": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:terracotta_cauldron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "icon": {
+      "count": 1,
+      "id": "genesis:terracotta_cauldron"
+    },
+    "title": {
+      "translate": "instruction.genesis.cook_terracotta_cauldron"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_terracotta_cauldron"
+    ]
+  ]
+}

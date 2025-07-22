@@ -25,6 +25,9 @@ public class GenesisTags {
         public static final TagKey<Item> IRON_TOOLS = createTag("iron_tools");
         public static final TagKey<Item> DIAMOND_TOOLS = createTag("diamond_tools");
 
+        public static final TagKey<Item> INSTRUCTIONS_CLAY_TOOL_CASTS = createTag("instructions_clay_tool_casts");
+        public static final TagKey<Item> INSTRUCTIONS_TOOL_CASTS = createTag("instructions_tool_casts");
+
         public static final TagKey<Item> FURNACES = createTag("furnaces");
 
         public static final TagKey<Item> HEALTHY_STEW_CONTENTS = createTag("healthy_stew_contents");

@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:craft_blank_clay_cast",
+  "criteria": {
+    "obtained_clay_tool_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#genesis:instructions_clay_tool_casts"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_clay_tool_cast.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:pickaxe_clay_cast"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_clay_tool_cast"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_clay_tool_cast"
+    ]
+  ]
+}

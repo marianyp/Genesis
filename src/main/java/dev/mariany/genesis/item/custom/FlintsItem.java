@@ -1,5 +1,6 @@
 package dev.mariany.genesis.item.custom;
 
+import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,6 +17,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.consume.UseAction;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -78,6 +80,10 @@ public class FlintsItem extends Item {
                     }
 
                     if (lit) {
+                        if (playerEntity instanceof ServerPlayerEntity serverPlayer) {
+                            GenesisCriteria.FIRE_STARTED.trigger(serverPlayer);
+                        }
+
                         serverWorld.playSound(null, abovePos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.35F, 1F);
                     }
 

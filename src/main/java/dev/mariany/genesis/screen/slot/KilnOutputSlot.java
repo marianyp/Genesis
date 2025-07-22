@@ -1,5 +1,6 @@
 package dev.mariany.genesis.screen.slot;
 
+import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.entity.custom.KilnBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -46,8 +47,12 @@ public class KilnOutputSlot extends Slot {
     protected void onCrafted(ItemStack stack) {
         stack.onCraftByPlayer(this.player, this.amount);
 
-        if (this.player instanceof ServerPlayerEntity serverPlayerEntity && this.inventory instanceof KilnBlockEntity kilnBlockEntity) {
-            kilnBlockEntity.dropExperienceForRecipesUsed(serverPlayerEntity);
+        if (
+                this.player instanceof ServerPlayerEntity serverPlayer &&
+                        this.inventory instanceof KilnBlockEntity kilnBlockEntity
+        ) {
+            kilnBlockEntity.dropExperienceForRecipesUsed(serverPlayer);
+            GenesisCriteria.COOK_WITH_KILN.trigger(serverPlayer, stack);
         }
 
         this.amount = 0;

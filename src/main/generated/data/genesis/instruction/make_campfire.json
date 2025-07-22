@@ -1,0 +1,25 @@
+{
+  "parent": "genesis:make_flints",
+  "criteria": {
+    "started_fire": {
+      "trigger": "genesis:fire_started"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.make_campfire.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:campfire"
+    },
+    "title": {
+      "translate": "instruction.genesis.make_campfire"
+    }
+  },
+  "requirements": [
+    [
+      "started_fire"
+    ]
+  ]
+}

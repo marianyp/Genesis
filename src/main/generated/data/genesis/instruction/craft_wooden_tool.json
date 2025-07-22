@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:cook_tool_cast",
+  "criteria": {
+    "obtained_wooden_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#genesis:wooden_tools"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_wooden_tool.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wooden_pickaxe"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_wooden_tool"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wooden_tool"
+    ]
+  ]
+}

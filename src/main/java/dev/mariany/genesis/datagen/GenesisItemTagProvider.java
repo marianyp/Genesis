@@ -114,6 +114,22 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.DIAMOND_HOE
         );
 
+        valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS).add(
+                GenesisItems.SWORD_CLAY_CAST,
+                GenesisItems.SHOVEL_CLAY_CAST,
+                GenesisItems.PICKAXE_CLAY_CAST,
+                GenesisItems.AXE_CLAY_CAST,
+                GenesisItems.HOE_CLAY_CAST
+        );
+
+        valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_TOOL_CASTS).add(
+                GenesisItems.SWORD_CAST,
+                GenesisItems.SHOVEL_CAST,
+                GenesisItems.PICKAXE_CAST,
+                GenesisItems.AXE_CAST,
+                GenesisItems.HOE_CAST
+        );
+
         valueLookupBuilder(GenesisTags.Items.FURNACES).add(Items.FURNACE, Items.SMOKER, Items.BLAST_FURNACE);
 
         valueLookupBuilder(GenesisTags.Items.HEALTHY_STEW_CONTENTS).add(

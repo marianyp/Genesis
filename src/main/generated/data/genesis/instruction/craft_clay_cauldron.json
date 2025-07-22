@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:make_campfire",
+  "criteria": {
+    "obtained_clay_cauldron": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:clay_cauldron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_clay_cauldron.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:clay_cauldron"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_clay_cauldron"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_clay_cauldron"
+    ]
+  ]
+}

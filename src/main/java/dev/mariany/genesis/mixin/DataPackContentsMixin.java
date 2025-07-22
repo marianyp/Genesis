@@ -3,6 +3,7 @@ package dev.mariany.genesis.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.age.AgeDataLoader;
+import dev.mariany.genesis.instruction.InstructionDataLoader;
 import net.minecraft.registry.CombinedDynamicRegistries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryWrapper;
@@ -25,6 +26,9 @@ public class DataPackContentsMixin {
     @Unique
     private AgeDataLoader ageLoader;
 
+    @Unique
+    private InstructionDataLoader instructionDataLoader;
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onConstruct(
             CombinedDynamicRegistries<ServerDynamicRegistryType> dynamicRegistries,
@@ -36,11 +40,12 @@ public class DataPackContentsMixin {
             CallbackInfo ci
     ) {
         this.ageLoader = new AgeDataLoader(registries);
+        this.instructionDataLoader = new InstructionDataLoader(registries);
     }
 
     @WrapOperation(method = "getContents", at = @At(value = "INVOKE", target = "Ljava/util/List;of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/List;"))
     public List<ResourceReloader> wrapGetContents(Object first, Object second, Object third, Operation<List<ResourceReloader>> original) {
-        List<ResourceReloader> resourceReloaders = new ArrayList<>(List.of(this.ageLoader));
+        List<ResourceReloader> resourceReloaders = new ArrayList<>(List.of(this.ageLoader, this.instructionDataLoader));
         resourceReloaders.addAll(original.call(first, second, third));
         return resourceReloaders;
     }

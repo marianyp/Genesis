@@ -28,9 +28,12 @@
   },
   "client": [
     "AnimatedResultButtonMixin",
-    "RecipeBookWidgetMixin",
+    "ClientAdvancementManagerMixin",
     "ClientRecipeDisplayEntryMixin",
+    "MinecraftClientMixin",
+    "RecipeBookWidgetMixin",
     "RecipeToastMixin",
+    "accessor.ClientAdvancementManagerAccessor",
     "accessor.GhostRecipeAccessor",
     "accessor.ToastManagerAccessor"
   ]

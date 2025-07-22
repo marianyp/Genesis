@@ -4,6 +4,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.age.AgeManager;
+import dev.mariany.genesis.instruction.InstructionEntry;
+import dev.mariany.genesis.instruction.InstructionManager;
 import net.minecraft.advancement.AdvancementDisplays;
 import net.minecraft.advancement.PlacedAdvancement;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +27,14 @@ public class AdvancementDisplaysMixin {
             Optional<AgeEntry> optionalAge = AgeManager.getInstance().find(placedAdvancement.getAdvancementEntry());
 
             if (optionalAge.isPresent()) {
+                return true;
+            }
+
+            Optional<InstructionEntry> optionalInstruction = InstructionManager.getInstance().find(
+                    placedAdvancement.getAdvancementEntry()
+            );
+
+            if (optionalInstruction.isPresent()) {
                 return true;
             }
         }

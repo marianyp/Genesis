@@ -14,5 +14,11 @@
     "sounds": [
       "genesis:item/flints"
     ]
+  },
+  "ui.toast.instructions_complete": {
+    "subtitle": "subtitles.ui.toast.instructions_complete",
+    "sounds": [
+      "genesis:ui/toast/instructions_complete"
+    ]
   }
 }

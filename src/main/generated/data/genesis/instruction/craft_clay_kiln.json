@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:craft_wooden_tool",
+  "criteria": {
+    "obtained_clay_kiln": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:clay_kiln"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_clay_kiln.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:clay_kiln"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_clay_kiln"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_clay_kiln"
+    ]
+  ]
+}

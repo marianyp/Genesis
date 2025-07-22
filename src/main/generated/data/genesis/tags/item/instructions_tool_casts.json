@@ -1,0 +1,9 @@
+{
+  "values": [
+    "genesis:sword_cast",
+    "genesis:shovel_cast",
+    "genesis:pickaxe_cast",
+    "genesis:axe_cast",
+    "genesis:hoe_cast"
+  ]
+}

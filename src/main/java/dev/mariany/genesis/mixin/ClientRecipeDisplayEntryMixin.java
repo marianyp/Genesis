@@ -22,6 +22,7 @@ public class ClientRecipeDisplayEntryMixin {
             )
     )
     public List<ItemStack> getStacks(SlotDisplay slotDisplay, ContextParameterMap parameters, Operation<List<ItemStack>> original) {
-        return original.call(slotDisplay, parameters).stream().filter(stack -> ClientAgeManager.getInstance().isUnlocked(stack)).toList();
+        ClientAgeManager clientAgeManager = ClientAgeManager.getInstance();
+        return original.call(slotDisplay, parameters).stream().filter(clientAgeManager::isUnlocked).toList();
     }
 }

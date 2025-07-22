@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:find_flint",
+  "criteria": {
+    "obtained_flints": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:flints"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_flints.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:flints"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_flints"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_flints"
+    ]
+  ]
+}

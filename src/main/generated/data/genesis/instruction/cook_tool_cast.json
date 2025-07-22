@@ -1,0 +1,29 @@
+{
+  "parent": "genesis:craft_clay_tool_cast",
+  "criteria": {
+    "cooked_tool_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#genesis:instructions_tool_casts"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "icon": {
+      "count": 1,
+      "id": "genesis:pickaxe_cast"
+    },
+    "title": {
+      "translate": "instruction.genesis.cook_tool_cast"
+    }
+  },
+  "requirements": [
+    [
+      "cooked_tool_cast"
+    ]
+  ]
+}

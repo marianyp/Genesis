@@ -1,0 +1,25 @@
+{
+  "parent": "genesis:cook_kiln",
+  "criteria": {
+    "used_kiln": {
+      "trigger": "genesis:cook_with_kiln"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.use_kiln.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:charcoal"
+    },
+    "title": {
+      "translate": "instruction.genesis.use_kiln"
+    }
+  },
+  "requirements": [
+    [
+      "used_kiln"
+    ]
+  ]
+}

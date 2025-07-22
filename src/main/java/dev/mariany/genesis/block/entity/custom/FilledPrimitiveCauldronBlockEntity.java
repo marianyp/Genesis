@@ -1,6 +1,7 @@
 package dev.mariany.genesis.block.entity.custom;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -158,6 +159,12 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
 
         if (this.getCachedState().getBlock() instanceof BrushableBlock brushableBlock) {
             baseBlock = brushableBlock.getBaseBlock();
+
+            if (brushableBlock instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
+                if (brusher instanceof ServerPlayerEntity serverPlayer) {
+                    GenesisCriteria.BRUSH_PRIMITIVE_CAULDRON.trigger(serverPlayer, filledPrimitiveCauldronBlock);
+                }
+            }
         }
 
         world.setBlockState(this.pos, baseBlock.getDefaultState(), Block.NOTIFY_ALL);

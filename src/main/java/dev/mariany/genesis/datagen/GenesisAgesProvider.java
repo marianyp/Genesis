@@ -347,4 +347,9 @@ public class GenesisAgesProvider extends AgesProvider {
                 )
                 .build(consumer, STORY_END);
     }
+
+    @Override
+    public String getName() {
+        return "Genesis Ages";
+    }
 }

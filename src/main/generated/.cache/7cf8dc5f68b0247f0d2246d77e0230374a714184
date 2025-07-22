@@ -8,6 +8,8 @@ c39377d96054448921776c922204995aaa982eee data/genesis/tags/item/diamond_tools.js
 4a86b6a6b50a249765e637a8e93fd0e09c01b1a7 data/genesis/tags/item/golden_armor.json
 9969ec65e75f4b5334294ed84f9c98e6da5b0693 data/genesis/tags/item/golden_tools.json
 41c8a4e3ccace866aba1f29d7322dbb2d164e334 data/genesis/tags/item/healthy_stew_contents.json
+d24c51485faae730c96b459c119ff4a310bf0d7b data/genesis/tags/item/instructions_clay_tool_casts.json
+b43b14b6b136b14c4d501a0be43dc7bb166ba9de data/genesis/tags/item/instructions_tool_casts.json
 742d0809ac433cd781625e58646a272e91f056a5 data/genesis/tags/item/iron_armor.json
 c9ca25f3061a81b67672a995702ebb2b60d4c7a1 data/genesis/tags/item/iron_tools.json
 36993ba55cda15eac9dcc20de8261cb27ac1ec9d data/genesis/tags/item/leather_armor.json

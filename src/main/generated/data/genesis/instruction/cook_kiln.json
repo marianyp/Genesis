@@ -1,0 +1,29 @@
+{
+  "parent": "genesis:craft_clay_kiln",
+  "criteria": {
+    "obtained_kiln": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:kiln"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "icon": {
+      "count": 1,
+      "id": "genesis:kiln"
+    },
+    "title": {
+      "translate": "instruction.genesis.cook_kiln"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_kiln"
+    ]
+  ]
+}
