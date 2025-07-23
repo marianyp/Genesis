@@ -27,6 +27,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "AdvancementsScreenMixin",
     "AnimatedResultButtonMixin",
     "ClientAdvancementManagerMixin",
     "ClientRecipeDisplayEntryMixin",
