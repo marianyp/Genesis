@@ -82,6 +82,7 @@
   "instruction.genesis.craft_wooden_tool.description": "using your tool cast.",
   "instruction.genesis.dust_terracotta_cauldron": "Sift a Dirt/Gravel Filled Cauldron.",
   "instruction.genesis.dust_terracotta_cauldron.description": "Use brush for better output.",
+  "instruction.genesis.find_clay": "Find Clay",
   "instruction.genesis.find_flint": "Find Flint",
   "instruction.genesis.make_campfire": "Make Campfire with Flints.",
   "instruction.genesis.make_campfire.description": "Toss 4 sticks on the ground to use.",

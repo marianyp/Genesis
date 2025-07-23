@@ -66,8 +66,14 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 )))
                 .build(consumer, Genesis.id("make_campfire"));
 
-        InstructionEntry craftClayCauldron = Instruction.Builder.create()
+        InstructionEntry findClay = Instruction.Builder.create()
                 .parent(makeCampfire)
+                .display(Items.CLAY_BALL, Text.translatable("instruction.genesis.find_clay"))
+                .criterion("obtained_clay", InventoryChangedCriterion.Conditions.items(Items.CLAY_BALL))
+                .build(consumer, Genesis.id("find_clay"));
+
+        InstructionEntry craftClayCauldron = Instruction.Builder.create()
+                .parent(findClay)
                 .display(
                         GenesisBlocks.CLAY_CAULDRON.asItem(),
                         Text.translatable("instruction.genesis.craft_clay_cauldron"),

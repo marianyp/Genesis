@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:make_campfire",
+  "parent": "genesis:find_clay",
   "criteria": {
     "obtained_clay_cauldron": {
       "conditions": {
