@@ -11,6 +11,7 @@ import dev.mariany.genesis.event.server.ServerPlayConnectionHandler;
 import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
 import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
 import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
+import dev.mariany.genesis.event.server.command.CommandRegistrationHandler;
 import dev.mariany.genesis.gamerule.GenesisGamerules;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.loot.LootTableModifiers;
@@ -20,6 +21,7 @@ import dev.mariany.genesis.sound.GenesisSoundEvents;
 import dev.mariany.genesis.stat.GenesisStats;
 import dev.mariany.genesis.village.GenesisTradeOffers;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
@@ -52,6 +54,7 @@ public class Genesis implements ModInitializer {
         ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::beforeAdvancementsLoad);
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
         ServerPlayConnectionEvents.JOIN.register(ServerPlayConnectionHandler::onJoin);
+        CommandRegistrationCallback.EVENT.register(CommandRegistrationHandler::onRegister);
 
         GenesisTradeOffers.registerVillagerOffers();
         GenesisGamerules.bootstrap();

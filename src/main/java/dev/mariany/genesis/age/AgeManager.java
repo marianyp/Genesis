@@ -119,6 +119,12 @@ public class AgeManager {
         ).findAny();
     }
 
+    public Optional<AgeEntry> find(Age age) {
+        return ages.values().stream().filter(
+                ageEntry -> ageEntry.getAge().equals(age)
+        ).findAny();
+    }
+
     public Optional<AgeEntry> get(Identifier id) {
         return Optional.ofNullable(this.ages.get(id));
     }

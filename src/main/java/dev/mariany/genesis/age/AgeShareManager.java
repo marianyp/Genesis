@@ -3,9 +3,7 @@ package dev.mariany.genesis.age;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.mariany.genesis.Genesis;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.advancement.PlayerAdvancementTracker;
+import dev.mariany.genesis.advancement.AdvancementHelper;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
@@ -46,6 +44,25 @@ public class AgeShareManager extends PersistentState {
         state.markDirty();
 
         return state;
+    }
+
+    public int clear(boolean global) {
+        int cleared;
+
+        if (global) {
+            cleared = this.globalAges.size();
+            this.globalAges.clear();
+        } else {
+            cleared = this.teamAges.values().stream()
+                    .mapToInt(Set::size)
+                    .sum();
+
+            this.teamAges.clear();
+        }
+
+        this.markDirty();
+
+        return cleared;
     }
 
     public void applySharedAges(ServerPlayerEntity serverPlayer) {
@@ -124,15 +141,7 @@ public class AgeShareManager extends PersistentState {
         }
 
         for (ServerPlayerEntity player : players) {
-            AdvancementEntry advancementEntry = ageEntry.getAdvancementEntry();
-            PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
-            AdvancementProgress advancementProgress = advancementTracker.getProgress(advancementEntry);
-
-            if (!advancementProgress.isDone()) {
-                for (String string : advancementProgress.getUnobtainedCriteria()) {
-                    player.getAdvancementTracker().grantCriterion(advancementEntry, string);
-                }
-            }
+            AdvancementHelper.giveAdvancement(player, ageEntry.getAdvancementEntry());
         }
     }
 

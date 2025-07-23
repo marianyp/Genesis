@@ -2,8 +2,8 @@ package dev.mariany.genesis.client.instruction;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.client.toast.HideableToast;
-import dev.mariany.genesis.client.toast.InstructionsCompleteToast;
 import dev.mariany.genesis.client.toast.InstructionToast;
+import dev.mariany.genesis.client.toast.InstructionsCompleteToast;
 import dev.mariany.genesis.config.ConfigHandler;
 import dev.mariany.genesis.mixin.accessor.ClientAdvancementManagerAccessor;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -101,8 +101,9 @@ public class ClientInstructionManager {
         if (this.toasts.containsKey(id)) {
             this.toasts.get(id).hide();
             this.toasts.remove(id);
-            this.waitingToasts.remove(id);
         }
+
+        this.waitingToasts.remove(id);
     }
 
     public void queueToast(Identifier id, HideableToast toast) {
@@ -135,6 +136,21 @@ public class ClientInstructionManager {
                     description
             ));
         });
+
+        resetCompleteToast();
+    }
+
+    private void resetCompleteToast() {
+        this.complete = false;
+
+        HideableToast toast = this.toasts.get(INSTRUCTIONS_COMPLETE_TOAST_ID);
+
+        if (toast != null) {
+            toast.hide();
+        }
+
+        this.toasts.remove(INSTRUCTIONS_COMPLETE_TOAST_ID);
+        this.waitingToasts.remove(INSTRUCTIONS_COMPLETE_TOAST_ID);
     }
 
     public void refreshInstructionToasts() {
@@ -142,7 +158,6 @@ public class ClientInstructionManager {
 
         for (PlacedAdvancement placed : instructionList) {
             Identifier id = placed.getAdvancementEntry().id();
-
             Optional<AdvancementProgress> optionalAdvancementProgress = getAdvancementProgress(placed);
 
             if (optionalAdvancementProgress.isPresent()) {
@@ -153,7 +168,6 @@ public class ClientInstructionManager {
                 } else if (!this.toasts.containsKey(id)) {
                     if (isParentComplete(placed)) {
                         addToast(placed);
-                        this.complete = false;
                     }
                 }
             }

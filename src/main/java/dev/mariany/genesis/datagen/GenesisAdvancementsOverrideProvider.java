@@ -14,6 +14,7 @@ import net.minecraft.util.Identifier;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+@SuppressWarnings("removal")
 public class GenesisAdvancementsOverrideProvider extends FabricAdvancementProvider {
     public GenesisAdvancementsOverrideProvider(
             FabricDataOutput output,
