@@ -7,6 +7,7 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.PlacedAdvancement;
 import net.minecraft.client.gui.screen.advancement.AdvancementTab;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
+import net.minecraft.client.network.ClientAdvancementManager;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,6 +28,10 @@ public abstract class AdvancementsScreenMixin {
     @Shadow
     public abstract void selectTab(@Nullable AdvancementEntry advancement);
 
+    @Shadow
+    @Final
+    private ClientAdvancementManager advancementHandler;
+
     @Inject(method = "init", at = @At(value = "TAIL"))
     public void injectInit(CallbackInfo ci) {
         if (ConfigHandler.getConfig().alwaysStartOnAgesAdvancementScreen) {
@@ -35,7 +40,10 @@ public abstract class AdvancementsScreenMixin {
                     .filter(advancementEntry -> advancementEntry.id().equals(AgeEntry.ROOT_ADVANCEMENT_ID))
                     .findFirst();
 
-            optionalAgeRoot.ifPresent(this::selectTab);
+            optionalAgeRoot.ifPresent(advancementEntry -> {
+                this.selectTab(advancementEntry);
+                this.advancementHandler.selectTab(advancementEntry, true);
+            });
         }
     }
 
