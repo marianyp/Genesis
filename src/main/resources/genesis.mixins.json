@@ -5,7 +5,7 @@
   "mixins": [
     "AdvancementDisplaysMixin",
     "BrushItemMixin",
-    "CrafterScreenHandlerMixin",
+    "CrafterBlockMixin",
     "DataPackContentsMixin",
     "EntityMixin",
     "GameRulesMixin",
@@ -30,6 +30,7 @@
     "AnimatedResultButtonMixin",
     "ClientAdvancementManagerMixin",
     "ClientRecipeDisplayEntryMixin",
+    "GameOptionsMixin",
     "MinecraftClientMixin",
     "RecipeBookWidgetMixin",
     "RecipeToastMixin",

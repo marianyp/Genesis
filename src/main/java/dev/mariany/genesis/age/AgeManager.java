@@ -3,6 +3,7 @@ package dev.mariany.genesis.age;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKey;
@@ -19,6 +20,16 @@ public class AgeManager {
 
     public static AgeManager getInstance() {
         return INSTANCE;
+    }
+
+    public boolean isAgeGuarded(ItemConvertible item) {
+        return this.ages.values()
+                .stream()
+                .anyMatch(
+                        ageEntry -> ageEntry.getAge().items()
+                                .stream()
+                                .anyMatch(ingredient -> ingredient.test(item.asItem().getDefaultStack()))
+                );
     }
 
     public boolean isUnlocked(ServerPlayerEntity player, RegistryKey<World> worldRegistryKey) {

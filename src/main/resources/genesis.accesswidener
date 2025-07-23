@@ -4,3 +4,4 @@ accessible field net/minecraft/recipe/RawShapedRecipe data Ljava/util/Optional;
 accessible class net/minecraft/client/gui/screen/recipebook/AnimatedResultButton$Result
 accessible class net/minecraft/client/toast/ToastManager$Entry
 accessible method net/minecraft/world/GameRules$BooleanRule create (Z)Lnet/minecraft/world/GameRules$Type;
+accessible class net/minecraft/client/option/GameOptions$OptionVisitor
