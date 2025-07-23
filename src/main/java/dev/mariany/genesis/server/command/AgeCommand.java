@@ -14,6 +14,7 @@ public class AgeCommand {
     ) {
         dispatcher.register(
                 CommandManager.literal("age")
+                        .requires(CommandManager.requirePermissionLevel(2))
                         .then(CommandManager.literal("clear")
                                 .then(CommandManager.literal("global")
                                         .executes(

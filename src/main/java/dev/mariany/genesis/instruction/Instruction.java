@@ -49,6 +49,10 @@ public record Instruction(
             return new Builder();
         }
 
+        public Builder parent(InstructionEntry parent) {
+            return parent(parent.getId());
+        }
+
         public Builder parent(Identifier parent) {
             this.parent = parent;
             return this;
@@ -91,9 +95,10 @@ public record Instruction(
             ));
         }
 
-        public void build(Consumer<InstructionEntry> exporter, Identifier id) {
+        public InstructionEntry build(Consumer<InstructionEntry> exporter, Identifier id) {
             InstructionEntry instructionEntry = this.build(id);
             exporter.accept(instructionEntry);
+            return instructionEntry;
         }
     }
 }

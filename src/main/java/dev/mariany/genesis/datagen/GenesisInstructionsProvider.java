@@ -19,28 +19,12 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class GenesisInstructionsProvider extends InstructionsProvider {
-    private static final Identifier FIND_FLINT = Genesis.id("find_flint");
-    private static final Identifier MAKE_FLINTS = Genesis.id("make_flints");
-    private static final Identifier MAKE_CAMPFIRE = Genesis.id("make_campfire");
-    private static final Identifier CRAFT_CLAY_CAULDRON = Genesis.id("craft_clay_cauldron");
-    private static final Identifier COOK_TERRACOTTA_CAULDRON = Genesis.id("cook_terracotta_cauldron");
-    private static final Identifier DUST_TERRACOTTA_CAULDRON = Genesis.id("dust_terracotta_cauldron");
-    private static final Identifier CRAFT_BLANK_CLAY_CAST = Genesis.id("craft_blank_clay_cast");
-    private static final Identifier CRAFT_CLAY_TOOL_CAST = Genesis.id("craft_clay_tool_cast");
-    private static final Identifier COOK_TOOL_CAST = Genesis.id("cook_tool_cast");
-    private static final Identifier CRAFT_WOODEN_TOOL = Genesis.id("craft_wooden_tool");
-    private static final Identifier CRAFT_CLAY_KILN = Genesis.id("craft_clay_kiln");
-    private static final Identifier COOK_KILN = Genesis.id("cook_kiln");
-    private static final Identifier USE_KILN = Genesis.id("use_kiln");
-    private static final Identifier CRAFT_HEALTHY_STEW = Genesis.id("craft_healthy_stew");
-
     public GenesisInstructionsProvider(
             FabricDataOutput output,
             CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup
@@ -55,23 +39,23 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
     ) {
         RegistryEntryLookup<Item> itemLookup = registryLookup.getOrThrow(RegistryKeys.ITEM);
 
-        Instruction.Builder.create()
+        InstructionEntry findFlint = Instruction.Builder.create()
                 .display(Items.FLINT, Text.translatable("instruction.genesis.find_flint"))
                 .criterion("obtained_flint", InventoryChangedCriterion.Conditions.items(Items.FLINT))
-                .build(consumer, FIND_FLINT);
+                .build(consumer, Genesis.id("find_flint"));
 
-        Instruction.Builder.create()
-                .parent(FIND_FLINT)
+        InstructionEntry makeFlints = Instruction.Builder.create()
+                .parent(findFlint)
                 .display(
                         GenesisItems.FLINTS,
                         Text.translatable("instruction.genesis.craft_flints"),
                         Text.translatable("instruction.genesis.craft_flints.description")
                 )
                 .criterion("obtained_flints", InventoryChangedCriterion.Conditions.items(GenesisItems.FLINTS))
-                .build(consumer, MAKE_FLINTS);
+                .build(consumer, Genesis.id("make_flints"));
 
-        Instruction.Builder.create()
-                .parent(MAKE_FLINTS)
+        InstructionEntry makeCampfire = Instruction.Builder.create()
+                .parent(makeFlints)
                 .display(
                         Items.CAMPFIRE,
                         Text.translatable("instruction.genesis.make_campfire"),
@@ -80,10 +64,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("started_fire", GenesisCriteria.FIRE_STARTED.create(new TickCriterion.Conditions(
                         Optional.empty()
                 )))
-                .build(consumer, MAKE_CAMPFIRE);
+                .build(consumer, Genesis.id("make_campfire"));
 
-        Instruction.Builder.create()
-                .parent(MAKE_CAMPFIRE)
+        InstructionEntry craftClayCauldron = Instruction.Builder.create()
+                .parent(makeCampfire)
                 .display(
                         GenesisBlocks.CLAY_CAULDRON.asItem(),
                         Text.translatable("instruction.genesis.craft_clay_cauldron"),
@@ -92,10 +76,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_clay_cauldron", InventoryChangedCriterion.Conditions.items(
                         GenesisBlocks.CLAY_CAULDRON
                 ))
-                .build(consumer, CRAFT_CLAY_CAULDRON);
+                .build(consumer, Genesis.id("craft_clay_cauldron"));
 
-        Instruction.Builder.create()
-                .parent(CRAFT_CLAY_CAULDRON)
+        InstructionEntry cookTerracottaCauldron = Instruction.Builder.create()
+                .parent(craftClayCauldron)
                 .display(
                         GenesisBlocks.TERRACOTTA_CAULDRON.asItem(),
                         Text.translatable("instruction.genesis.cook_terracotta_cauldron")
@@ -103,20 +87,20 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_terracotta_cauldron", InventoryChangedCriterion.Conditions.items(
                         GenesisBlocks.TERRACOTTA_CAULDRON
                 ))
-                .build(consumer, COOK_TERRACOTTA_CAULDRON);
+                .build(consumer, Genesis.id("cook_terracotta_cauldron"));
 
-        Instruction.Builder.create()
-                .parent(COOK_TERRACOTTA_CAULDRON)
+        InstructionEntry dustTerracottaCauldron = Instruction.Builder.create()
+                .parent(cookTerracottaCauldron)
                 .display(
                         GenesisBlocks.DIRT_TERRACOTTA_CAULDRON.asItem(),
                         Text.translatable("instruction.genesis.dust_terracotta_cauldron"),
                         Text.translatable("instruction.genesis.dust_terracotta_cauldron.description")
                 )
                 .criterion("dusted_terracotta_cauldron", BrushPrimitiveCauldronCriteria.Conditions.create())
-                .build(consumer, DUST_TERRACOTTA_CAULDRON);
+                .build(consumer, Genesis.id("dust_terracotta_cauldron"));
 
-        Instruction.Builder.create()
-                .parent(DUST_TERRACOTTA_CAULDRON)
+        InstructionEntry craftBlankClayCast = Instruction.Builder.create()
+                .parent(dustTerracottaCauldron)
                 .display(
                         GenesisItems.BLANK_CLAY_CAST,
                         Text.translatable("instruction.genesis.craft_blank_clay_cast"),
@@ -125,10 +109,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_blank_clay_cast", InventoryChangedCriterion.Conditions.items(
                         GenesisItems.BLANK_CLAY_CAST
                 ))
-                .build(consumer, CRAFT_BLANK_CLAY_CAST);
+                .build(consumer, Genesis.id("craft_blank_clay_cast"));
 
-        Instruction.Builder.create()
-                .parent(CRAFT_BLANK_CLAY_CAST)
+        InstructionEntry craftClayToolCast = Instruction.Builder.create()
+                .parent(craftBlankClayCast)
                 .display(
                         GenesisItems.PICKAXE_CLAY_CAST,
                         Text.translatable("instruction.genesis.craft_clay_tool_cast"),
@@ -137,10 +121,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_clay_tool_cast", InventoryChangedCriterion.Conditions.items(
                         ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS)
                 ))
-                .build(consumer, CRAFT_CLAY_TOOL_CAST);
+                .build(consumer, Genesis.id("craft_clay_tool_cast"));
 
-        Instruction.Builder.create()
-                .parent(CRAFT_CLAY_TOOL_CAST)
+        InstructionEntry cookToolCast = Instruction.Builder.create()
+                .parent(craftClayToolCast)
                 .display(
                         GenesisItems.PICKAXE_CAST,
                         Text.translatable("instruction.genesis.cook_tool_cast")
@@ -148,10 +132,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("cooked_tool_cast", InventoryChangedCriterion.Conditions.items(
                         ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.INSTRUCTIONS_TOOL_CASTS)
                 ))
-                .build(consumer, COOK_TOOL_CAST);
+                .build(consumer, Genesis.id("cook_tool_cast"));
 
-        Instruction.Builder.create()
-                .parent(COOK_TOOL_CAST)
+        InstructionEntry craftWoodenTool = Instruction.Builder.create()
+                .parent(cookToolCast)
                 .display(
                         Items.WOODEN_PICKAXE,
                         Text.translatable("instruction.genesis.craft_wooden_tool"),
@@ -160,10 +144,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_wooden_tool", InventoryChangedCriterion.Conditions.items(
                         ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.WOODEN_TOOLS)
                 ))
-                .build(consumer, CRAFT_WOODEN_TOOL);
+                .build(consumer, Genesis.id("craft_wooden_tool"));
 
-        Instruction.Builder.create()
-                .parent(CRAFT_WOODEN_TOOL)
+        InstructionEntry craftClayKiln = Instruction.Builder.create()
+                .parent(craftWoodenTool)
                 .display(
                         GenesisBlocks.CLAY_KILN.asItem(),
                         Text.translatable("instruction.genesis.craft_clay_kiln"),
@@ -172,10 +156,10 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_clay_kiln", InventoryChangedCriterion.Conditions.items(
                         GenesisBlocks.CLAY_KILN
                 ))
-                .build(consumer, CRAFT_CLAY_KILN);
+                .build(consumer, Genesis.id("craft_clay_kiln"));
 
-        Instruction.Builder.create()
-                .parent(CRAFT_CLAY_KILN)
+        InstructionEntry cookKiln = Instruction.Builder.create()
+                .parent(craftClayKiln)
                 .display(
                         GenesisBlocks.KILN.asItem(),
                         Text.translatable("instruction.genesis.cook_kiln")
@@ -183,20 +167,20 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_kiln", InventoryChangedCriterion.Conditions.items(
                         GenesisBlocks.KILN
                 ))
-                .build(consumer, COOK_KILN);
+                .build(consumer, Genesis.id("cook_kiln"));
 
-        Instruction.Builder.create()
-                .parent(COOK_KILN)
+        InstructionEntry useKiln = Instruction.Builder.create()
+                .parent(cookKiln)
                 .display(
                         Items.CHARCOAL,
                         Text.translatable("instruction.genesis.use_kiln"),
                         Text.translatable("instruction.genesis.use_kiln.description")
                 )
                 .criterion("used_kiln", CookWithKilnCriteria.Conditions.create())
-                .build(consumer, USE_KILN);
+                .build(consumer, Genesis.id("use_kiln"));
 
         Instruction.Builder.create()
-                .parent(USE_KILN)
+                .parent(useKiln)
                 .display(
                         GenesisItems.HEALTHY_STEW,
                         Text.translatable("instruction.genesis.craft_healthy_stew"),
@@ -205,7 +189,7 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 .criterion("obtained_healthy_stew", InventoryChangedCriterion.Conditions.items(
                         GenesisItems.HEALTHY_STEW
                 ))
-                .build(consumer, CRAFT_HEALTHY_STEW);
+                .build(consumer, Genesis.id("craft_healthy_stew"));
     }
 
     @Override
