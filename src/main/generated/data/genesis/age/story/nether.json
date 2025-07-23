@@ -1,11 +1,8 @@
 {
   "parent": "genesis:story/survival",
   "criteria": {
-    "has_diamond_tools_age": {
-      "conditions": {
-        "advancement": "genesis:age/tools/diamond"
-      },
-      "trigger": "genesis:obtain_advancement"
+    "has_enchanted": {
+      "trigger": "minecraft:enchanted_item"
     }
   },
   "dimensions": [

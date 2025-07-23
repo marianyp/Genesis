@@ -11,6 +11,7 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.advancement.criterion.EnchantedItemCriterion;
 import net.minecraft.advancement.criterion.OnKilledCriterion;
 import net.minecraft.advancement.criterion.PlayerGeneratesContainerLootCriterion;
 import net.minecraft.entity.EntityType;
@@ -237,7 +238,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 .dimensionUnlocks(World.NETHER)
                 .parent(STORY_SURVIVAL)
                 .parentOptional()
-                .requireAge(TOOLS_DIAMOND)
+                .criterion("has_enchanted", EnchantedItemCriterion.Conditions.any())
                 .display(
                         Items.ZOMBIFIED_PIGLIN_SPAWN_EGG,
                         Text.translatable("age.genesis.nether"),

@@ -18,6 +18,7 @@ public class GenesisRecipeOverrideProvider extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
+    @Override
     protected Identifier getRecipeIdentifier(Identifier identifier) {
         return Identifier.ofVanilla(identifier.getPath());
     }

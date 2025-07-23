@@ -39,6 +39,7 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
     private static final Identifier CRAFT_CLAY_KILN = Genesis.id("craft_clay_kiln");
     private static final Identifier COOK_KILN = Genesis.id("cook_kiln");
     private static final Identifier USE_KILN = Genesis.id("use_kiln");
+    private static final Identifier CRAFT_HEALTHY_STEW = Genesis.id("craft_healthy_stew");
 
     public GenesisInstructionsProvider(
             FabricDataOutput output,
@@ -193,6 +194,18 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 )
                 .criterion("used_kiln", CookWithKilnCriteria.Conditions.create())
                 .build(consumer, USE_KILN);
+
+        Instruction.Builder.create()
+                .parent(USE_KILN)
+                .display(
+                        GenesisItems.HEALTHY_STEW,
+                        Text.translatable("instruction.genesis.craft_healthy_stew"),
+                        Text.translatable("instruction.genesis.craft_healthy_stew.description")
+                )
+                .criterion("obtained_healthy_stew", InventoryChangedCriterion.Conditions.items(
+                        GenesisItems.HEALTHY_STEW
+                ))
+                .build(consumer, CRAFT_HEALTHY_STEW);
     }
 
     @Override

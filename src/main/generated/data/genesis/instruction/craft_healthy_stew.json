@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:use_kiln",
+  "criteria": {
+    "obtained_healthy_stew": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:healthy_stew"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_healthy_stew.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:healthy_stew"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_healthy_stew"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_healthy_stew"
+    ]
+  ]
+}
