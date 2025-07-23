@@ -1,0 +1,32 @@
+{
+  "criteria": {
+    "view_ages": {
+      "conditions": {
+        "advancement": "genesis:age/root"
+      },
+      "trigger": "genesis:open_advancement_tab"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.view_ages.description",
+      "with": [
+        {
+          "keybind": "key.advancements"
+        }
+      ]
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:written_book"
+    },
+    "title": {
+      "translate": "instruction.genesis.view_ages"
+    }
+  },
+  "requirements": [
+    [
+      "view_ages"
+    ]
+  ]
+}

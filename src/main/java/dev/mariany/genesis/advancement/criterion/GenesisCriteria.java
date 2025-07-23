@@ -27,6 +27,10 @@ public class GenesisCriteria {
             "cook_with_kiln",
             new CookWithKilnCriteria()
     );
+    public static final OpenAdvancementTabCriteria OPEN_ADVANCEMENT_TAB = register(
+            "open_advancement_tab",
+            new OpenAdvancementTabCriteria()
+    );
 
     public static <T extends Criterion<?>> T register(String name, T criterion) {
         return Registry.register(Registries.CRITERION, Genesis.id(name), criterion);

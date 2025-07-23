@@ -14,6 +14,7 @@
     "PlayerAdvancementTrackerMixin",
     "RecipeUnlockerMixin",
     "ServerAdvancementLoaderMixin",
+    "ServerPlayerNetworkHandlerMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerRecipeManagerMixin",
     "TrialSpawnerStateMixin",
