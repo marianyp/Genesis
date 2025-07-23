@@ -157,18 +157,19 @@ public class ClientInstructionManager {
         List<PlacedAdvancement> instructionList = getInstructionAdvancements();
 
         for (PlacedAdvancement placed : instructionList) {
-            Identifier id = placed.getAdvancementEntry().id();
             Optional<AdvancementProgress> optionalAdvancementProgress = getAdvancementProgress(placed);
+            Identifier id = placed.getAdvancementEntry().id();
 
             if (optionalAdvancementProgress.isPresent()) {
                 AdvancementProgress progress = optionalAdvancementProgress.get();
 
-                if (progress.isDone()) {
+                boolean isDone = progress.isDone();
+                boolean isParentComplete = isParentComplete(placed);
+
+                if (isDone || !isParentComplete) {
                     removeToast(id);
                 } else if (!this.toasts.containsKey(id)) {
-                    if (isParentComplete(placed)) {
-                        addToast(placed);
-                    }
+                    addToast(placed);
                 }
             }
         }
