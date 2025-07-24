@@ -8,26 +8,32 @@ import net.minecraft.village.VillagerProfession;
 
 public class GenesisTradeOffers {
     public static void registerVillagerOffers() {
-        TradeOfferHelper.registerVillagerOffers(VillagerProfession.CARTOGRAPHER, 2, factories -> {
-            factories.add(
-                    new TradeOffers.SellMapFactory(14,
-                            GenesisTags.Structures.ON_DEEP_DARK_EXPLORER_MAPS,
-                            "filled_map.ancient_city",
-                            MapDecorationTypes.RED_X,
-                            12,
-                            10
-                    )
-            );
+        TradeOfferHelper.registerVillagerOffers(
+                VillagerProfession.CARTOGRAPHER,
+                2,
+                factories -> factories.add(
+                        new SellBiomeMapFactory(8,
+                                GenesisTags.Biomes.ON_PALE_GARDEN_EXPLORER_MAPS,
+                                "filled_map.pale_garden",
+                                MapDecorationTypes.RED_X,
+                                12,
+                                5
+                        )
+                )
+        );
 
-            factories.add(
-                    new SellBiomeMapFactory(14,
-                            GenesisTags.Biomes.ON_PALE_GARDEN_EXPLORER_MAPS,
-                            "filled_map.pale_garden",
-                            MapDecorationTypes.RED_X,
-                            12,
-                            10
-                    )
-            );
-        });
+        TradeOfferHelper.registerVillagerOffers(
+                VillagerProfession.CARTOGRAPHER,
+                3,
+                factories -> factories.add(
+                        new TradeOffers.SellMapFactory(14,
+                                GenesisTags.Structures.ON_DEEP_DARK_EXPLORER_MAPS,
+                                "filled_map.ancient_city",
+                                MapDecorationTypes.RED_X,
+                                12,
+                                10
+                        )
+                )
+        );
     }
 }

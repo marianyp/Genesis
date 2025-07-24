@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:story/nether",
+  "parent": "genesis:story/survival",
   "criteria": {
     "killed_creaking": {
       "conditions": {

@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:story/survival",
+  "parent": "genesis:story/night",
   "criteria": {
     "has_enchanted": {
       "trigger": "minecraft:enchanted_item"

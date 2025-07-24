@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:story/night",
+  "parent": "genesis:story/nether",
   "criteria": {
     "complete_ominous_trial_spawner": {
       "conditions": {

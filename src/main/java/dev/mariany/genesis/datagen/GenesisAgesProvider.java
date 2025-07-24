@@ -51,8 +51,8 @@ public class GenesisAgesProvider extends AgesProvider {
     private static final Identifier BLOCKS_FURNACE = of(AgeCategory.BLOCKS, "furnace");
 
     private static final Identifier STORY_SURVIVAL = of(AgeCategory.STORY, "survival");
-    private static final Identifier STORY_NETHER = of(AgeCategory.STORY, "nether");
     private static final Identifier STORY_NIGHT = of(AgeCategory.STORY, "night");
+    private static final Identifier STORY_NETHER = of(AgeCategory.STORY, "nether");
     private static final Identifier STORY_TRIAL = of(AgeCategory.STORY, "trial");
     private static final Identifier STORY_OCEAN = of(AgeCategory.STORY, "ocean");
     private static final Identifier STORY_SCULK = of(AgeCategory.STORY, "sculk");
@@ -235,20 +235,8 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_SURVIVAL);
 
         Age.Builder.create()
-                .dimensionUnlocks(World.NETHER)
-                .parent(STORY_SURVIVAL)
-                .parentOptional()
-                .criterion("has_enchanted", EnchantedItemCriterion.Conditions.any())
-                .display(
-                        Items.ZOMBIFIED_PIGLIN_SPAWN_EGG,
-                        Text.translatable("age.genesis.nether"),
-                        Text.translatable("age.genesis.story.nether.description")
-                )
-                .build(consumer, STORY_NETHER);
-
-        Age.Builder.create()
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(ItemTags.BEDS)))
-                .parent(STORY_NETHER)
+                .parent(STORY_SURVIVAL)
                 .parentOptional()
                 .criterion("killed_creaking",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
@@ -263,8 +251,20 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_NIGHT);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
+                .dimensionUnlocks(World.NETHER)
                 .parent(STORY_NIGHT)
+                .parentOptional()
+                .criterion("has_enchanted", EnchantedItemCriterion.Conditions.any())
+                .display(
+                        Items.ZOMBIFIED_PIGLIN_SPAWN_EGG,
+                        Text.translatable("age.genesis.nether"),
+                        Text.translatable("age.genesis.story.nether.description")
+                )
+                .build(consumer, STORY_NETHER);
+
+        Age.Builder.create()
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
+                .parent(STORY_NETHER)
                 .parentOptional()
                 .criterion("complete_ominous_trial_spawner", CompleteTrialSpawnerCriteria.Conditions.create(true))
                 .display(
