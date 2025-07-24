@@ -4,10 +4,15 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagBuilder;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
@@ -98,6 +103,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.GOLDEN_HOE
         );
 
+        supportExternalMod(GenesisTags.Items.GOLDEN_TOOLS, "farmersdelight:golden_knife");
+
         valueLookupBuilder(GenesisTags.Items.IRON_TOOLS).add(
                 Items.IRON_SWORD,
                 Items.IRON_SHOVEL,
@@ -106,6 +113,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.IRON_HOE
         );
 
+        supportExternalMod(GenesisTags.Items.IRON_TOOLS, "farmersdelight:iron_knife");
+
         valueLookupBuilder(GenesisTags.Items.DIAMOND_TOOLS).add(
                 Items.DIAMOND_SWORD,
                 Items.DIAMOND_SHOVEL,
@@ -113,6 +122,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.DIAMOND_AXE,
                 Items.DIAMOND_HOE
         );
+
+        supportExternalMod(GenesisTags.Items.DIAMOND_TOOLS, "farmersdelight:diamond_knife");
 
         valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS).add(
                 GenesisItems.CLAY_SWORD_CAST,
@@ -148,5 +159,33 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.PUMPKIN,
                 Items.SWEET_BERRIES
         );
+
+        supportExternalMod(GenesisTags.Items.HEALTHY_STEW_CONTENTS, "biomesoplenty", List.of(
+                        "orange_cosmos",
+                        "pink_hibiscus",
+                        "rose",
+                        "violet"
+                )
+        );
+
+        supportExternalMod(GenesisTags.Items.HEALTHY_STEW_CONTENTS, "farmersdelight", List.of(
+                        "cabbage",
+                        "onion",
+                        "tomato"
+                )
+        );
+    }
+
+    private void supportExternalMod(TagKey<Item> tag, String item) {
+        Identifier id = Identifier.of(item);
+        supportExternalMod(tag, id.getNamespace(), List.of(id.getPath()));
+    }
+
+    private void supportExternalMod(TagKey<Item> tag, String modName, List<String> items) {
+        TagBuilder tagBuilder = getTagBuilder(tag);
+
+        for (String item : items) {
+            tagBuilder.addOptional(Identifier.of(modName, item));
+        }
     }
 }

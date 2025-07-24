@@ -16,6 +16,7 @@ import dev.mariany.genesis.gamerule.GenesisGamerules;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.loot.LootTableModifiers;
 import dev.mariany.genesis.packet.GenesisPackets;
+import dev.mariany.genesis.recipe.brew.GenesisBrewingRecipes;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
 import dev.mariany.genesis.stat.GenesisStats;
@@ -41,6 +42,7 @@ public class Genesis implements ModInitializer {
         GenesisPackets.register();
         GenesisSoundEvents.bootstrap();
         GenesisItems.bootstrap();
+        GenesisBrewingRecipes.registerBrewingRecipes();
         GenesisScreenHandlers.bootstrap();
         GenesisBlocks.bootstrap();
         GenesisBlockEntities.bootstrap();

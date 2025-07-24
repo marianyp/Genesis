@@ -13,6 +13,34 @@
     "minecraft:oxeye_daisy",
     "minecraft:poppy",
     "minecraft:pumpkin",
-    "minecraft:sweet_berries"
+    "minecraft:sweet_berries",
+    {
+      "id": "biomesoplenty:orange_cosmos",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_hibiscus",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:rose",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:violet",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:cabbage",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:onion",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:tomato",
+      "required": false
+    }
   ]
 }

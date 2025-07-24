@@ -5,3 +5,4 @@ accessible class net/minecraft/client/gui/screen/recipebook/AnimatedResultButton
 accessible class net/minecraft/client/toast/ToastManager$Entry
 accessible method net/minecraft/world/GameRules$BooleanRule create (Z)Lnet/minecraft/world/GameRules$Type;
 accessible class net/minecraft/client/option/GameOptions$OptionVisitor
+accessible class net/minecraft/screen/BrewingStandScreenHandler$PotionSlot

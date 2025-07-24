@@ -9,6 +9,7 @@ import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.property.numeric.UseDurationProperty;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 
 public class GenesisModelProvider extends FabricModelProvider {
     public GenesisModelProvider(FabricDataOutput output) {
@@ -29,6 +30,11 @@ public class GenesisModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(GenesisItems.COPPER_NUGGET, Models.GENERATED);
         itemModelGenerator.register(GenesisItems.HEALTHY_STEW, Models.GENERATED);
+        itemModelGenerator.registerWithTextureSource(
+                GenesisItems.ENCHANTED_HONEY_BOTTLE,
+                Items.HONEY_BOTTLE,
+                Models.GENERATED
+        );
 
         this.registerCopperTools(itemModelGenerator);
         this.registerCopperArmor(itemModelGenerator);

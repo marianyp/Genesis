@@ -7,12 +7,15 @@ import dev.mariany.genesis.component.type.GenesisFoodComponents;
 import dev.mariany.genesis.item.custom.FlintsItem;
 import dev.mariany.genesis.item.equipment.GenesisArmorMaterials;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FoodComponents;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Rarity;
 
 import java.util.function.Function;
 
@@ -61,10 +64,21 @@ public class GenesisItems {
     public static final Item TOTEM_CAST = register("totem_cast", CAST_SETTINGS);
 
     public static final Item HEALTHY_STEW = register("healthy_stew", (
-            new Item.Settings()
-                    .maxCount(GenesisConstants.STEW_STACK_SIZE)
-                    .food(GenesisFoodComponents.HEALTHY_STEW, GenesisConsumableComponents.HEALTHY_STEW)
-                    .useRemainder(Items.BOWL))
+                    new Item.Settings()
+                            .maxCount(GenesisConstants.STEW_STACK_SIZE)
+                            .food(GenesisFoodComponents.HEALTHY_STEW, GenesisConsumableComponents.HEALTHY_STEW)
+                            .useRemainder(Items.BOWL)
+            )
+    );
+
+    public static final Item ENCHANTED_HONEY_BOTTLE = register("enchanted_honey_bottle", (new Item.Settings()
+                    .recipeRemainder(Items.GLASS_BOTTLE)
+                    .food(FoodComponents.HONEY_BOTTLE, GenesisConsumableComponents.ENCHANTED_HONEY_BOTTLE)
+                    .useRemainder(Items.GLASS_BOTTLE)
+                    .component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    .rarity(Rarity.UNCOMMON)
+                    .maxCount(16)
+            )
     );
 
     private static RegistryKey<Item> keyOf(String id) {
@@ -144,6 +158,7 @@ public class GenesisItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
             entries.addAfter(Items.RABBIT_STEW, HEALTHY_STEW);
+            entries.addAfter(Items.HONEY_BOTTLE, ENCHANTED_HONEY_BOTTLE);
         });
     }
 }
