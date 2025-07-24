@@ -6,6 +6,7 @@
     "AdvancementDisplaysMixin",
     "BrewingRecipeRegistryBuilderMixin",
     "BrewingRecipeRegistryMixin",
+    "BrewingStandBlockEntityMixin",
     "BrewingStandScreenHandlerPotionSlotMixin",
     "BrushItemMixin",
     "CrafterBlockMixin",
