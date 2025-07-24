@@ -6,11 +6,14 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -37,7 +40,9 @@ public class GenesisAdvancementsOverrideProvider extends FabricAdvancementProvid
                         true,
                         false
                 )
-                .criterion("diamond", InventoryChangedCriterion.Conditions.items(GenesisItems.RAW_DIAMOND))
+                .criterion("diamond", InventoryChangedCriterion.Conditions.items(Items.DIAMOND))
+                .criterion("raw_diamond", InventoryChangedCriterion.Conditions.items(GenesisItems.RAW_DIAMOND))
+                .requirements(AdvancementRequirements.anyOf(List.of("diamond", "raw_diamond")))
                 .build(consumer, "story/mine_diamond");
     }
 }

@@ -5,6 +5,16 @@
       "conditions": {
         "items": [
           {
+            "items": "minecraft:diamond"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raw_diamond": {
+      "conditions": {
+        "items": [
+          {
             "items": "genesis:raw_diamond"
           }
         ]
@@ -26,7 +36,8 @@
   },
   "requirements": [
     [
-      "diamond"
+      "diamond",
+      "raw_diamond"
     ]
   ],
   "sends_telemetry_event": true
