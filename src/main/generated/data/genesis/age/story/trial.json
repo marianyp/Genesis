@@ -21,7 +21,7 @@
     }
   },
   "items": [
-    "genesis:anvil_clay_cast"
+    "genesis:clay_anvil_cast"
   ],
   "requires_parent": false
 }

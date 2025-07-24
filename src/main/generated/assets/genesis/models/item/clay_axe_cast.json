@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "genesis:item/shovel_clay_cast"
+    "layer0": "genesis:item/clay_axe_cast"
   }
 }

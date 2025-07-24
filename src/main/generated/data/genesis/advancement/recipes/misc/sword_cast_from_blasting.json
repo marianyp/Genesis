@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sword_clay_cast": {
+    "has_clay_sword_cast": {
       "conditions": {
         "items": [
           {
-            "items": "genesis:sword_clay_cast"
+            "items": "genesis:clay_sword_cast"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sword_clay_cast"
+      "has_clay_sword_cast"
     ]
   ],
   "rewards": {

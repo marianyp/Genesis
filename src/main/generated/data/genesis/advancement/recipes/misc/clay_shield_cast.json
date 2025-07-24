@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:shovel_clay_cast"
+        "recipe": "genesis:clay_shield_cast"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "genesis:shovel_clay_cast"
+      "genesis:clay_shield_cast"
     ]
   }
 }

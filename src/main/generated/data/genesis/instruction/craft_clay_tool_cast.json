@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "genesis:pickaxe_clay_cast"
+      "id": "genesis:clay_pickaxe_cast"
     },
     "title": {
       "translate": "instruction.genesis.craft_clay_tool_cast"

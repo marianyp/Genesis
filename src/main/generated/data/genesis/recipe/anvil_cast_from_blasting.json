@@ -3,7 +3,7 @@
   "category": "misc",
   "cookingtime": 300,
   "experience": 0.3,
-  "ingredient": "genesis:anvil_clay_cast",
+  "ingredient": "genesis:clay_anvil_cast",
   "result": {
     "id": "genesis:anvil_cast"
   }

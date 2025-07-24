@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "genesis:item/hoe_clay_cast"
+    "layer0": "genesis:item/clay_anvil_cast"
   }
 }

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "genesis:item/pickaxe_clay_cast"
+    "model": "genesis:item/clay_hoe_cast"
   }
 }

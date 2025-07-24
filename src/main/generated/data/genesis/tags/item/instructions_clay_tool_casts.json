@@ -1,9 +1,9 @@
 {
   "values": [
-    "genesis:sword_clay_cast",
-    "genesis:shovel_clay_cast",
-    "genesis:pickaxe_clay_cast",
-    "genesis:axe_clay_cast",
-    "genesis:hoe_clay_cast"
+    "genesis:clay_sword_cast",
+    "genesis:clay_shovel_cast",
+    "genesis:clay_pickaxe_cast",
+    "genesis:clay_axe_cast",
+    "genesis:clay_hoe_cast"
   ]
 }

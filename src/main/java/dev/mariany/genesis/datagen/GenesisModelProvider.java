@@ -63,14 +63,14 @@ public class GenesisModelProvider extends FabricModelProvider {
 
     private void registerCasts(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(GenesisItems.BLANK_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.SWORD_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.SHOVEL_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.PICKAXE_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.AXE_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.HOE_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.SHIELD_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.ANVIL_CLAY_CAST, Models.GENERATED);
-        itemModelGenerator.register(GenesisItems.TOTEM_CLAY_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_SWORD_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_SHOVEL_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_PICKAXE_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_AXE_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_HOE_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_SHIELD_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_ANVIL_CAST, Models.GENERATED);
+        itemModelGenerator.register(GenesisItems.CLAY_TOTEM_CAST, Models.GENERATED);
         itemModelGenerator.register(GenesisItems.SWORD_CAST, Models.GENERATED);
         itemModelGenerator.register(GenesisItems.SHOVEL_CAST, Models.GENERATED);
         itemModelGenerator.register(GenesisItems.PICKAXE_CAST, Models.GENERATED);

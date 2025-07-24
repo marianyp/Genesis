@@ -3,7 +3,7 @@
   "category": "misc",
   "cookingtime": 300,
   "experience": 0.3,
-  "ingredient": "genesis:totem_clay_cast",
+  "ingredient": "genesis:clay_totem_cast",
   "result": {
     "id": "genesis:totem_cast"
   }

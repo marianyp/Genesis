@@ -220,14 +220,14 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
             }
 
             private void registerCasts() {
-                registerCast(GenesisItems.SWORD_CLAY_CAST, GenesisItems.SWORD_CAST);
-                registerCast(GenesisItems.SHOVEL_CLAY_CAST, GenesisItems.SHOVEL_CAST);
-                registerCast(GenesisItems.PICKAXE_CLAY_CAST, GenesisItems.PICKAXE_CAST);
-                registerCast(GenesisItems.AXE_CLAY_CAST, GenesisItems.AXE_CAST);
-                registerCast(GenesisItems.HOE_CLAY_CAST, GenesisItems.HOE_CAST);
-                registerCast(GenesisItems.SHIELD_CLAY_CAST, GenesisItems.SHIELD_CAST);
-                registerCast(GenesisItems.ANVIL_CLAY_CAST, GenesisItems.ANVIL_CAST);
-                registerCast(GenesisItems.TOTEM_CLAY_CAST, GenesisItems.TOTEM_CAST);
+                registerCast(GenesisItems.CLAY_SWORD_CAST, GenesisItems.SWORD_CAST);
+                registerCast(GenesisItems.CLAY_SHOVEL_CAST, GenesisItems.SHOVEL_CAST);
+                registerCast(GenesisItems.CLAY_PICKAXE_CAST, GenesisItems.PICKAXE_CAST);
+                registerCast(GenesisItems.CLAY_AXE_CAST, GenesisItems.AXE_CAST);
+                registerCast(GenesisItems.CLAY_HOE_CAST, GenesisItems.HOE_CAST);
+                registerCast(GenesisItems.CLAY_SHIELD_CAST, GenesisItems.SHIELD_CAST);
+                registerCast(GenesisItems.CLAY_ANVIL_CAST, GenesisItems.ANVIL_CAST);
+                registerCast(GenesisItems.CLAY_TOTEM_CAST, GenesisItems.TOTEM_CAST);
             }
 
             private void registerCast(Item input, Item output) {
@@ -261,7 +261,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.CLAY_BALL), conditionsFromItem(Items.CLAY_BALL))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.SWORD_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_SWORD_CAST)
                         .pattern("F")
                         .pattern("F")
                         .pattern("C")
@@ -270,7 +270,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.SHOVEL_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_SHOVEL_CAST)
                         .pattern("F")
                         .pattern("C")
                         .input('F', Items.FLINT)
@@ -278,7 +278,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.PICKAXE_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_PICKAXE_CAST)
                         .pattern("FFF")
                         .pattern(" C ")
                         .input('F', Items.FLINT)
@@ -286,7 +286,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.AXE_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_AXE_CAST)
                         .pattern("FF")
                         .pattern("CF")
                         .input('F', Items.FLINT)
@@ -294,7 +294,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.HOE_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_HOE_CAST)
                         .pattern("FF")
                         .pattern(" C")
                         .input('F', Items.FLINT)
@@ -302,7 +302,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.SHIELD_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_SHIELD_CAST)
                         .pattern(" FF")
                         .pattern("CFF")
                         .pattern(" FF")
@@ -311,7 +311,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
-                this.createShaped(RecipeCategory.MISC, GenesisItems.ANVIL_CLAY_CAST)
+                this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_ANVIL_CAST)
                         .pattern("FFF")
                         .pattern(" C ")
                         .pattern("FFF")

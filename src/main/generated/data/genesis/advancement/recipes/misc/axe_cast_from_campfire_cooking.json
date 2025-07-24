@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_axe_clay_cast": {
+    "has_clay_axe_cast": {
       "conditions": {
         "items": [
           {
-            "items": "genesis:axe_clay_cast"
+            "items": "genesis:clay_axe_cast"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_axe_clay_cast"
+      "has_clay_axe_cast"
     ]
   ],
   "rewards": {

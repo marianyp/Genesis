@@ -42,14 +42,14 @@ public class GenesisItems {
     public static final Item RAW_NETHERITE = register("raw_netherite");
 
     public static final Item BLANK_CLAY_CAST = register("blank_clay_cast");
-    public static final Item SWORD_CLAY_CAST = register("sword_clay_cast", CAST_SETTINGS);
-    public static final Item SHOVEL_CLAY_CAST = register("shovel_clay_cast", CAST_SETTINGS);
-    public static final Item PICKAXE_CLAY_CAST = register("pickaxe_clay_cast", CAST_SETTINGS);
-    public static final Item AXE_CLAY_CAST = register("axe_clay_cast", CAST_SETTINGS);
-    public static final Item HOE_CLAY_CAST = register("hoe_clay_cast", CAST_SETTINGS);
-    public static final Item SHIELD_CLAY_CAST = register("shield_clay_cast", CAST_SETTINGS);
-    public static final Item ANVIL_CLAY_CAST = register("anvil_clay_cast", CAST_SETTINGS);
-    public static final Item TOTEM_CLAY_CAST = register("totem_clay_cast", CAST_SETTINGS);
+    public static final Item CLAY_SWORD_CAST = register("clay_sword_cast", CAST_SETTINGS);
+    public static final Item CLAY_SHOVEL_CAST = register("clay_shovel_cast", CAST_SETTINGS);
+    public static final Item CLAY_PICKAXE_CAST = register("clay_pickaxe_cast", CAST_SETTINGS);
+    public static final Item CLAY_AXE_CAST = register("clay_axe_cast", CAST_SETTINGS);
+    public static final Item CLAY_HOE_CAST = register("clay_hoe_cast", CAST_SETTINGS);
+    public static final Item CLAY_SHIELD_CAST = register("clay_shield_cast", CAST_SETTINGS);
+    public static final Item CLAY_ANVIL_CAST = register("clay_anvil_cast", CAST_SETTINGS);
+    public static final Item CLAY_TOTEM_CAST = register("clay_totem_cast", CAST_SETTINGS);
 
     public static final Item SWORD_CAST = register("sword_cast", CAST_SETTINGS);
     public static final Item SHOVEL_CAST = register("shovel_cast", CAST_SETTINGS);
@@ -104,16 +104,16 @@ public class GenesisItems {
             entries.addAfter(RAW_DIAMOND, RAW_REDSTONE);
 
             entries.addBefore(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, BLANK_CLAY_CAST);
-            entries.addAfter(BLANK_CLAY_CAST, SWORD_CLAY_CAST);
-            entries.addAfter(SWORD_CLAY_CAST, SHOVEL_CLAY_CAST);
-            entries.addAfter(SHOVEL_CLAY_CAST, PICKAXE_CLAY_CAST);
-            entries.addAfter(PICKAXE_CLAY_CAST, AXE_CLAY_CAST);
-            entries.addAfter(AXE_CLAY_CAST, HOE_CLAY_CAST);
-            entries.addAfter(HOE_CLAY_CAST, SHIELD_CLAY_CAST);
-            entries.addAfter(SHIELD_CLAY_CAST, ANVIL_CLAY_CAST);
-            entries.addAfter(ANVIL_CLAY_CAST, TOTEM_CLAY_CAST);
+            entries.addAfter(BLANK_CLAY_CAST, CLAY_SWORD_CAST);
+            entries.addAfter(CLAY_SWORD_CAST, CLAY_SHOVEL_CAST);
+            entries.addAfter(CLAY_SHOVEL_CAST, CLAY_PICKAXE_CAST);
+            entries.addAfter(CLAY_PICKAXE_CAST, CLAY_AXE_CAST);
+            entries.addAfter(CLAY_AXE_CAST, CLAY_HOE_CAST);
+            entries.addAfter(CLAY_HOE_CAST, CLAY_SHIELD_CAST);
+            entries.addAfter(CLAY_SHIELD_CAST, CLAY_ANVIL_CAST);
+            entries.addAfter(CLAY_ANVIL_CAST, CLAY_TOTEM_CAST);
 
-            entries.addAfter(TOTEM_CLAY_CAST, SWORD_CAST);
+            entries.addAfter(CLAY_TOTEM_CAST, SWORD_CAST);
             entries.addAfter(SWORD_CAST, SHOVEL_CAST);
             entries.addAfter(SHOVEL_CAST, PICKAXE_CAST);
             entries.addAfter(PICKAXE_CAST, AXE_CAST);

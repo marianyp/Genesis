@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_hoe_clay_cast": {
+    "has_clay_hoe_cast": {
       "conditions": {
         "items": [
           {
-            "items": "genesis:hoe_clay_cast"
+            "items": "genesis:clay_hoe_cast"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_hoe_clay_cast"
+      "has_clay_hoe_cast"
     ]
   ],
   "rewards": {

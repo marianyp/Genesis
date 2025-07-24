@@ -4,6 +4,7 @@
     "minecraft:apple",
     "minecraft:beetroot",
     "minecraft:blue_orchid",
+    "minecraft:cactus_flower",
     "minecraft:carrot",
     "minecraft:cornflower",
     "minecraft:dandelion",
@@ -12,7 +13,6 @@
     "minecraft:oxeye_daisy",
     "minecraft:poppy",
     "minecraft:pumpkin",
-    "minecraft:sweet_berries",
-    "minecraft:cactus_flower"
+    "minecraft:sweet_berries"
   ]
 }

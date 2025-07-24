@@ -6,11 +6,11 @@
     "F": "minecraft:flint"
   },
   "pattern": [
-    "FF",
-    "CF"
+    "F",
+    "C"
   ],
   "result": {
     "count": 1,
-    "id": "genesis:axe_clay_cast"
+    "id": "genesis:clay_shovel_cast"
   }
 }

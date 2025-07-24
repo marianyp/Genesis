@@ -115,11 +115,11 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         );
 
         valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS).add(
-                GenesisItems.SWORD_CLAY_CAST,
-                GenesisItems.SHOVEL_CLAY_CAST,
-                GenesisItems.PICKAXE_CLAY_CAST,
-                GenesisItems.AXE_CLAY_CAST,
-                GenesisItems.HOE_CLAY_CAST
+                GenesisItems.CLAY_SWORD_CAST,
+                GenesisItems.CLAY_SHOVEL_CAST,
+                GenesisItems.CLAY_PICKAXE_CAST,
+                GenesisItems.CLAY_AXE_CAST,
+                GenesisItems.CLAY_HOE_CAST
         );
 
         valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_TOOL_CASTS).add(
@@ -137,6 +137,7 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.APPLE,
                 Items.BEETROOT,
                 Items.BLUE_ORCHID,
+                Items.CACTUS_FLOWER,
                 Items.CARROT,
                 Items.CORNFLOWER,
                 Items.DANDELION,
@@ -145,8 +146,7 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.OXEYE_DAISY,
                 Items.POPPY,
                 Items.PUMPKIN,
-                Items.SWEET_BERRIES,
-                Items.CACTUS_FLOWER
+                Items.SWEET_BERRIES
         );
     }
 }

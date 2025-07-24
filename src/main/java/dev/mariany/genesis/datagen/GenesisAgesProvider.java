@@ -263,7 +263,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_NIGHT);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.ANVIL_CLAY_CAST))
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
                 .parent(STORY_NIGHT)
                 .parentOptional()
                 .criterion("complete_ominous_trial_spawner", CompleteTrialSpawnerCriteria.Conditions.create(true))
@@ -299,7 +299,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_OCEAN);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.SHIELD_CLAY_CAST))
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_SHIELD_CAST))
                 .parent(STORY_OCEAN)
                 .parentOptional()
                 .criterion(LOOT_ANCIENT_CITY_REQUIREMENT,

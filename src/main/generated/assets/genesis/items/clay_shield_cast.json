@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "genesis:item/shovel_clay_cast"
+    "model": "genesis:item/clay_shield_cast"
   }
 }

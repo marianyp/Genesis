@@ -3,7 +3,7 @@
   "category": "misc",
   "cookingtime": 300,
   "experience": 0.3,
-  "ingredient": "genesis:pickaxe_clay_cast",
+  "ingredient": "genesis:clay_pickaxe_cast",
   "result": {
     "id": "genesis:pickaxe_cast"
   }

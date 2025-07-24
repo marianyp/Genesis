@@ -135,7 +135,7 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
         InstructionEntry craftClayToolCast = Instruction.Builder.create()
                 .parent(craftBlankClayCast)
                 .display(
-                        GenesisItems.PICKAXE_CLAY_CAST,
+                        GenesisItems.CLAY_PICKAXE_CAST,
                         Text.translatable("instruction.genesis.craft_clay_tool_cast"),
                         Text.translatable("instruction.genesis.craft_clay_tool_cast.description")
                 )

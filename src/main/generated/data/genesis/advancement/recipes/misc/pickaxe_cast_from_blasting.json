@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_pickaxe_clay_cast": {
+    "has_clay_pickaxe_cast": {
       "conditions": {
         "items": [
           {
-            "items": "genesis:pickaxe_clay_cast"
+            "items": "genesis:clay_pickaxe_cast"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_pickaxe_clay_cast"
+      "has_clay_pickaxe_cast"
     ]
   ],
   "rewards": {

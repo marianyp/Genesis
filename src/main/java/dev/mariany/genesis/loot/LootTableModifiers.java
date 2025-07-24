@@ -52,8 +52,8 @@ public class LootTableModifiers {
                 tableBuilder.pool(
                         LootPool.builder()
                                 .rolls(UniformLootNumberProvider.create(0, 1))
-                                .with(ItemEntry.builder(GenesisItems.SHIELD_CLAY_CAST))
-                                .with(ItemEntry.builder(GenesisItems.ANVIL_CLAY_CAST))
+                                .with(ItemEntry.builder(GenesisItems.CLAY_SHIELD_CAST))
+                                .with(ItemEntry.builder(GenesisItems.CLAY_ANVIL_CAST))
                                 .conditionally(RandomChanceLootCondition.builder(castChance))
                 );
             } else if (TOTEM_CAST_MAP.containsKey(key)) {
@@ -62,23 +62,23 @@ public class LootTableModifiers {
                 tableBuilder.pool(
                         LootPool.builder()
                                 .rolls(ConstantLootNumberProvider.create(1))
-                                .with(ItemEntry.builder(GenesisItems.TOTEM_CLAY_CAST))
-                                .with(ItemEntry.builder(GenesisItems.SHIELD_CLAY_CAST))
-                                .with(ItemEntry.builder(GenesisItems.ANVIL_CLAY_CAST))
+                                .with(ItemEntry.builder(GenesisItems.CLAY_TOTEM_CAST))
+                                .with(ItemEntry.builder(GenesisItems.CLAY_SHIELD_CAST))
+                                .with(ItemEntry.builder(GenesisItems.CLAY_ANVIL_CAST))
                                 .conditionally(RandomChanceLootCondition.builder(totemCastChance))
                 );
             } else if (SINGLE_RARE_CAST_MAP.contains(key)) {
                 tableBuilder.modifyPools(builder -> builder
-                        .with(ItemEntry.builder(GenesisItems.TOTEM_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.SHIELD_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.ANVIL_CLAY_CAST)));
+                        .with(ItemEntry.builder(GenesisItems.CLAY_TOTEM_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_SHIELD_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_ANVIL_CAST)));
             } else if (SINGLE_COMMON_CAST_MAP.contains(key)) {
                 tableBuilder.modifyPools(builder -> builder
-                        .with(ItemEntry.builder(GenesisItems.SWORD_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.SHOVEL_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.PICKAXE_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.AXE_CLAY_CAST))
-                        .with(ItemEntry.builder(GenesisItems.HOE_CLAY_CAST)));
+                        .with(ItemEntry.builder(GenesisItems.CLAY_SWORD_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_SHOVEL_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_PICKAXE_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_AXE_CAST))
+                        .with(ItemEntry.builder(GenesisItems.CLAY_HOE_CAST)));
             }
         });
     }

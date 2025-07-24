@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:pickaxe_clay_cast"
+        "recipe": "genesis:clay_hoe_cast"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "genesis:pickaxe_clay_cast"
+      "genesis:clay_hoe_cast"
     ]
   }
 }
