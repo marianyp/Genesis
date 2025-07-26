@@ -1,7 +1,6 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.advancement.criterion.CompleteTrialSpawnerCriteria;
 import dev.mariany.genesis.advancement.criterion.ItemBrokenCriterion;
 import dev.mariany.genesis.age.Age;
 import dev.mariany.genesis.age.AgeCategory;
@@ -11,27 +10,22 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.criterion.EnchantedItemCriterion;
-import net.minecraft.advancement.criterion.OnKilledCriterion;
-import net.minecraft.advancement.criterion.PlayerGeneratesContainerLootCriterion;
+import net.minecraft.advancement.criterion.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.DamageSourcePredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.PlayerPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -49,11 +43,11 @@ public class GenesisAgesProvider extends AgesProvider {
 
     private static final Identifier BLOCKS_CLAY = of(AgeCategory.BLOCKS, "clay");
     private static final Identifier BLOCKS_FURNACE = of(AgeCategory.BLOCKS, "furnace");
+    private static final Identifier BLOCKS_BED = of(AgeCategory.BLOCKS, "bed");
 
     private static final Identifier STORY_SURVIVAL = of(AgeCategory.STORY, "survival");
-    private static final Identifier STORY_NIGHT = of(AgeCategory.STORY, "night");
+    private static final Identifier STORY_GARDEN = of(AgeCategory.STORY, "garden");
     private static final Identifier STORY_NETHER = of(AgeCategory.STORY, "nether");
-    private static final Identifier STORY_TRIAL = of(AgeCategory.STORY, "trial");
     private static final Identifier STORY_OCEAN = of(AgeCategory.STORY, "ocean");
     private static final Identifier STORY_SCULK = of(AgeCategory.STORY, "sculk");
     private static final Identifier STORY_WITHER = of(AgeCategory.STORY, "wither");
@@ -65,6 +59,16 @@ public class GenesisAgesProvider extends AgesProvider {
             LOOT_ANCIENT_CITY_REQUIREMENT,
             LOOT_ANCIENT_CITY_ICE_BOX_REQUIREMENT
     );
+
+    private static final int TICKS_PER_SECOND = 20;
+    private static final int SECONDS_PER_MINUTE = 60;
+    private static final int MINUTES_PER_DAY = 20;
+
+    private static final int TICKS_PER_DAY = TICKS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_DAY;
+
+    private static final int BED_AGE_SURVIVE_DAYS = 5;
+    private static final int BED_AGE_SURVIVE_TICKS = BED_AGE_SURVIVE_DAYS * TICKS_PER_DAY;
+
 
     private static Identifier of(AgeCategory category, String key) {
         return Genesis.id(category.asString() + "/" + key);
@@ -82,10 +86,13 @@ public class GenesisAgesProvider extends AgesProvider {
         generateArmorAges(itemLookup, consumer);
         generateToolAges(itemLookup, consumer);
         generateBlockAges(itemLookup, consumer);
-        generateStoryAges(itemLookup, entityLookup, consumer);
+        generateStoryAges(entityLookup, consumer);
     }
 
-    private void generateArmorAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
+    private void generateArmorAges(
+            RegistryWrapper.Impl<Item> itemLookup,
+            Consumer<AgeEntry> consumer
+    ) {
         Age.Builder.create()
                 .display(
                         Items.LEATHER_CHESTPLATE,
@@ -100,8 +107,13 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.copper"),
                         Text.translatable("age.genesis.armor.copper.description")
                 )
-                .criterion("broken_leather", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.LEATHER_ARMOR))
+                .requireTrialWearing(
+                        itemLookup,
+                        false,
+                        Items.LEATHER_HELMET,
+                        Items.LEATHER_CHESTPLATE,
+                        Items.LEATHER_LEGGINGS,
+                        Items.LEATHER_BOOTS
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR)))
                 .parent(ARMOR_LEATHER)
@@ -113,8 +125,13 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.iron"),
                         Text.translatable("age.genesis.armor.iron.description")
                 )
-                .criterion("broken_copper", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR))
+                .requireTrialWearing(
+                        itemLookup,
+                        true,
+                        GenesisItems.COPPER_HELMET,
+                        GenesisItems.COPPER_CHESTPLATE,
+                        GenesisItems.COPPER_LEGGINGS,
+                        GenesisItems.COPPER_BOOTS
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR)))
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR)))
@@ -127,9 +144,9 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.diamond"),
                         Text.translatable("age.genesis.armor.diamond.description")
                 )
-                .criterion("broken_iron", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR))
-                )
+                .criterion("completed_raid", Criteria.HERO_OF_THE_VILLAGE.create(new TickCriterion.Conditions(
+                        Optional.empty()
+                )))
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_ARMOR)))
                 .parent(ARMOR_IRON)
                 .build(consumer, ARMOR_DIAMOND);
@@ -214,14 +231,26 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.blocks.furnace.description")
                 )
                 .parent(BLOCKS_CLAY)
+                .parentOptional()
                 .requireAge(TOOLS_IRON)
                 .requireAge(ARMOR_IRON)
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.FURNACES)))
                 .build(consumer, BLOCKS_FURNACE);
+
+        Age.Builder.create()
+                .display(
+                        Items.RED_BED,
+                        Text.translatable("age.genesis.bed"),
+                        Text.translatable("age.genesis.blocks.bed.description")
+                )
+                .parent(BLOCKS_FURNACE)
+                .parentOptional()
+                .requireTimePlayed(BED_AGE_SURVIVE_TICKS)
+                .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(ItemTags.BEDS)))
+                .build(consumer, BLOCKS_BED);
     }
 
     private void generateStoryAges(
-            RegistryWrapper.Impl<Item> itemLookup,
             RegistryWrapper.Impl<EntityType<?>> entityLookup,
             Consumer<AgeEntry> consumer
     ) {
@@ -235,7 +264,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_SURVIVAL);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(ItemTags.BEDS)))
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_SHIELD_CAST))
                 .parent(STORY_SURVIVAL)
                 .parentOptional()
                 .criterion("killed_creaking",
@@ -245,14 +274,14 @@ public class GenesisAgesProvider extends AgesProvider {
                 )
                 .display(
                         Items.CREAKING_SPAWN_EGG,
-                        Text.translatable("age.genesis.night"),
-                        Text.translatable("age.genesis.story.night.description")
+                        Text.translatable("age.genesis.garden"),
+                        Text.translatable("age.genesis.story.garden.description")
                 )
-                .build(consumer, STORY_NIGHT);
+                .build(consumer, STORY_GARDEN);
 
         Age.Builder.create()
                 .dimensionUnlocks(World.NETHER)
-                .parent(STORY_NIGHT)
+                .parent(STORY_GARDEN)
                 .parentOptional()
                 .criterion("has_enchanted", EnchantedItemCriterion.Conditions.any())
                 .display(
@@ -263,34 +292,10 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_NETHER);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
+                .itemUnlocks(Ingredient.ofItem(Items.TRIDENT))
                 .parent(STORY_NETHER)
                 .parentOptional()
-                .criterion("complete_ominous_trial_spawner", CompleteTrialSpawnerCriteria.Conditions.create(true))
-                .display(
-                        Items.BREEZE_SPAWN_EGG,
-                        Text.translatable("age.genesis.trial"),
-                        Text.translatable("age.genesis.story.trial.description")
-                )
-                .build(consumer, STORY_TRIAL);
-
-        Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(Items.TRIDENT))
-                .parent(STORY_TRIAL)
-                .parentOptional()
-                .criterion("killed_three_guardians",
-                        OnKilledCriterion.Conditions.createPlayerKilledEntity(
-                                EntityPredicate.Builder.create().type(entityLookup, EntityType.ELDER_GUARDIAN),
-                                DamageSourcePredicate.Builder.create().sourceEntity(
-                                        EntityPredicate.Builder.create().typeSpecific(
-                                                PlayerPredicate.Builder.create().stat(
-                                                        Stats.KILLED,
-                                                        EntityType.ELDER_GUARDIAN.getRegistryEntry(),
-                                                        NumberRange.IntRange.atLeast(2)).build()
-                                        )
-                                )
-                        )
-                )
+                .requireKill(entityLookup, EntityType.ELDER_GUARDIAN, 3)
                 .display(
                         Items.ELDER_GUARDIAN_SPAWN_EGG,
                         Text.translatable("age.genesis.ocean"),
@@ -299,7 +304,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_OCEAN);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_SHIELD_CAST))
+                .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
                 .parent(STORY_OCEAN)
                 .parentOptional()
                 .criterion(LOOT_ANCIENT_CITY_REQUIREMENT,
@@ -336,8 +341,7 @@ public class GenesisAgesProvider extends AgesProvider {
         Age.Builder.create()
                 .parent(STORY_WITHER)
                 .requireAge(STORY_NETHER)
-                .requireAge(STORY_NIGHT)
-                .requireAge(STORY_TRIAL)
+                .requireAge(STORY_GARDEN)
                 .requireAge(STORY_OCEAN)
                 .requireAge(STORY_SCULK)
                 .requireAge(STORY_WITHER)

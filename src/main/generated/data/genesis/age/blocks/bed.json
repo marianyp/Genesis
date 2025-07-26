@@ -1,0 +1,46 @@
+{
+  "parent": "genesis:blocks/furnace",
+  "criteria": {
+    "time_played": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "stats": [
+                  {
+                    "type": "minecraft:custom",
+                    "stat": "minecraft:play_time",
+                    "value": {
+                      "min": 120000
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.blocks.bed.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:red_bed"
+    },
+    "title": {
+      "translate": "age.genesis.bed"
+    }
+  },
+  "items": [
+    "#minecraft:beds"
+  ],
+  "requires_parent": false
+}

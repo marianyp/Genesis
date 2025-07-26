@@ -1,11 +1,8 @@
 {
   "parent": "genesis:armor/iron",
   "criteria": {
-    "broken_iron": {
-      "conditions": {
-        "item": "#genesis:iron_armor"
-      },
-      "trigger": "genesis:item_broken"
+    "completed_raid": {
+      "trigger": "minecraft:hero_of_the_village"
     }
   },
   "display": {

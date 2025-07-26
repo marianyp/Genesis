@@ -2,13 +2,25 @@ package dev.mariany.genesis.age;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.mariany.genesis.advancement.criterion.CompleteTrialSpawnerCriteria;
 import dev.mariany.genesis.advancement.criterion.ObtainAdvancementCriterion;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.advancement.criterion.OnKilledCriterion;
+import net.minecraft.advancement.criterion.TickCriterion;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.predicate.NumberRange;
+import net.minecraft.predicate.entity.*;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -56,8 +68,8 @@ public record Age(
         private Builder() {
         }
 
-        public static Age.Builder create() {
-            return new Age.Builder();
+        public static Builder create() {
+            return new Builder();
         }
 
         public Builder itemUnlocks(Ingredient ingredient) {
@@ -113,6 +125,91 @@ public record Age(
             ).orElse("has_age");
 
             return criterion(name, ObtainAdvancementCriterion.Conditions.create(AgeEntry.getAdvancementId(id)));
+        }
+
+        public Builder requireKill(
+                RegistryWrapper.Impl<EntityType<?>> entityLookup,
+                EntityType<?> entityType,
+                int atLeast
+        ) {
+            return criterion("killed_" + atLeast + EntityType.getId(entityType).getPath(),
+                    OnKilledCriterion.Conditions.createPlayerKilledEntity(
+                            EntityPredicate.Builder.create().type(entityLookup, entityType),
+                            DamageSourcePredicate.Builder.create().sourceEntity(
+                                    EntityPredicate.Builder.create().typeSpecific(
+                                            PlayerPredicate.Builder.create().stat(
+                                                    Stats.KILLED,
+                                                    entityType.getRegistryEntry(),
+                                                    NumberRange.IntRange.atLeast(atLeast - 1)).build()
+                                    )
+                            )
+                    )
+            );
+        }
+
+        public Builder requireTrialWearing(
+                RegistryWrapper.Impl<Item> itemLookup,
+                boolean ominous,
+                Item head,
+                Item chest,
+                Item legs,
+                Item feet
+        ) {
+            List<String> requirements = new ArrayList<>();
+
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                @Nullable EntityEquipmentPredicate entityEquipmentPredicate = switch (slot) {
+                    case HEAD -> EntityEquipmentPredicate.Builder.create().head(ItemPredicate.Builder.create()
+                            .items(itemLookup, head)
+                    ).build();
+                    case CHEST -> EntityEquipmentPredicate.Builder.create().chest(ItemPredicate.Builder.create()
+                            .items(itemLookup, chest)
+                    ).build();
+                    case LEGS -> EntityEquipmentPredicate.Builder.create().legs(ItemPredicate.Builder.create()
+                            .items(itemLookup, legs)
+                    ).build();
+                    case FEET -> EntityEquipmentPredicate.Builder.create().feet(ItemPredicate.Builder.create()
+                            .items(itemLookup, feet)
+                    ).build();
+                    default -> null;
+                };
+
+                if (entityEquipmentPredicate != null) {
+                    String name = "trial_completed_with_" + slot.asString();
+
+                    criterion(name, CompleteTrialSpawnerCriteria.Conditions.create(
+                                    EntityPredicate.asLootContextPredicate(
+                                            EntityPredicate.Builder.create().equipment(entityEquipmentPredicate).build()
+                                    ),
+                                    ominous
+                            )
+                    );
+
+                    requirements.add(name);
+                }
+            }
+
+            this.requirements = AdvancementRequirements.anyOf(requirements);
+
+            return this;
+        }
+
+        public Builder requireTimePlayed(int ticks) {
+            LootContextPredicate predicate = EntityPredicate.asLootContextPredicate(
+                    EntityPredicate.Builder.create().typeSpecific(
+                            PlayerPredicate.Builder.create().stat(
+                                    Stats.CUSTOM,
+                                    Registries.CUSTOM_STAT.getOrThrow(
+                                            RegistryKey.of(RegistryKeys.CUSTOM_STAT, Stats.PLAY_TIME)
+                                    ),
+                                    NumberRange.IntRange.atLeast(ticks)).build()
+                    ).build()
+            );
+
+            return criterion("time_played", Criteria.TICK.create(
+                            new TickCriterion.Conditions(Optional.of(predicate))
+                    )
+            );
         }
 
         public Builder display(AgeDisplay display) {

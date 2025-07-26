@@ -22,7 +22,7 @@ public class GenesisConsumableComponents {
             .sound(SoundEvents.ITEM_HONEY_BOTTLE_DRINK)
             .consumeEffect(new RemoveEffectsConsumeEffect(StatusEffects.POISON))
             .consumeEffect(new ApplyEffectsConsumeEffect(
-                            new StatusEffectInstance(StatusEffects.REGENERATION, 225, 1)
+                            new StatusEffectInstance(StatusEffects.REGENERATION, 250, 1)
                     )
             )
             .build();

@@ -18,18 +18,18 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.story.night.description"
+      "translate": "age.genesis.story.garden.description"
     },
     "icon": {
       "count": 1,
       "id": "minecraft:creaking_spawn_egg"
     },
     "title": {
-      "translate": "age.genesis.night"
+      "translate": "age.genesis.garden"
     }
   },
   "items": [
-    "#minecraft:beds"
+    "genesis:clay_shield_cast"
   ],
   "requires_parent": false
 }

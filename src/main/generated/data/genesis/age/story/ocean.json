@@ -1,7 +1,7 @@
 {
-  "parent": "genesis:story/trial",
+  "parent": "genesis:story/nether",
   "criteria": {
-    "killed_three_guardians": {
+    "killed_3elder_guardian": {
       "conditions": {
         "entity": [
           {

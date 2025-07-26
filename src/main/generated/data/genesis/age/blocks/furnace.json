@@ -28,5 +28,6 @@
   },
   "items": [
     "#genesis:furnaces"
-  ]
+  ],
+  "requires_parent": false
 }
