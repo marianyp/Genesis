@@ -76,7 +76,7 @@
   "instruction.genesis.craft_clay_kiln.description": "using 8 Clay.",
   "instruction.genesis.craft_clay_tool_cast": "Craft Clay Tool Cast",
   "instruction.genesis.craft_clay_tool_cast.description": "with Flint and a Blank Clay Cast.",
-  "instruction.genesis.craft_flints": "Merge Flints",
+  "instruction.genesis.craft_flints": "Merge 2 Flint",
   "instruction.genesis.craft_flints.description": "inside of a crafting grid.",
   "instruction.genesis.craft_healthy_stew": "Craft Healthy Stew",
   "instruction.genesis.craft_healthy_stew.description": "with foraged flowers, fruits, or vegetables.",
