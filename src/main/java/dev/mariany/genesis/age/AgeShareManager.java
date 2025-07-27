@@ -134,7 +134,7 @@ public class AgeShareManager extends PersistentState {
     private static void shareWithPlayers(Collection<ServerPlayerEntity> players, AgeEntry ageEntry) {
         Optional<Identifier> parentAgeId = ageEntry.getAge().parent();
 
-        if (parentAgeId.isPresent()) {
+        if (parentAgeId.isPresent() && ageEntry.getAge().requiresParent()) {
             AgeManager ageManager = AgeManager.getInstance();
             Optional<AgeEntry> optionalParentAgeEntry = ageManager.get(parentAgeId.get());
             optionalParentAgeEntry.ifPresent(entry -> shareWithPlayers(players, entry));
