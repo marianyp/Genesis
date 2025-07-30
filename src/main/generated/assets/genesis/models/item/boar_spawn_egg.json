@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/pig_spawn_egg"
+    "layer0": "genesis:item/boar_spawn_egg"
   }
 }

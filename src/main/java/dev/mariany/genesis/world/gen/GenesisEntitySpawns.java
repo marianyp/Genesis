@@ -15,7 +15,7 @@ public class GenesisEntitySpawns {
                 BiomeSelectors.foundInOverworld(),
                 SpawnGroup.MONSTER,
                 GenesisEntities.BOAR,
-                25,
+                40,
                 2,
                 4
         );
