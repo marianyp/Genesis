@@ -24,11 +24,11 @@ public class GenesisItems {
 
     public static final Item COPPER_NUGGET = register("copper_nugget");
 
-    public static final Item COPPER_SWORD = register("copper_sword", (new Item.Settings()).sword(GenesisToolMaterials.COPPER, 3.0F, -2.4F));
-    public static final Item COPPER_SHOVEL = register("copper_shovel", ((settings) -> new ShovelItem(GenesisToolMaterials.COPPER, 1.5F, -3.0F, settings)));
-    public static final Item COPPER_PICKAXE = register("copper_pickaxe", (new Item.Settings()).pickaxe(GenesisToolMaterials.COPPER, 1.0F, -2.8F));
-    public static final Item COPPER_AXE = register("copper_axe", ((settings) -> new AxeItem(GenesisToolMaterials.COPPER, 6.5F, -3.1F, settings)));
-    public static final Item COPPER_HOE = register("copper_hoe", ((settings) -> new HoeItem(GenesisToolMaterials.COPPER, -1.5F, -1.0F, settings)));
+    public static final Item COPPER_SWORD = register("copper_sword", (new Item.Settings()).sword(GenesisToolMaterials.COPPER, 3F, -2.4F));
+    public static final Item COPPER_SHOVEL = register("copper_shovel", ((settings) -> new ShovelItem(GenesisToolMaterials.COPPER, 1.5F, -3F, settings)));
+    public static final Item COPPER_PICKAXE = register("copper_pickaxe", (new Item.Settings()).pickaxe(GenesisToolMaterials.COPPER, 1F, -2.8F));
+    public static final Item COPPER_AXE = register("copper_axe", ((settings) -> new AxeItem(GenesisToolMaterials.COPPER, 7F, -3.2F, settings)));
+    public static final Item COPPER_HOE = register("copper_hoe", ((settings) -> new HoeItem(GenesisToolMaterials.COPPER, -1F, -2F, settings)));
 
     public static final Item COPPER_HELMET = register("copper_helmet", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.HELMET));
     public static final Item COPPER_CHESTPLATE = register("copper_chestplate", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.CHESTPLATE));

@@ -9,14 +9,14 @@ import java.util.Map;
 
 public class GenesisArmorMaterials {
     public static final ArmorMaterial COPPER = new ArmorMaterial(
-            10,
+            11,
             Map.of(
                     EquipmentType.HELMET, 2,
                     EquipmentType.CHESTPLATE, 4,
                     EquipmentType.LEGGINGS, 3,
                     EquipmentType.BOOTS, 1
             ),
-            5,
+            8,
             GenesisSoundEvents.ITEM_ARMOR_EQUIP_COPPER,
             0F,
             0F,
