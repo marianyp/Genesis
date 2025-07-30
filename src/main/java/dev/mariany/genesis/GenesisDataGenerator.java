@@ -15,6 +15,7 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenesisRecipeOverrideProvider::new);
         pack.addProvider(GenesisBlockLootTableProvider::new);
         pack.addProvider(GenesisBlockLootTableOverrideProvider::new);
+        pack.addProvider(GenesisEntityLootTableGenerator::new);
         pack.addProvider(GenesisAdvancementsOverrideProvider::new);
         pack.addProvider(GenesisDustingLootTableProvider::new);
         pack.addProvider(GenesisAgesProvider::new);

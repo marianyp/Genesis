@@ -1,4 +1,4 @@
-// 1.21.7	-999999999-01-01T00:00:00	Genesis/Genesis Instructions
+// 1.21.8	-999999999-01-01T00:00:00	Genesis/Genesis Instructions
 4994d50b9328545ef3cc7c244c0d87712011aa89 data/genesis/instruction/cook_kiln.json
 18c8dc615df2909be01af8237d380d993baf81d0 data/genesis/instruction/cook_terracotta_cauldron.json
 9af62e5b6564bd567fd26291a16962db80c32e06 data/genesis/instruction/cook_tool_cast.json

@@ -4,6 +4,7 @@ import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.GenesisConstants;
 import dev.mariany.genesis.component.type.GenesisConsumableComponents;
 import dev.mariany.genesis.component.type.GenesisFoodComponents;
+import dev.mariany.genesis.entity.GenesisEntities;
 import dev.mariany.genesis.item.custom.FlintsItem;
 import dev.mariany.genesis.item.equipment.GenesisArmorMaterials;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -79,6 +80,11 @@ public class GenesisItems {
                     .rarity(Rarity.UNCOMMON)
                     .maxCount(16)
             )
+    );
+
+    public static final Item BOAR_SPAWN_EGG = register(
+            "boar_spawn_egg",
+            settings -> new SpawnEggItem(GenesisEntities.BOAR, settings)
     );
 
     private static RegistryKey<Item> keyOf(String id) {
@@ -160,5 +166,9 @@ public class GenesisItems {
             entries.addAfter(Items.RABBIT_STEW, HEALTHY_STEW);
             entries.addAfter(Items.HONEY_BOTTLE, ENCHANTED_HONEY_BOTTLE);
         });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries ->
+                entries.addAfter(Items.TURTLE_SPAWN_EGG, BOAR_SPAWN_EGG)
+        );
     }
 }

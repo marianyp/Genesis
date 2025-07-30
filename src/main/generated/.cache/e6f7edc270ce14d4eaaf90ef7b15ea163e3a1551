@@ -1,4 +1,4 @@
-// 1.21.7	-999999999-01-01T00:00:00	Genesis/Genesis Block Loot Table Overrides
+// 1.21.8	-999999999-01-01T00:00:00	Genesis/Genesis Block Loot Table Overrides
 8aa2f5fb48963760e7d4745aefe7d8df277de3db data/minecraft/loot_table/blocks/ancient_debris.json
 f3f7e891acadb5e9b5cfe93ff8206e5d18925337 data/minecraft/loot_table/blocks/coal_ore.json
 a7a7481539fab1e0ce2a3f2e00e0f9737d146b4a data/minecraft/loot_table/blocks/deepslate_coal_ore.json

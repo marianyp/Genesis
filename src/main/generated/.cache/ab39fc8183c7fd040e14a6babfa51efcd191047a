@@ -1,4 +1,4 @@
-// 1.21.7	-999999999-01-01T00:00:00	Genesis/Model Definitions
+// 1.21.8	-999999999-01-01T00:00:00	Genesis/Model Definitions
 42cf88b7ad4fcd9788ae9bbc6888104328166963 assets/genesis/blockstates/raw_coal_block.json
 5fb47f37c61de76e2efa861ede6b38b158e28da2 assets/genesis/blockstates/raw_diamond_block.json
 90be246a73d2668d544cce9d1e49f3c865801f53 assets/genesis/blockstates/raw_emerald_block.json
@@ -8,6 +8,7 @@ b73d5938f05ec05a5eb24c83b36a12f703666a1c assets/genesis/blockstates/raw_netherit
 3c62b44447612d04c6b59d576d0602a4726b0f73 assets/genesis/items/anvil_cast.json
 cd36a616261a6700de4ac314959659eba75165de assets/genesis/items/axe_cast.json
 2babf0d2edbe280ea64f3c42b7a34397d40ffd7b assets/genesis/items/blank_clay_cast.json
+6f72c9bd9f22e15344552be3c764ae1675d56e90 assets/genesis/items/boar_spawn_egg.json
 ac2313d836aa3830a16baf128633a0dbcfa12365 assets/genesis/items/clay_anvil_cast.json
 133bfb60071580e09f75467ae224b06b3a6a593a assets/genesis/items/clay_axe_cast.json
 9d4a7ee8e42afa493185fe55207f9de76e7ce911 assets/genesis/items/clay_hoe_cast.json
@@ -56,6 +57,7 @@ a8a61ada22370a70b0bef14875e354686fb316f7 assets/genesis/models/block/raw_diamond
 7569dbfd263ec8936c3aa0d515ae1804e55cd607 assets/genesis/models/item/anvil_cast.json
 b8a86889a5d5306666781375ce6ff966b284272a assets/genesis/models/item/axe_cast.json
 030e3ee7e52a0ed7c437889f64db259aefe797f0 assets/genesis/models/item/blank_clay_cast.json
+a11b1afc5e6d6c48fc6c8a559fb9bdd03ebd8bd8 assets/genesis/models/item/boar_spawn_egg.json
 c20b6f5d6c72a40be27838f3ae2779834f16add7 assets/genesis/models/item/clay_anvil_cast.json
 52a8bfc538d14be55f2c72e328a10e0d56b53f83 assets/genesis/models/item/clay_axe_cast.json
 743127c981dcb0663e546105473f6615fb6975fc assets/genesis/models/item/clay_hoe_cast.json

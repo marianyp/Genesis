@@ -35,6 +35,11 @@ public class GenesisModelProvider extends FabricModelProvider {
                 Items.HONEY_BOTTLE,
                 Models.GENERATED
         );
+        itemModelGenerator.registerWithTextureSource(
+                GenesisItems.BOAR_SPAWN_EGG,
+                Items.PIG_SPAWN_EGG,
+                Models.GENERATED
+        );
 
         this.registerCopperTools(itemModelGenerator);
         this.registerCopperArmor(itemModelGenerator);
