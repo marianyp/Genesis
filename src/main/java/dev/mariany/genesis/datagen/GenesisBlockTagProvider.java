@@ -1,8 +1,10 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
+import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 
@@ -15,6 +17,18 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+        valueLookupBuilder(GenesisTags.Blocks.BOAR_SPAWNABLE_ON)
+                .addOptionalTag(BlockTags.ANIMALS_SPAWNABLE_ON)
+                .addOptionalTag(BlockTags.BADLANDS_TERRACOTTA)
+                .add(
+                        Blocks.SAND,
+                        Blocks.RED_SAND,
+                        Blocks.DIRT,
+                        Blocks.COARSE_DIRT,
+                        Blocks.SNOW_BLOCK,
+                        Blocks.POWDER_SNOW
+                );
+
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(
                 GenesisBlocks.CLAY_KILN,
                 GenesisBlocks.KILN,

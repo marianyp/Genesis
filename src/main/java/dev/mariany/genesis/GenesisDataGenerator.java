@@ -10,6 +10,7 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(GenesisItemTagProvider::new);
         pack.addProvider(GenesisBlockTagProvider::new);
+        pack.addProvider(GenesisEntityTypeTagProvider::new);
         pack.addProvider(GenesisModelProvider::new);
         pack.addProvider(GenesisRecipeProvider::new);
         pack.addProvider(GenesisRecipeOverrideProvider::new);

@@ -9,8 +9,16 @@ import net.minecraft.util.Identifier;
 
 public class GenesisSoundEvents {
     public static final RegistryEntry<SoundEvent> ITEM_ARMOR_EQUIP_COPPER = registerReference("item.armor.equip_copper");
+
     public static final SoundEvent FLINTS = register("item.flints");
+
     public static final SoundEvent UI_TOAST_INSTRUCTIONS_COMPLETE = register("ui.toast.instructions_complete");
+
+    public static final SoundEvent ENTITY_BOAR_AMBIENT = register("entity.boar.ambient");
+    public static final SoundEvent ENTITY_BOAR_ATTACK = register("entity.boar.attack");
+    public static final SoundEvent ENTITY_BOAR_DEATH = register("entity.boar.death");
+    public static final SoundEvent ENTITY_BOAR_HURT = register("entity.boar.hurt");
+    public static final SoundEvent ENTITY_BOAR_STEP = register("entity.boar.step");
 
     private static SoundEvent register(String id) {
         return register(Genesis.id(id));

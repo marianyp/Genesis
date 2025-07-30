@@ -1,6 +1,8 @@
 package dev.mariany.genesis.entity.custom.mob;
 
 import dev.mariany.genesis.entity.ai.goal.DestroyCropsGoal;
+import dev.mariany.genesis.sound.GenesisSoundEvents;
+import dev.mariany.genesis.tag.GenesisTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,9 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Hoglin;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.ServerWorldAccess;
@@ -53,33 +53,40 @@ public class BoarEntity extends HostileEntity {
             BlockPos pos,
             Random random
     ) {
-        return world.getBlockState(pos.down()).isIn(BlockTags.ANIMALS_SPAWNABLE_ON) && HostileEntity.canSpawnInDark(
-                type,
-                world,
-                spawnReason,
-                pos,
-                random
-        );
+        return world.getBlockState(pos.down()).isIn(GenesisTags.Blocks.BOAR_SPAWNABLE_ON) &&
+                world.isSkyVisible(pos) &&
+                HostileEntity.canSpawnInDark(
+                        type,
+                        world,
+                        spawnReason,
+                        pos,
+                        random
+                );
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_HOGLIN_AMBIENT;
+        return GenesisSoundEvents.ENTITY_BOAR_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_HOGLIN_HURT;
+        return GenesisSoundEvents.ENTITY_BOAR_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_HOGLIN_DEATH;
+        return GenesisSoundEvents.ENTITY_BOAR_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_HOGLIN_STEP, 0.15F, 1F);
+        this.playSound(GenesisSoundEvents.ENTITY_BOAR_STEP, 0.15F, 1F);
+    }
+
+    @Override
+    protected void playAttackSound() {
+        this.playSound(GenesisSoundEvents.ENTITY_BOAR_ATTACK);
     }
 
     @Override

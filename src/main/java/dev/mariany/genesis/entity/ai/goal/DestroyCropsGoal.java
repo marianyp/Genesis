@@ -25,6 +25,11 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     }
 
     @Override
+    public double getDesiredDistanceToTarget() {
+        return 0;
+    }
+
+    @Override
     public boolean canStart() {
         if (!getServerWorld(this.stepAndDestroyMob).getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
             return false;
@@ -44,15 +49,15 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
 
         World world = this.stepAndDestroyMob.getWorld();
         BlockPos mobPos = this.stepAndDestroyMob.getBlockPos();
-        BlockPos targetBlockPos = this.tweakToProperPos(mobPos, world);
+        BlockPos cropBlockPos = this.adjustPositionToCrop(mobPos, world);
 
-        if (this.hasReached() && targetBlockPos != null) {
-            world.breakBlock(targetBlockPos, false, this.stepAndDestroyMob);
+        if (cropBlockPos != null) {
+            world.breakBlock(cropBlockPos, false, this.stepAndDestroyMob);
         }
     }
 
     @Nullable
-    private BlockPos tweakToProperPos(BlockPos originalPos, BlockView world) {
+    private BlockPos adjustPositionToCrop(BlockPos originalPos, BlockView world) {
         BlockPos[] positions = new BlockPos[]{
                 originalPos.down(),
                 originalPos.west(),
@@ -61,18 +66,35 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
                 originalPos.south()
         };
 
+        BlockPos position = checkPositionAndAbove(originalPos, world);
+
+        if (position != null) {
+            return position;
+        }
+
         for (BlockPos pos : positions) {
-            BlockPos above = pos.up();
-            BlockState state = world.getBlockState(pos);
-            BlockState aboveState = world.getBlockState(above);
+            BlockPos iteratedPosition = checkPositionAndAbove(pos, world);
 
-            if (isValidState(state)) {
-                return originalPos;
+            if (iteratedPosition != null) {
+                return iteratedPosition;
             }
+        }
 
-            if (isValidState(aboveState)) {
-                return above;
-            }
+        return null;
+    }
+
+    @Nullable
+    private BlockPos checkPositionAndAbove(BlockPos pos, BlockView world) {
+        BlockPos above = pos.up();
+        BlockState state = world.getBlockState(pos);
+        BlockState aboveState = world.getBlockState(above);
+
+        if (isValidState(state)) {
+            return pos;
+        }
+
+        if (isValidState(aboveState)) {
+            return above;
         }
 
         return null;

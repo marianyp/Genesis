@@ -20,5 +20,161 @@
     "sounds": [
       "genesis:ui/toast/instructions_complete"
     ]
+  },
+  "entity.boar.ambient": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/hoglin/idle1",
+        "volume": 0.65,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle2",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle3",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle4",
+        "volume": 0.7,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle5",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle6",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle7",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle8",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle9",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle10",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/idle11",
+        "volume": 0.9,
+        "pitch": 1.5
+      }
+    ],
+    "subtitle": "subtitles.entity.genesis.boar.ambient"
+  },
+  "entity.boar.angry": {
+    "sounds": [
+      "minecraft:mob/hoglin/angry1",
+      "minecraft:mob/hoglin/angry2",
+      "minecraft:mob/hoglin/angry3",
+      "minecraft:mob/hoglin/angry4",
+      "minecraft:mob/hoglin/angry5",
+      "minecraft:mob/hoglin/angry6"
+    ],
+    "pitch": 1.5,
+    "subtitle": "subtitles.entity.genesis.boar.angry"
+  },
+  "entity.boar.attack": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/hoglin/attack1",
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/attack1",
+        "pitch": 0.8,
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/attack2",
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/attack2",
+        "pitch": 0.8,
+        "volume": 0.8,
+        "pitch": 1.5
+      }
+    ],
+    "subtitle": "subtitles.entity.genesis.boar.attack"
+  },
+  "entity.boar.death": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/hoglin/death1",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/death2",
+        "volume": 0.9,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/death3",
+        "volume": 0.9,
+        "pitch": 1.5
+      }
+    ],
+    "subtitle": "subtitles.entity.genesis.boar.death"
+  },
+  "entity.boar.hurt": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/hoglin/hurt1",
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/hurt2",
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/hurt3",
+        "volume": 0.8,
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/hurt4",
+        "volume": 0.8,
+        "pitch": 1.5
+      }
+    ],
+    "subtitle": "subtitles.entity.genesis.boar.hurt"
+  },
+  "entity.boar.step": {
+    "sounds": [
+      "minecraft:mob/hoglin/step1",
+      "minecraft:mob/hoglin/step2",
+      "minecraft:mob/hoglin/step3",
+      "minecraft:mob/hoglin/step4",
+      "minecraft:mob/hoglin/step5",
+      "minecraft:mob/hoglin/step6"
+    ],
+    "pitch": 1.5,
+    "subtitle": "subtitles.block.generic.footsteps"
   }
 }

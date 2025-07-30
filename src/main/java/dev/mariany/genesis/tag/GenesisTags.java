@@ -1,6 +1,7 @@
 package dev.mariany.genesis.tag;
 
 import dev.mariany.genesis.Genesis;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -34,6 +35,14 @@ public class GenesisTags {
 
         private static TagKey<Item> createTag(String name) {
             return TagKey.of(RegistryKeys.ITEM, Genesis.id(name));
+        }
+    }
+
+    public static final class Blocks {
+        public static final TagKey<Block> BOAR_SPAWNABLE_ON = createTag("boar_spawnable_on");
+
+        private static TagKey<Block> createTag(String name) {
+            return TagKey.of(RegistryKeys.BLOCK, Genesis.id(name));
         }
     }
 
