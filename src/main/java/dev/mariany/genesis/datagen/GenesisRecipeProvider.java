@@ -37,11 +37,20 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
             @Override
             public void generate() {
                 this.offerReversibleCompactingRecipesWithCompactingRecipeGroup(
-                        RecipeCategory.MISC, GenesisItems.COPPER_NUGGET, RecipeCategory.MISC, Items.COPPER_INGOT, "copper_ingot_from_nuggets", "copper_ingot"
+                        RecipeCategory.MISC,
+                        GenesisItems.COPPER_NUGGET,
+                        RecipeCategory.MISC,
+                        Items.COPPER_INGOT,
+                        "copper_ingot_from_nuggets",
+                        "copper_ingot"
                 );
 
                 this.createShapeless(RecipeCategory.TOOLS, GenesisItems.FLINTS).input(Items.FLINT).input(Items.FLINT)
                         .criterion(hasItem(Items.FLINT), this.conditionsFromItem(Items.FLINT)).offerTo(this.exporter);
+
+                this.createShapeless(RecipeCategory.MISC, GenesisBlocks.ASSEMBLY_TABLE).input(Items.CRAFTING_TABLE)
+                        .criterion(hasItem(Items.CRAFTING_TABLE), this.conditionsFromItem(Items.CRAFTING_TABLE))
+                        .offerTo(this.exporter);
 
                 this.registerCopperTools();
                 this.registerCopperArmor();
@@ -210,11 +219,10 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
             private void registerSpecialCastRecipes() {
                 this.createShaped(RecipeCategory.MISC, Items.TOTEM_OF_UNDYING)
                         .pattern("BBB")
-                        .pattern("ECE")
+                        .pattern("EBE")
                         .pattern("BBB")
                         .input('B', Items.GOLD_BLOCK)
                         .input('E', Items.EMERALD)
-                        .input('C', GenesisItems.TOTEM_CAST)
                         .criterion(hasItem(GenesisItems.TOTEM_CAST), conditionsFromItem(GenesisItems.TOTEM_CAST))
                         .offerTo(this.exporter);
             }

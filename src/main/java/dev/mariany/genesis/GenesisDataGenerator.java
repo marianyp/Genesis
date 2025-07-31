@@ -13,7 +13,6 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenesisEntityTypeTagProvider::new);
         pack.addProvider(GenesisModelProvider::new);
         pack.addProvider(GenesisRecipeProvider::new);
-        pack.addProvider(GenesisRecipeOverrideProvider::new);
         pack.addProvider(GenesisBlockLootTableProvider::new);
         pack.addProvider(GenesisBlockLootTableOverrideProvider::new);
         pack.addProvider(GenesisEntityLootTableGenerator::new);

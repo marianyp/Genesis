@@ -20,6 +20,8 @@ public class GenesisSoundEvents {
     public static final SoundEvent ENTITY_BOAR_HURT = register("entity.boar.hurt");
     public static final SoundEvent ENTITY_BOAR_STEP = register("entity.boar.step");
 
+    public static final RegistryEntry<SoundEvent> BLOCK_ASSEMBLY_TABLE_USE = registerReference("block.assembly_table.use");
+
     private static SoundEvent register(String id) {
         return register(Genesis.id(id));
     }

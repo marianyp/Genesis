@@ -5,6 +5,7 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.item.equipment.GenesisEquipmentAssets;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.property.numeric.UseDurationProperty;
@@ -24,6 +25,12 @@ public class GenesisModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_NETHERITE_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(GenesisBlocks.RAW_REDSTONE_BLOCK);
+
+        blockStateModelGenerator.registerCubeWithCustomTextures(
+                GenesisBlocks.ASSEMBLY_TABLE,
+                Blocks.OAK_PLANKS,
+                TextureMap::frontSideWithCustomBottom
+        );
     }
 
     @Override

@@ -1,16 +1,14 @@
 package dev.mariany.genesis.block;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.block.custom.AssemblyTableBlock;
 import dev.mariany.genesis.block.custom.KilnBlock;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBlock;
 import dev.mariany.genesis.loot.GenesisLootTables;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
@@ -135,6 +133,17 @@ public class GenesisBlocks {
             "raw_redstone_block", AbstractBlock.Settings.copy(RAW_COAL_BLOCK).mapColor(MapColor.BRIGHT_RED)
     );
 
+    public static final Block ASSEMBLY_TABLE = register(
+            "assembly_table",
+            AssemblyTableBlock::new,
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.OAK_TAN)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.5F)
+                    .sounds(BlockSoundGroup.WOOD)
+                    .burnable()
+    );
+
     private static Block register(String name,
                                   AbstractBlock.Settings settings) {
         return register(name, Block::new, settings);
@@ -155,6 +164,8 @@ public class GenesisBlocks {
         Genesis.LOGGER.info("Registering Blocks for " + Genesis.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+            entries.addAfter(Items.CRAFTING_TABLE, ASSEMBLY_TABLE);
+
             entries.addBefore(Items.CAMPFIRE, CLAY_CAULDRON);
             entries.addAfter(CLAY_CAULDRON, TERRACOTTA_CAULDRON);
             entries.addAfter(TERRACOTTA_CAULDRON, DIRT_TERRACOTTA_CAULDRON);

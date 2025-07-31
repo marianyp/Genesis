@@ -9,6 +9,10 @@ import net.minecraft.screen.ScreenHandlerType;
 
 public class GenesisScreenHandlers {
     public static final ScreenHandlerType<KilnScreenHandler> KILN = register("kiln", KilnScreenHandler::new);
+    public static final ScreenHandlerType<AssemblyScreenHandler> ASSEMBLY = register(
+            "assembly",
+            AssemblyScreenHandler::new
+    );
 
     private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
         return Registry.register(Registries.SCREEN_HANDLER, Genesis.id(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));

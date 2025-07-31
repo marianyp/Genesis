@@ -4,6 +4,15 @@ e8c0332cbd9514cef4cee1351662c6b80c05435d data/genesis/tags/item/copper_armor.jso
 4438b4ed271ea47f03b38b675d0cdbda43a7fd9b data/genesis/tags/item/copper_tools.json
 27e204902976d8fe13a30a245c402b63e03d3ab5 data/genesis/tags/item/diamond_armor.json
 f45df6bc23c236fda72f83f18a01ba6f3411ab92 data/genesis/tags/item/diamond_tools.json
+b18f75548574fda94e06ce9e1c34f65da6ae2be2 data/genesis/tags/item/from_anvil_cast.json
+2120f6b3da6803f7db194b83269c94ea0632943b data/genesis/tags/item/from_assembly_table.json
+58b92ae412db10a7041d5ae649a445f3ac2e4a13 data/genesis/tags/item/from_axe_cast.json
+a4294e62419ff1e6f90ca898fd168917dbe83685 data/genesis/tags/item/from_hoe_cast.json
+b1b1de5dd36c189a00225507c31c1520042f57db data/genesis/tags/item/from_pickaxe_cast.json
+ea404a0ab7a6f867ef91e88ed35fb7429c480842 data/genesis/tags/item/from_shield_cast.json
+8e6e02d593b90dce4dedd17705020360332ed150 data/genesis/tags/item/from_shovel_cast.json
+0920b44962def81502667a666d3ded82d176c3fe data/genesis/tags/item/from_sword_cast.json
+9dffb9d7eb766747226b453827c4a194d7c5911c data/genesis/tags/item/from_totem_cast.json
 3e67d9e150dea7489e20cc8b4c599e7c66054ac3 data/genesis/tags/item/furnaces.json
 4a86b6a6b50a249765e637a8e93fd0e09c01b1a7 data/genesis/tags/item/golden_armor.json
 8153ec4205694f27005812ec24fba0d5cc64c232 data/genesis/tags/item/golden_tools.json

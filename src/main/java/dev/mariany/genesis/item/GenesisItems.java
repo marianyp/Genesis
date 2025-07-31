@@ -5,8 +5,11 @@ import dev.mariany.genesis.GenesisConstants;
 import dev.mariany.genesis.component.type.GenesisConsumableComponents;
 import dev.mariany.genesis.component.type.GenesisFoodComponents;
 import dev.mariany.genesis.entity.GenesisEntities;
+import dev.mariany.genesis.item.custom.AssemblyPatternItem;
 import dev.mariany.genesis.item.custom.FlintsItem;
 import dev.mariany.genesis.item.equipment.GenesisArmorMaterials;
+import dev.mariany.genesis.recipe.CraftingPattern;
+import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponents;
@@ -16,6 +19,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Rarity;
 
 import java.util.function.Function;
@@ -55,14 +59,46 @@ public class GenesisItems {
     public static final Item CLAY_ANVIL_CAST = register("clay_anvil_cast", CAST_SETTINGS);
     public static final Item CLAY_TOTEM_CAST = register("clay_totem_cast", CAST_SETTINGS);
 
-    public static final Item SWORD_CAST = register("sword_cast", CAST_SETTINGS);
-    public static final Item SHOVEL_CAST = register("shovel_cast", CAST_SETTINGS);
-    public static final Item PICKAXE_CAST = register("pickaxe_cast", CAST_SETTINGS);
-    public static final Item AXE_CAST = register("axe_cast", CAST_SETTINGS);
-    public static final Item HOE_CAST = register("hoe_cast", CAST_SETTINGS);
-    public static final Item SHIELD_CAST = register("shield_cast", CAST_SETTINGS);
-    public static final Item ANVIL_CAST = register("anvil_cast", CAST_SETTINGS);
-    public static final Item TOTEM_CAST = register("totem_cast", CAST_SETTINGS);
+    public static final Item SWORD_CAST = registerCast(
+            "sword",
+            CraftingPattern.SWORD,
+            GenesisTags.Items.FROM_SWORD_CAST
+    );
+    public static final Item SHOVEL_CAST = registerCast(
+            "shovel",
+            CraftingPattern.SHOVEL,
+            GenesisTags.Items.FROM_SHOVEL_CAST
+    );
+    public static final Item PICKAXE_CAST = registerCast(
+            "pickaxe",
+            CraftingPattern.PICKAXE,
+            GenesisTags.Items.FROM_PICKAXE_CAST
+    );
+    public static final Item AXE_CAST = registerCast(
+            "axe",
+            CraftingPattern.AXE,
+            GenesisTags.Items.FROM_AXE_CAST
+    );
+    public static final Item HOE_CAST = registerCast(
+            "hoe",
+            CraftingPattern.HOE,
+            GenesisTags.Items.FROM_HOE_CAST
+    );
+    public static final Item SHIELD_CAST = registerCast(
+            "shield",
+            CraftingPattern.SHIELD,
+            GenesisTags.Items.FROM_SHIELD_CAST
+    );
+    public static final Item ANVIL_CAST = registerCast(
+            "anvil",
+            CraftingPattern.ANVIL,
+            GenesisTags.Items.FROM_ANVIL_CAST
+    );
+    public static final Item TOTEM_CAST = registerCast(
+            "totem",
+            CraftingPattern.ALL,
+            GenesisTags.Items.FROM_TOTEM_CAST
+    );
 
     public static final Item HEALTHY_STEW = register("healthy_stew", (
                     new Item.Settings()
@@ -89,6 +125,14 @@ public class GenesisItems {
 
     private static RegistryKey<Item> keyOf(String id) {
         return RegistryKey.of(RegistryKeys.ITEM, Genesis.id(id));
+    }
+
+    private static Item registerCast(String type, CraftingPattern pattern, TagKey<Item> crafts) {
+        return register(
+                type + "_cast",
+                (settings -> new AssemblyPatternItem(pattern, crafts, settings)),
+                CAST_SETTINGS
+        );
     }
 
     private static Item register(String name) {

@@ -1,4 +1,5 @@
 // 1.21.8	-999999999-01-01T00:00:00	Genesis/Model Definitions
+f3230f32deff1fba19283b47e0dc764a225931fa assets/genesis/blockstates/assembly_table.json
 42cf88b7ad4fcd9788ae9bbc6888104328166963 assets/genesis/blockstates/raw_coal_block.json
 5fb47f37c61de76e2efa861ede6b38b158e28da2 assets/genesis/blockstates/raw_diamond_block.json
 90be246a73d2668d544cce9d1e49f3c865801f53 assets/genesis/blockstates/raw_emerald_block.json
@@ -6,6 +7,7 @@
 b73d5938f05ec05a5eb24c83b36a12f703666a1c assets/genesis/blockstates/raw_netherite_block.json
 2b0c889973c630e6e8cff322959f28d8172bf65e assets/genesis/blockstates/raw_redstone_block.json
 3c62b44447612d04c6b59d576d0602a4726b0f73 assets/genesis/items/anvil_cast.json
+64781cfbeb23093b5ca697b5622c29f36e089c91 assets/genesis/items/assembly_table.json
 cd36a616261a6700de4ac314959659eba75165de assets/genesis/items/axe_cast.json
 2babf0d2edbe280ea64f3c42b7a34397d40ffd7b assets/genesis/items/blank_clay_cast.json
 6f72c9bd9f22e15344552be3c764ae1675d56e90 assets/genesis/items/boar_spawn_egg.json
@@ -48,6 +50,7 @@ d2c069d850e926dc0fcf6e774a371dbae1823ba3 assets/genesis/items/shield_cast.json
 e9fbbc3dbdc108be19e5685c60e81c1b322baeb2 assets/genesis/items/shovel_cast.json
 0ffdb6ee05382ada219dbcf08f82af3ed5c7e6b6 assets/genesis/items/sword_cast.json
 1b33e7b7799efb5fee411dd197f34d4854f87adb assets/genesis/items/totem_cast.json
+d915c8be01af23232f2ccb6bfa34b0afc2419546 assets/genesis/models/block/assembly_table.json
 4e9be28fd2e75ec3f6fc54fdf8bf599dcb9f7146 assets/genesis/models/block/raw_coal_block.json
 a8a61ada22370a70b0bef14875e354686fb316f7 assets/genesis/models/block/raw_diamond_block.json
 073a5d91b185c4436aff28a35219e6f44b5f7760 assets/genesis/models/block/raw_emerald_block.json

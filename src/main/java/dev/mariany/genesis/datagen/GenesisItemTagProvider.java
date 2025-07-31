@@ -174,6 +174,25 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                         "tomato"
                 )
         );
+
+        valueLookupBuilder(GenesisTags.Items.FROM_ASSEMBLY_TABLE)
+                .addTag(GenesisTags.Items.FROM_SWORD_CAST)
+                .addTag(GenesisTags.Items.FROM_SHOVEL_CAST)
+                .addTag(GenesisTags.Items.FROM_PICKAXE_CAST)
+                .addTag(GenesisTags.Items.FROM_AXE_CAST)
+                .addTag(GenesisTags.Items.FROM_HOE_CAST)
+                .addTag(GenesisTags.Items.FROM_SHIELD_CAST)
+                .addTag(GenesisTags.Items.FROM_ANVIL_CAST)
+                .addTag(GenesisTags.Items.FROM_TOTEM_CAST);
+
+        valueLookupBuilder(GenesisTags.Items.FROM_SWORD_CAST).addOptionalTag(ItemTags.SWORDS);
+        valueLookupBuilder(GenesisTags.Items.FROM_SHOVEL_CAST).addOptionalTag(ItemTags.SHOVELS);
+        valueLookupBuilder(GenesisTags.Items.FROM_PICKAXE_CAST).addOptionalTag(ItemTags.PICKAXES);
+        valueLookupBuilder(GenesisTags.Items.FROM_AXE_CAST).addOptionalTag(ItemTags.AXES);
+        valueLookupBuilder(GenesisTags.Items.FROM_HOE_CAST).addOptionalTag(ItemTags.HOES);
+        valueLookupBuilder(GenesisTags.Items.FROM_SHIELD_CAST).add(Items.SHIELD);
+        valueLookupBuilder(GenesisTags.Items.FROM_ANVIL_CAST).addOptionalTag(ItemTags.ANVIL);
+        valueLookupBuilder(GenesisTags.Items.FROM_TOTEM_CAST).add(Items.TOTEM_OF_UNDYING);
     }
 
     private void supportExternalMod(TagKey<Item> tag, String item) {

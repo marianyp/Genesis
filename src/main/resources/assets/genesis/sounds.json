@@ -83,14 +83,31 @@
   },
   "entity.boar.angry": {
     "sounds": [
-      "minecraft:mob/hoglin/angry1",
-      "minecraft:mob/hoglin/angry2",
-      "minecraft:mob/hoglin/angry3",
-      "minecraft:mob/hoglin/angry4",
-      "minecraft:mob/hoglin/angry5",
-      "minecraft:mob/hoglin/angry6"
+      {
+        "name": "minecraft:mob/hoglin/angry1",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/angry2",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/angry3",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/angry4",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/angry5",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/angry6",
+        "pitch": 1.5
+      }
     ],
-    "pitch": 1.5,
     "subtitle": "subtitles.entity.genesis.boar.angry"
   },
   "entity.boar.attack": {
@@ -167,14 +184,61 @@
   },
   "entity.boar.step": {
     "sounds": [
-      "minecraft:mob/hoglin/step1",
-      "minecraft:mob/hoglin/step2",
-      "minecraft:mob/hoglin/step3",
-      "minecraft:mob/hoglin/step4",
-      "minecraft:mob/hoglin/step5",
-      "minecraft:mob/hoglin/step6"
+      {
+        "name": "minecraft:mob/hoglin/step1",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/step2",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/step3",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/step4",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/step5",
+        "pitch": 1.5
+      },
+      {
+        "name": "minecraft:mob/hoglin/step6",
+        "pitch": 1.5
+      }
     ],
-    "pitch": 1.5,
     "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.assembly_table.use": {
+    "sounds": [
+      {
+        "name": "block/decorated_pot/shatter1",
+        "volume": 0.2,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/decorated_pot/shatter2",
+        "volume": 0.2,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/decorated_pot/shatter3",
+        "volume": 0.2,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/decorated_pot/shatter4",
+        "volume": 0.2,
+        "pitch": 1.1
+      },
+      {
+        "name": "block/decorated_pot/shatter5",
+        "volume": 0.2,
+        "pitch": 1.1
+      }
+    ],
+    "subtitle": "subtitles.block.genesis.assembly_table.use"
   }
 }

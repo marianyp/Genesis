@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "minecraft:block/oak_planks",
+    "east": "genesis:block/assembly_table_side",
+    "north": "genesis:block/assembly_table_front",
+    "particle": "genesis:block/assembly_table_front",
+    "south": "genesis:block/assembly_table_side",
+    "up": "genesis:block/assembly_table_top",
+    "west": "genesis:block/assembly_table_front"
+  }
+}

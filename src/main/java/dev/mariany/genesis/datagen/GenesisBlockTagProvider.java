@@ -43,5 +43,7 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
                 GenesisBlocks.RAW_NETHERITE_BLOCK,
                 GenesisBlocks.RAW_REDSTONE_BLOCK
         );
+
+        valueLookupBuilder(BlockTags.AXE_MINEABLE).add(GenesisBlocks.ASSEMBLY_TABLE);
     }
 }

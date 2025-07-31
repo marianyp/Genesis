@@ -38,10 +38,13 @@
     "ClientRecipeDisplayEntryMixin",
     "GameOptionsMixin",
     "MinecraftClientMixin",
+    "RecipeBookScreenMixin",
     "RecipeBookWidgetMixin",
     "RecipeToastMixin",
     "accessor.ClientAdvancementManagerAccessor",
     "accessor.GhostRecipeAccessor",
+    "accessor.RecipeBookWidgetAccessor",
+    "accessor.ScreenAccessor",
     "accessor.ToastManagerAccessor"
   ]
 }

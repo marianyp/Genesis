@@ -1,6 +1,7 @@
 package dev.mariany.genesis.client;
 
 import dev.mariany.genesis.client.age.ClientAgeManager;
+import dev.mariany.genesis.client.gui.screen.ingame.AssemblyScreen;
 import dev.mariany.genesis.client.gui.screen.ingame.KilnScreen;
 import dev.mariany.genesis.client.instruction.ClientInstructionManager;
 import dev.mariany.genesis.client.render.entity.BoarEntityRenderer;
@@ -38,6 +39,7 @@ public class GenesisClient implements ClientModInitializer {
 
     private static void registerScreenHandlers() {
         HandledScreens.register(GenesisScreenHandlers.KILN, KilnScreen::new);
+        HandledScreens.register(GenesisScreenHandlers.ASSEMBLY, AssemblyScreen::new);
     }
 
     private static void cleanup(

@@ -9,6 +9,10 @@ import net.minecraft.util.Identifier;
 
 public class GenesisStats {
     public static final Identifier INTERACT_WITH_KILN = register("interact_with_kiln", StatFormatter.DEFAULT);
+    public static final Identifier INTERACT_WITH_ASSEMBLY_TABLE = register(
+            "interact_with_assembly_table",
+            StatFormatter.DEFAULT
+    );
 
     private static Identifier register(String id, StatFormatter formatter) {
         Identifier identifier = Genesis.id(id);

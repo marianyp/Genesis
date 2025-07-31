@@ -1,7 +1,7 @@
 package dev.mariany.genesis.mixin;
 
+import dev.mariany.genesis.recipe.AssemblyRecipeProvider;
 import dev.mariany.genesis.recipe.HealthyStewRecipeGenerator;
-import dev.mariany.genesis.recipe.override.ToolRecipeOverrider;
 import net.minecraft.recipe.PreparedRecipes;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.registry.RegistryWrapper;
@@ -24,10 +24,10 @@ public class ServerRecipeManagerMixin {
 
     @Inject(method = "initialize", at = @At("HEAD"))
     public void initialize(FeatureSet features, CallbackInfo ci) {
-        ToolRecipeOverrider toolRecipeOverrider = new ToolRecipeOverrider(this.registries);
+        AssemblyRecipeProvider assemblyRecipeProvider = new AssemblyRecipeProvider(this.registries);
         HealthyStewRecipeGenerator healthyStewRecipeGenerator = new HealthyStewRecipeGenerator(this.registries);
 
-        PreparedRecipes overriddenRecipes = toolRecipeOverrider.override(preparedRecipes.recipes());
-        this.preparedRecipes = healthyStewRecipeGenerator.populate(overriddenRecipes.recipes());
+        PreparedRecipes populatedRecipes = assemblyRecipeProvider.provide(preparedRecipes.recipes());
+        this.preparedRecipes = healthyStewRecipeGenerator.populate(populatedRecipes.recipes());
     }
 }

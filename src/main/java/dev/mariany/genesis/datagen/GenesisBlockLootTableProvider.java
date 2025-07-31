@@ -30,5 +30,7 @@ public class GenesisBlockLootTableProvider extends FabricBlockLootTableProvider 
         addDrop(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
         addDrop(GenesisBlocks.RAW_NETHERITE_BLOCK);
         addDrop(GenesisBlocks.RAW_REDSTONE_BLOCK);
+
+        addDrop(GenesisBlocks.ASSEMBLY_TABLE);
     }
 }
