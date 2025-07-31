@@ -5,13 +5,11 @@ import dev.mariany.genesis.sound.GenesisSoundEvents;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.Hoglin;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
@@ -87,10 +85,5 @@ public class BoarEntity extends HostileEntity {
     @Override
     protected void playAttackSound() {
         this.playSound(GenesisSoundEvents.ENTITY_BOAR_ATTACK);
-    }
-
-    @Override
-    protected void knockback(LivingEntity target) {
-        Hoglin.knockback(this, target);
     }
 }
