@@ -5,14 +5,25 @@
       "required": false
     },
     {
+      "id": "#minecraft:sand",
+      "required": false
+    },
+    {
+      "id": "#minecraft:snow",
+      "required": false
+    },
+    {
       "id": "#minecraft:badlands_terracotta",
       "required": false
     },
-    "minecraft:sand",
-    "minecraft:red_sand",
     "minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:podzol",
     "minecraft:coarse_dirt",
-    "minecraft:snow_block",
-    "minecraft:powder_snow"
+    "minecraft:rooted_dirt",
+    "minecraft:moss_block",
+    "minecraft:pale_moss_block",
+    "minecraft:mud",
+    "minecraft:muddy_mangrove_roots"
   ]
 }

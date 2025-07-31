@@ -155,8 +155,20 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
                 ))
                 .build(consumer, Genesis.id("cook_tool_cast"));
 
-        InstructionEntry craftWoodenTool = Instruction.Builder.create()
+        InstructionEntry craftAssemblyTable = Instruction.Builder.create()
                 .parent(cookToolCast)
+                .display(
+                        GenesisBlocks.ASSEMBLY_TABLE.asItem(),
+                        Text.translatable("instruction.genesis.craft_assembly_table"),
+                        Text.translatable("instruction.genesis.craft_assembly_table.description")
+                )
+                .criterion("obtained_assembly_table", InventoryChangedCriterion.Conditions.items(
+                        ItemPredicate.Builder.create().items(itemLookup, GenesisBlocks.ASSEMBLY_TABLE)
+                ))
+                .build(consumer, Genesis.id("craft_assembly_table"));
+
+        InstructionEntry craftWoodenTool = Instruction.Builder.create()
+                .parent(craftAssemblyTable)
                 .display(
                         Items.WOODEN_PICKAXE,
                         Text.translatable("instruction.genesis.craft_wooden_tool"),

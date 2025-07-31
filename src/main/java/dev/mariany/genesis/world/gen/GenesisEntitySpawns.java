@@ -4,6 +4,7 @@ import dev.mariany.genesis.entity.GenesisEntities;
 import dev.mariany.genesis.entity.custom.mob.BoarEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnRestriction;
@@ -12,7 +13,7 @@ import net.minecraft.world.Heightmap;
 public class GenesisEntitySpawns {
     public static void addSpawns() {
         BiomeModifications.addSpawn(
-                BiomeSelectors.foundInOverworld(),
+                BiomeSelectors.spawnsOneOf(EntityType.SPIDER),
                 SpawnGroup.MONSTER,
                 GenesisEntities.BOAR,
                 55,

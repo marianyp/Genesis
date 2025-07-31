@@ -19,14 +19,19 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         valueLookupBuilder(GenesisTags.Blocks.BOAR_SPAWNABLE_ON)
                 .addOptionalTag(BlockTags.ANIMALS_SPAWNABLE_ON)
+                .addOptionalTag(BlockTags.SAND)
+                .addOptionalTag(BlockTags.SNOW)
                 .addOptionalTag(BlockTags.BADLANDS_TERRACOTTA)
                 .add(
-                        Blocks.SAND,
-                        Blocks.RED_SAND,
                         Blocks.DIRT,
+                        Blocks.GRASS_BLOCK,
+                        Blocks.PODZOL,
                         Blocks.COARSE_DIRT,
-                        Blocks.SNOW_BLOCK,
-                        Blocks.POWDER_SNOW
+                        Blocks.ROOTED_DIRT,
+                        Blocks.MOSS_BLOCK,
+                        Blocks.PALE_MOSS_BLOCK,
+                        Blocks.MUD,
+                        Blocks.MUDDY_MANGROVE_ROOTS
                 );
 
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(

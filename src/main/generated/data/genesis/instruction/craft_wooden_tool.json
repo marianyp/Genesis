@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:cook_tool_cast",
+  "parent": "genesis:craft_assembly_table",
   "criteria": {
     "obtained_wooden_tool": {
       "conditions": {

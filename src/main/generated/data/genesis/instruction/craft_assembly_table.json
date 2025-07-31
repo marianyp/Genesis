@@ -1,0 +1,32 @@
+{
+  "parent": "genesis:cook_tool_cast",
+  "criteria": {
+    "obtained_assembly_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:assembly_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_assembly_table.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "genesis:assembly_table"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_assembly_table"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_assembly_table"
+    ]
+  ]
+}
