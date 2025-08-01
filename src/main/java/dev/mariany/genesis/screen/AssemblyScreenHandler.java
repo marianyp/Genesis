@@ -170,17 +170,11 @@ public class AssemblyScreenHandler extends AbstractCraftingScreenHandler {
                 x,
                 y) {
             @Override
-            protected void onCrafted(ItemStack stack) {
-                super.onCrafted(stack);
-                SimpleInventory assemblyPatternInventory = AssemblyScreenHandler.this.assemblyPatternInventory;
+            public void onTakeItem(PlayerEntity player, ItemStack stack) {
+                super.onTakeItem(player, stack);
 
                 assemblyPatternInventory.getStack(0).decrement(1);
                 assemblyPatternInventory.markDirty();
-            }
-
-            @Override
-            public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                super.onTakeItem(player, stack);
 
                 if (player instanceof ServerPlayerEntity serverPlayer) {
                     AssemblyScreenHandler.this.context.run(
