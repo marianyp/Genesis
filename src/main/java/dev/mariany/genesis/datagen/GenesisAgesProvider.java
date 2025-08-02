@@ -322,10 +322,9 @@ public class GenesisAgesProvider extends AgesProvider {
                 .build(consumer, STORY_SCULK);
 
         Age.Builder.create()
-                .itemUnlocks(Ingredient.ofItem(Items.ENCHANTED_GOLDEN_APPLE))
-                .dimensionUnlocks(World.END)
                 .parent(STORY_SCULK)
                 .parentOptional()
+                .itemUnlocks(Ingredient.ofItem(Items.ENCHANTED_GOLDEN_APPLE))
                 .criterion("killed_wither",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
                                 EntityPredicate.Builder.create().type(entityLookup, EntityType.WITHER)
@@ -340,6 +339,8 @@ public class GenesisAgesProvider extends AgesProvider {
 
         Age.Builder.create()
                 .parent(STORY_WITHER)
+                .dimensionUnlocks(World.END)
+                .itemUnlocks(Ingredient.ofItem(Items.ENDER_EYE))
                 .requireAge(STORY_NETHER)
                 .requireAge(STORY_GARDEN)
                 .requireAge(STORY_OCEAN)

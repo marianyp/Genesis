@@ -16,9 +16,6 @@
       "trigger": "minecraft:player_killed_entity"
     }
   },
-  "dimensions": [
-    "minecraft:the_end"
-  ],
   "display": {
     "description": {
       "translate": "age.genesis.story.wither.description"

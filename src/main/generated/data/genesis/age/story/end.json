@@ -32,6 +32,9 @@
       "trigger": "genesis:obtain_advancement"
     }
   },
+  "dimensions": [
+    "minecraft:the_end"
+  ],
   "display": {
     "description": {
       "translate": "age.genesis.story.end.description"
@@ -43,5 +46,8 @@
     "title": {
       "translate": "age.genesis.end"
     }
-  }
+  },
+  "items": [
+    "minecraft:ender_eye"
+  ]
 }
