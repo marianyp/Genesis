@@ -58,8 +58,6 @@
   "entity.genesis.boar": "Boar",
   "filled_map.ancient_city": "Deep Dark Explorer Map",
   "filled_map.pale_garden": "Pale Garden Explorer Map",
-  "gamerule.sharedAgeProgression": "Shared Age Progression",
-  "gamerule.sharedAgeProgression.description": "Players earn age's at the same time.",
   "instruction.genesis.cook_kiln": "Cook Clay Kiln on a Campfire",
   "instruction.genesis.cook_terracotta_cauldron": "Cook Terracotta Cauldron on a Campfire",
   "instruction.genesis.cook_tool_cast": "Cook Clay Tool Cast on a Campfire",
