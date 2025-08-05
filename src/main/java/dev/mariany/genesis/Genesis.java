@@ -6,17 +6,9 @@ import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.config.ConfigHandler;
 import dev.mariany.genesis.entity.GenesisEntities;
-import dev.mariany.genesis.event.block.UseBlockHandler;
 import dev.mariany.genesis.event.item.ModifyItemComponentsHandler;
-import dev.mariany.genesis.event.server.ServerPlayConnectionHandler;
-import dev.mariany.genesis.event.server.SyncDataPackContentsHandler;
-import dev.mariany.genesis.event.server.advancement.BeforeAdvancementsLoadHandler;
-import dev.mariany.genesis.event.server.advancement.ServerAdvancementEvents;
-import dev.mariany.genesis.event.server.command.CommandRegistrationHandler;
-import dev.mariany.genesis.gamerule.GenesisGamerules;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.loot.LootTableModifiers;
-import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.recipe.GenesisRecipeTypes;
 import dev.mariany.genesis.recipe.brew.GenesisBrewingRecipes;
 import dev.mariany.genesis.recipe.display.AssemblyCraftingRecipeDisplay;
@@ -26,11 +18,7 @@ import dev.mariany.genesis.stat.GenesisStats;
 import dev.mariany.genesis.village.GenesisTradeOffers;
 import dev.mariany.genesis.world.gen.GenesisEntitySpawns;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -49,7 +37,6 @@ public class Genesis implements ModInitializer {
     public void onInitialize() {
         ConfigHandler.loadConfig();
 
-        GenesisPackets.register();
         GenesisSoundEvents.bootstrap();
         GenesisItems.bootstrap();
         GenesisBrewingRecipes.registerBrewingRecipes();
@@ -64,14 +51,8 @@ public class Genesis implements ModInitializer {
         LootTableModifiers.modifyLootTables();
 
         DefaultItemComponentEvents.MODIFY.register(ModifyItemComponentsHandler::modify);
-        UseBlockCallback.EVENT.register(UseBlockHandler::onUseBlock);
-        ServerAdvancementEvents.BEFORE_ADVANCEMENTS_LOAD.register(BeforeAdvancementsLoadHandler::beforeAdvancementsLoad);
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(SyncDataPackContentsHandler::onSyncDataPackContents);
-        ServerPlayConnectionEvents.JOIN.register(ServerPlayConnectionHandler::onJoin);
-        CommandRegistrationCallback.EVENT.register(CommandRegistrationHandler::onRegister);
 
         GenesisTradeOffers.registerVillagerOffers();
-        GenesisGamerules.bootstrap();
 
         GenesisRecipeTypes.bootstrap();
         bootstrapRecipeDisplay();

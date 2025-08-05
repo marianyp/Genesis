@@ -8,13 +8,6 @@ import net.minecraft.registry.Registry;
 
 public class GenesisCriteria {
     public static final ItemBrokenCriterion ITEM_BROKEN = register("item_broken", new ItemBrokenCriterion());
-    public static final ObtainAdvancementCriterion OBTAIN_ADVANCEMENT = register("obtain_advancement",
-            new ObtainAdvancementCriterion()
-    );
-    public static final CompleteTrialSpawnerCriteria COMPLETE_TRIAL_SPAWNER_ADVANCEMENT = register(
-            "complete_trial_spawner",
-            new CompleteTrialSpawnerCriteria()
-    );
     public static final TickCriterion FIRE_STARTED = register(
             "fire_started",
             new TickCriterion()
@@ -26,10 +19,6 @@ public class GenesisCriteria {
     public static final CookWithKilnCriteria COOK_WITH_KILN = register(
             "cook_with_kiln",
             new CookWithKilnCriteria()
-    );
-    public static final OpenAdvancementTabCriteria OPEN_ADVANCEMENT_TAB = register(
-            "open_advancement_tab",
-            new OpenAdvancementTabCriteria()
     );
 
     public static <T extends Criterion<?>> T register(String name, T criterion) {

@@ -3,7 +3,7 @@
   "criteria": {
     "trial_completed_with_chest": {
       "conditions": {
-        "ominous": true,
+        "ominous": false,
         "player": [
           {
             "condition": "minecraft:entity_properties",
@@ -18,11 +18,11 @@
           }
         ]
       },
-      "trigger": "genesis:complete_trial_spawner"
+      "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_feet": {
       "conditions": {
-        "ominous": true,
+        "ominous": false,
         "player": [
           {
             "condition": "minecraft:entity_properties",
@@ -37,11 +37,11 @@
           }
         ]
       },
-      "trigger": "genesis:complete_trial_spawner"
+      "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_head": {
       "conditions": {
-        "ominous": true,
+        "ominous": false,
         "player": [
           {
             "condition": "minecraft:entity_properties",
@@ -56,11 +56,11 @@
           }
         ]
       },
-      "trigger": "genesis:complete_trial_spawner"
+      "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_legs": {
       "conditions": {
-        "ominous": true,
+        "ominous": false,
         "player": [
           {
             "condition": "minecraft:entity_properties",
@@ -75,7 +75,7 @@
           }
         ]
       },
-      "trigger": "genesis:complete_trial_spawner"
+      "trigger": "genesisframework:complete_trial_spawner"
     }
   },
   "display": {

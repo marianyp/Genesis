@@ -2,12 +2,12 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.ItemBrokenCriterion;
-import dev.mariany.genesis.age.Age;
-import dev.mariany.genesis.age.AgeCategory;
-import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
+import dev.mariany.genesisframework.age.Age;
+import dev.mariany.genesisframework.age.AgeEntry;
+import dev.mariany.genesisframework.datagen.AgesProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.criterion.*;
@@ -22,6 +22,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -34,12 +35,14 @@ public class GenesisAgesProvider extends AgesProvider {
     private static final Identifier ARMOR_COPPER = of(AgeCategory.ARMOR, "copper");
     private static final Identifier ARMOR_IRON = of(AgeCategory.ARMOR, "iron");
     private static final Identifier ARMOR_DIAMOND = of(AgeCategory.ARMOR, "diamond");
+    private static final Identifier ARMOR_NETHERITE = of(AgeCategory.ARMOR, "netherite");
 
     private static final Identifier TOOLS_WOOD = of(AgeCategory.TOOLS, "wood");
     private static final Identifier TOOLS_STONE = of(AgeCategory.TOOLS, "stone");
     private static final Identifier TOOLS_COPPER = of(AgeCategory.TOOLS, "copper");
     private static final Identifier TOOLS_IRON = of(AgeCategory.TOOLS, "iron");
     private static final Identifier TOOLS_DIAMOND = of(AgeCategory.TOOLS, "diamond");
+    private static final Identifier TOOLS_NETHERITE = of(AgeCategory.TOOLS, "netherite");
 
     private static final Identifier BLOCKS_CLAY = of(AgeCategory.BLOCKS, "clay");
     private static final Identifier BLOCKS_FURNACE = of(AgeCategory.BLOCKS, "furnace");
@@ -107,14 +110,7 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.copper"),
                         Text.translatable("age.genesis.armor.copper.description")
                 )
-                .requireTrialWearing(
-                        itemLookup,
-                        false,
-                        Items.LEATHER_HELMET,
-                        Items.LEATHER_CHESTPLATE,
-                        Items.LEATHER_LEGGINGS,
-                        Items.LEATHER_BOOTS
-                )
+                .requireKillHostiles(50)
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR)))
                 .parent(ARMOR_LEATHER)
                 .build(consumer, ARMOR_COPPER);
@@ -127,7 +123,7 @@ public class GenesisAgesProvider extends AgesProvider {
                 )
                 .requireTrialWearing(
                         itemLookup,
-                        true,
+                        false,
                         GenesisItems.COPPER_HELMET,
                         GenesisItems.COPPER_CHESTPLATE,
                         GenesisItems.COPPER_LEGGINGS,
@@ -144,12 +140,30 @@ public class GenesisAgesProvider extends AgesProvider {
                         Text.translatable("age.genesis.diamond"),
                         Text.translatable("age.genesis.armor.diamond.description")
                 )
-                .criterion("completed_raid", Criteria.HERO_OF_THE_VILLAGE.create(new TickCriterion.Conditions(
-                        Optional.empty()
-                )))
+                .requireTrialWearing(
+                        itemLookup,
+                        true,
+                        Items.IRON_HELMET,
+                        Items.IRON_CHESTPLATE,
+                        Items.IRON_LEGGINGS,
+                        Items.IRON_BOOTS
+                )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_ARMOR)))
                 .parent(ARMOR_IRON)
                 .build(consumer, ARMOR_DIAMOND);
+
+        Age.Builder.create()
+                .display(
+                        Items.NETHERITE_CHESTPLATE,
+                        Text.translatable("age.genesis.netherite"),
+                        Text.translatable("age.genesis.armor.netherite.description")
+                )
+                .criterion("completed_raid", Criteria.HERO_OF_THE_VILLAGE.create(new TickCriterion.Conditions(
+                        Optional.empty()
+                )))
+                .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_ARMOR)))
+                .parent(ARMOR_DIAMOND)
+                .build(consumer, ARMOR_NETHERITE);
     }
 
     private void generateToolAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
@@ -213,6 +227,19 @@ public class GenesisAgesProvider extends AgesProvider {
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS)))
                 .parent(TOOLS_IRON)
                 .build(consumer, TOOLS_DIAMOND);
+
+        Age.Builder.create()
+                .display(
+                        Items.NETHERITE_PICKAXE,
+                        Text.translatable("age.genesis.netherite"),
+                        Text.translatable("age.genesis.tools.netherite.description")
+                )
+                .criterion("broken_diamond", ItemBrokenCriterion.Conditions.create(
+                        itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS))
+                )
+                .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_TOOLS)))
+                .parent(TOOLS_DIAMOND)
+                .build(consumer, TOOLS_NETHERITE);
     }
 
     private void generateBlockAges(RegistryWrapper.Impl<Item> itemLookup, Consumer<AgeEntry> consumer) {
@@ -357,5 +384,23 @@ public class GenesisAgesProvider extends AgesProvider {
     @Override
     public String getName() {
         return "Genesis Ages";
+    }
+
+    enum AgeCategory implements StringIdentifiable {
+        ARMOR("armor"),
+        BLOCKS("blocks"),
+        TOOLS("tools"),
+        STORY("story");
+
+        private final String name;
+
+        AgeCategory(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String asString() {
+            return this.name;
+        }
     }
 }

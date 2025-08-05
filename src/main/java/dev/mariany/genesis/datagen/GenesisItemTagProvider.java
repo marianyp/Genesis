@@ -71,6 +71,13 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.DIAMOND_BOOTS
         );
 
+        valueLookupBuilder(GenesisTags.Items.NETHERITE_ARMOR).add(
+                Items.NETHERITE_HELMET,
+                Items.NETHERITE_CHESTPLATE,
+                Items.NETHERITE_LEGGINGS,
+                Items.NETHERITE_BOOTS
+        );
+
         valueLookupBuilder(GenesisTags.Items.WOODEN_TOOLS).add(
                 Items.WOODEN_SWORD,
                 Items.WOODEN_SHOVEL,
@@ -124,6 +131,16 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         );
 
         supportExternalMod(GenesisTags.Items.DIAMOND_TOOLS, "farmersdelight:diamond_knife");
+
+        valueLookupBuilder(GenesisTags.Items.NETHERITE_TOOLS).add(
+                Items.NETHERITE_SWORD,
+                Items.NETHERITE_SHOVEL,
+                Items.NETHERITE_PICKAXE,
+                Items.NETHERITE_AXE,
+                Items.NETHERITE_HOE
+        );
+
+        supportExternalMod(GenesisTags.Items.NETHERITE_TOOLS, "farmersdelight:netherite_knife");
 
         valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS).add(
                 GenesisItems.CLAY_SWORD_CAST,

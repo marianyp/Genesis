@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:view_ages",
+  "parent": "genesisframework:view_ages",
   "criteria": {
     "obtained_flint": {
       "conditions": {

@@ -18,6 +18,7 @@ public class GenesisTags {
         public static final TagKey<Item> GOLDEN_ARMOR = createTag("golden_armor");
         public static final TagKey<Item> IRON_ARMOR = createTag("iron_armor");
         public static final TagKey<Item> DIAMOND_ARMOR = createTag("diamond_armor");
+        public static final TagKey<Item> NETHERITE_ARMOR = createTag("netherite_armor");
 
         public static final TagKey<Item> WOODEN_TOOLS = createTag("wooden_tools");
         public static final TagKey<Item> STONE_TOOLS = createTag("stone_tools");
@@ -25,6 +26,7 @@ public class GenesisTags {
         public static final TagKey<Item> GOLDEN_TOOLS = createTag("golden_tools");
         public static final TagKey<Item> IRON_TOOLS = createTag("iron_tools");
         public static final TagKey<Item> DIAMOND_TOOLS = createTag("diamond_tools");
+        public static final TagKey<Item> NETHERITE_TOOLS = createTag("netherite_tools");
 
         public static final TagKey<Item> INSTRUCTIONS_CLAY_TOOL_CASTS = createTag("instructions_clay_tool_casts");
         public static final TagKey<Item> INSTRUCTIONS_TOOL_CASTS = createTag("instructions_tool_casts");

@@ -1,81 +1,30 @@
 {
   "parent": "genesis:armor/leather",
   "criteria": {
-    "trial_completed_with_chest": {
+    "killed_50_hostiles": {
       "conditions": {
-        "ominous": false,
         "player": [
           {
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
-                "chest": {
-                  "items": "minecraft:leather_chestplate"
-                }
+              "type_specific": {
+                "type": "minecraft:player",
+                "stats": [
+                  {
+                    "type": "minecraft:custom",
+                    "stat": "genesisframework:hostile_kills",
+                    "value": {
+                      "min": 50
+                    }
+                  }
+                ]
               }
             }
           }
         ]
       },
-      "trigger": "genesis:complete_trial_spawner"
-    },
-    "trial_completed_with_feet": {
-      "conditions": {
-        "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "equipment": {
-                "feet": {
-                  "items": "minecraft:leather_boots"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "genesis:complete_trial_spawner"
-    },
-    "trial_completed_with_head": {
-      "conditions": {
-        "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "equipment": {
-                "head": {
-                  "items": "minecraft:leather_helmet"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "genesis:complete_trial_spawner"
-    },
-    "trial_completed_with_legs": {
-      "conditions": {
-        "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "equipment": {
-                "legs": {
-                  "items": "minecraft:leather_leggings"
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "genesis:complete_trial_spawner"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -92,13 +41,5 @@
   },
   "items": [
     "#genesis:copper_armor"
-  ],
-  "requirements": [
-    [
-      "trial_completed_with_feet",
-      "trial_completed_with_legs",
-      "trial_completed_with_chest",
-      "trial_completed_with_head"
-    ]
   ]
 }

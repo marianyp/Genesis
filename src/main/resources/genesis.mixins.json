@@ -3,27 +3,16 @@
   "package": "dev.mariany.genesis.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AdvancementDisplaysMixin",
     "BrewingRecipeRegistryBuilderMixin",
     "BrewingRecipeRegistryMixin",
     "BrewingStandBlockEntityMixin",
     "BrewingStandScreenHandlerPotionSlotMixin",
     "BrushItemMixin",
-    "CrafterBlockMixin",
-    "DataPackContentsMixin",
-    "EntityMixin",
     "GameRulesMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
-    "PlayerAdvancementTrackerMixin",
-    "RecipeUnlockerMixin",
-    "ServerAdvancementLoaderMixin",
-    "ServerPlayerNetworkHandlerMixin",
-    "ServerPlayNetworkHandlerMixin",
     "ServerRecipeManagerMixin",
-    "TrialSpawnerStateMixin",
-    "accessor.ShapedRecipeAccessor",
-    "accessor.TrialSpawnerDataAccessor"
+    "accessor.ShapedRecipeAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -32,19 +21,10 @@
     "requireAnnotations": true
   },
   "client": [
-    "AdvancementsScreenMixin",
-    "AnimatedResultButtonMixin",
-    "ClientAdvancementManagerMixin",
-    "ClientRecipeDisplayEntryMixin",
     "GameOptionsMixin",
-    "MinecraftClientMixin",
     "RecipeBookScreenMixin",
-    "RecipeBookWidgetMixin",
-    "RecipeToastMixin",
-    "accessor.ClientAdvancementManagerAccessor",
     "accessor.GhostRecipeAccessor",
     "accessor.RecipeBookWidgetAccessor",
-    "accessor.ScreenAccessor",
-    "accessor.ToastManagerAccessor"
+    "accessor.ScreenAccessor"
   ]
 }

@@ -12,8 +12,6 @@ public class GenesisSoundEvents {
 
     public static final SoundEvent FLINTS = register("item.flints");
 
-    public static final SoundEvent UI_TOAST_INSTRUCTIONS_COMPLETE = register("ui.toast.instructions_complete");
-
     public static final SoundEvent ENTITY_BOAR_AMBIENT = register("entity.boar.ambient");
     public static final SoundEvent ENTITY_BOAR_ATTACK = register("entity.boar.attack");
     public static final SoundEvent ENTITY_BOAR_DEATH = register("entity.boar.death");

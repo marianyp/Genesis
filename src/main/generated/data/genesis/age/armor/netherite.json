@@ -1,0 +1,23 @@
+{
+  "parent": "genesis:armor/diamond",
+  "criteria": {
+    "completed_raid": {
+      "trigger": "minecraft:hero_of_the_village"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.armor.netherite.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:netherite_chestplate"
+    },
+    "title": {
+      "translate": "age.genesis.netherite"
+    }
+  },
+  "items": [
+    "#genesis:netherite_armor"
+  ]
+}

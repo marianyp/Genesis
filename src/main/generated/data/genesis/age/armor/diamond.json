@@ -1,8 +1,81 @@
 {
   "parent": "genesis:armor/iron",
   "criteria": {
-    "completed_raid": {
-      "trigger": "minecraft:hero_of_the_village"
+    "trial_completed_with_chest": {
+      "conditions": {
+        "ominous": true,
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "chest": {
+                  "items": "minecraft:iron_chestplate"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "genesisframework:complete_trial_spawner"
+    },
+    "trial_completed_with_feet": {
+      "conditions": {
+        "ominous": true,
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "feet": {
+                  "items": "minecraft:iron_boots"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "genesisframework:complete_trial_spawner"
+    },
+    "trial_completed_with_head": {
+      "conditions": {
+        "ominous": true,
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "head": {
+                  "items": "minecraft:iron_helmet"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "genesisframework:complete_trial_spawner"
+    },
+    "trial_completed_with_legs": {
+      "conditions": {
+        "ominous": true,
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "legs": {
+                  "items": "minecraft:iron_leggings"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "genesisframework:complete_trial_spawner"
     }
   },
   "display": {
@@ -19,5 +92,13 @@
   },
   "items": [
     "#genesis:diamond_armor"
+  ],
+  "requirements": [
+    [
+      "trial_completed_with_feet",
+      "trial_completed_with_legs",
+      "trial_completed_with_chest",
+      "trial_completed_with_head"
+    ]
   ]
 }

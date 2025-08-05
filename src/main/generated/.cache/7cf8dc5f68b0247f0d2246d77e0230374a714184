@@ -22,6 +22,8 @@ b43b14b6b136b14c4d501a0be43dc7bb166ba9de data/genesis/tags/item/instructions_too
 742d0809ac433cd781625e58646a272e91f056a5 data/genesis/tags/item/iron_armor.json
 aa85b16c2d0a60190e61deff504a50d11238e9d8 data/genesis/tags/item/iron_tools.json
 36993ba55cda15eac9dcc20de8261cb27ac1ec9d data/genesis/tags/item/leather_armor.json
+1b94bea5746759a465c690884ea66a9506a55990 data/genesis/tags/item/netherite_armor.json
+be7acad24f8675de6bda086d35cd8e0b2d6da533 data/genesis/tags/item/netherite_tools.json
 6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/genesis/tags/item/repairs_copper_armor.json
 a9e3ed45c2a64afe0152108fb2ec71fc1ff432d8 data/genesis/tags/item/stone_tools.json
 d6b197e7a7febaafdeaaac2d73051f9d119200f4 data/genesis/tags/item/wooden_tools.json

@@ -5,31 +5,31 @@
       "conditions": {
         "advancement": "genesis:age/story/garden"
       },
-      "trigger": "genesis:obtain_advancement"
+      "trigger": "genesisframework:obtain_advancement"
     },
     "has_nether_story_age": {
       "conditions": {
         "advancement": "genesis:age/story/nether"
       },
-      "trigger": "genesis:obtain_advancement"
+      "trigger": "genesisframework:obtain_advancement"
     },
     "has_ocean_story_age": {
       "conditions": {
         "advancement": "genesis:age/story/ocean"
       },
-      "trigger": "genesis:obtain_advancement"
+      "trigger": "genesisframework:obtain_advancement"
     },
     "has_sculk_story_age": {
       "conditions": {
         "advancement": "genesis:age/story/sculk"
       },
-      "trigger": "genesis:obtain_advancement"
+      "trigger": "genesisframework:obtain_advancement"
     },
     "has_wither_story_age": {
       "conditions": {
         "advancement": "genesis:age/story/wither"
       },
-      "trigger": "genesis:obtain_advancement"
+      "trigger": "genesisframework:obtain_advancement"
     }
   },
   "dimensions": [

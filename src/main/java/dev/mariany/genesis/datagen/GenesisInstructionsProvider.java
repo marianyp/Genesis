@@ -4,17 +4,15 @@ import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.BrushPrimitiveCauldronCriteria;
 import dev.mariany.genesis.advancement.criterion.CookWithKilnCriteria;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
-import dev.mariany.genesis.advancement.criterion.OpenAdvancementTabCriteria;
-import dev.mariany.genesis.age.AgeEntry;
 import dev.mariany.genesis.block.GenesisBlocks;
-import dev.mariany.genesis.instruction.Instruction;
-import dev.mariany.genesis.instruction.InstructionEntry;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
+import dev.mariany.genesisframework.datagen.InstructionsProvider;
+import dev.mariany.genesisframework.instruction.Instruction;
+import dev.mariany.genesisframework.instruction.InstructionEntry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.advancement.criterion.TickCriterion;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.predicate.item.ItemPredicate;
@@ -42,19 +40,8 @@ public class GenesisInstructionsProvider extends InstructionsProvider {
     ) {
         RegistryEntryLookup<Item> itemLookup = registryLookup.getOrThrow(RegistryKeys.ITEM);
 
-        InstructionEntry viewAges = Instruction.Builder.create()
-                .display(
-                        Items.WRITTEN_BOOK,
-                        Text.translatable("instruction.genesis.view_ages"),
-                        Text.translatable("instruction.genesis.view_ages.description",
-                                Text.keybind(MinecraftClient.getInstance().options.advancementsKey.getTranslationKey())
-                        )
-                )
-                .criterion("view_ages", OpenAdvancementTabCriteria.Conditions.create(AgeEntry.ROOT_ADVANCEMENT_ID))
-                .build(consumer, Genesis.id("view_ages"));
-
         InstructionEntry findFlint = Instruction.Builder.create()
-                .parent(viewAges)
+                .parent(InstructionEntry.VIEW_AGES_INSTRUCTION_ID)
                 .display(Items.FLINT, Text.translatable("instruction.genesis.find_flint"))
                 .criterion("obtained_flint", InventoryChangedCriterion.Conditions.items(Items.FLINT))
                 .build(consumer, Genesis.id("find_flint"));
