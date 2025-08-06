@@ -11,7 +11,8 @@ base {
 }
 
 repositories {
-    mavenLocal()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 loom {
@@ -30,17 +31,17 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "dev.mariany.genesisframework:genesisframework:${project.genesisframework_version}"
+    modImplementation "com.github.marianyp:genesis-framework:${project.genesis_framework_version}"
 }
 
 processResources {
     var expandProps = [
-            minecraft_version       : minecraft_version,
-            genesisframework_version: genesisframework_version,
-            mod_id                  : mod_id, mod_name: mod_name, mod_version: mod_version,
-            mod_authors             : mod_authors, mod_description: mod_description,
-            mod_page_url            : mod_page_url, mod_git_url: mod_git_url,
-            mod_license             : mod_license
+            minecraft_version        : minecraft_version,
+            genesis_framework_version: genesis_framework_version,
+            mod_id                   : mod_id, mod_name: mod_name, mod_version: mod_version,
+            mod_authors              : mod_authors, mod_description: mod_description,
+            mod_page_url             : mod_page_url, mod_git_url: mod_git_url,
+            mod_license              : mod_license
     ]
 
     filesMatching("fabric.mod.json") {
@@ -66,18 +67,5 @@ jar {
 
     from("LICENSE") {
         rename { "${it}_${inputs.properties.archivesName}" }
-    }
-}
-
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
     }
 }
