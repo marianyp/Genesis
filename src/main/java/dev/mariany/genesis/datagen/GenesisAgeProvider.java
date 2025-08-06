@@ -7,7 +7,7 @@ import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import dev.mariany.genesisframework.age.Age;
 import dev.mariany.genesisframework.age.AgeEntry;
-import dev.mariany.genesisframework.datagen.AgesProvider;
+import dev.mariany.genesisframework.datagen.AgeProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.criterion.*;
@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class GenesisAgesProvider extends AgesProvider {
+public class GenesisAgeProvider extends AgeProvider {
     private static final Identifier ARMOR_LEATHER = of(AgeCategory.ARMOR, "leather");
     private static final Identifier ARMOR_COPPER = of(AgeCategory.ARMOR, "copper");
     private static final Identifier ARMOR_IRON = of(AgeCategory.ARMOR, "iron");
@@ -77,7 +77,7 @@ public class GenesisAgesProvider extends AgesProvider {
         return Genesis.id(category.asString() + "/" + key);
     }
 
-    public GenesisAgesProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public GenesisAgeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(output, registryLookup);
     }
 

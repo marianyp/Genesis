@@ -7,7 +7,7 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
-import dev.mariany.genesisframework.datagen.InstructionsProvider;
+import dev.mariany.genesisframework.datagen.InstructionProvider;
 import dev.mariany.genesisframework.instruction.Instruction;
 import dev.mariany.genesisframework.instruction.InstructionEntry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -25,8 +25,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class GenesisInstructionsProvider extends InstructionsProvider {
-    public GenesisInstructionsProvider(
+public class GenesisInstructionProvider extends InstructionProvider {
+    public GenesisInstructionProvider(
             FabricDataOutput output,
             CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup
     ) {
