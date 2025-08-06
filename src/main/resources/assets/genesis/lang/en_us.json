@@ -59,7 +59,7 @@
   "filled_map.ancient_city": "Deep Dark Explorer Map",
   "filled_map.pale_garden": "Pale Garden Explorer Map",
   "instruction.genesis.cook_kiln": "Cook Clay Kiln on a Campfire",
-  "instruction.genesis.cook_terracotta_cauldron": "Cook Terracotta Cauldron on a Campfire",
+  "instruction.genesis.cook_terracotta_cauldron": "Cook Clay Cauldron on a Campfire",
   "instruction.genesis.cook_tool_cast": "Cook Clay Tool Cast on a Campfire",
   "instruction.genesis.craft_assembly_table": "Convert a Crafting Table",
   "instruction.genesis.craft_assembly_table.description": "into a Assembly Table inside of a crafting grid.",
