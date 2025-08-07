@@ -6,8 +6,10 @@ import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.screen.KilnScreenHandler;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.block.FireBlock;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -237,46 +239,60 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
     private boolean isLit() {
         if (this.world != null) {
             BlockState belowState = this.world.getBlockState(this.pos.down());
-            return belowState.getBlock() instanceof CampfireBlock && belowState.get(CampfireBlock.LIT, false);
+            Block belowBlock = belowState.getBlock();
+
+            if (belowBlock instanceof FireBlock) {
+                return true;
+            }
+
+            return belowBlock instanceof CampfireBlock && belowState.get(CampfireBlock.LIT, false);
         }
 
         return false;
     }
 
-    public static void tick(ServerWorld world, BlockPos pos, BlockState state, KilnBlockEntity furnace) {
+    public static void tick(ServerWorld world, BlockPos pos, BlockState state, KilnBlockEntity kiln) {
         boolean stateChanged = false;
 
-        ItemStack inputStack = furnace.inventory.getFirst();
+        ItemStack inputStack = kiln.inventory.getFirst();
 
         boolean hasInput = !inputStack.isEmpty();
 
-        if (furnace.isLit() && hasInput) {
+        if (kiln.isLit() && hasInput) {
             SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(inputStack);
-            RecipeEntry<? extends AbstractCookingRecipe> recipeEntry = furnace.matchGetter
+            RecipeEntry<? extends AbstractCookingRecipe> recipeEntry = kiln.matchGetter
                     .getFirstMatch(recipeInput, world)
                     .orElse(null);
 
-            int maxStackSize = furnace.getMaxCountPerStack();
+            int maxStackSize = kiln.getMaxCountPerStack();
 
-            if (canAcceptRecipeOutput(world.getRegistryManager(), recipeEntry, recipeInput, furnace.inventory, maxStackSize)) {
-                furnace.cookingTimeSpent++;
+            if (
+                    canAcceptRecipeOutput(
+                            world.getRegistryManager(),
+                            recipeEntry,
+                            recipeInput,
+                            kiln.inventory,
+                            maxStackSize
+                    )
+            ) {
+                kiln.cookingTimeSpent++;
 
-                if (furnace.cookingTimeSpent >= furnace.cookingTotalTime) {
-                    furnace.cookingTimeSpent = 0;
-                    furnace.cookingTotalTime = getCookTime(world, furnace);
+                if (kiln.cookingTimeSpent >= kiln.cookingTotalTime) {
+                    kiln.cookingTimeSpent = 0;
+                    kiln.cookingTotalTime = getCookTime(world, kiln);
 
-                    if (craftRecipe(world.getRegistryManager(), recipeEntry, recipeInput, furnace.inventory, maxStackSize)) {
-                        furnace.setLastRecipe(recipeEntry);
+                    if (craftRecipe(world.getRegistryManager(), recipeEntry, recipeInput, kiln.inventory, maxStackSize)) {
+                        kiln.setLastRecipe(recipeEntry);
                     }
 
                     stateChanged = true;
                 }
             } else {
-                furnace.cookingTimeSpent = 0;
+                kiln.cookingTimeSpent = 0;
             }
-        } else if (furnace.cookingTimeSpent > 0) {
+        } else if (kiln.cookingTimeSpent > 0) {
             // Cooling down if no heat source
-            furnace.cookingTimeSpent = MathHelper.clamp(furnace.cookingTimeSpent - 2, 0, furnace.cookingTotalTime);
+            kiln.cookingTimeSpent = MathHelper.clamp(kiln.cookingTimeSpent - 2, 0, kiln.cookingTotalTime);
         }
 
         if (stateChanged) {
