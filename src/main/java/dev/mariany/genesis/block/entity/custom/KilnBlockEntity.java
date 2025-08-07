@@ -6,10 +6,7 @@ import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.screen.KilnScreenHandler;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.block.FireBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -241,7 +238,7 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
             BlockState belowState = this.world.getBlockState(this.pos.down());
             Block belowBlock = belowState.getBlock();
 
-            if (belowBlock instanceof FireBlock) {
+            if (belowBlock instanceof AbstractFireBlock) {
                 return true;
             }
 

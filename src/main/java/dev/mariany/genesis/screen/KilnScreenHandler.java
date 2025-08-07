@@ -146,7 +146,7 @@ public class KilnScreenHandler extends AbstractRecipeScreenHandler {
             boolean craftAll, boolean creative, RecipeEntry<?> recipe, ServerWorld world, PlayerInventory inventory
     ) {
         final List<Slot> list = List.of(this.getSlot(0), this.getSlot(2));
-        return InputSlotFiller.fill(new InputSlotFiller.Handler<AbstractCookingRecipe>() {
+        return InputSlotFiller.fill(new InputSlotFiller.Handler<>() {
             @Override
             public void populateRecipeFinder(RecipeFinder finder) {
                 KilnScreenHandler.this.populateRecipeFinder(finder);
