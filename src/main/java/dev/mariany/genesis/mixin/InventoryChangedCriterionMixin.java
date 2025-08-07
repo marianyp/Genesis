@@ -1,6 +1,6 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.recipe.HealthyStewRecipeGenerator;
+import dev.mariany.genesis.recipe.DynamicHealthyStewRecipeProvider;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class InventoryChangedCriterionMixin {
             at = @At("TAIL")
     )
     public void trigger(ServerPlayerEntity player, PlayerInventory inventory, ItemStack stack, CallbackInfo ci) {
-        List<RegistryKey<Recipe<?>>> recipesInvolving = HealthyStewRecipeGenerator.getRecipesInvolving(stack.getItem())
+        List<RegistryKey<Recipe<?>>> recipesInvolving = DynamicHealthyStewRecipeProvider.getRecipesInvolving(stack.getItem())
                 .stream()
                 .map(id -> RegistryKey.of(RegistryKeys.RECIPE, id))
                 .toList();

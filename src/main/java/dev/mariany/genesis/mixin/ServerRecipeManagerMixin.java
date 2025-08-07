@@ -1,7 +1,7 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.recipe.AssemblyRecipeProvider;
-import dev.mariany.genesis.recipe.HealthyStewRecipeGenerator;
+import dev.mariany.genesis.recipe.DynamicAssemblyRecipeProvider;
+import dev.mariany.genesis.recipe.DynamicHealthyStewRecipeProvider;
 import net.minecraft.recipe.PreparedRecipes;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.registry.RegistryWrapper;
@@ -24,10 +24,14 @@ public class ServerRecipeManagerMixin {
 
     @Inject(method = "initialize", at = @At("HEAD"))
     public void initialize(FeatureSet features, CallbackInfo ci) {
-        AssemblyRecipeProvider assemblyRecipeProvider = new AssemblyRecipeProvider(this.registries);
-        HealthyStewRecipeGenerator healthyStewRecipeGenerator = new HealthyStewRecipeGenerator(this.registries);
+        DynamicAssemblyRecipeProvider dynamicAssemblyRecipeProvider = new DynamicAssemblyRecipeProvider(
+                this.registries
+        );
+        DynamicHealthyStewRecipeProvider dynamicHealthyStewRecipeProvider = new DynamicHealthyStewRecipeProvider(
+                this.registries
+        );
 
-        PreparedRecipes populatedRecipes = assemblyRecipeProvider.provide(preparedRecipes.recipes());
-        this.preparedRecipes = healthyStewRecipeGenerator.populate(populatedRecipes.recipes());
+        PreparedRecipes populatedRecipes = dynamicAssemblyRecipeProvider.provide(preparedRecipes.recipes());
+        this.preparedRecipes = dynamicHealthyStewRecipeProvider.provide(populatedRecipes.recipes());
     }
 }

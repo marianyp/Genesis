@@ -57,7 +57,7 @@ public class GenesisItems {
     public static final Item CLAY_HOE_CAST = register("clay_hoe_cast", CAST_SETTINGS);
     public static final Item CLAY_SHIELD_CAST = register("clay_shield_cast", CAST_SETTINGS);
     public static final Item CLAY_ANVIL_CAST = register("clay_anvil_cast", CAST_SETTINGS);
-    public static final Item CLAY_TOTEM_CAST = register("clay_totem_cast", CAST_SETTINGS);
+    public static final Item CLAY_TOTEM_CAST = register("clay_totem_cast", CAST_SETTINGS.rarity(Rarity.UNCOMMON));
 
     public static final Item SWORD_CAST = registerCast(
             "sword",
@@ -97,7 +97,8 @@ public class GenesisItems {
     public static final Item TOTEM_CAST = registerCast(
             "totem",
             CraftingPattern.ALL,
-            GenesisTags.Items.FROM_TOTEM_CAST
+            GenesisTags.Items.FROM_TOTEM_CAST,
+            Rarity.UNCOMMON
     );
 
     public static final Item HEALTHY_STEW = register("healthy_stew", (
@@ -128,10 +129,14 @@ public class GenesisItems {
     }
 
     private static Item registerCast(String type, CraftingPattern pattern, TagKey<Item> crafts) {
+        return registerCast(type, pattern, crafts, Rarity.COMMON);
+    }
+
+    private static Item registerCast(String type, CraftingPattern pattern, TagKey<Item> crafts, Rarity rarity) {
         return register(
                 type + "_cast",
                 (settings -> new AssemblyPatternItem(pattern, crafts, settings)),
-                CAST_SETTINGS
+                CAST_SETTINGS.rarity(Rarity.UNCOMMON)
         );
     }
 

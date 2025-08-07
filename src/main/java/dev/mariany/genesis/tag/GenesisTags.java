@@ -35,8 +35,6 @@ public class GenesisTags {
 
         public static final TagKey<Item> HEALTHY_STEW_CONTENTS = createTag("healthy_stew_contents");
 
-        public static final TagKey<Item> FROM_ASSEMBLY_TABLE = createTag("from_assembly_table");
-
         public static final TagKey<Item> FROM_SWORD_CAST = createTag("from_sword_cast");
         public static final TagKey<Item> FROM_SHOVEL_CAST = createTag("from_shovel_cast");
         public static final TagKey<Item> FROM_PICKAXE_CAST = createTag("from_pickaxe_cast");

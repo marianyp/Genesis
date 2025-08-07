@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class HealthyStewRecipeGenerator {
+public class DynamicHealthyStewRecipeProvider {
     private final RegistryWrapper.WrapperLookup wrapperLookup;
 
-    public HealthyStewRecipeGenerator(RegistryWrapper.WrapperLookup wrapperLookup) {
+    public DynamicHealthyStewRecipeProvider(RegistryWrapper.WrapperLookup wrapperLookup) {
         this.wrapperLookup = wrapperLookup;
     }
 
@@ -33,14 +33,14 @@ public class HealthyStewRecipeGenerator {
         return getRecipesInvolving(item, getItemsInTag(GenesisTags.Items.HEALTHY_STEW_CONTENTS));
     }
 
-    public static List<Identifier> getRecipesInvolving(Item item, List<Item> possibleIngredients) {
+    private static List<Identifier> getRecipesInvolving(Item item, List<Item> possibleIngredients) {
         return generate(possibleIngredients).stream()
                 .filter(data -> data.ingredients().contains(item))
                 .map(HealthyStewRecipeData::id)
                 .toList();
     }
 
-    public static List<HealthyStewRecipeData> generate(List<Item> possibleIngredients) {
+    private static List<HealthyStewRecipeData> generate(List<Item> possibleIngredients) {
         List<HealthyStewRecipeData> results = new ArrayList<>();
         int ingredientCount = possibleIngredients.size();
 
@@ -64,7 +64,7 @@ public class HealthyStewRecipeGenerator {
         return results;
     }
 
-    public PreparedRecipes populate(Collection<RecipeEntry<?>> recipes) {
+    public PreparedRecipes provide(Collection<RecipeEntry<?>> recipes) {
         List<RecipeEntry<?>> newRecipes = new ArrayList<>(recipes);
 
         this.wrapperLookup.getOptional(RegistryKeys.ITEM)

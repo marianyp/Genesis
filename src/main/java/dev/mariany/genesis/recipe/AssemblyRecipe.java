@@ -1,5 +1,6 @@
 package dev.mariany.genesis.recipe;
 
+import dev.mariany.genesis.item.custom.AssemblyPatternItem;
 import dev.mariany.genesis.mixin.accessor.ShapedRecipeAccessor;
 import dev.mariany.genesis.recipe.display.AssemblyCraftingRecipeDisplay;
 import net.minecraft.item.ItemStack;
@@ -14,14 +15,16 @@ import java.util.List;
 public class AssemblyRecipe extends ShapedRecipe {
     final RawShapedRecipe raw;
     final ItemStack result;
+    final List<AssemblyPatternItem> patterns;
 
-    public AssemblyRecipe(ShapedRecipe recipe) {
+    public AssemblyRecipe(ShapedRecipe recipe, List<AssemblyPatternItem> patterns) {
         this(
                 recipe.getGroup(),
                 recipe.getCategory(),
                 ((ShapedRecipeAccessor) recipe).genesis$raw(),
                 ((ShapedRecipeAccessor) recipe).genesis$result(),
-                recipe.showNotification()
+                recipe.showNotification(),
+                patterns
         );
     }
 
@@ -30,12 +33,22 @@ public class AssemblyRecipe extends ShapedRecipe {
             CraftingRecipeCategory category,
             RawShapedRecipe raw,
             ItemStack result,
-            boolean showNotification
+            boolean showNotification,
+            List<AssemblyPatternItem> patterns
     ) {
         super(group, category, raw, result, showNotification);
 
         this.raw = raw;
         this.result = result;
+        this.patterns = patterns;
+    }
+
+    public List<AssemblyPatternItem> getPatterns() {
+        return this.patterns;
+    }
+
+    public ItemStack craft() {
+        return this.result.copy();
     }
 
     @Override

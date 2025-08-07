@@ -218,10 +218,10 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
 
             private void registerSpecialCastRecipes() {
                 this.createShaped(RecipeCategory.MISC, Items.TOTEM_OF_UNDYING)
-                        .pattern("BBB")
-                        .pattern("EBE")
-                        .pattern("BBB")
-                        .input('B', Items.GOLD_BLOCK)
+                        .pattern("GGG")
+                        .pattern("EGE")
+                        .pattern("GGG")
+                        .input('G', Items.GOLD_INGOT)
                         .input('E', Items.EMERALD)
                         .criterion(hasItem(GenesisItems.TOTEM_CAST), conditionsFromItem(GenesisItems.TOTEM_CAST))
                         .offerTo(this.exporter);

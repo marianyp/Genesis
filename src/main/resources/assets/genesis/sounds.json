@@ -207,31 +207,7 @@
   },
   "block.assembly_table.use": {
     "sounds": [
-      {
-        "name": "block/decorated_pot/shatter1",
-        "volume": 0.2,
-        "pitch": 1.1
-      },
-      {
-        "name": "block/decorated_pot/shatter2",
-        "volume": 0.2,
-        "pitch": 1.1
-      },
-      {
-        "name": "block/decorated_pot/shatter3",
-        "volume": 0.2,
-        "pitch": 1.1
-      },
-      {
-        "name": "block/decorated_pot/shatter4",
-        "volume": 0.2,
-        "pitch": 1.1
-      },
-      {
-        "name": "block/decorated_pot/shatter5",
-        "volume": 0.2,
-        "pitch": 1.1
-      }
+      "genesis:block/assembly_table/shatter"
     ],
     "subtitle": "subtitles.block.genesis.assembly_table.use"
   }

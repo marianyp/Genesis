@@ -5,7 +5,6 @@ e8c0332cbd9514cef4cee1351662c6b80c05435d data/genesis/tags/item/copper_armor.jso
 27e204902976d8fe13a30a245c402b63e03d3ab5 data/genesis/tags/item/diamond_armor.json
 f45df6bc23c236fda72f83f18a01ba6f3411ab92 data/genesis/tags/item/diamond_tools.json
 b18f75548574fda94e06ce9e1c34f65da6ae2be2 data/genesis/tags/item/from_anvil_cast.json
-2120f6b3da6803f7db194b83269c94ea0632943b data/genesis/tags/item/from_assembly_table.json
 58b92ae412db10a7041d5ae649a445f3ac2e4a13 data/genesis/tags/item/from_axe_cast.json
 a4294e62419ff1e6f90ca898fd168917dbe83685 data/genesis/tags/item/from_hoe_cast.json
 b1b1de5dd36c189a00225507c31c1520042f57db data/genesis/tags/item/from_pickaxe_cast.json

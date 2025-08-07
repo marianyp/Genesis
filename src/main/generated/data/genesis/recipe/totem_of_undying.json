@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": "minecraft:gold_block",
-    "E": "minecraft:emerald"
+    "E": "minecraft:emerald",
+    "G": "minecraft:gold_ingot"
   },
   "pattern": [
-    "BBB",
-    "EBE",
-    "BBB"
+    "GGG",
+    "EGE",
+    "GGG"
   ],
   "result": {
     "count": 1,

@@ -29,6 +29,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -184,7 +185,7 @@ public class AssemblyScreenHandler extends AbstractCraftingScreenHandler {
                                                     SoundCategory.BLOCKS,
                                                     serverPlayer,
                                                     1,
-                                                    1,
+                                                    MathHelper.nextBetween(world.getRandom(), 1.4F, 0.9F),
                                                     world.getRandom().nextLong()
                                             )
                                     )
