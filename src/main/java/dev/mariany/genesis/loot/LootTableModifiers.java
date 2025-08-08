@@ -39,8 +39,11 @@ public class LootTableModifiers {
         CAST_MAP.put(LootTables.SIMPLE_DUNGEON_CHEST, 0.5F);
         CAST_MAP.put(LootTables.TRIAL_CHAMBERS_REWARD_COMMON_CHEST, 0.2F);
 
+        RARE_CAST_MAP.put(LootTables.BASTION_BRIDGE_CHEST, 0.4F);
+        RARE_CAST_MAP.put(LootTables.BASTION_TREASURE_CHEST, 1F);
         RARE_CAST_MAP.put(LootTables.DESERT_PYRAMID_CHEST, 0.2F);
         RARE_CAST_MAP.put(LootTables.JUNGLE_TEMPLE_CHEST, 0.7F);
+        RARE_CAST_MAP.put(LootTables.NETHER_BRIDGE_CHEST, 0.2F);
         RARE_CAST_MAP.put(LootTables.TRIAL_CHAMBERS_REWARD_CHEST, 0.45F);
 
         SINGLE_RARE_CAST_MAP.add(LootTables.DESERT_PYRAMID_ARCHAEOLOGY);
