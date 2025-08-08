@@ -136,7 +136,7 @@ public class GenesisItems {
         return register(
                 type + "_cast",
                 (settings -> new AssemblyPatternItem(pattern, crafts, settings)),
-                CAST_SETTINGS.rarity(Rarity.UNCOMMON)
+                CAST_SETTINGS.rarity(rarity)
         );
     }
 
