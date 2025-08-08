@@ -6,8 +6,8 @@ cfe857fb80b391064fdb584e8dd3d39587c64c49 data/genesis/age/armor/leather.json
 17eab86a4682a37a525c44bf47ee0e5b44379ad8 data/genesis/age/armor/netherite.json
 a30fa8cf97d7fbe06bcc1390385a31e9446d654d data/genesis/age/blocks/bed.json
 a2ef97ec4da13cd3ae5539f9eafbf268e786711e data/genesis/age/blocks/clay.json
-d588e0f97f0b91a4706e4e97ef793d5dd35aed6c data/genesis/age/blocks/furnace.json
-bf4ccd903001c0055a58add24fb629a5f12128d4 data/genesis/age/story/end.json
+d23ea9714028e5db865d3cf6d640571618581145 data/genesis/age/blocks/furnace.json
+39d75af3c08aaaf9e480ed8e78d6cd6abd1e31bd data/genesis/age/story/end.json
 2db4ace19aec208dd0588c249fe5e3c74d37fc7e data/genesis/age/story/garden.json
 1b284bdda141ce339c679229dce596718578a7d3 data/genesis/age/story/nether.json
 e894125b886b406a5252b1759c5c4fc153140f4c data/genesis/age/story/ocean.json

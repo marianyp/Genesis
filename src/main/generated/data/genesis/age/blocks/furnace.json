@@ -3,15 +3,41 @@
   "criteria": {
     "has_iron_armor_age": {
       "conditions": {
-        "advancement": "genesis:age/armor/iron"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/armor/iron": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     },
     "has_iron_tools_age": {
       "conditions": {
-        "advancement": "genesis:age/tools/iron"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/tools/iron": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {

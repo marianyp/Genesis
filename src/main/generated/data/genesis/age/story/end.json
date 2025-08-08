@@ -3,33 +3,98 @@
   "criteria": {
     "has_garden_story_age": {
       "conditions": {
-        "advancement": "genesis:age/story/garden"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/story/garden": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     },
     "has_nether_story_age": {
       "conditions": {
-        "advancement": "genesis:age/story/nether"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/story/nether": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     },
     "has_ocean_story_age": {
       "conditions": {
-        "advancement": "genesis:age/story/ocean"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/story/ocean": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     },
     "has_sculk_story_age": {
       "conditions": {
-        "advancement": "genesis:age/story/sculk"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/story/sculk": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     },
     "has_wither_story_age": {
       "conditions": {
-        "advancement": "genesis:age/story/wither"
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "genesis:age/story/wither": true
+                }
+              }
+            }
+          }
+        ]
       },
-      "trigger": "genesisframework:obtain_advancement"
+      "trigger": "minecraft:tick"
     }
   },
   "dimensions": [
