@@ -125,25 +125,21 @@ public class LootTableModifiers {
 
     private static void addCastLootTables(RegistryKey<LootTable> key, LootTable.Builder tableBuilder) {
         if (CAST_MAP.containsKey(key)) {
-            float castChance = CAST_MAP.get(key);
-
             tableBuilder.pool(
                     LootPool.builder()
                             .rolls(UniformLootNumberProvider.create(0, 1))
                             .with(ItemEntry.builder(GenesisItems.CLAY_SHIELD_CAST))
                             .with(ItemEntry.builder(GenesisItems.CLAY_ANVIL_CAST))
-                            .conditionally(RandomChanceLootCondition.builder(castChance))
+                            .conditionally(RandomChanceLootCondition.builder( CAST_MAP.get(key)))
             );
         } else if (RARE_CAST_MAP.containsKey(key)) {
-            float totemCastChance = RARE_CAST_MAP.get(key);
-
             tableBuilder.pool(
                     LootPool.builder()
                             .rolls(ConstantLootNumberProvider.create(1))
                             .with(ItemEntry.builder(GenesisItems.CLAY_TOTEM_CAST).weight(3))
                             .with(ItemEntry.builder(GenesisItems.CLAY_SHIELD_CAST))
                             .with(ItemEntry.builder(GenesisItems.CLAY_ANVIL_CAST))
-                            .conditionally(RandomChanceLootCondition.builder(totemCastChance))
+                            .conditionally(RandomChanceLootCondition.builder(RARE_CAST_MAP.get(key)))
             );
         } else if (SINGLE_RARE_CAST_MAP.contains(key)) {
             tableBuilder.modifyPools(builder -> builder
