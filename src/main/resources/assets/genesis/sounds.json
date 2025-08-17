@@ -10,7 +10,7 @@
     ]
   },
   "item.flints": {
-    "subtitle": "subtitles.item.flints",
+    "subtitle": "subtitles.item.genesis.flints",
     "sounds": [
       "genesis:item/flints"
     ]
