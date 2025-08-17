@@ -164,12 +164,14 @@ public class AssemblyScreenHandler extends AbstractCraftingScreenHandler {
 
     @Override
     protected CraftingResultSlot addResultSlot(PlayerEntity player, int x, int y) {
-        CraftingResultSlot craftingResultSlot = new CraftingResultSlot(player,
+        CraftingResultSlot craftingResultSlot = new CraftingResultSlot(
+                player,
                 this.craftingInventory,
                 this.craftingResultInventory,
                 0,
                 x,
-                y) {
+                y
+        ) {
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 super.onTakeItem(player, stack);
