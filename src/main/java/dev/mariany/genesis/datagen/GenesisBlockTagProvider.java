@@ -4,9 +4,13 @@ import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -50,5 +54,12 @@ public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider 
         );
 
         valueLookupBuilder(BlockTags.AXE_MINEABLE).add(GenesisBlocks.ASSEMBLY_TABLE);
+
+        supportExternalMod("visualworkbench:unaltered_workbenches", GenesisBlocks.ASSEMBLY_TABLE);
+    }
+
+    private void supportExternalMod(String tag, Block block) {
+        getTagBuilder(TagKey.of(RegistryKeys.BLOCK, Identifier.of(tag)))
+                .add(block.getRegistryEntry().registryKey().getValue());
     }
 }
