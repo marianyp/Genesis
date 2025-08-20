@@ -2,3 +2,4 @@
 e6da75acac8bb8879498d1d9757ac7e69ebf9921 data/genesis/tags/block/boar_spawnable_on.json
 5b1b98d269025b8b767a8f406bd2794a15e9bd37 data/minecraft/tags/block/mineable/axe.json
 87b0c3ea9bb63806c3d959d2d7af2ec0b810a59a data/minecraft/tags/block/mineable/pickaxe.json
+5b1b98d269025b8b767a8f406bd2794a15e9bd37 data/visualworkbench/tags/block/unaltered_workbenches.json
