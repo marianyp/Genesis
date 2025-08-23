@@ -23,12 +23,14 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisRecipeProvider extends FabricRecipeProvider {
-    public GenesisRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public GenesisRecipeProvider(FabricDataOutput output,
+                                 CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup,
+                                                 RecipeExporter exporter) {
         return new RecipeGenerator(registryLookup, exporter) {
             private static String getCampfireItemPath(ItemConvertible item) {
                 return getItemPath(item) + "_from_campfire_cooking";
@@ -146,7 +148,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 0.3F,
                                 1200
                         )
-                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON), this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
+                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON),
+                                this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
                         .offerTo(this.exporter, getCampfireItemPath(GenesisBlocks.TERRACOTTA_CAULDRON));
 
                 // Cook Clay Cauldron in Blast Furnace
@@ -157,7 +160,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 0.3F,
                                 300
                         )
-                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON), this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
+                        .criterion(hasItem(GenesisBlocks.CLAY_CAULDRON),
+                                this.conditionsFromItem(GenesisBlocks.CLAY_CAULDRON))
                         .offerTo(this.exporter, getBlastingItemPath(GenesisBlocks.TERRACOTTA_CAULDRON));
             }
 
@@ -275,7 +279,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern("C")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_SHOVEL_CAST)
@@ -283,7 +288,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern("C")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_PICKAXE_CAST)
@@ -291,7 +297,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern(" C ")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_AXE_CAST)
@@ -299,7 +306,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern("CF")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_HOE_CAST)
@@ -307,7 +315,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern(" C")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_SHIELD_CAST)
@@ -316,7 +325,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern(" FF")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
 
                 this.createShaped(RecipeCategory.MISC, GenesisItems.CLAY_ANVIL_CAST)
@@ -325,7 +335,8 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .pattern("FFF")
                         .input('F', Items.FLINT)
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
-                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST), conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
+                        .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
+                                conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
                         .offerTo(this.exporter);
             }
 
@@ -347,15 +358,22 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 0.1F,
                                 200
                         )
-                        .criterion(hasItem(GenesisItems.COPPER_SWORD), this.conditionsFromItem(GenesisItems.COPPER_SWORD))
-                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL), this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
-                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE), this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
+                        .criterion(hasItem(GenesisItems.COPPER_SWORD),
+                                this.conditionsFromItem(GenesisItems.COPPER_SWORD))
+                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL),
+                                this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
+                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE),
+                                this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
                         .criterion(hasItem(GenesisItems.COPPER_AXE), this.conditionsFromItem(GenesisItems.COPPER_AXE))
                         .criterion(hasItem(GenesisItems.COPPER_HOE), this.conditionsFromItem(GenesisItems.COPPER_HOE))
-                        .criterion(hasItem(GenesisItems.COPPER_HELMET), this.conditionsFromItem(GenesisItems.COPPER_HELMET))
-                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE), this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
-                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS), this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
-                        .criterion(hasItem(GenesisItems.COPPER_BOOTS), this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
+                        .criterion(hasItem(GenesisItems.COPPER_HELMET),
+                                this.conditionsFromItem(GenesisItems.COPPER_HELMET))
+                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE),
+                                this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
+                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS),
+                                this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
+                        .criterion(hasItem(GenesisItems.COPPER_BOOTS),
+                                this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
                         .offerTo(this.exporter, getSmeltingItemPath(GenesisItems.COPPER_NUGGET));
 
                 CookingRecipeJsonBuilder.createBlasting(
@@ -375,15 +393,22 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                                 0.1F,
                                 100
                         )
-                        .criterion(hasItem(GenesisItems.COPPER_SWORD), this.conditionsFromItem(GenesisItems.COPPER_SWORD))
-                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL), this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
-                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE), this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
+                        .criterion(hasItem(GenesisItems.COPPER_SWORD),
+                                this.conditionsFromItem(GenesisItems.COPPER_SWORD))
+                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL),
+                                this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
+                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE),
+                                this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
                         .criterion(hasItem(GenesisItems.COPPER_AXE), this.conditionsFromItem(GenesisItems.COPPER_AXE))
                         .criterion(hasItem(GenesisItems.COPPER_HOE), this.conditionsFromItem(GenesisItems.COPPER_HOE))
-                        .criterion(hasItem(GenesisItems.COPPER_HELMET), this.conditionsFromItem(GenesisItems.COPPER_HELMET))
-                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE), this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
-                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS), this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
-                        .criterion(hasItem(GenesisItems.COPPER_BOOTS), this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
+                        .criterion(hasItem(GenesisItems.COPPER_HELMET),
+                                this.conditionsFromItem(GenesisItems.COPPER_HELMET))
+                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE),
+                                this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
+                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS),
+                                this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
+                        .criterion(hasItem(GenesisItems.COPPER_BOOTS),
+                                this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
                         .offerTo(this.exporter, getBlastingItemPath(GenesisItems.COPPER_NUGGET));
             }
 
@@ -452,6 +477,15 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
                         .pattern("XX")
                         .pattern("X#")
+                        .pattern(" #")
+                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
+                        .offerTo(this.exporter);
+
+                this.createShaped(RecipeCategory.TOOLS, GenesisItems.COPPER_HOE)
+                        .input('#', Items.STICK)
+                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
+                        .pattern("XX")
+                        .pattern(" #")
                         .pattern(" #")
                         .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
                         .offerTo(this.exporter);
