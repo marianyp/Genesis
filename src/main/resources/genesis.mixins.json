@@ -11,6 +11,7 @@
     "GameRulesMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
+    "LivingEntityMixin",
     "ServerRecipeManagerMixin",
     "accessor.ShapedRecipeAccessor"
   ],

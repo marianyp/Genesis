@@ -6,6 +6,8 @@ import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBehavior;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.config.ConfigHandler;
 import dev.mariany.genesis.entity.GenesisEntities;
+import dev.mariany.genesis.event.entity.BeforeEntityDeathHandler;
+import dev.mariany.genesis.event.entity.EntityEvents;
 import dev.mariany.genesis.event.item.ModifyItemComponentsHandler;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.loot.LootTableModifiers;
@@ -51,6 +53,7 @@ public class Genesis implements ModInitializer {
         LootTableModifiers.modifyLootTables();
 
         DefaultItemComponentEvents.MODIFY.register(ModifyItemComponentsHandler::modify);
+        EntityEvents.BEFORE_ENTITY_DEATH.register(BeforeEntityDeathHandler::onEntityDeath);
 
         GenesisTradeOffers.registerVillagerOffers();
 

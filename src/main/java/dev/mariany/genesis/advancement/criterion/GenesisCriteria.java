@@ -20,6 +20,10 @@ public class GenesisCriteria {
             "cook_with_kiln",
             new CookWithKilnCriteria()
     );
+    public static final TickCriterion COMPLETE_MONUMENT = register(
+            "complete_monument",
+            new TickCriterion()
+    );
 
     public static <T extends Criterion<?>> T register(String name, T criterion) {
         return Registry.register(Registries.CRITERION, Genesis.id(name), criterion);

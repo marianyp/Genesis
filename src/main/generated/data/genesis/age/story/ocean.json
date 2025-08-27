@@ -1,35 +1,8 @@
 {
   "parent": "genesis:story/nether",
   "criteria": {
-    "killed_3elder_guardian": {
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "minecraft:elder_guardian"
-            }
-          }
-        ],
-        "killing_blow": {
-          "source_entity": {
-            "type_specific": {
-              "type": "minecraft:player",
-              "stats": [
-                {
-                  "type": "minecraft:killed",
-                  "stat": "minecraft:elder_guardian",
-                  "value": {
-                    "min": 2
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "trigger": "minecraft:player_killed_entity"
+    "complete_monument": {
+      "trigger": "genesis:complete_monument"
     }
   },
   "display": {

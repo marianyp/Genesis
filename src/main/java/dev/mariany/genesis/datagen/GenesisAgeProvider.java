@@ -1,6 +1,7 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.advancement.criterion.ItemBrokenCriterion;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
@@ -158,9 +159,13 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.netherite"),
                         Text.translatable("age.genesis.armor.netherite.description")
                 )
-                .criterion("completed_raid", Criteria.HERO_OF_THE_VILLAGE.create(new TickCriterion.Conditions(
-                        Optional.empty()
-                )))
+                .criterion(
+                        "completed_raid", Criteria.HERO_OF_THE_VILLAGE.create(
+                                new TickCriterion.Conditions(
+                                        Optional.empty()
+                                )
+                        )
+                )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_ARMOR)))
                 .parent(ARMOR_DIAMOND)
                 .build(consumer, ARMOR_NETHERITE);
@@ -181,8 +186,9 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.stone"),
                         Text.translatable("age.genesis.tools.stone.description")
                 )
-                .criterion("broken_wood", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.WOODEN_TOOLS))
+                .criterion(
+                        "broken_wood", ItemBrokenCriterion.Conditions.create(
+                                itemLookup.getOrThrow(GenesisTags.Items.WOODEN_TOOLS))
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS)))
                 .parent(TOOLS_WOOD)
@@ -194,8 +200,9 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.copper"),
                         Text.translatable("age.genesis.tools.copper.description")
                 )
-                .criterion("broken_stone", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
+                .criterion(
+                        "broken_stone", ItemBrokenCriterion.Conditions.create(
+                                itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS)))
                 .parent(TOOLS_STONE)
@@ -207,8 +214,9 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.iron"),
                         Text.translatable("age.genesis.tools.iron.description")
                 )
-                .criterion("broken_copper", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
+                .criterion(
+                        "broken_copper", ItemBrokenCriterion.Conditions.create(
+                                itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS)))
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_TOOLS)))
@@ -221,8 +229,9 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.diamond"),
                         Text.translatable("age.genesis.tools.diamond.description")
                 )
-                .criterion("broken_iron", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
+                .criterion(
+                        "broken_iron", ItemBrokenCriterion.Conditions.create(
+                                itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS)))
                 .parent(TOOLS_IRON)
@@ -234,8 +243,9 @@ public class GenesisAgeProvider extends AgeProvider {
                         Text.translatable("age.genesis.netherite"),
                         Text.translatable("age.genesis.tools.netherite.description")
                 )
-                .criterion("broken_diamond", ItemBrokenCriterion.Conditions.create(
-                        itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS))
+                .criterion(
+                        "broken_diamond", ItemBrokenCriterion.Conditions.create(
+                                itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS))
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_TOOLS)))
                 .parent(TOOLS_DIAMOND)
@@ -294,7 +304,8 @@ public class GenesisAgeProvider extends AgeProvider {
                 .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_SHIELD_CAST))
                 .parent(STORY_SURVIVAL)
                 .parentOptional()
-                .criterion("killed_creaking",
+                .criterion(
+                        "killed_creaking",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
                                 EntityPredicate.Builder.create().type(entityLookup, EntityType.CREAKING)
                         )
@@ -322,7 +333,13 @@ public class GenesisAgeProvider extends AgeProvider {
                 .itemUnlocks(Ingredient.ofItem(Items.TRIDENT))
                 .parent(STORY_NETHER)
                 .parentOptional()
-                .requireKill(entityLookup, EntityType.ELDER_GUARDIAN, 3)
+                .criterion(
+                        "complete_monument", GenesisCriteria.COMPLETE_MONUMENT.create(
+                                new TickCriterion.Conditions(
+                                        Optional.empty()
+                                )
+                        )
+                )
                 .display(
                         Items.ELDER_GUARDIAN_SPAWN_EGG,
                         Text.translatable("age.genesis.ocean"),
@@ -334,10 +351,12 @@ public class GenesisAgeProvider extends AgeProvider {
                 .itemUnlocks(Ingredient.ofItem(GenesisItems.CLAY_ANVIL_CAST))
                 .parent(STORY_OCEAN)
                 .parentOptional()
-                .criterion(LOOT_ANCIENT_CITY_REQUIREMENT,
+                .criterion(
+                        LOOT_ANCIENT_CITY_REQUIREMENT,
                         PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.ANCIENT_CITY_CHEST)
                 )
-                .criterion(LOOT_ANCIENT_CITY_ICE_BOX_REQUIREMENT,
+                .criterion(
+                        LOOT_ANCIENT_CITY_ICE_BOX_REQUIREMENT,
                         PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.ANCIENT_CITY_ICE_BOX_CHEST)
                 )
                 .requirements(AdvancementRequirements.anyOf(ANCIENT_CITY_REQUIREMENTS))
@@ -352,7 +371,8 @@ public class GenesisAgeProvider extends AgeProvider {
                 .parent(STORY_SCULK)
                 .parentOptional()
                 .itemUnlocks(Ingredient.ofItem(Items.ENCHANTED_GOLDEN_APPLE))
-                .criterion("killed_wither",
+                .criterion(
+                        "killed_wither",
                         OnKilledCriterion.Conditions.createPlayerKilledEntity(
                                 EntityPredicate.Builder.create().type(entityLookup, EntityType.WITHER)
                         )
