@@ -2,7 +2,6 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
-import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
@@ -38,15 +37,6 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
 
             @Override
             public void generate() {
-                this.offerReversibleCompactingRecipesWithCompactingRecipeGroup(
-                        RecipeCategory.MISC,
-                        GenesisItems.COPPER_NUGGET,
-                        RecipeCategory.MISC,
-                        Items.COPPER_INGOT,
-                        "copper_ingot_from_nuggets",
-                        "copper_ingot"
-                );
-
                 this.createShapeless(RecipeCategory.TOOLS, GenesisItems.FLINTS).input(Items.FLINT).input(Items.FLINT)
                         .criterion(hasItem(Items.FLINT), this.conditionsFromItem(Items.FLINT)).offerTo(this.exporter);
 
@@ -54,9 +44,6 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.CRAFTING_TABLE), this.conditionsFromItem(Items.CRAFTING_TABLE))
                         .offerTo(this.exporter);
 
-                this.registerCopperTools();
-                this.registerCopperArmor();
-                this.registerCopperGearCooking();
                 this.registerClayCasts();
                 this.registerCasts();
                 this.registerSpecialCastRecipes();
@@ -337,157 +324,6 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                         .input('C', GenesisItems.BLANK_CLAY_CAST)
                         .criterion(hasItem(GenesisItems.BLANK_CLAY_CAST),
                                 conditionsFromItem(GenesisItems.BLANK_CLAY_CAST))
-                        .offerTo(this.exporter);
-            }
-
-            private void registerCopperGearCooking() {
-                CookingRecipeJsonBuilder.createSmelting(
-                                Ingredient.ofItems(
-                                        GenesisItems.COPPER_SWORD,
-                                        GenesisItems.COPPER_SHOVEL,
-                                        GenesisItems.COPPER_PICKAXE,
-                                        GenesisItems.COPPER_AXE,
-                                        GenesisItems.COPPER_HOE,
-                                        GenesisItems.COPPER_HELMET,
-                                        GenesisItems.COPPER_CHESTPLATE,
-                                        GenesisItems.COPPER_LEGGINGS,
-                                        GenesisItems.COPPER_BOOTS
-                                ),
-                                RecipeCategory.MISC,
-                                GenesisItems.COPPER_NUGGET,
-                                0.1F,
-                                200
-                        )
-                        .criterion(hasItem(GenesisItems.COPPER_SWORD),
-                                this.conditionsFromItem(GenesisItems.COPPER_SWORD))
-                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL),
-                                this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
-                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE),
-                                this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
-                        .criterion(hasItem(GenesisItems.COPPER_AXE), this.conditionsFromItem(GenesisItems.COPPER_AXE))
-                        .criterion(hasItem(GenesisItems.COPPER_HOE), this.conditionsFromItem(GenesisItems.COPPER_HOE))
-                        .criterion(hasItem(GenesisItems.COPPER_HELMET),
-                                this.conditionsFromItem(GenesisItems.COPPER_HELMET))
-                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE),
-                                this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
-                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS),
-                                this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
-                        .criterion(hasItem(GenesisItems.COPPER_BOOTS),
-                                this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
-                        .offerTo(this.exporter, getSmeltingItemPath(GenesisItems.COPPER_NUGGET));
-
-                CookingRecipeJsonBuilder.createBlasting(
-                                Ingredient.ofItems(
-                                        GenesisItems.COPPER_SWORD,
-                                        GenesisItems.COPPER_SHOVEL,
-                                        GenesisItems.COPPER_PICKAXE,
-                                        GenesisItems.COPPER_AXE,
-                                        GenesisItems.COPPER_HOE,
-                                        GenesisItems.COPPER_HELMET,
-                                        GenesisItems.COPPER_CHESTPLATE,
-                                        GenesisItems.COPPER_LEGGINGS,
-                                        GenesisItems.COPPER_BOOTS
-                                ),
-                                RecipeCategory.MISC,
-                                GenesisItems.COPPER_NUGGET,
-                                0.1F,
-                                100
-                        )
-                        .criterion(hasItem(GenesisItems.COPPER_SWORD),
-                                this.conditionsFromItem(GenesisItems.COPPER_SWORD))
-                        .criterion(hasItem(GenesisItems.COPPER_SHOVEL),
-                                this.conditionsFromItem(GenesisItems.COPPER_SHOVEL))
-                        .criterion(hasItem(GenesisItems.COPPER_PICKAXE),
-                                this.conditionsFromItem(GenesisItems.COPPER_PICKAXE))
-                        .criterion(hasItem(GenesisItems.COPPER_AXE), this.conditionsFromItem(GenesisItems.COPPER_AXE))
-                        .criterion(hasItem(GenesisItems.COPPER_HOE), this.conditionsFromItem(GenesisItems.COPPER_HOE))
-                        .criterion(hasItem(GenesisItems.COPPER_HELMET),
-                                this.conditionsFromItem(GenesisItems.COPPER_HELMET))
-                        .criterion(hasItem(GenesisItems.COPPER_CHESTPLATE),
-                                this.conditionsFromItem(GenesisItems.COPPER_CHESTPLATE))
-                        .criterion(hasItem(GenesisItems.COPPER_LEGGINGS),
-                                this.conditionsFromItem(GenesisItems.COPPER_LEGGINGS))
-                        .criterion(hasItem(GenesisItems.COPPER_BOOTS),
-                                this.conditionsFromItem(GenesisItems.COPPER_BOOTS))
-                        .offerTo(this.exporter, getBlastingItemPath(GenesisItems.COPPER_NUGGET));
-            }
-
-            private void registerCopperArmor() {
-                this.createShaped(RecipeCategory.COMBAT, GenesisItems.COPPER_HELMET)
-                        .input('X', Items.COPPER_INGOT)
-                        .pattern("XXX")
-                        .pattern("X X")
-                        .criterion(hasItem(Items.COPPER_INGOT), this.conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.COMBAT, GenesisItems.COPPER_CHESTPLATE)
-                        .input('X', Items.COPPER_INGOT)
-                        .pattern("X X")
-                        .pattern("XXX")
-                        .pattern("XXX")
-                        .criterion(hasItem(Items.COPPER_INGOT), this.conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.COMBAT, GenesisItems.COPPER_LEGGINGS)
-                        .input('X', Items.COPPER_INGOT)
-                        .pattern("XXX")
-                        .pattern("X X")
-                        .pattern("X X")
-                        .criterion(hasItem(Items.COPPER_INGOT), this.conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.COMBAT, GenesisItems.COPPER_BOOTS)
-                        .input('X', Items.COPPER_INGOT)
-                        .pattern("X X")
-                        .pattern("X X")
-                        .criterion(hasItem(Items.COPPER_INGOT), this.conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(this.exporter);
-            }
-
-            private void registerCopperTools() {
-                this.createShaped(RecipeCategory.COMBAT, GenesisItems.COPPER_SWORD)
-                        .input('#', Items.STICK)
-                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
-                        .pattern("X")
-                        .pattern("X")
-                        .pattern("#")
-                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.TOOLS, GenesisItems.COPPER_SHOVEL)
-                        .input('#', Items.STICK)
-                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
-                        .pattern("X")
-                        .pattern("#")
-                        .pattern("#")
-                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.TOOLS, GenesisItems.COPPER_PICKAXE)
-                        .input('#', Items.STICK)
-                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
-                        .pattern("XXX")
-                        .pattern(" # ")
-                        .pattern(" # ")
-                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.TOOLS, GenesisItems.COPPER_AXE)
-                        .input('#', Items.STICK)
-                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
-                        .pattern("XX")
-                        .pattern("X#")
-                        .pattern(" #")
-                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
-                        .offerTo(this.exporter);
-
-                this.createShaped(RecipeCategory.TOOLS, GenesisItems.COPPER_HOE)
-                        .input('#', Items.STICK)
-                        .input('X', GenesisTags.Items.COPPER_TOOL_MATERIALS)
-                        .pattern("XX")
-                        .pattern(" #")
-                        .pattern(" #")
-                        .criterion("has_copper_ingot", this.conditionsFromTag(GenesisTags.Items.COPPER_TOOL_MATERIALS))
                         .offerTo(this.exporter);
             }
         };

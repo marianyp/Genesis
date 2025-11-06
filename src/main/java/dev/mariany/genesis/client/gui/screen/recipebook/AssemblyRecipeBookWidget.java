@@ -7,7 +7,7 @@ import dev.mariany.genesis.screen.AssemblyScreenHandler;
 import dev.mariany.genesis.screen.slot.AssemblyInputSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.recipebook.AbstractCraftingRecipeBookWidget;
+import net.minecraft.client.gui.screen.recipebook.CraftingRecipeBookWidget;
 import net.minecraft.client.gui.screen.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screen.recipebook.RecipeResultCollection;
 import net.minecraft.item.ItemStack;
@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
-public class AssemblyRecipeBookWidget extends AbstractCraftingRecipeBookWidget {
+public class AssemblyRecipeBookWidget extends CraftingRecipeBookWidget {
     public AssemblyRecipeBookWidget(AssemblyScreenHandler screenHandler) {
         super(screenHandler);
     }

@@ -14,7 +14,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "genesis:copper_pickaxe"
+      "id": "minecraft:copper_pickaxe"
     },
     "title": {
       "translate": "age.genesis.copper"

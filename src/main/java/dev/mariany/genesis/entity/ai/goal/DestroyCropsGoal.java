@@ -47,7 +47,7 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     public void tick() {
         super.tick();
 
-        World world = this.stepAndDestroyMob.getWorld();
+        World world = this.stepAndDestroyMob.getEntityWorld();
         BlockPos mobPos = this.stepAndDestroyMob.getBlockPos();
         BlockPos cropBlockPos = this.adjustPositionToCrop(mobPos, world);
 

@@ -7,14 +7,15 @@ import dev.mariany.genesis.component.type.GenesisFoodComponents;
 import dev.mariany.genesis.entity.GenesisEntities;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
 import dev.mariany.genesis.item.custom.FlintsItem;
-import dev.mariany.genesis.item.equipment.GenesisArmorMaterials;
 import dev.mariany.genesis.recipe.CraftingPattern;
 import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponents;
-import net.minecraft.item.*;
-import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -26,19 +27,6 @@ import java.util.function.Function;
 
 public class GenesisItems {
     private static final Item.Settings CAST_SETTINGS = new Item.Settings().maxCount(1);
-
-    public static final Item COPPER_NUGGET = register("copper_nugget");
-
-    public static final Item COPPER_SWORD = register("copper_sword", (new Item.Settings()).sword(GenesisToolMaterials.COPPER, 3F, -2.4F));
-    public static final Item COPPER_SHOVEL = register("copper_shovel", ((settings) -> new ShovelItem(GenesisToolMaterials.COPPER, 1.5F, -3F, settings)));
-    public static final Item COPPER_PICKAXE = register("copper_pickaxe", (new Item.Settings()).pickaxe(GenesisToolMaterials.COPPER, 1F, -2.8F));
-    public static final Item COPPER_AXE = register("copper_axe", ((settings) -> new AxeItem(GenesisToolMaterials.COPPER, 7F, -3.2F, settings)));
-    public static final Item COPPER_HOE = register("copper_hoe", ((settings) -> new HoeItem(GenesisToolMaterials.COPPER, -1F, -2F, settings)));
-
-    public static final Item COPPER_HELMET = register("copper_helmet", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.HELMET));
-    public static final Item COPPER_CHESTPLATE = register("copper_chestplate", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.CHESTPLATE));
-    public static final Item COPPER_LEGGINGS = register("copper_leggings", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.LEGGINGS));
-    public static final Item COPPER_BOOTS = register("copper_boots", (new Item.Settings()).armor(GenesisArmorMaterials.COPPER, EquipmentType.BOOTS));
 
     public static final Item FLINTS = register("flints", FlintsItem::new, (new Item.Settings()).maxDamage(4));
 
@@ -101,7 +89,8 @@ public class GenesisItems {
             Rarity.UNCOMMON
     );
 
-    public static final Item HEALTHY_STEW = register("healthy_stew", (
+    public static final Item HEALTHY_STEW = register(
+            "healthy_stew", (
                     new Item.Settings()
                             .maxCount(GenesisConstants.STEW_STACK_SIZE)
                             .food(GenesisFoodComponents.HEALTHY_STEW, GenesisConsumableComponents.HEALTHY_STEW)
@@ -109,7 +98,8 @@ public class GenesisItems {
             )
     );
 
-    public static final Item ENCHANTED_HONEY_BOTTLE = register("enchanted_honey_bottle", (new Item.Settings()
+    public static final Item ENCHANTED_HONEY_BOTTLE = register(
+            "enchanted_honey_bottle", (new Item.Settings()
                     .recipeRemainder(Items.GLASS_BOTTLE)
                     .food(FoodComponents.HONEY_BOTTLE, GenesisConsumableComponents.ENCHANTED_HONEY_BOTTLE)
                     .useRemainder(Items.GLASS_BOTTLE)
@@ -121,7 +111,8 @@ public class GenesisItems {
 
     public static final Item BOAR_SPAWN_EGG = register(
             "boar_spawn_egg",
-            settings -> new SpawnEggItem(GenesisEntities.BOAR, settings)
+            SpawnEggItem::new,
+            new Item.Settings().spawnEgg(GenesisEntities.BOAR)
     );
 
     private static RegistryKey<Item> keyOf(String id) {
@@ -148,10 +139,6 @@ public class GenesisItems {
         return register(name, Item::new, settings);
     }
 
-    private static Item register(String name, Function<Item.Settings, Item> factory) {
-        return register(name, factory, new Item.Settings());
-    }
-
     private static Item register(String name, Function<Item.Settings, Item> factory, Item.Settings settings) {
         RegistryKey<Item> itemKey = keyOf(name);
         Item item = factory.apply(settings.registryKey(itemKey));
@@ -163,8 +150,6 @@ public class GenesisItems {
         Genesis.LOGGER.info("Registering Items for " + Genesis.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            entries.addAfter(Items.IRON_NUGGET, COPPER_NUGGET);
-
             entries.addAfter(Items.RAW_GOLD, RAW_NETHERITE);
             entries.addAfter(RAW_NETHERITE, RAW_COAL);
             entries.addAfter(RAW_COAL, RAW_EMERALD);
@@ -192,22 +177,7 @@ public class GenesisItems {
             entries.addAfter(ANVIL_CAST, TOTEM_CAST);
         });
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-            entries.addAfter(Items.IRON_SWORD, COPPER_SWORD);
-            entries.addAfter(Items.IRON_AXE, COPPER_AXE);
-
-            entries.addAfter(Items.IRON_BOOTS, COPPER_HELMET);
-            entries.addAfter(COPPER_HELMET, COPPER_CHESTPLATE);
-            entries.addAfter(COPPER_CHESTPLATE, COPPER_LEGGINGS);
-            entries.addAfter(COPPER_LEGGINGS, COPPER_BOOTS);
-        });
-
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
-            entries.addAfter(Items.IRON_HOE, COPPER_SHOVEL);
-            entries.addAfter(COPPER_SHOVEL, COPPER_PICKAXE);
-            entries.addAfter(COPPER_PICKAXE, COPPER_AXE);
-            entries.addAfter(COPPER_AXE, COPPER_HOE);
-
             entries.addAfter(Items.FLINT_AND_STEEL, FLINTS);
         });
 
@@ -216,8 +186,11 @@ public class GenesisItems {
             entries.addAfter(Items.HONEY_BOTTLE, ENCHANTED_HONEY_BOTTLE);
         });
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries ->
-                entries.addAfter(Items.TURTLE_SPAWN_EGG, BOAR_SPAWN_EGG)
-        );
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
+            entries.addAfter(
+                    Items.TURTLE_SPAWN_EGG,
+                    BOAR_SPAWN_EGG
+            );
+        });
     }
 }

@@ -35,8 +35,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class KilnBlockEntity extends LockableContainerBlockEntity implements RecipeUnlocker, RecipeInputProvider, SidedInventory {
-    private static final Codec<Map<RegistryKey<Recipe<?>>, Integer>> CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
+public class KilnBlockEntity extends LockableContainerBlockEntity
+        implements RecipeUnlocker, RecipeInputProvider, SidedInventory {
+    private static final Codec<Map<RegistryKey<Recipe<?>>, Integer>> CODEC =
+            Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
 
     private static final int DEFAULT_COOK_SECONDS = 45;
     private static final int DEFAULT_COOK_TICKS = DEFAULT_COOK_SECONDS * 20;
@@ -159,7 +161,11 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
     }
 
     public void dropExperienceForRecipesUsed(ServerPlayerEntity player) {
-        List<RecipeEntry<?>> usedRecipes = this.getRecipesUsedAndDropExperience(player.getWorld(), player.getPos());
+        List<RecipeEntry<?>> usedRecipes = this.getRecipesUsedAndDropExperience(
+                player.getEntityWorld(),
+                player.getEntityPos()
+        );
+
         player.unlockRecipes(usedRecipes);
 
         for (RecipeEntry<?> recipeEntry : usedRecipes) {
@@ -177,7 +183,12 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
         for (Reference2IntMap.Entry<RegistryKey<Recipe<?>>> recipeUsageEntry : this.recipesUsed.reference2IntEntrySet()) {
             world.getRecipeManager().get(recipeUsageEntry.getKey()).ifPresent(recipe -> {
                 usedRecipes.add(recipe);
-                dropExperience(world, pos, recipeUsageEntry.getIntValue(), ((AbstractCookingRecipe) recipe.value()).getExperience());
+                dropExperience(
+                        world,
+                        pos,
+                        recipeUsageEntry.getIntValue(),
+                        ((AbstractCookingRecipe) recipe.value()).getExperience()
+                );
             });
         }
 
@@ -278,7 +289,13 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
                     kiln.cookingTimeSpent = 0;
                     kiln.cookingTotalTime = getCookTime(world, kiln);
 
-                    if (craftRecipe(world.getRegistryManager(), recipeEntry, recipeInput, kiln.inventory, maxStackSize)) {
+                    if (craftRecipe(
+                            world.getRegistryManager(),
+                            recipeEntry,
+                            recipeInput,
+                            kiln.inventory,
+                            maxStackSize
+                    )) {
                         kiln.setLastRecipe(recipeEntry);
                     }
 
@@ -324,7 +341,8 @@ public class KilnBlockEntity extends LockableContainerBlockEntity implements Rec
                 return false;
             }
 
-            return outputStack.getCount() < maxCount && outputStack.getCount() < outputStack.getMaxCount() || outputStack.getCount() < itemStack.getMaxCount();
+            return outputStack.getCount() < maxCount && outputStack.getCount() < outputStack.getMaxCount() ||
+                    outputStack.getCount() < itemStack.getMaxCount();
         }
 
         return false;

@@ -127,7 +127,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Text.translatable("instruction.genesis.craft_clay_tool_cast.description")
                 )
                 .criterion("obtained_clay_tool_cast", InventoryChangedCriterion.Conditions.items(
-                        ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS)
+                        ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.CLAY_TOOL_CASTS)
                 ))
                 .build(consumer, Genesis.id("craft_clay_tool_cast"));
 
@@ -138,7 +138,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Text.translatable("instruction.genesis.cook_tool_cast")
                 )
                 .criterion("cooked_tool_cast", InventoryChangedCriterion.Conditions.items(
-                        ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.INSTRUCTIONS_TOOL_CASTS)
+                        ItemPredicate.Builder.create().tag(itemLookup, GenesisTags.Items.TOOL_CASTS)
                 ))
                 .build(consumer, Genesis.id("cook_tool_cast"));
 

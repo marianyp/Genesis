@@ -2,7 +2,6 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
-import dev.mariany.genesis.item.equipment.GenesisEquipmentAssets;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Blocks;
@@ -35,7 +34,6 @@ public class GenesisModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(GenesisItems.COPPER_NUGGET, Models.GENERATED);
         itemModelGenerator.register(GenesisItems.HEALTHY_STEW, Models.GENERATED);
         itemModelGenerator.registerWithTextureSource(
                 GenesisItems.ENCHANTED_HONEY_BOTTLE,
@@ -44,26 +42,9 @@ public class GenesisModelProvider extends FabricModelProvider {
         );
         itemModelGenerator.register(GenesisItems.BOAR_SPAWN_EGG, Models.GENERATED);
 
-        this.registerCopperTools(itemModelGenerator);
-        this.registerCopperArmor(itemModelGenerator);
         this.registerRawOres(itemModelGenerator);
         this.registerCasts(itemModelGenerator);
         this.registerFlints(itemModelGenerator, GenesisItems.FLINTS);
-    }
-
-    private void registerCopperTools(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(GenesisItems.COPPER_SWORD, Models.HANDHELD);
-        itemModelGenerator.register(GenesisItems.COPPER_SHOVEL, Models.HANDHELD);
-        itemModelGenerator.register(GenesisItems.COPPER_PICKAXE, Models.HANDHELD);
-        itemModelGenerator.register(GenesisItems.COPPER_AXE, Models.HANDHELD);
-        itemModelGenerator.register(GenesisItems.COPPER_HOE, Models.HANDHELD);
-    }
-
-    private void registerCopperArmor(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.registerArmor(GenesisItems.COPPER_HELMET, GenesisEquipmentAssets.COPPER, ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(GenesisItems.COPPER_CHESTPLATE, GenesisEquipmentAssets.COPPER, ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(GenesisItems.COPPER_LEGGINGS, GenesisEquipmentAssets.COPPER, ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(GenesisItems.COPPER_BOOTS, GenesisEquipmentAssets.COPPER, ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
     }
 
     private void registerRawOres(ItemModelGenerator itemModelGenerator) {

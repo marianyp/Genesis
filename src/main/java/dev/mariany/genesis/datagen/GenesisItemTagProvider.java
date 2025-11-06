@@ -16,26 +16,15 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public GenesisItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public GenesisItemTagProvider(
+            FabricDataOutput output,
+            CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture
+    ) {
         super(output, registriesFuture);
     }
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        valueLookupBuilder(ItemTags.SWORDS).add(GenesisItems.COPPER_SWORD);
-        valueLookupBuilder(ItemTags.SHOVELS).add(GenesisItems.COPPER_SHOVEL);
-        valueLookupBuilder(ItemTags.PICKAXES).add(GenesisItems.COPPER_PICKAXE);
-        valueLookupBuilder(ItemTags.AXES).add(GenesisItems.COPPER_AXE);
-        valueLookupBuilder(ItemTags.HOES).add(GenesisItems.COPPER_HOE);
-
-        valueLookupBuilder(ItemTags.HEAD_ARMOR).add(GenesisItems.COPPER_HELMET);
-        valueLookupBuilder(ItemTags.CHEST_ARMOR).add(GenesisItems.COPPER_CHESTPLATE);
-        valueLookupBuilder(ItemTags.LEG_ARMOR).add(GenesisItems.COPPER_LEGGINGS);
-        valueLookupBuilder(ItemTags.FOOT_ARMOR).add(GenesisItems.COPPER_BOOTS);
-
-        valueLookupBuilder(GenesisTags.Items.COPPER_TOOL_MATERIALS).add(Items.COPPER_INGOT);
-        valueLookupBuilder(GenesisTags.Items.REPAIRS_COPPER_ARMOR).add(Items.COPPER_INGOT);
-
         valueLookupBuilder(GenesisTags.Items.LEATHER_ARMOR).add(
                 Items.LEATHER_HELMET,
                 Items.LEATHER_CHESTPLATE,
@@ -44,10 +33,10 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         );
 
         valueLookupBuilder(GenesisTags.Items.COPPER_ARMOR).add(
-                GenesisItems.COPPER_HELMET,
-                GenesisItems.COPPER_CHESTPLATE,
-                GenesisItems.COPPER_LEGGINGS,
-                GenesisItems.COPPER_BOOTS
+                Items.COPPER_HELMET,
+                Items.COPPER_CHESTPLATE,
+                Items.COPPER_LEGGINGS,
+                Items.COPPER_BOOTS
         );
 
         valueLookupBuilder(GenesisTags.Items.GOLDEN_ARMOR).add(
@@ -95,11 +84,11 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         );
 
         valueLookupBuilder(GenesisTags.Items.COPPER_TOOLS).add(
-                GenesisItems.COPPER_SWORD,
-                GenesisItems.COPPER_SHOVEL,
-                GenesisItems.COPPER_PICKAXE,
-                GenesisItems.COPPER_AXE,
-                GenesisItems.COPPER_HOE
+                Items.COPPER_SWORD,
+                Items.COPPER_SHOVEL,
+                Items.COPPER_PICKAXE,
+                Items.COPPER_AXE,
+                Items.COPPER_HOE
         );
 
         valueLookupBuilder(GenesisTags.Items.GOLDEN_TOOLS).add(
@@ -142,7 +131,7 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
         supportExternalMod(GenesisTags.Items.NETHERITE_TOOLS, "farmersdelight:netherite_knife");
 
-        valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_CLAY_TOOL_CASTS).add(
+        valueLookupBuilder(GenesisTags.Items.CLAY_TOOL_CASTS).add(
                 GenesisItems.CLAY_SWORD_CAST,
                 GenesisItems.CLAY_SHOVEL_CAST,
                 GenesisItems.CLAY_PICKAXE_CAST,
@@ -150,7 +139,7 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 GenesisItems.CLAY_HOE_CAST
         );
 
-        valueLookupBuilder(GenesisTags.Items.INSTRUCTIONS_TOOL_CASTS).add(
+        valueLookupBuilder(GenesisTags.Items.TOOL_CASTS).add(
                 GenesisItems.SWORD_CAST,
                 GenesisItems.SHOVEL_CAST,
                 GenesisItems.PICKAXE_CAST,
@@ -177,7 +166,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 Items.SWEET_BERRIES
         );
 
-        supportExternalMod(GenesisTags.Items.HEALTHY_STEW_CONTENTS, "biomesoplenty", List.of(
+        supportExternalMod(
+                GenesisTags.Items.HEALTHY_STEW_CONTENTS, "biomesoplenty", List.of(
                         "orange_cosmos",
                         "pink_hibiscus",
                         "rose",
@@ -185,7 +175,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 )
         );
 
-        supportExternalMod(GenesisTags.Items.HEALTHY_STEW_CONTENTS, "farmersdelight", List.of(
+        supportExternalMod(
+                GenesisTags.Items.HEALTHY_STEW_CONTENTS, "farmersdelight", List.of(
                         "cabbage",
                         "onion",
                         "tomato"

@@ -33,7 +33,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "genesis:copper_chestplate"
+      "id": "minecraft:copper_chestplate"
     },
     "title": {
       "translate": "age.genesis.copper"

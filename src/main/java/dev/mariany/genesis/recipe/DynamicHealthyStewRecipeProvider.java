@@ -68,7 +68,10 @@ public class DynamicHealthyStewRecipeProvider {
         List<RecipeEntry<?>> newRecipes = new ArrayList<>(recipes);
 
         this.wrapperLookup.getOptional(RegistryKeys.ITEM)
-                .flatMap(itemRegistry -> itemRegistry.getOptional(GenesisTags.Items.HEALTHY_STEW_CONTENTS))
+                .flatMap(
+                        itemRegistry -> itemRegistry
+                                .getOptional(GenesisTags.Items.HEALTHY_STEW_CONTENTS)
+                )
                 .ifPresent(entryList -> {
                     List<Item> itemsInTag = entryList.stream()
                             .map(RegistryEntry::value)

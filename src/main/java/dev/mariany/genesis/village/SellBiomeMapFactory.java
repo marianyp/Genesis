@@ -42,7 +42,7 @@ public class SellBiomeMapFactory implements TradeOffers.Factory {
     @Nullable
     @Override
     public TradeOffer create(Entity entity, Random random) {
-        if (entity.getWorld() instanceof ServerWorld serverWorld) {
+        if (entity.getEntityWorld() instanceof ServerWorld serverWorld) {
             Pair<BlockPos, RegistryEntry<Biome>> results = serverWorld.locateBiome(
                     biome -> biome.isIn(this.biome),
                     entity.getBlockPos(),

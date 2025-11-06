@@ -1,9 +1,9 @@
 {
   "values": [
-    "genesis:copper_sword",
-    "genesis:copper_shovel",
-    "genesis:copper_pickaxe",
-    "genesis:copper_axe",
-    "genesis:copper_hoe"
+    "minecraft:copper_sword",
+    "minecraft:copper_shovel",
+    "minecraft:copper_pickaxe",
+    "minecraft:copper_axe",
+    "minecraft:copper_hoe"
   ]
 }

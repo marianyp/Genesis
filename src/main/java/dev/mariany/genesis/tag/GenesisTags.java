@@ -10,9 +10,6 @@ import net.minecraft.world.gen.structure.Structure;
 
 public class GenesisTags {
     public static final class Items {
-        public static final TagKey<Item> REPAIRS_COPPER_ARMOR = createTag("repairs_copper_armor");
-        public static final TagKey<Item> COPPER_TOOL_MATERIALS = createTag("copper_tool_materials");
-
         public static final TagKey<Item> LEATHER_ARMOR = createTag("leather_armor");
         public static final TagKey<Item> COPPER_ARMOR = createTag("copper_armor");
         public static final TagKey<Item> GOLDEN_ARMOR = createTag("golden_armor");
@@ -28,8 +25,8 @@ public class GenesisTags {
         public static final TagKey<Item> DIAMOND_TOOLS = createTag("diamond_tools");
         public static final TagKey<Item> NETHERITE_TOOLS = createTag("netherite_tools");
 
-        public static final TagKey<Item> INSTRUCTIONS_CLAY_TOOL_CASTS = createTag("instructions_clay_tool_casts");
-        public static final TagKey<Item> INSTRUCTIONS_TOOL_CASTS = createTag("instructions_tool_casts");
+        public static final TagKey<Item> CLAY_TOOL_CASTS = createTag("clay_tool_casts");
+        public static final TagKey<Item> TOOL_CASTS = createTag("tool_casts");
 
         public static final TagKey<Item> FURNACES = createTag("furnaces");
 

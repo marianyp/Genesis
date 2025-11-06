@@ -25,10 +25,8 @@
       "dev.mariany.genesis.GenesisDataGenerator"
     ],
     "rei_client": [
-      "dev.mariany.genesis.compat.rei.client.GenesisClientREIPlugin"
     ],
     "rei_common": [
-      "dev.mariany.genesis.compat.rei.GenesisREIPlugin"
     ]
   },
   "mixins": [

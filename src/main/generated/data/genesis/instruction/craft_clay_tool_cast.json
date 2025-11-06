@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#genesis:instructions_clay_tool_casts"
+            "items": "#genesis:clay_tool_casts"
           }
         ]
       },

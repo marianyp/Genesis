@@ -11,7 +11,7 @@
             "predicate": {
               "equipment": {
                 "chest": {
-                  "items": "genesis:copper_chestplate"
+                  "items": "minecraft:copper_chestplate"
                 }
               }
             }
@@ -30,7 +30,7 @@
             "predicate": {
               "equipment": {
                 "feet": {
-                  "items": "genesis:copper_boots"
+                  "items": "minecraft:copper_boots"
                 }
               }
             }
@@ -49,7 +49,7 @@
             "predicate": {
               "equipment": {
                 "head": {
-                  "items": "genesis:copper_helmet"
+                  "items": "minecraft:copper_helmet"
                 }
               }
             }
@@ -68,7 +68,7 @@
             "predicate": {
               "equipment": {
                 "legs": {
-                  "items": "genesis:copper_leggings"
+                  "items": "minecraft:copper_leggings"
                 }
               }
             }

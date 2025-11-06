@@ -107,7 +107,7 @@ public class GenesisAgeProvider extends AgeProvider {
 
         Age.Builder.create()
                 .display(
-                        GenesisItems.COPPER_CHESTPLATE,
+                        Items.COPPER_CHESTPLATE,
                         Text.translatable("age.genesis.copper"),
                         Text.translatable("age.genesis.armor.copper.description")
                 )
@@ -125,10 +125,10 @@ public class GenesisAgeProvider extends AgeProvider {
                 .requireTrialWearing(
                         itemLookup,
                         false,
-                        GenesisItems.COPPER_HELMET,
-                        GenesisItems.COPPER_CHESTPLATE,
-                        GenesisItems.COPPER_LEGGINGS,
-                        GenesisItems.COPPER_BOOTS
+                        Items.COPPER_HELMET,
+                        Items.COPPER_CHESTPLATE,
+                        Items.COPPER_LEGGINGS,
+                        Items.COPPER_BOOTS
                 )
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR)))
                 .itemUnlocks(Ingredient.ofTag(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR)))
@@ -196,7 +196,7 @@ public class GenesisAgeProvider extends AgeProvider {
 
         Age.Builder.create()
                 .display(
-                        GenesisItems.COPPER_PICKAXE,
+                        Items.COPPER_PICKAXE,
                         Text.translatable("age.genesis.copper"),
                         Text.translatable("age.genesis.tools.copper.description")
                 )

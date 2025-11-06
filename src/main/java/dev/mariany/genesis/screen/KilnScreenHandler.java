@@ -45,7 +45,7 @@ public class KilnScreenHandler extends AbstractRecipeScreenHandler {
         checkDataCount(propertyDelegate, 3);
         this.inventory = inventory;
         this.propertyDelegate = propertyDelegate;
-        this.world = playerInventory.player.getWorld();
+        this.world = playerInventory.player.getEntityWorld();
         this.recipePropertySet = this.world.getRecipeManager().getPropertySet(RecipePropertySet.FURNACE_INPUT);
         this.addSlot(new Slot(inventory, 0, 56, 34));
         this.addSlot(new KilnOutputSlot(playerInventory.player, inventory, 1, 116, 35));

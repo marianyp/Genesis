@@ -20,10 +20,10 @@ public class BeforeEntityDeathHandler {
         GenesisConfig config = ConfigHandler.getConfig();
 
         if (livingEntity instanceof ElderGuardianEntity elderGuardian) {
-            if (elderGuardian.getWorld() instanceof ServerWorld serverWorld) {
+            if (elderGuardian.getEntityWorld() instanceof ServerWorld serverWorld) {
                 List<Entity> otherEntities = serverWorld.getOtherEntities(
                         null,
-                        Box.from(elderGuardian.getPos()).expand(config.oceanMonumentSearchRadius),
+                        Box.from(elderGuardian.getEntityPos()).expand(config.oceanMonumentSearchRadius),
                         Entity::isAlive
                 );
 

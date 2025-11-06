@@ -39,7 +39,7 @@ public class KilnRecipeBookWidget extends RecipeBookWidget<KilnScreenHandler> {
     }
 
     @Override
-    protected boolean isValid(Slot slot) {
+    protected boolean isCraftingSlot(Slot slot) {
         return switch (slot.id) {
             case 0, 1, 2 -> true;
             default -> false;

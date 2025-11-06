@@ -41,7 +41,7 @@ public class AssemblyTableBlock extends CraftingTableBlock {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient) {
+        if (!world.isClient()) {
             player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
             player.incrementStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);
         }
