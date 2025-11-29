@@ -12,6 +12,7 @@
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "SchemasMixin",
     "ServerRecipeManagerMixin",
     "accessor.ShapedRecipeAccessor"
   ],

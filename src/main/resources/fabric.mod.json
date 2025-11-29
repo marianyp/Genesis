@@ -25,8 +25,10 @@
       "dev.mariany.genesis.GenesisDataGenerator"
     ],
     "rei_client": [
+      "dev.mariany.genesis.compat.rei.client.GenesisClientREIPlugin"
     ],
     "rei_common": [
+      "dev.mariany.genesis.compat.rei.GenesisREIPlugin"
     ]
   },
   "mixins": [
@@ -34,10 +36,10 @@
   ],
   "accessWidener": "genesis.accesswidener",
   "depends": {
-    "fabricloader": ">=0.16.14",
-    "minecraft": ">=1.21.6",
+    "fabricloader": ">=0.18.1",
+    "minecraft": ">=1.21.9",
     "java": ">=21",
-    "fabric-api": ">=0.128.2",
+    "fabric-api": ">=0.138.3",
     "genesisframework": ">=${genesis_framework_version}"
   }
 }

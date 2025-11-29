@@ -1,5 +1,7 @@
 package dev.mariany.genesis.mixin;
 
+import dev.mariany.genesis.config.ConfigHandler;
+import dev.mariany.genesis.config.GenesisConfig;
 import dev.mariany.genesis.recipe.DynamicAssemblyRecipeProvider;
 import dev.mariany.genesis.recipe.DynamicHealthyStewRecipeProvider;
 import net.minecraft.recipe.PreparedRecipes;
@@ -24,14 +26,20 @@ public class ServerRecipeManagerMixin {
 
     @Inject(method = "initialize", at = @At("HEAD"))
     public void initialize(FeatureSet features, CallbackInfo ci) {
-        DynamicAssemblyRecipeProvider dynamicAssemblyRecipeProvider = new DynamicAssemblyRecipeProvider(
-                this.registries
-        );
-        DynamicHealthyStewRecipeProvider dynamicHealthyStewRecipeProvider = new DynamicHealthyStewRecipeProvider(
-                this.registries
-        );
+        GenesisConfig config = ConfigHandler.getConfig();
 
-        PreparedRecipes populatedRecipes = dynamicAssemblyRecipeProvider.provide(preparedRecipes.recipes());
-        this.preparedRecipes = dynamicHealthyStewRecipeProvider.provide(populatedRecipes.recipes());
+        if (config.generateHealthyStewRecipes) {
+            DynamicAssemblyRecipeProvider dynamicAssemblyRecipeProvider = new DynamicAssemblyRecipeProvider(
+                    this.registries
+            );
+
+            DynamicHealthyStewRecipeProvider dynamicHealthyStewRecipeProvider = new DynamicHealthyStewRecipeProvider(
+                    this.registries
+            );
+
+            PreparedRecipes populatedRecipes = dynamicAssemblyRecipeProvider.provide(preparedRecipes.recipes());
+
+            this.preparedRecipes = dynamicHealthyStewRecipeProvider.provide(populatedRecipes.recipes());
+        }
     }
 }

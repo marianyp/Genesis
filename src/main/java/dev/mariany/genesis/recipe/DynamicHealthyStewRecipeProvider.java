@@ -35,9 +35,19 @@ public class DynamicHealthyStewRecipeProvider {
 
     private static List<Identifier> getRecipesInvolving(Item item, List<Item> possibleIngredients) {
         return generate(possibleIngredients).stream()
-                .filter(data -> data.ingredients().contains(item))
-                .map(HealthyStewRecipeData::id)
-                .toList();
+                                            .filter(data -> data.ingredients().contains(item))
+                                            .map(HealthyStewRecipeData::id)
+                                            .toList();
+    }
+
+    private static List<Item> getItemsInTag(TagKey<Item> tag) {
+        return Registries.ITEM.getOptional(tag).map(
+                registryEntries ->
+                        registryEntries
+                                .stream()
+                                .map(RegistryEntry::value)
+                                .toList()
+        ).orElseGet(List::of);
     }
 
     private static List<HealthyStewRecipeData> generate(List<Item> possibleIngredients) {
@@ -68,26 +78,26 @@ public class DynamicHealthyStewRecipeProvider {
         List<RecipeEntry<?>> newRecipes = new ArrayList<>(recipes);
 
         this.wrapperLookup.getOptional(RegistryKeys.ITEM)
-                .flatMap(
-                        itemRegistry -> itemRegistry
-                                .getOptional(GenesisTags.Items.HEALTHY_STEW_CONTENTS)
-                )
-                .ifPresent(entryList -> {
-                    List<Item> itemsInTag = entryList.stream()
-                            .map(RegistryEntry::value)
-                            .toList();
+                          .flatMap(
+                                  itemRegistry -> itemRegistry
+                                          .getOptional(GenesisTags.Items.HEALTHY_STEW_CONTENTS)
+                          )
+                          .ifPresent(entryList -> {
+                              List<Item> itemsInTag = entryList.stream()
+                                                               .map(RegistryEntry::value)
+                                                               .toList();
 
-                    List<HealthyStewRecipeData> recipeDataList = generate(itemsInTag);
+                              List<HealthyStewRecipeData> recipeDataList = generate(itemsInTag);
 
-                    for (HealthyStewRecipeData data : recipeDataList) {
-                        newRecipes.add(new RecipeEntry<>(
-                                RegistryKey.of(RegistryKeys.RECIPE, data.id()),
-                                createStewRecipe(data)
-                        ));
-                    }
+                              for (HealthyStewRecipeData data : recipeDataList) {
+                                  newRecipes.add(new RecipeEntry<>(
+                                          RegistryKey.of(RegistryKeys.RECIPE, data.id()),
+                                          createStewRecipe(data)
+                                  ));
+                              }
 
-                    Genesis.LOGGER.info("Added {} healthy stew recipes!", recipeDataList.size());
-                });
+                              Genesis.LOGGER.info("Added {} healthy stew recipes!", recipeDataList.size());
+                          });
 
         return PreparedRecipes.of(newRecipes);
     }
@@ -97,8 +107,8 @@ public class DynamicHealthyStewRecipeProvider {
         ingredients.add(Items.BOWL);
 
         List<Ingredient> ingredientList = ingredients.stream()
-                .map(Ingredient::ofItem)
-                .toList();
+                                                     .map(Ingredient::ofItem)
+                                                     .toList();
 
         String group = "healthy_stew_";
         group += data.primaryItem().getRegistryEntry().registryKey().getValue().getPath();
@@ -118,13 +128,6 @@ public class DynamicHealthyStewRecipeProvider {
         return Genesis.id("healthy_stew/" + pattern);
     }
 
-    private static List<Item> getItemsInTag(TagKey<Item> tag) {
-        return Registries.ITEM.getOptional(tag).map(registryEntries -> registryEntries.stream()
-                .map(RegistryEntry::value)
-                .toList()).orElseGet(List::of);
-
-    }
-
-    public record HealthyStewRecipeData(Identifier id, Item primaryItem, List<Item> ingredients) {
+    private record HealthyStewRecipeData(Identifier id, Item primaryItem, List<Item> ingredients) {
     }
 }
