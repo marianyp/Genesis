@@ -24,6 +24,11 @@ public class AssemblyInputSlot extends Slot {
     }
 
     @Override
+    public boolean isEnabled() {
+        return this.canInsert();
+    }
+
+    @Override
     public int getMaxItemCount() {
         return 1;
     }
