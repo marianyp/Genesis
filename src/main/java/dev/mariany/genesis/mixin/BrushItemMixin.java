@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.custom.FilledPrimitiveCauldronBlockEntity;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,9 +30,24 @@ public abstract class BrushItemMixin {
     @Shadow
     protected abstract HitResult getHitResult(PlayerEntity user);
 
-    @WrapOperation(method = "usageTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BrushItem;addDustParticles(Lnet/minecraft/world/World;Lnet/minecraft/util/hit/BlockHitResult;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Arm;)V"))
-    public void wrapAddDustParticles(BrushItem brushItem, World world, BlockHitResult hitResult, BlockState state, Vec3d userRotation, Arm arm, Operation<Void> original) {
-        if (hitResult.getSide() == Direction.UP && state.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
+    @WrapOperation(
+            method = "usageTick", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/item/BrushItem;addDustParticles(Lnet/minecraft/world/World;Lnet/minecraft/util/hit/BlockHitResult;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Arm;)V"
+    )
+    )
+    public void wrapAddDustParticles(
+            BrushItem brushItem,
+            World world,
+            BlockHitResult hitResult,
+            BlockState state,
+            Vec3d userRotation,
+            Arm arm,
+            Operation<Void> original
+    ) {
+        boolean topSide = hitResult.getSide() == Direction.UP;
+
+        if (topSide && state.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
             BlockState containingBlock = filledPrimitiveCauldronBlock.getParticleBlock().getDefaultState();
             original.call(brushItem, world, hitResult, containingBlock, userRotation, arm);
         } else {
@@ -55,13 +71,20 @@ public abstract class BrushItemMixin {
             if (hitResult instanceof BlockHitResult blockHitResult) {
                 BlockPos blockPos = blockHitResult.getBlockPos();
 
-                if (world instanceof ServerWorld serverWorld && world.getBlockEntity(blockPos) instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                    if (blockHitResult.getSide() == Direction.UP) {
-                        if (filledPrimitiveCauldronBlockEntity.brush(serverWorld, playerEntity, stack)) {
-                            ItemStack offhandStack = playerEntity.getEquippedStack(EquipmentSlot.OFFHAND);
-                            EquipmentSlot equipmentSlot = stack.equals(offhandStack) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
-                            stack.damage(1, playerEntity, equipmentSlot);
-                            user.stopUsingItem();
+                if (world instanceof ServerWorld serverWorld) {
+                    BlockEntity blockEntity = world.getBlockEntity(blockPos);
+
+                    if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
+                        if (blockHitResult.getSide() == Direction.UP) {
+                            if (filledPrimitiveCauldronBlockEntity.brush(serverWorld, playerEntity, stack)) {
+                                ItemStack offhandStack = playerEntity.getEquippedStack(EquipmentSlot.OFFHAND);
+                                EquipmentSlot equipmentSlot = stack.equals(offhandStack) ?
+                                        EquipmentSlot.OFFHAND :
+                                        EquipmentSlot.MAINHAND;
+
+                                stack.damage(1, playerEntity, equipmentSlot);
+                                user.stopUsingItem();
+                            }
                         }
                     }
                 }

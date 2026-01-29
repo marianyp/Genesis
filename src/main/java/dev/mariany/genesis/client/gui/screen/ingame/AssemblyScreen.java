@@ -148,27 +148,19 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
     }
 
     @Override
-    public void drawSlot(DrawContext context, Slot slot) {
-        boolean shouldDraw = true;
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        super.drawForeground(context, mouseX, mouseY);
 
-        if (slot instanceof AssemblyInputSlot assemblyInputSlot) {
-            boolean canInsert = assemblyInputSlot.canInsert();
-
-            if (this.handler.getAssemblyPatternItem().isPresent()) {
-                this.drawBackground(context, assemblyInputSlot, canInsert);
+        if (this.handler.getCraftingPattern().isPresent()) {
+            for (Slot slot : this.handler.slots) {
+                if (slot instanceof AssemblyInputSlot assemblyInputSlot) {
+                    this.drawSlot(context, assemblyInputSlot, assemblyInputSlot.isEnabled());
+                }
             }
-
-            if (!canInsert) {
-                shouldDraw = false;
-            }
-        }
-
-        if (shouldDraw) {
-            super.drawSlot(context, slot);
         }
     }
 
-    private void drawBackground(DrawContext context, AssemblyInputSlot slot, boolean enabled) {
+    private void drawSlot(DrawContext context, AssemblyInputSlot slot, boolean enabled) {
         Identifier texture = enabled ? SLOT_TEXTURE : DISABLED_SLOT_TEXTURE;
 
         int index = slot.getIndex();

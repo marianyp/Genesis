@@ -82,17 +82,17 @@ public record CraftingPattern(int patternBits) {
     @Override
     @NotNull
     public String toString() {
-        StringBuilder sb = new StringBuilder(11);
+        StringBuilder stringBuilder = new StringBuilder(11);
 
         for (int i = 0; i < 9; i++) {
-            sb.append(isSlotDisabled(i) ? "0" : "1");
+            stringBuilder.append(isSlotDisabled(i) ? "0" : "1");
 
             if (i % 3 == 2) {
-                sb.append('\n');
+                stringBuilder.append('\n');
             }
         }
 
-        return sb.toString();
+        return stringBuilder.toString();
     }
 }
 

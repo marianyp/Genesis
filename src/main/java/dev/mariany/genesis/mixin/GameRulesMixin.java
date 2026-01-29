@@ -17,9 +17,12 @@ public class GameRulesMixin {
     private static Map<GameRules.Key<?>, GameRules.Type<?>> RULE_TYPES;
 
     @Inject(method = "register", at = @At("HEAD"), cancellable = true)
-    private static <T extends GameRules.Rule<T>> void onRegister(String name, GameRules.Category category,
-                                                                 GameRules.Type<T> oldType,
-                                                                 CallbackInfoReturnable<GameRules.Key<T>> cir) {
+    private static <T extends GameRules.Rule<T>> void injectRegister(
+            String name,
+            GameRules.Category category,
+            GameRules.Type<T> oldType,
+            CallbackInfoReturnable<GameRules.Key<T>> cir
+    ) {
         if (name.equals("naturalRegeneration")) {
             GameRules.Key<T> key = new GameRules.Key<>(name, category);
             GameRules.Type<GameRules.BooleanRule> type = GameRules.BooleanRule.create(false);

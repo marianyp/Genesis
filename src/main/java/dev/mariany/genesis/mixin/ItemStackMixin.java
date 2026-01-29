@@ -18,10 +18,15 @@ public class ItemStackMixin {
             method = "onDurabilityChange",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;shouldBreak()Z")
     )
-    private void injectOnDurabilityChange(int damage, @Nullable ServerPlayerEntity player, Consumer<Item> breakCallback, CallbackInfo ci) {
+    private void injectOnDurabilityChange(
+            int damage,
+            @Nullable ServerPlayerEntity player,
+            Consumer<Item> breakCallback,
+            CallbackInfo ci
+    ) {
         ItemStack stack = ((ItemStack) (Object) this);
 
-        if(player != null && stack.shouldBreak()) {
+        if (player != null && stack.shouldBreak()) {
             GenesisCriteria.ITEM_BROKEN.trigger(player, stack);
         }
     }

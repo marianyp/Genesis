@@ -22,10 +22,11 @@ public class InventoryChangedCriterionMixin {
             at = @At("TAIL")
     )
     public void trigger(ServerPlayerEntity player, PlayerInventory inventory, ItemStack stack, CallbackInfo ci) {
-        List<RegistryKey<Recipe<?>>> recipesInvolving = DynamicHealthyStewRecipeProvider.getRecipesInvolving(stack.getItem())
-                .stream()
-                .map(id -> RegistryKey.of(RegistryKeys.RECIPE, id))
-                .toList();
+        List<RegistryKey<Recipe<?>>> recipesInvolving =
+                DynamicHealthyStewRecipeProvider.getRecipesInvolving(stack.getItem())
+                                                .stream()
+                                                .map(id -> RegistryKey.of(RegistryKeys.RECIPE, id))
+                                                .toList();
 
         if (!recipesInvolving.isEmpty()) {
             player.unlockRecipes(recipesInvolving);

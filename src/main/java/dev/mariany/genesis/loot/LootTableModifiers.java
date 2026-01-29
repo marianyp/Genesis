@@ -74,7 +74,7 @@ public class LootTableModifiers {
                 tableBuilder.pool(
                         LootPool.builder()
                                 .rolls(UniformLootNumberProvider.create(0, 1))
-                                .with(buildTrialChamberMap())
+                                 .with(buildTrialChamberMap())
                 );
             }
 
