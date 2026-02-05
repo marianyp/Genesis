@@ -35,6 +35,14 @@
       "required": false
     },
     {
+      "id": "farmersdelight:cabbage_leaf",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:pumpkin_slice",
+      "required": false
+    },
+    {
       "id": "farmersdelight:onion",
       "required": false
     },

@@ -178,6 +178,8 @@ public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
         supportExternalMod(
                 GenesisTags.Items.HEALTHY_STEW_CONTENTS, "farmersdelight", List.of(
                         "cabbage",
+                        "cabbage_leaf",
+                        "pumpkin_slice",
                         "onion",
                         "tomato"
                 )
