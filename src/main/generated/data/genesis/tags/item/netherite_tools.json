@@ -5,6 +5,7 @@
     "minecraft:netherite_pickaxe",
     "minecraft:netherite_axe",
     "minecraft:netherite_hoe",
+    "minecraft:netherite_spear",
     {
       "id": "farmersdelight:netherite_knife",
       "required": false

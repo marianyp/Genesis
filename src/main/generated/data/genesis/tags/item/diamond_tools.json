@@ -5,6 +5,7 @@
     "minecraft:diamond_pickaxe",
     "minecraft:diamond_axe",
     "minecraft:diamond_hoe",
+    "minecraft:diamond_spear",
     {
       "id": "farmersdelight:diamond_knife",
       "required": false

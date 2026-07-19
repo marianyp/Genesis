@@ -2,62 +2,62 @@ package dev.mariany.genesis.advancement.criterion;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.core.HolderSet;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class CookWithKilnCriteria extends AbstractCriterion<CookWithKilnCriteria.Conditions> {
+public class CookWithKilnCriteria extends SimpleCriterionTrigger<CookWithKilnCriteria.Conditions> {
     @Override
-    public Codec<CookWithKilnCriteria.Conditions> getConditionsCodec() {
+    public Codec<CookWithKilnCriteria.Conditions> codec() {
         return CookWithKilnCriteria.Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayerEntity player, ItemStack output) {
+    public void trigger(ServerPlayer player, ItemStack output) {
         this.trigger(player, conditions -> conditions.matches(output));
     }
 
-    public record Conditions(Optional<LootContextPredicate> player, Optional<Ingredient> ingredient)
-            implements AbstractCriterion.Conditions {
+    public record Conditions(Optional<ContextAwarePredicate> player, Optional<Ingredient> ingredient)
+            implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+                                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Conditions::player),
                                 Ingredient.CODEC.optionalFieldOf("item").forGetter(Conditions::ingredient)
                         )
                         .apply(instance, Conditions::new)
         );
 
-        public static AdvancementCriterion<Conditions> create(ItemConvertible item) {
-            return create(null, Ingredient.ofItem(item));
+        public static Criterion<Conditions> create(ItemLike item) {
+            return create(null, Ingredient.of(item));
         }
 
-        public static AdvancementCriterion<Conditions> create(ItemConvertible... items) {
-            return create(null, Ingredient.ofItems(items));
+        public static Criterion<Conditions> create(ItemLike... items) {
+            return create(null, Ingredient.of(items));
         }
 
-        public static AdvancementCriterion<Conditions> create(RegistryEntryList<Item> tag) {
-            return create(null, Ingredient.ofTag(tag));
+        public static Criterion<Conditions> create(HolderSet<Item> tag) {
+            return create(null, Ingredient.of(tag));
         }
 
-        public static AdvancementCriterion<Conditions> create(Ingredient ingredient) {
+        public static Criterion<Conditions> create(Ingredient ingredient) {
             return create(null, ingredient);
         }
 
-        public static AdvancementCriterion<Conditions> create(@Nullable LootContextPredicate playerPredicate, Ingredient ingredient) {
-            return GenesisCriteria.COOK_WITH_KILN.create(new Conditions(Optional.ofNullable(playerPredicate), Optional.of(ingredient)));
+        public static Criterion<Conditions> create(@Nullable ContextAwarePredicate playerPredicate, Ingredient ingredient) {
+            return GenesisCriteria.COOK_WITH_KILN.createCriterion(new Conditions(Optional.ofNullable(playerPredicate), Optional.of(ingredient)));
         }
 
-        public static AdvancementCriterion<Conditions> create() {
-            return GenesisCriteria.COOK_WITH_KILN.create(new Conditions(Optional.empty(), Optional.empty()));
+        public static Criterion<Conditions> create() {
+            return GenesisCriteria.COOK_WITH_KILN.createCriterion(new Conditions(Optional.empty(), Optional.empty()));
         }
 
         public boolean matches(ItemStack stack) {

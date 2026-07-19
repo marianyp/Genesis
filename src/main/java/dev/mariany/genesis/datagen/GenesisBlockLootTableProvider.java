@@ -1,36 +1,35 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+import net.minecraft.core.HolderLookup;
 import java.util.concurrent.CompletableFuture;
 
-public class GenesisBlockLootTableProvider extends FabricBlockLootTableProvider {
-    public GenesisBlockLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+public class GenesisBlockLootTableProvider extends FabricBlockLootSubProvider {
+    public GenesisBlockLootTableProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
 
     @Override
     public void generate() {
-        addDrop(GenesisBlocks.CLAY_KILN);
-        addDrop(GenesisBlocks.KILN, this::nameableContainerDrops);
+        dropSelf(GenesisBlocks.CLAY_KILN);
+        add(GenesisBlocks.KILN, this::createNameableBlockEntityTable);
 
-        addDrop(GenesisBlocks.CLAY_CAULDRON);
-        addDrop(GenesisBlocks.TERRACOTTA_CAULDRON);
-        addDrop(GenesisBlocks.DIRT_TERRACOTTA_CAULDRON);
-        addDrop(GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON);
-        addDrop(GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON);
-        addDrop(GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON);
+        dropSelf(GenesisBlocks.CLAY_CAULDRON);
+        dropSelf(GenesisBlocks.TERRACOTTA_CAULDRON);
+        dropSelf(GenesisBlocks.DIRT_TERRACOTTA_CAULDRON);
+        dropSelf(GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON);
+        dropSelf(GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON);
+        dropSelf(GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON);
 
-        addDrop(GenesisBlocks.RAW_COAL_BLOCK);
-        addDrop(GenesisBlocks.RAW_DIAMOND_BLOCK);
-        addDrop(GenesisBlocks.RAW_EMERALD_BLOCK);
-        addDrop(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
-        addDrop(GenesisBlocks.RAW_NETHERITE_BLOCK);
-        addDrop(GenesisBlocks.RAW_REDSTONE_BLOCK);
+        dropSelf(GenesisBlocks.RAW_COAL_BLOCK);
+        dropSelf(GenesisBlocks.RAW_DIAMOND_BLOCK);
+        dropSelf(GenesisBlocks.RAW_EMERALD_BLOCK);
+        dropSelf(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK);
+        dropSelf(GenesisBlocks.RAW_NETHERITE_BLOCK);
+        dropSelf(GenesisBlocks.RAW_REDSTONE_BLOCK);
 
-        addDrop(GenesisBlocks.ASSEMBLY_TABLE);
+        dropSelf(GenesisBlocks.ASSEMBLY_TABLE);
     }
 }

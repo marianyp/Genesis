@@ -1,15 +1,29 @@
 {
   "parent": "genesis:find_clay",
   "criteria": {
-    "obtained_clay_cauldron": {
+    "clay_cauldron_crafted": {
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": "genesis:clay_cauldron"
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:crafted",
+                    "stat": "genesis:clay_cauldron",
+                    "value": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -17,7 +31,6 @@
       "translate": "instruction.genesis.craft_clay_cauldron.description"
     },
     "icon": {
-      "count": 1,
       "id": "genesis:clay_cauldron"
     },
     "title": {
@@ -26,7 +39,7 @@
   },
   "requirements": [
     [
-      "obtained_clay_cauldron"
+      "clay_cauldron_crafted"
     ]
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 1200,
+  "experience": 0.3,
+  "ingredient": "genesis:clay_spear_cast",
+  "result": {
+    "id": "genesis:spear_cast"
+  }
+}

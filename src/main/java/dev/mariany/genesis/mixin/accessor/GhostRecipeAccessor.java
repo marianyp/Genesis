@@ -1,17 +1,17 @@
 package dev.mariany.genesis.mixin.accessor;
 
-import net.minecraft.client.gui.screen.recipebook.GhostRecipe;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.context.ContextParameterMap;
+import net.minecraft.client.gui.screens.recipebook.GhostSlots;
+import net.minecraft.util.context.ContextMap;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(GhostRecipe.class)
+@Mixin(GhostSlots.class)
 public interface GhostRecipeAccessor {
-    @Invoker("addInputs")
-    void genesis$addInputs(Slot slot, ContextParameterMap context, SlotDisplay display);
+    @Invoker("setInput")
+    void genesis$addInputs(Slot slot, ContextMap context, SlotDisplay display);
 
-    @Invoker("addResults")
-    void genesis$addResults(Slot slot, ContextParameterMap context, SlotDisplay display);
+    @Invoker("setResult")
+    void genesis$addResults(Slot slot, ContextMap context, SlotDisplay display);
 }

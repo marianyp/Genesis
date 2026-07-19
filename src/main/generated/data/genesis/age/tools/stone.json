@@ -13,11 +13,10 @@
       "translate": "age.genesis.tools.stone.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:stone_pickaxe"
     },
     "title": {
-      "translate": "age.genesis.stone"
+      "translate": "age.genesis.tools.stone"
     }
   },
   "items": [

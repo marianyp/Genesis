@@ -1,0 +1,44 @@
+{
+  "parent": "genesis:skills/combat",
+  "criteria": {
+    "time_played": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:custom",
+                    "stat": "minecraft:play_time",
+                    "value": {
+                      "min": 120000
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.skills.smelting.description"
+    },
+    "icon": {
+      "id": "minecraft:furnace"
+    },
+    "title": {
+      "translate": "age.genesis.skills.smelting"
+    }
+  },
+  "items": [
+    "#genesis:furnaces"
+  ],
+  "requires_parent": false
+}

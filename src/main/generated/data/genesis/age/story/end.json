@@ -1,25 +1,6 @@
 {
   "parent": "genesis:story/wither",
   "criteria": {
-    "has_garden_story_age": {
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
-                "advancements": {
-                  "genesis:age/story/garden": true
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:tick"
-    },
     "has_nether_story_age": {
       "conditions": {
         "player": [
@@ -27,8 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "advancements": {
                   "genesis:age/story/nether": true
                 }
@@ -46,10 +26,27 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "advancements": {
                   "genesis:age/story/ocean": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    },
+    "has_pale_story_age": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "advancements": {
+                  "genesis:age/story/pale": true
                 }
               }
             }
@@ -65,8 +62,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "advancements": {
                   "genesis:age/story/sculk": true
                 }
@@ -84,8 +80,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "advancements": {
                   "genesis:age/story/wither": true
                 }
@@ -105,11 +100,10 @@
       "translate": "age.genesis.story.end.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:ender_dragon_spawn_egg"
     },
     "title": {
-      "translate": "age.genesis.end"
+      "translate": "age.genesis.story.end"
     }
   },
   "items": [

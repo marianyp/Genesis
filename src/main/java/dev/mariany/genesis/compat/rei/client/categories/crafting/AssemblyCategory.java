@@ -18,7 +18,7 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.entry.InputIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class AssemblyCategory implements DisplayCategory<AssemblyDisplay> {
     }
 
     @Override
-    public Text getTitle() {
-        return Text.translatable("category.rei.genesis.assembly");
+    public Component getTitle() {
+        return Component.translatable("category.rei.genesis.assembly");
     }
 
     @Override

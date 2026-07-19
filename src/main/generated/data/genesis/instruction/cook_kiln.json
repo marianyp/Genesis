@@ -1,7 +1,7 @@
 {
   "parent": "genesis:craft_clay_kiln",
   "criteria": {
-    "obtained_kiln": {
+    "kiln_obtained": {
       "conditions": {
         "items": [
           {
@@ -14,7 +14,6 @@
   },
   "display": {
     "icon": {
-      "count": 1,
       "id": "genesis:kiln"
     },
     "title": {
@@ -23,7 +22,7 @@
   },
   "requirements": [
     [
-      "obtained_kiln"
+      "kiln_obtained"
     ]
   ]
 }

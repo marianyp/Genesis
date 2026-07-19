@@ -1,0 +1,10 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:target"
+    },
+    "title": {
+      "translate": "age.genesis.skills.basic"
+    }
+  }
+}

@@ -13,11 +13,10 @@
       "translate": "age.genesis.tools.copper.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:copper_pickaxe"
     },
     "title": {
-      "translate": "age.genesis.copper"
+      "translate": "age.genesis.tools.copper"
     }
   },
   "items": [

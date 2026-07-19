@@ -4,6 +4,7 @@
     "genesis:clay_shovel_cast",
     "genesis:clay_pickaxe_cast",
     "genesis:clay_axe_cast",
-    "genesis:clay_hoe_cast"
+    "genesis:clay_hoe_cast",
+    "genesis:clay_spear_cast"
   ]
 }

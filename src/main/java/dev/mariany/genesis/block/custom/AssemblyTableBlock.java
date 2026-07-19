@@ -3,49 +3,49 @@ package dev.mariany.genesis.block.custom;
 import com.mojang.serialization.MapCodec;
 import dev.mariany.genesis.screen.AssemblyScreenHandler;
 import dev.mariany.genesis.stat.GenesisStats;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class AssemblyTableBlock extends CraftingTableBlock {
-    public static final MapCodec<AssemblyTableBlock> CODEC = createCodec(AssemblyTableBlock::new);
-    private static final Text SCREEN_TITLE = Text.translatable("container.genesis.assembly_table.title");
+    public static final MapCodec<AssemblyTableBlock> CODEC = simpleCodec(AssemblyTableBlock::new);
+    private static final Component SCREEN_TITLE = Component.translatable("container.genesis.assembly_table.title");
 
     @Override
-    public MapCodec<AssemblyTableBlock> getCodec() {
+    public MapCodec<AssemblyTableBlock> codec() {
         return CODEC;
     }
 
-    public AssemblyTableBlock(AbstractBlock.Settings settings) {
+    public AssemblyTableBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    protected NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return new SimpleNamedScreenHandlerFactory(
+    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        return new SimpleMenuProvider(
                 (syncId, inventory, player) -> new AssemblyScreenHandler(
-                        syncId, inventory, ScreenHandlerContext.create(world, pos)
+                        syncId, inventory, ContainerLevelAccess.create(level, pos)
                 ),
                 SCREEN_TITLE
         );
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            player.incrementStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!level.isClientSide()) {
+            player.openMenu(state.getMenuProvider(level, pos));
+            player.awardStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 }

@@ -5,199 +5,213 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BrushableBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BrushItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.context.LootWorldContext;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.state.property.Properties;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BrushItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BrushableBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
     private static final String BRUSHES_NBT_KEY = "brushes";
-    private static final int BRUSH_DELAY = 1;
-    private static final int MAX_BRUSHES = 10;
+    private static final int MAX_BRUSHES = 3;
+    private static final int WITHOUT_BRUSH_DELAY = 10;
 
     private int brushesCount;
     private long nextBrushTime;
     private ItemStack item = ItemStack.EMPTY;
 
     @Nullable
-    private final RegistryKey<LootTable> lootTable;
+    private final ResourceKey<LootTable> lootTable;
 
     public FilledPrimitiveCauldronBlockEntity(BlockPos pos, BlockState state) {
         this(pos, state, getLootTableFromState(state));
     }
 
-    public FilledPrimitiveCauldronBlockEntity(BlockPos pos, BlockState state, @Nullable RegistryKey<LootTable> lootTable) {
+    public FilledPrimitiveCauldronBlockEntity(
+            BlockPos pos,
+            BlockState state,
+            @Nullable ResourceKey<LootTable> lootTable
+    ) {
         super(GenesisBlockEntities.FILLED_PRIMITIVE_CAULDRON, pos, state);
         this.lootTable = lootTable;
     }
 
-    private static RegistryKey<LootTable> getLootTableFromState(BlockState state) {
+    private static ResourceKey<LootTable> getLootTableFromState(BlockState state) {
         if (state.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
-            return filledPrimitiveCauldronBlock.getLootTable();
+            return filledPrimitiveCauldronBlock.getPrimitiveLootTable();
         }
 
         return null;
     }
 
-    public boolean brush(ServerWorld world, LivingEntity brusher, ItemStack brush) {
-        return brush(world, brusher, brush, false);
+    public boolean brush(ServerLevel level, LivingEntity brusher, ItemStack brush) {
+        return brush(level, brusher, brush, false);
     }
 
-    public boolean brush(ServerWorld world, LivingEntity brusher, ItemStack brush, boolean sound) {
-        long worldTime = world.getTime();
+    public boolean brush(ServerLevel level, LivingEntity brusher, ItemStack brush, boolean sound) {
+        long worldTime = level.getGameTime();
 
         if (worldTime < this.nextBrushTime) {
             return false;
         }
 
-        BlockState currentState = this.getCachedState();
+        BlockState currentState = this.getBlockState();
 
         if (currentState.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
-            BlockState particleBlockState = filledPrimitiveCauldronBlock.getParticleBlock().getDefaultState();
-            this.addBlockBreakParticles(world, pos, particleBlockState);
+            BlockState particleBlockState = filledPrimitiveCauldronBlock.getParticleBlock().defaultBlockState();
+            this.addBlockBreakParticles(level, worldPosition, particleBlockState);
         }
 
-        int delay = brush.getItem() instanceof BrushItem ? BRUSH_DELAY : BRUSH_DELAY * 10;
+        int delay = brush.getItem() instanceof BrushItem ? 1 : WITHOUT_BRUSH_DELAY;
         this.nextBrushTime = worldTime + delay;
         int previousDustedLevel = this.getDustedLevel();
 
-        boolean finished = ++this.brushesCount >= MAX_BRUSHES;
+        ++this.brushesCount;
+
+        boolean finished = this.brushesCount >= MAX_BRUSHES;
 
         if (finished || sound) {
             playSound(finished);
         }
 
         if (finished) {
-            this.finishBrushing(world, brusher, brush);
+            this.finishBrushing(level, brusher, brush);
             return true;
         }
 
-        BlockPos pos = this.getPos();
+        BlockPos pos = this.getBlockPos();
 
         int currentDustedLevel = this.getDustedLevel();
 
         if (previousDustedLevel != currentDustedLevel) {
-            BlockState updatedState = currentState.with(Properties.DUSTED, currentDustedLevel);
+            BlockState updatedState = currentState.setValue(BlockStateProperties.DUSTED, currentDustedLevel);
 
-            world.setBlockState(pos, updatedState, Block.NOTIFY_ALL);
+            level.setBlock(pos, updatedState, Block.UPDATE_ALL);
         }
 
         return false;
     }
 
     private void playSound(boolean finished) {
-        Block block = this.getCachedState().getBlock();
+        Block block = this.getBlockState().getBlock();
 
-        if (
-                this.world != null && block instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock
-        ) {
-            SoundEvent soundEvent = finished ? filledPrimitiveCauldronBlock.getBrushingCompleteSound() :
-                    filledPrimitiveCauldronBlock.getBrushingSound();
-            this.world.playSound(null, pos, soundEvent, SoundCategory.BLOCKS);
+        if (this.level != null && block instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
+            SoundEvent soundEvent = finished ? filledPrimitiveCauldronBlock.getBrushCompletedSound() :
+                    filledPrimitiveCauldronBlock.getBrushSound();
+
+            this.level.playSound(null, worldPosition, soundEvent, SoundSource.BLOCKS);
         }
     }
 
-    private void generateItem(ServerWorld world, LivingEntity brusher, ItemStack brush) {
-        if (this.lootTable != null) {
-            LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(this.lootTable);
+    private void generateItem(ServerLevel level, LivingEntity brusher, ItemStack brush) {
+        if (this.lootTable == null) {
+            return;
+        }
 
-            if (brusher instanceof ServerPlayerEntity serverPlayerEntity) {
-                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger(serverPlayerEntity, this.lootTable);
+        LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(this.lootTable);
+
+        if (brusher instanceof ServerPlayer serverPlayerEntity) {
+            CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayerEntity, this.lootTable);
+        }
+
+        LootParams lootParams = new LootParams.Builder(level)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition))
+                .withLuck(brusher.getLuck())
+                .withParameter(LootContextParams.THIS_ENTITY, brusher)
+                .withParameter(LootContextParams.TOOL, brush)
+                .create(LootContextParamSets.ARCHAEOLOGY);
+
+        ObjectArrayList<ItemStack> loot = lootTable.getRandomItems(lootParams, brusher.getRandom().nextLong());
+
+        this.item = switch (loot.size()) {
+            case 0 -> ItemStack.EMPTY;
+            case 1 -> loot.getFirst();
+            default -> {
+                Genesis.LOGGER.warn(
+                        "Expected max 1 loot from loot table {}, but got {}",
+                        this.lootTable.identifier(),
+                        loot.size()
+                );
+                yield loot.getFirst();
             }
+        };
 
-            LootWorldContext lootWorldContext = new LootWorldContext.Builder(world)
-                    .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos))
-                    .luck(brusher.getLuck())
-                    .add(LootContextParameters.THIS_ENTITY, brusher)
-                    .add(LootContextParameters.TOOL, brush)
-                    .build(LootContextTypes.ARCHAEOLOGY);
-            ObjectArrayList<ItemStack> loot = lootTable.generateLoot(lootWorldContext, brusher.getRandom().nextLong());
-
-            this.item = switch (loot.size()) {
-                case 0 -> ItemStack.EMPTY;
-                case 1 -> loot.getFirst();
-                default -> {
-                    Genesis.LOGGER.warn("Expected max 1 loot from loot table {}, but got {}", this.lootTable.getValue(), loot.size());
-                    yield loot.getFirst();
-                }
-            };
-
-            this.markDirty();
-        }
+        this.setChanged();
     }
 
-    private void finishBrushing(ServerWorld world, LivingEntity brusher, ItemStack brush) {
+    private void finishBrushing(ServerLevel level, LivingEntity brusher, ItemStack brush) {
         Block baseBlock = Blocks.AIR;
 
-        if (this.getCachedState().getBlock() instanceof BrushableBlock brushableBlock) {
-            baseBlock = brushableBlock.getBaseBlock();
+        if (this.getBlockState().getBlock() instanceof BrushableBlock brushableBlock) {
+            baseBlock = brushableBlock.getTurnsInto();
 
             if (brushableBlock instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
-                if (brusher instanceof ServerPlayerEntity serverPlayer) {
+                if (brusher instanceof ServerPlayer serverPlayer) {
                     GenesisCriteria.BRUSH_PRIMITIVE_CAULDRON.trigger(serverPlayer, filledPrimitiveCauldronBlock);
                 }
             }
         }
 
-        world.setBlockState(this.pos, baseBlock.getDefaultState(), Block.NOTIFY_ALL);
-        this.spawnItem(world, brusher, brush);
+        level.setBlock(this.worldPosition, baseBlock.defaultBlockState(), Block.UPDATE_ALL);
+
+        this.spawnItem(level, brusher, brush);
     }
 
-    private void spawnItem(ServerWorld world, LivingEntity brusher, ItemStack brush) {
-        this.generateItem(world, brusher, brush);
+    private void spawnItem(ServerLevel level, LivingEntity brusher, ItemStack brush) {
+        this.generateItem(level, brusher, brush);
 
-        if (!this.item.isEmpty()) {
-            double itemEntityWidth = EntityType.ITEM.getWidth();
-            double offsetFactor = 1.0 - itemEntityWidth;
-            double halfEntityWidth = itemEntityWidth / 2.0;
-
-            double spawnX = this.pos.getX() + 0.5 * offsetFactor + halfEntityWidth;
-            double spawnY = this.pos.getY() + 0.5 + EntityType.ITEM.getHeight() / 2F;
-            double spawnZ = this.pos.getZ() + 0.5 * offsetFactor + halfEntityWidth;
-
-            int stackSize = world.random.nextInt(21) + 10;
-            ItemStack splitStack = this.item.split(stackSize);
-
-            ItemEntity droppedItem = new ItemEntity(world, spawnX, spawnY, spawnZ, splitStack);
-            droppedItem.setVelocity(Vec3d.ZERO);
-            world.spawnEntity(droppedItem);
-
-            this.item = ItemStack.EMPTY;
+        if (this.item.isEmpty()) {
+            return;
         }
+
+        double itemEntityWidth = 0.25F;
+        double offsetFactor = 1.0 - itemEntityWidth;
+        double halfEntityWidth = itemEntityWidth / 2.0;
+
+        double spawnX = this.worldPosition.getX() + 0.5 * offsetFactor + halfEntityWidth;
+        double spawnY = this.worldPosition.getY() + 0.5 + 0.25F / 2F;
+        double spawnZ = this.worldPosition.getZ() + 0.5 * offsetFactor + halfEntityWidth;
+
+        int stackSize = level.getRandom().nextInt(21) + 10;
+        ItemStack splitStack = this.item.split(stackSize);
+
+        ItemEntity droppedItem = new ItemEntity(level, spawnX, spawnY, spawnZ, splitStack);
+        droppedItem.setDeltaMovement(Vec3.ZERO);
+        level.addFreshEntity(droppedItem);
+
+        this.item = ItemStack.EMPTY;
     }
 
-    private void addBlockBreakParticles(ServerWorld world, BlockPos pos, BlockState state) {
-        if (!state.isAir() && state.hasBlockBreakParticles()) {
-            world.spawnParticles(
-                    new BlockStateParticleEffect(ParticleTypes.BLOCK, state),
+    private void addBlockBreakParticles(ServerLevel level, BlockPos pos, BlockState state) {
+        if (!state.isAir() && state.shouldSpawnTerrainParticles()) {
+            level.sendParticles(
+                    new BlockParticleOption(ParticleTypes.BLOCK, state),
                     pos.getX() + 0.5,
                     pos.getY() + 0.7,
                     pos.getZ() + 0.5,
@@ -211,42 +225,33 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt(registries);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag nbtCompound = super.getUpdateTag(registries);
 
         nbtCompound.putInt(BRUSHES_NBT_KEY, this.brushesCount);
 
         return nbtCompound;
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-
-        this.brushesCount = view.read(BRUSHES_NBT_KEY, Codecs.NON_NEGATIVE_INT).orElse(0);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        this.brushesCount = view.read(BRUSHES_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT).orElse(0);
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
 
-        view.put(BRUSHES_NBT_KEY, Codecs.NON_NEGATIVE_INT, this.brushesCount);
+        view.store(BRUSHES_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT, this.brushesCount);
     }
 
     private int getDustedLevel() {
-        if (this.brushesCount == 0) {
-            return 0;
-        }
-
-        if (this.brushesCount < 3) {
-            return 1;
-        }
-
-        return this.brushesCount < 6 ? 2 : 3;
+        return this.brushesCount;
     }
 
     public ItemStack getItem() {

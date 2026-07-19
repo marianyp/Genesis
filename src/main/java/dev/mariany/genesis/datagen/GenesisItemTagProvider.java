@@ -2,209 +2,191 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagBuilder;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class GenesisItemTagProvider extends FabricTagProvider.ItemTagProvider {
+public class GenesisItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
     public GenesisItemTagProvider(
-            FabricDataOutput output,
-            CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture
+            FabricPackOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture
     ) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        valueLookupBuilder(GenesisTags.Items.LEATHER_ARMOR).add(
-                Items.LEATHER_HELMET,
-                Items.LEATHER_CHESTPLATE,
-                Items.LEATHER_LEGGINGS,
-                Items.LEATHER_BOOTS
-        );
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
+        tag(GenesisTags.Items.LEATHER_ARMOR)
+                .add(key(Items.LEATHER_HELMET))
+                .add(key(Items.LEATHER_CHESTPLATE))
+                .add(key(Items.LEATHER_LEGGINGS))
+                .add(key(Items.LEATHER_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.COPPER_ARMOR).add(
-                Items.COPPER_HELMET,
-                Items.COPPER_CHESTPLATE,
-                Items.COPPER_LEGGINGS,
-                Items.COPPER_BOOTS
-        );
+        tag(GenesisTags.Items.COPPER_ARMOR)
+                .add(key(Items.COPPER_HELMET))
+                .add(key(Items.COPPER_CHESTPLATE))
+                .add(key(Items.COPPER_LEGGINGS))
+                .add(key(Items.COPPER_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.GOLDEN_ARMOR).add(
-                Items.GOLDEN_HELMET,
-                Items.GOLDEN_CHESTPLATE,
-                Items.GOLDEN_LEGGINGS,
-                Items.GOLDEN_BOOTS
-        );
+        tag(GenesisTags.Items.GOLDEN_ARMOR)
+                .add(key(Items.GOLDEN_HELMET))
+                .add(key(Items.GOLDEN_CHESTPLATE))
+                .add(key(Items.GOLDEN_LEGGINGS))
+                .add(key(Items.GOLDEN_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.IRON_ARMOR).add(
-                Items.IRON_HELMET,
-                Items.IRON_CHESTPLATE,
-                Items.IRON_LEGGINGS,
-                Items.IRON_BOOTS
-        );
+        tag(GenesisTags.Items.IRON_ARMOR)
+                .add(key(Items.IRON_HELMET))
+                .add(key(Items.IRON_CHESTPLATE))
+                .add(key(Items.IRON_LEGGINGS))
+                .add(key(Items.IRON_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.DIAMOND_ARMOR).add(
-                Items.DIAMOND_HELMET,
-                Items.DIAMOND_CHESTPLATE,
-                Items.DIAMOND_LEGGINGS,
-                Items.DIAMOND_BOOTS
-        );
+        tag(GenesisTags.Items.DIAMOND_ARMOR)
+                .add(key(Items.DIAMOND_HELMET))
+                .add(key(Items.DIAMOND_CHESTPLATE))
+                .add(key(Items.DIAMOND_LEGGINGS))
+                .add(key(Items.DIAMOND_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.NETHERITE_ARMOR).add(
-                Items.NETHERITE_HELMET,
-                Items.NETHERITE_CHESTPLATE,
-                Items.NETHERITE_LEGGINGS,
-                Items.NETHERITE_BOOTS
-        );
+        tag(GenesisTags.Items.NETHERITE_ARMOR)
+                .add(key(Items.NETHERITE_HELMET))
+                .add(key(Items.NETHERITE_CHESTPLATE))
+                .add(key(Items.NETHERITE_LEGGINGS))
+                .add(key(Items.NETHERITE_BOOTS));
 
-        valueLookupBuilder(GenesisTags.Items.WOODEN_TOOLS).add(
-                Items.WOODEN_SWORD,
-                Items.WOODEN_SHOVEL,
-                Items.WOODEN_PICKAXE,
-                Items.WOODEN_AXE,
-                Items.WOODEN_HOE
-        );
+        tag(GenesisTags.Items.WOODEN_TOOLS)
+                .add(key(Items.WOODEN_SWORD))
+                .add(key(Items.WOODEN_SHOVEL))
+                .add(key(Items.WOODEN_PICKAXE))
+                .add(key(Items.WOODEN_AXE))
+                .add(key(Items.WOODEN_HOE))
+                .add(key(Items.WOODEN_SPEAR));
 
-        valueLookupBuilder(GenesisTags.Items.STONE_TOOLS).add(
-                Items.STONE_SWORD,
-                Items.STONE_SHOVEL,
-                Items.STONE_PICKAXE,
-                Items.STONE_AXE,
-                Items.STONE_HOE
-        );
+        tag(GenesisTags.Items.STONE_TOOLS)
+                .add(key(Items.STONE_SWORD))
+                .add(key(Items.STONE_SHOVEL))
+                .add(key(Items.STONE_PICKAXE))
+                .add(key(Items.STONE_AXE))
+                .add(key(Items.STONE_HOE))
+                .add(key(Items.STONE_SPEAR));
 
-        valueLookupBuilder(GenesisTags.Items.COPPER_TOOLS).add(
-                Items.COPPER_SWORD,
-                Items.COPPER_SHOVEL,
-                Items.COPPER_PICKAXE,
-                Items.COPPER_AXE,
-                Items.COPPER_HOE
-        );
+        tag(GenesisTags.Items.COPPER_TOOLS)
+                .add(key(Items.COPPER_SWORD))
+                .add(key(Items.COPPER_SHOVEL))
+                .add(key(Items.COPPER_PICKAXE))
+                .add(key(Items.COPPER_AXE))
+                .add(key(Items.COPPER_HOE))
+                .add(key(Items.COPPER_SPEAR));
 
-        valueLookupBuilder(GenesisTags.Items.GOLDEN_TOOLS).add(
-                Items.GOLDEN_SWORD,
-                Items.GOLDEN_SHOVEL,
-                Items.GOLDEN_PICKAXE,
-                Items.GOLDEN_AXE,
-                Items.GOLDEN_HOE
-        );
+        supportExternalMod(GenesisTags.Items.COPPER_TOOLS, "farmersdelight:copper_knife");
+
+        tag(GenesisTags.Items.GOLDEN_TOOLS)
+                .add(key(Items.GOLDEN_SWORD))
+                .add(key(Items.GOLDEN_SHOVEL))
+                .add(key(Items.GOLDEN_PICKAXE))
+                .add(key(Items.GOLDEN_AXE))
+                .add(key(Items.GOLDEN_HOE))
+                .add(key(Items.GOLDEN_SPEAR));
 
         supportExternalMod(GenesisTags.Items.GOLDEN_TOOLS, "farmersdelight:golden_knife");
 
-        valueLookupBuilder(GenesisTags.Items.IRON_TOOLS).add(
-                Items.IRON_SWORD,
-                Items.IRON_SHOVEL,
-                Items.IRON_PICKAXE,
-                Items.IRON_AXE,
-                Items.IRON_HOE
-        );
+        tag(GenesisTags.Items.IRON_TOOLS)
+                .add(key(Items.IRON_SWORD))
+                .add(key(Items.IRON_SHOVEL))
+                .add(key(Items.IRON_PICKAXE))
+                .add(key(Items.IRON_AXE))
+                .add(key(Items.IRON_HOE))
+                .add(key(Items.IRON_SPEAR));
 
         supportExternalMod(GenesisTags.Items.IRON_TOOLS, "farmersdelight:iron_knife");
 
-        valueLookupBuilder(GenesisTags.Items.DIAMOND_TOOLS).add(
-                Items.DIAMOND_SWORD,
-                Items.DIAMOND_SHOVEL,
-                Items.DIAMOND_PICKAXE,
-                Items.DIAMOND_AXE,
-                Items.DIAMOND_HOE
-        );
+        tag(GenesisTags.Items.DIAMOND_TOOLS)
+                .add(key(Items.DIAMOND_SWORD))
+                .add(key(Items.DIAMOND_SHOVEL))
+                .add(key(Items.DIAMOND_PICKAXE))
+                .add(key(Items.DIAMOND_AXE))
+                .add(key(Items.DIAMOND_HOE))
+                .add(key(Items.DIAMOND_SPEAR));
 
         supportExternalMod(GenesisTags.Items.DIAMOND_TOOLS, "farmersdelight:diamond_knife");
 
-        valueLookupBuilder(GenesisTags.Items.NETHERITE_TOOLS).add(
-                Items.NETHERITE_SWORD,
-                Items.NETHERITE_SHOVEL,
-                Items.NETHERITE_PICKAXE,
-                Items.NETHERITE_AXE,
-                Items.NETHERITE_HOE
-        );
+        tag(GenesisTags.Items.NETHERITE_TOOLS)
+                .add(key(Items.NETHERITE_SWORD))
+                .add(key(Items.NETHERITE_SHOVEL))
+                .add(key(Items.NETHERITE_PICKAXE))
+                .add(key(Items.NETHERITE_AXE))
+                .add(key(Items.NETHERITE_HOE))
+                .add(key(Items.NETHERITE_SPEAR));
 
         supportExternalMod(GenesisTags.Items.NETHERITE_TOOLS, "farmersdelight:netherite_knife");
 
-        valueLookupBuilder(GenesisTags.Items.CLAY_TOOL_CASTS).add(
-                GenesisItems.CLAY_SWORD_CAST,
-                GenesisItems.CLAY_SHOVEL_CAST,
-                GenesisItems.CLAY_PICKAXE_CAST,
-                GenesisItems.CLAY_AXE_CAST,
-                GenesisItems.CLAY_HOE_CAST
-        );
+        tag(GenesisTags.Items.CLAY_TOOL_CASTS)
+                .add(key(GenesisItems.CLAY_SWORD_CAST))
+                .add(key(GenesisItems.CLAY_SHOVEL_CAST))
+                .add(key(GenesisItems.CLAY_PICKAXE_CAST))
+                .add(key(GenesisItems.CLAY_AXE_CAST))
+                .add(key(GenesisItems.CLAY_HOE_CAST))
+                .add(key(GenesisItems.CLAY_SPEAR_CAST));
 
-        valueLookupBuilder(GenesisTags.Items.TOOL_CASTS).add(
-                GenesisItems.SWORD_CAST,
-                GenesisItems.SHOVEL_CAST,
-                GenesisItems.PICKAXE_CAST,
-                GenesisItems.AXE_CAST,
-                GenesisItems.HOE_CAST
-        );
+        tag(GenesisTags.Items.TOOL_CASTS)
+                .add(key(GenesisItems.SWORD_CAST))
+                .add(key(GenesisItems.SHOVEL_CAST))
+                .add(key(GenesisItems.PICKAXE_CAST))
+                .add(key(GenesisItems.AXE_CAST))
+                .add(key(GenesisItems.HOE_CAST))
+                .add(key(GenesisItems.SPEAR_CAST));
 
-        valueLookupBuilder(GenesisTags.Items.FURNACES).add(Items.FURNACE, Items.SMOKER, Items.BLAST_FURNACE);
+        tag(GenesisTags.Items.FURNACES).add(key(Items.FURNACE)).add(key(Items.SMOKER)).add(key(Items.BLAST_FURNACE));
 
-        valueLookupBuilder(GenesisTags.Items.HEALTHY_STEW_CONTENTS).add(
-                Items.ALLIUM,
-                Items.APPLE,
-                Items.BEETROOT,
-                Items.BLUE_ORCHID,
-                Items.CACTUS_FLOWER,
-                Items.CARROT,
-                Items.CORNFLOWER,
-                Items.DANDELION,
-                Items.GLOW_BERRIES,
-                Items.MELON_SLICE,
-                Items.OXEYE_DAISY,
-                Items.POPPY,
-                Items.PUMPKIN,
-                Items.SWEET_BERRIES
-        );
+        tag(GenesisTags.Items.FROM_SWORD_CAST).addOptionalTag(ItemTags.SWORDS);
+        tag(GenesisTags.Items.FROM_SHOVEL_CAST).addOptionalTag(ItemTags.SHOVELS);
+        tag(GenesisTags.Items.FROM_PICKAXE_CAST).addOptionalTag(ItemTags.PICKAXES);
+        tag(GenesisTags.Items.FROM_AXE_CAST).addOptionalTag(ItemTags.AXES);
+        tag(GenesisTags.Items.FROM_HOE_CAST).addOptionalTag(ItemTags.HOES);
+        tag(GenesisTags.Items.FROM_SPEAR_CAST).addOptionalTag(ItemTags.SPEARS);
+        tag(GenesisTags.Items.FROM_SHIELD_CAST).add(key(Items.SHIELD));
+        tag(GenesisTags.Items.FROM_ANVIL_CAST).addOptionalTag(ItemTags.ANVIL);
+        tag(GenesisTags.Items.FROM_TOTEM_CAST).add(key(Items.TOTEM_OF_UNDYING));
 
-        supportExternalMod(
-                GenesisTags.Items.HEALTHY_STEW_CONTENTS, "biomesoplenty", List.of(
-                        "orange_cosmos",
-                        "pink_hibiscus",
-                        "rose",
-                        "violet"
-                )
-        );
+        tag(GenesisTags.Items.WEAPON_AGE_RESTRICTED_WEAPONS)
+                .addOptionalTag(ItemTags.AXES)
+                .addOptionalTag(ItemTags.SWORDS);
 
-        supportExternalMod(
-                GenesisTags.Items.HEALTHY_STEW_CONTENTS, "farmersdelight", List.of(
-                        "cabbage",
-                        "cabbage_leaf",
-                        "pumpkin_slice",
-                        "onion",
-                        "tomato"
-                )
-        );
+        tag(GenesisTags.Items.CAUSES_HUNGER)
+                .add(key(Items.BEEF))
+                .add(key(Items.PORKCHOP))
+                .add(key(Items.MUTTON))
+                .add(key(Items.CHICKEN))
+                .add(key(Items.RABBIT));
 
-        valueLookupBuilder(GenesisTags.Items.FROM_SWORD_CAST).addOptionalTag(ItemTags.SWORDS);
-        valueLookupBuilder(GenesisTags.Items.FROM_SHOVEL_CAST).addOptionalTag(ItemTags.SHOVELS);
-        valueLookupBuilder(GenesisTags.Items.FROM_PICKAXE_CAST).addOptionalTag(ItemTags.PICKAXES);
-        valueLookupBuilder(GenesisTags.Items.FROM_AXE_CAST).addOptionalTag(ItemTags.AXES);
-        valueLookupBuilder(GenesisTags.Items.FROM_HOE_CAST).addOptionalTag(ItemTags.HOES);
-        valueLookupBuilder(GenesisTags.Items.FROM_SHIELD_CAST).add(Items.SHIELD);
-        valueLookupBuilder(GenesisTags.Items.FROM_ANVIL_CAST).addOptionalTag(ItemTags.ANVIL);
-        valueLookupBuilder(GenesisTags.Items.FROM_TOTEM_CAST).add(Items.TOTEM_OF_UNDYING);
+        supportExternalMod(GenesisTags.Items.CAUSES_HUNGER, "farmersdelight:bacon");
+        supportExternalMod(GenesisTags.Items.CAUSES_HUNGER, "farmersdelight:minced_beef");
+        supportExternalMod(GenesisTags.Items.CAUSES_HUNGER, "farmersdelight:chicken_cuts");
+        supportExternalMod(GenesisTags.Items.CAUSES_HUNGER, "farmersdelight:wheat_dough");
+    }
+
+    private static ResourceKey<Item> key(Item item) {
+        return item.builtInRegistryHolder().key();
     }
 
     private void supportExternalMod(TagKey<Item> tag, String item) {
-        Identifier id = Identifier.of(item);
+        Identifier id = Identifier.parse(item);
         supportExternalMod(tag, id.getNamespace(), List.of(id.getPath()));
     }
 
     private void supportExternalMod(TagKey<Item> tag, String modName, List<String> items) {
-        TagBuilder tagBuilder = getTagBuilder(tag);
+        TagBuilder tagBuilder = getOrCreateRawBuilder(tag);
 
         for (String item : items) {
-            tagBuilder.addOptional(Identifier.of(modName, item));
+            tagBuilder.addOptionalElement(Identifier.fromNamespaceAndPath(modName, item));
         }
     }
 }

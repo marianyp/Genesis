@@ -1,7 +1,7 @@
 {
   "parent": "genesis:craft_clay_cauldron",
   "criteria": {
-    "obtained_terracotta_cauldron": {
+    "terracotta_cauldron_obtained": {
       "conditions": {
         "items": [
           {
@@ -14,7 +14,6 @@
   },
   "display": {
     "icon": {
-      "count": 1,
       "id": "genesis:terracotta_cauldron"
     },
     "title": {
@@ -23,7 +22,7 @@
   },
   "requirements": [
     [
-      "obtained_terracotta_cauldron"
+      "terracotta_cauldron_obtained"
     ]
   ]
 }

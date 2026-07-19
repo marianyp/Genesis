@@ -1,0 +1,56 @@
+{
+  "parent": "genesis:skills/basic",
+  "criteria": {
+    "killed_25_hostiles": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:custom",
+                    "stat": "genesisframework:hostile_kills",
+                    "value": {
+                      "min": 25
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.skills.combat.description"
+    },
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "age.genesis.skills.combat"
+    }
+  },
+  "item_traits": {
+    "before_done": [
+      {
+        "attribute_modifiers": [
+          {
+            "type": "minecraft:attack_damage",
+            "amount": -0.9,
+            "id": "genesis:weapon_age_attack_damage",
+            "operation": "add_multiplied_total"
+          }
+        ],
+        "items": "#genesis:weapon_age_restricted_weapons"
+      }
+    ]
+  },
+  "requires_parent": false
+}

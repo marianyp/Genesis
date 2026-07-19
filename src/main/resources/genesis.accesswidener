@@ -1,6 +1,1 @@
-accessWidener v2 named
-
-accessible class net/minecraft/client/option/GameOptions$OptionVisitor
-accessible class net/minecraft/screen/BrewingStandScreenHandler$PotionSlot
-accessible field net/minecraft/recipe/RawShapedRecipe data Ljava/util/Optional;
-accessible method net/minecraft/world/GameRules$BooleanRule create (Z)Lnet/minecraft/world/GameRules$Type;
+accessWidener v2 official

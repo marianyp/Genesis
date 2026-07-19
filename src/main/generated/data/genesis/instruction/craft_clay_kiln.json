@@ -1,15 +1,29 @@
 {
   "parent": "genesis:craft_wooden_tool",
   "criteria": {
-    "obtained_clay_kiln": {
+    "clay_kiln_crafted": {
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": "genesis:clay_kiln"
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:crafted",
+                    "stat": "genesis:clay_kiln",
+                    "value": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -17,7 +31,6 @@
       "translate": "instruction.genesis.craft_clay_kiln.description"
     },
     "icon": {
-      "count": 1,
       "id": "genesis:clay_kiln"
     },
     "title": {
@@ -26,7 +39,7 @@
   },
   "requirements": [
     [
-      "obtained_clay_kiln"
+      "clay_kiln_crafted"
     ]
   ]
 }

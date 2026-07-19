@@ -6,50 +6,64 @@ import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.screen.KilnScreenHandler;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.level.block.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedItemContents;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
+import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
-public class KilnBlockEntity extends LockableContainerBlockEntity
-        implements RecipeUnlocker, RecipeInputProvider, SidedInventory {
-    private static final Codec<Map<RegistryKey<Recipe<?>>, Integer>> CODEC =
+public class KilnBlockEntity extends BaseContainerBlockEntity
+        implements RecipeCraftingHolder, StackedContentsCompatible, WorldlyContainer {
+    private static final Codec<Map<ResourceKey<Recipe<?>>, Integer>> CODEC =
             Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
 
     private static final int DEFAULT_COOK_SECONDS = 45;
     private static final int DEFAULT_COOK_TICKS = DEFAULT_COOK_SECONDS * 20;
 
-    private final ServerRecipeManager.MatchGetter<SingleStackRecipeInput, ? extends AbstractCookingRecipe> matchGetter;
-    private final Reference2IntOpenHashMap<RegistryKey<Recipe<?>>> recipesUsed = new Reference2IntOpenHashMap<>();
-    protected DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    private final RecipeManager.CachedCheck<SingleRecipeInput, ? extends AbstractCookingRecipe> matchGetter;
+    private final Reference2IntOpenHashMap<ResourceKey<Recipe<?>>> recipesUsed = new Reference2IntOpenHashMap<>();
+
+    protected NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+
     int cookingTimeSpent;
     int cookingTotalTime;
 
-    protected final PropertyDelegate propertyDelegate = new PropertyDelegate() {
+    protected final ContainerData propertyDelegate = new ContainerData() {
         @Override
         public int get(int index) {
             return switch (index) {
@@ -73,121 +87,121 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
         }
 
         @Override
-        public int size() {
+        public int getCount() {
             return 3;
         }
     };
 
     public KilnBlockEntity(BlockPos pos, BlockState state) {
         super(GenesisBlockEntities.KILN, pos, state);
-        this.matchGetter = ServerRecipeManager.createCachedMatchGetter(RecipeType.SMELTING);
+        this.matchGetter = RecipeManager.createCheck(RecipeType.SMELTING);
     }
 
     @Override
-    public int size() {
+    public int getContainerSize() {
         return inventory.size();
     }
 
     @Override
-    protected Text getContainerName() {
-        return Text.translatable("container.genesis.kiln");
+    protected Component getDefaultName() {
+        return Component.translatable("container.genesis.kiln");
     }
 
     @Override
-    protected DefaultedList<ItemStack> getHeldStacks() {
+    protected NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 
     @Override
-    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+    protected void setItems(NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
     }
 
     @Override
-    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         return new KilnScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
+    public void setItem(int slot, ItemStack stack) {
         ItemStack previousStack = this.inventory.get(slot);
-        boolean isSameItemType = !stack.isEmpty() && ItemStack.areItemsAndComponentsEqual(previousStack, stack);
+        boolean isSameItemType = !stack.isEmpty() && ItemStack.isSameItemSameComponents(previousStack, stack);
 
         this.inventory.set(slot, stack);
-        stack.capCount(this.getMaxCount(stack));
+        stack.limitSize(this.getMaxStackSize(stack));
 
-        if (slot == 0 && !isSameItemType && this.world instanceof ServerWorld serverWorld) {
-            this.cookingTotalTime = getCookTime(serverWorld, this);
+        if (slot == 0 && !isSameItemType && this.level instanceof ServerLevel serverLevel) {
+            this.cookingTotalTime = getCookTime(serverLevel, this);
             this.cookingTimeSpent = 0;
-            this.markDirty();
+            this.setChanged();
         }
     }
 
     @Override
-    public boolean isValid(int slot, ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack stack) {
         return slot == 0;
     }
 
     @Override
-    public void provideRecipeInputs(RecipeFinder finder) {
+    public void fillStackedContents(StackedItemContents finder) {
         for (ItemStack itemStack : this.inventory) {
-            finder.addInput(itemStack);
+            finder.accountStack(itemStack);
         }
     }
 
     @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        super.onBlockReplaced(pos, oldState);
-        if (this.world instanceof ServerWorld serverWorld) {
-            this.getRecipesUsedAndDropExperience(serverWorld, Vec3d.ofCenter(pos));
+    public void preRemoveSideEffects(BlockPos pos, BlockState oldState) {
+        super.preRemoveSideEffects(pos, oldState);
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.getRecipesUsedAndDropExperience(serverLevel, Vec3.atCenterOf(pos));
         }
     }
 
     @Override
-    public void setLastRecipe(@Nullable RecipeEntry<?> recipe) {
+    public void setRecipeUsed(@Nullable RecipeHolder<?> recipe) {
         if (recipe != null) {
-            RegistryKey<Recipe<?>> registryKey = recipe.id();
+            ResourceKey<Recipe<?>> registryKey = recipe.id();
             this.recipesUsed.addTo(registryKey, 1);
         }
     }
 
     @Override
-    public @Nullable RecipeEntry<?> getLastRecipe() {
+    public @Nullable RecipeHolder<?> getRecipeUsed() {
         return null;
     }
 
     @Override
-    public void unlockLastRecipe(PlayerEntity player, List<ItemStack> ingredients) {
+    public void awardUsedRecipes(Player player, List<ItemStack> ingredients) {
     }
 
-    public void dropExperienceForRecipesUsed(ServerPlayerEntity player) {
-        List<RecipeEntry<?>> usedRecipes = this.getRecipesUsedAndDropExperience(
-                player.getEntityWorld(),
-                player.getEntityPos()
+    public void dropExperienceForRecipesUsed(ServerPlayer player) {
+        List<RecipeHolder<?>> usedRecipes = this.getRecipesUsedAndDropExperience(
+                player.level(),
+                player.position()
         );
 
-        player.unlockRecipes(usedRecipes);
+        player.awardRecipes(usedRecipes);
 
-        for (RecipeEntry<?> recipeEntry : usedRecipes) {
+        for (RecipeHolder<?> recipeEntry : usedRecipes) {
             if (recipeEntry != null) {
-                player.onRecipeCrafted(recipeEntry, this.inventory);
+                player.triggerRecipeCrafted(recipeEntry, this.inventory);
             }
         }
 
         this.recipesUsed.clear();
     }
 
-    private List<RecipeEntry<?>> getRecipesUsedAndDropExperience(ServerWorld world, Vec3d pos) {
-        List<RecipeEntry<?>> usedRecipes = Lists.<RecipeEntry<?>>newArrayList();
+    private List<RecipeHolder<?>> getRecipesUsedAndDropExperience(ServerLevel level, Vec3 pos) {
+        List<RecipeHolder<?>> usedRecipes = Lists.<RecipeHolder<?>>newArrayList();
 
-        for (Reference2IntMap.Entry<RegistryKey<Recipe<?>>> recipeUsageEntry : this.recipesUsed.reference2IntEntrySet()) {
-            world.getRecipeManager().get(recipeUsageEntry.getKey()).ifPresent(recipe -> {
+        for (Reference2IntMap.Entry<ResourceKey<Recipe<?>>> recipeUsageEntry : this.recipesUsed.reference2IntEntrySet()) {
+            level.recipeAccess().byKey(recipeUsageEntry.getKey()).ifPresent(recipe -> {
                 usedRecipes.add(recipe);
                 dropExperience(
-                        world,
+                        level,
                         pos,
                         recipeUsageEntry.getIntValue(),
-                        ((AbstractCookingRecipe) recipe.value()).getExperience()
+                        ((AbstractCookingRecipe) recipe.value()).experience()
                 );
             });
         }
@@ -195,71 +209,71 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
         return usedRecipes;
     }
 
-    private static void dropExperience(ServerWorld world, Vec3d pos, int multiplier, float baseExperience) {
+    private static void dropExperience(ServerLevel level, Vec3 pos, int multiplier, float baseExperience) {
         float totalExperience = multiplier * baseExperience;
-        int experienceToDrop = MathHelper.floor(totalExperience);
-        float fractionalPart = MathHelper.fractionalPart(totalExperience);
+        int experienceToDrop = Mth.floor(totalExperience);
+        float fractionalPart = Mth.frac(totalExperience);
 
         if (fractionalPart != 0.0F && Math.random() < fractionalPart) {
             experienceToDrop++;
         }
 
-        ExperienceOrbEntity.spawn(world, pos, experienceToDrop);
+        ExperienceOrb.award(level, pos, experienceToDrop);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        Inventories.readData(view, this.inventory);
-        this.cookingTimeSpent = view.getShort("cooking_time_spent", (short) 0);
-        this.cookingTotalTime = view.getShort("cooking_total_time", (short) 0);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(view, this.inventory);
+        this.cookingTimeSpent = view.getShortOr("cooking_time_spent", (short) 0);
+        this.cookingTotalTime = view.getShortOr("cooking_total_time", (short) 0);
         this.recipesUsed.clear();
         this.recipesUsed.putAll(view.read("RecipesUsed", CODEC).orElse(Map.of()));
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
         view.putShort("cooking_time_spent", (short) this.cookingTimeSpent);
         view.putShort("cooking_total_time", (short) this.cookingTotalTime);
-        Inventories.writeData(view, this.inventory);
-        view.put("RecipesUsed", CODEC, this.recipesUsed);
+        ContainerHelper.saveAllItems(view, this.inventory);
+        view.store("RecipesUsed", CODEC, this.recipesUsed);
     }
 
     //region Prevent Hopper Usage
     @Override
-    public int[] getAvailableSlots(Direction side) {
+    public int[] getSlotsForFace(Direction side) {
         return new int[0];
     }
 
     @Override
-    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir) {
         return false;
     }
 
     @Override
-    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction dir) {
         return false;
     }
     //endregion
 
     private boolean isLit() {
-        if (this.world != null) {
-            BlockState belowState = this.world.getBlockState(this.pos.down());
+        if (this.level != null) {
+            BlockState belowState = this.level.getBlockState(this.worldPosition.below());
             Block belowBlock = belowState.getBlock();
 
-            if (belowBlock instanceof AbstractFireBlock) {
+            if (belowBlock instanceof BaseFireBlock) {
                 return true;
             }
 
-            return belowBlock instanceof CampfireBlock && belowState.get(CampfireBlock.LIT, false);
+            return belowBlock instanceof CampfireBlock && belowState.getValueOrElse(CampfireBlock.LIT, false);
         }
 
         return false;
     }
 
-    public static void tick(ServerWorld world, BlockPos pos, BlockState state, KilnBlockEntity kiln) {
+    public static void tick(ServerLevel level, BlockPos pos, BlockState state, KilnBlockEntity kiln) {
         boolean stateChanged = false;
 
         ItemStack inputStack = kiln.inventory.getFirst();
@@ -267,16 +281,16 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
         boolean hasInput = !inputStack.isEmpty();
 
         if (kiln.isLit() && hasInput) {
-            SingleStackRecipeInput recipeInput = new SingleStackRecipeInput(inputStack);
-            RecipeEntry<? extends AbstractCookingRecipe> recipeEntry = kiln.matchGetter
-                    .getFirstMatch(recipeInput, world)
+            SingleRecipeInput recipeInput = new SingleRecipeInput(inputStack);
+            RecipeHolder<? extends AbstractCookingRecipe> recipeEntry = kiln.matchGetter
+                    .getRecipeFor(recipeInput, level)
                     .orElse(null);
 
-            int maxStackSize = kiln.getMaxCountPerStack();
+            int maxStackSize = kiln.getMaxStackSize();
 
             if (
                     canAcceptRecipeOutput(
-                            world.getRegistryManager(),
+                            level.registryAccess(),
                             recipeEntry,
                             recipeInput,
                             kiln.inventory,
@@ -287,16 +301,16 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
 
                 if (kiln.cookingTimeSpent >= kiln.cookingTotalTime) {
                     kiln.cookingTimeSpent = 0;
-                    kiln.cookingTotalTime = getCookTime(world, kiln);
+                    kiln.cookingTotalTime = getCookTime(level, kiln);
 
                     if (craftRecipe(
-                            world.getRegistryManager(),
+                            level.registryAccess(),
                             recipeEntry,
                             recipeInput,
                             kiln.inventory,
                             maxStackSize
                     )) {
-                        kiln.setLastRecipe(recipeEntry);
+                        kiln.setRecipeUsed(recipeEntry);
                     }
 
                     stateChanged = true;
@@ -306,26 +320,26 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
             }
         } else if (kiln.cookingTimeSpent > 0) {
             // Cooling down if no heat source
-            kiln.cookingTimeSpent = MathHelper.clamp(kiln.cookingTimeSpent - 2, 0, kiln.cookingTotalTime);
+            kiln.cookingTimeSpent = Mth.clamp(kiln.cookingTimeSpent - 2, 0, kiln.cookingTotalTime);
         }
 
         if (stateChanged) {
-            markDirty(world, pos, state);
+            setChanged(level, pos, state);
         }
     }
 
 
     private static boolean canAcceptRecipeOutput(
-            DynamicRegistryManager dynamicRegistryManager,
-            @Nullable RecipeEntry<? extends AbstractCookingRecipe> recipe,
-            SingleStackRecipeInput input,
-            DefaultedList<ItemStack> inventory,
+            RegistryAccess dynamicRegistryManager,
+            @Nullable RecipeHolder<? extends AbstractCookingRecipe> recipe,
+            SingleRecipeInput input,
+            NonNullList<ItemStack> inventory,
             int maxCount
     ) {
         ItemStack inputStack = inventory.get(0);
 
         if (!inputStack.isEmpty() && recipe != null) {
-            ItemStack itemStack = recipe.value().craft(input, dynamicRegistryManager);
+            ItemStack itemStack = recipe.value().assemble(input);
 
             if (itemStack.isEmpty()) {
                 return false;
@@ -337,36 +351,36 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
                 return true;
             }
 
-            if (!ItemStack.areItemsAndComponentsEqual(outputStack, itemStack)) {
+            if (!ItemStack.isSameItemSameComponents(outputStack, itemStack)) {
                 return false;
             }
 
-            return outputStack.getCount() < maxCount && outputStack.getCount() < outputStack.getMaxCount() ||
-                    outputStack.getCount() < itemStack.getMaxCount();
+            return outputStack.getCount() < maxCount && outputStack.getCount() < outputStack.getMaxStackSize() ||
+                    outputStack.getCount() < itemStack.getMaxStackSize();
         }
 
         return false;
     }
 
     private static boolean craftRecipe(
-            DynamicRegistryManager dynamicRegistryManager,
-            @Nullable RecipeEntry<? extends AbstractCookingRecipe> recipe,
-            SingleStackRecipeInput input,
-            DefaultedList<ItemStack> inventory,
+            RegistryAccess dynamicRegistryManager,
+            @Nullable RecipeHolder<? extends AbstractCookingRecipe> recipe,
+            SingleRecipeInput input,
+            NonNullList<ItemStack> inventory,
             int maxCount
     ) {
         if (recipe != null && canAcceptRecipeOutput(dynamicRegistryManager, recipe, input, inventory, maxCount)) {
             ItemStack inputStack = inventory.get(0);
-            ItemStack smeltToStack = recipe.value().craft(input, dynamicRegistryManager);
+            ItemStack smeltToStack = recipe.value().assemble(input);
             ItemStack outputStack = inventory.get(1);
 
             if (outputStack.isEmpty()) {
                 inventory.set(1, smeltToStack.copy());
-            } else if (ItemStack.areItemsAndComponentsEqual(outputStack, smeltToStack)) {
-                outputStack.increment(1);
+            } else if (ItemStack.isSameItemSameComponents(outputStack, smeltToStack)) {
+                outputStack.grow(1);
             }
 
-            inputStack.decrement(1);
+            inputStack.shrink(1);
 
             return true;
         }
@@ -374,11 +388,12 @@ public class KilnBlockEntity extends LockableContainerBlockEntity
         return false;
     }
 
-    private static int getCookTime(ServerWorld world, KilnBlockEntity kiln) {
-        SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(kiln.getStack(0));
+    private static int getCookTime(ServerLevel level, KilnBlockEntity kiln) {
+        SingleRecipeInput singleStackRecipeInput = new SingleRecipeInput(kiln.getItem(0));
+
         int cookTime = kiln.matchGetter
-                .getFirstMatch(singleStackRecipeInput, world)
-                .map(recipe -> recipe.value().getCookingTime())
+                .getRecipeFor(singleStackRecipeInput, level)
+                .map(recipe -> recipe.value().cookingTime())
                 .orElse(DEFAULT_COOK_TICKS);
 
         return Math.max(cookTime, DEFAULT_COOK_TICKS);

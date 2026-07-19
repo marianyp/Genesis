@@ -1,56 +1,61 @@
 package dev.mariany.genesis.screen;
 
 import dev.mariany.genesis.screen.slot.KilnOutputSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookType;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.recipebook.ServerPlaceRecipe;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedItemContents;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipePropertySet;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class KilnScreenHandler extends AbstractRecipeScreenHandler {
+public class KilnScreenHandler extends RecipeBookMenu {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
-    final Inventory inventory;
-    private final PropertyDelegate propertyDelegate;
-    protected final World world;
+    final Container inventory;
+    private final ContainerData propertyDelegate;
+    protected final Level level;
     private final RecipePropertySet recipePropertySet;
 
     public KilnScreenHandler(
-            int syncId, PlayerInventory playerInventory
+            int syncId, Inventory playerInventory
     ) {
-        this(syncId, playerInventory, new SimpleInventory(2), new ArrayPropertyDelegate(3));
+        this(syncId, playerInventory, new SimpleContainer(2), new SimpleContainerData(3));
     }
 
     public KilnScreenHandler(
             int syncId,
-            PlayerInventory playerInventory,
-            Inventory inventory,
-            PropertyDelegate propertyDelegate
+            Inventory playerInventory,
+            Container inventory,
+            ContainerData propertyDelegate
     ) {
         super(GenesisScreenHandlers.KILN, syncId);
-        checkSize(inventory, 2);
-        checkDataCount(propertyDelegate, 3);
+        checkContainerSize(inventory, 2);
+        checkContainerDataCount(propertyDelegate, 3);
         this.inventory = inventory;
         this.propertyDelegate = propertyDelegate;
-        this.world = playerInventory.player.getEntityWorld();
-        this.recipePropertySet = this.world.getRecipeManager().getPropertySet(RecipePropertySet.FURNACE_INPUT);
+        this.level = playerInventory.player.level();
+        this.recipePropertySet = this.level.recipeAccess().propertySet(RecipePropertySet.FURNACE_INPUT);
         this.addSlot(new Slot(inventory, 0, 56, 34));
         this.addSlot(new KilnOutputSlot(playerInventory.player, inventory, 1, 116, 35));
-        this.addPlayerSlots(playerInventory, 8, 84);
-        this.addProperties(propertyDelegate);
+        this.addStandardInventorySlots(playerInventory, 8, 84);
+        this.addDataSlots(propertyDelegate);
     }
 
     public Slot getOutputSlot() {
@@ -58,13 +63,13 @@ public class KilnScreenHandler extends AbstractRecipeScreenHandler {
     }
 
     protected boolean isSmeltable(ItemStack itemStack) {
-        return this.recipePropertySet.canUse(itemStack);
+        return this.recipePropertySet.test(itemStack);
     }
 
     public float getCookProgress() {
         int timeSpent = this.propertyDelegate.get(0);
         int totalTime = this.propertyDelegate.get(1);
-        return totalTime != 0 && timeSpent != 0 ? MathHelper.clamp((float) timeSpent / totalTime, 0F, 1F) : 0F;
+        return totalTime != 0 && timeSpent != 0 ? Mth.clamp((float) timeSpent / totalTime, 0F, 1F) : 0F;
     }
 
     public boolean isBurning() {
@@ -72,95 +77,114 @@ public class KilnScreenHandler extends AbstractRecipeScreenHandler {
     }
 
     @Override
-    public RecipeBookType getCategory() {
+    public RecipeBookType getRecipeBookType() {
         return RecipeBookType.FURNACE;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.inventory.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.inventory.stillValid(player);
     }
 
     @Override
-    public void populateRecipeFinder(RecipeFinder finder) {
-        if (this.inventory instanceof RecipeInputProvider recipeInputProvider) {
-            recipeInputProvider.provideRecipeInputs(finder);
+    public void fillCraftSlotsStackedContents(StackedItemContents finder) {
+        if (this.inventory instanceof StackedContentsCompatible recipeInputProvider) {
+            recipeInputProvider.fillStackedContents(finder);
         }
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack resultStack = ItemStack.EMPTY;
         Slot clickedSlot = this.slots.get(index);
 
-        if (clickedSlot.hasStack()) {
-            ItemStack clickedStack = clickedSlot.getStack();
+        if (clickedSlot.hasItem()) {
+            ItemStack clickedStack = clickedSlot.getItem();
             resultStack = clickedStack.copy();
 
             if (index == OUTPUT_SLOT) {
                 // Output slot to player inventory
-                if (!this.insertItem(clickedStack, 2, 38, true)) {
+                if (!this.moveItemStackTo(clickedStack, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }
 
-                clickedSlot.onQuickTransfer(clickedStack, resultStack);
+                clickedSlot.onQuickCraft(clickedStack, resultStack);
             } else if (index != INPUT_SLOT) {
                 // From player inventory or hotbar
                 if (this.isSmeltable(clickedStack)) {
-                    if (!this.insertItem(clickedStack, 0, 1, false)) {
+                    if (!this.moveItemStackTo(clickedStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (index >= 2 && index < 29) {
                     // Main inventory to Hotbar
-                    if (!this.insertItem(clickedStack, 29, 38, false)) {
+                    if (!this.moveItemStackTo(clickedStack, 29, 38, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (index >= 29 && index < 38) {
                     // Hotbar to Main Inventory
-                    if (!this.insertItem(clickedStack, 2, 29, false)) {
+                    if (!this.moveItemStackTo(clickedStack, 2, 29, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.insertItem(clickedStack, 2, 38, false)) {
+            } else if (!this.moveItemStackTo(clickedStack, 2, 38, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (clickedStack.isEmpty()) {
-                clickedSlot.setStack(ItemStack.EMPTY);
+                clickedSlot.setByPlayer(ItemStack.EMPTY);
             } else {
-                clickedSlot.markDirty();
+                clickedSlot.setChanged();
             }
 
             if (clickedStack.getCount() == resultStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            clickedSlot.onTakeItem(player, clickedStack);
+            clickedSlot.onTake(player, clickedStack);
         }
 
         return resultStack;
     }
 
     @Override
-    public AbstractRecipeScreenHandler.PostFillAction fillInputSlots(
-            boolean craftAll, boolean creative, RecipeEntry<?> recipe, ServerWorld world, PlayerInventory inventory
+    public RecipeBookMenu.PostPlaceAction handlePlacement(
+            boolean craftAll,
+            boolean creative,
+            RecipeHolder<?> recipe,
+            ServerLevel level,
+            Inventory inventory
     ) {
         final List<Slot> list = List.of(this.getSlot(0), this.getSlot(2));
-        return InputSlotFiller.fill(new InputSlotFiller.Handler<>() {
-            @Override
-            public void populateRecipeFinder(RecipeFinder finder) {
-                KilnScreenHandler.this.populateRecipeFinder(finder);
-            }
 
-            @Override
-            public void clear() {
-                list.forEach(slot -> slot.setStackNoCallbacks(ItemStack.EMPTY));
-            }
+        return ServerPlaceRecipe.placeRecipe(
+                new ServerPlaceRecipe.CraftingMenuAccess<>() {
+                    @Override
+                    public void fillCraftSlotsStackedContents(StackedItemContents finder) {
+                        KilnScreenHandler.this.fillCraftSlotsStackedContents(finder);
+                    }
 
-            @Override
-            public boolean matches(RecipeEntry<AbstractCookingRecipe> entry) {
-                return entry.value().matches(new SingleStackRecipeInput(KilnScreenHandler.this.inventory.getStack(0)), world);
-            }
-        }, 1, 1, List.of(this.getSlot(0)), list, inventory, (RecipeEntry<AbstractCookingRecipe>) recipe, craftAll, creative);
+                    @Override
+                    public void clearCraftingContent() {
+                        list.forEach(slot -> slot.set(ItemStack.EMPTY));
+                    }
+
+                    @Override
+                    public boolean recipeMatches(RecipeHolder<AbstractCookingRecipe> entry) {
+                        SingleRecipeInput input = new SingleRecipeInput(
+                                KilnScreenHandler.this.inventory.getItem(0)
+                        );
+
+                        return entry.value().matches(input, level);
+                    }
+                },
+                1,
+                1,
+                List.of(this.getSlot(0)),
+                list,
+                inventory,
+                (RecipeHolder<AbstractCookingRecipe>) recipe,
+                craftAll,
+                creative
+        );
     }
 }

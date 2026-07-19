@@ -1,31 +1,33 @@
 package dev.mariany.genesis.client.render.entity;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.client.render.entity.model.GenesisModelLayers;
+import dev.mariany.genesis.client.render.entity.layer.BoarEyesLayer;
 import dev.mariany.genesis.client.render.entity.model.BoarEntityModel;
+import dev.mariany.genesis.client.render.entity.model.GenesisModelLayers;
 import dev.mariany.genesis.entity.custom.mob.BoarEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class BoarEntityRenderer extends MobEntityRenderer<BoarEntity, LivingEntityRenderState, BoarEntityModel> {
-    private static final Identifier TEXTURE = Genesis.id("textures/entity/boar.png");
+public class BoarEntityRenderer extends MobRenderer<BoarEntity, LivingEntityRenderState, BoarEntityModel> {
+    private static final Identifier TEXTURE = Genesis.id("textures/entity/boar/boar.png");
 
-    public BoarEntityRenderer(EntityRendererFactory.Context context) {
+    public BoarEntityRenderer(EntityRendererProvider.Context context) {
         this(context, GenesisModelLayers.BOAR);
     }
 
-    public BoarEntityRenderer(EntityRendererFactory.Context ctx, EntityModelLayer layer) {
-        super(ctx, new BoarEntityModel(ctx.getPart(layer)), 0.7F);
+    public BoarEntityRenderer(EntityRendererProvider.Context ctx, ModelLayerLocation layer) {
+        super(ctx, new BoarEntityModel(ctx.bakeLayer(layer)), 0.7F);
+        this.addLayer(new BoarEyesLayer<>(this));
     }
 
     @Override
-    public Identifier getTexture(LivingEntityRenderState state) {
+    public Identifier getTextureLocation(LivingEntityRenderState state) {
         return TEXTURE;
     }
 

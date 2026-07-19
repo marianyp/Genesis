@@ -1,24 +1,29 @@
 package dev.mariany.genesis.screen;
 
 import dev.mariany.genesis.Genesis;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 
 public class GenesisScreenHandlers {
-    public static final ScreenHandlerType<KilnScreenHandler> KILN = register("kiln", KilnScreenHandler::new);
-    public static final ScreenHandlerType<AssemblyScreenHandler> ASSEMBLY = register(
+    public static final MenuType<KilnScreenHandler> KILN = register("kiln", KilnScreenHandler::new);
+
+    public static final MenuType<AssemblyScreenHandler> ASSEMBLY = register(
             "assembly",
             AssemblyScreenHandler::new
     );
 
-    private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType.Factory<T> factory) {
-        return Registry.register(Registries.SCREEN_HANDLER, Genesis.id(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
+    private static <T extends AbstractContainerMenu> MenuType<T> register(String id, MenuType.MenuSupplier<T> factory) {
+        return Registry.register(
+                BuiltInRegistries.MENU,
+                Genesis.id(id),
+                new MenuType<>(factory, FeatureFlags.VANILLA_SET)
+        );
     }
 
     public static void bootstrap() {
-        Genesis.LOGGER.info("Registering Screen Handlers for " + Genesis.MOD_ID);
+        Genesis.bootstrapLog("Screen Handlers");
     }
 }

@@ -13,11 +13,10 @@
       "translate": "age.genesis.tools.diamond.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:diamond_pickaxe"
     },
     "title": {
-      "translate": "age.genesis.diamond"
+      "translate": "age.genesis.tools.diamond"
     }
   },
   "items": [

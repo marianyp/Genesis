@@ -2,32 +2,32 @@ package dev.mariany.genesis.advancement.criterion;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.AdvancementCriterion;
-import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.block.Block;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.Block;
 
-public class BrushPrimitiveCauldronCriteria extends AbstractCriterion<BrushPrimitiveCauldronCriteria.Conditions> {
+public class BrushPrimitiveCauldronCriteria extends SimpleCriterionTrigger<BrushPrimitiveCauldronCriteria.Conditions> {
     @Override
-    public Codec<BrushPrimitiveCauldronCriteria.Conditions> getConditionsCodec() {
+    public Codec<BrushPrimitiveCauldronCriteria.Conditions> codec() {
         return BrushPrimitiveCauldronCriteria.Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayerEntity player, Block cauldron) {
+    public void trigger(ServerPlayer player, Block cauldron) {
         this.trigger(player, conditions -> conditions.matches(cauldron));
     }
 
-    public record Conditions(Optional<LootContextPredicate> player, List<Block> whitelist)
-            implements AbstractCriterion.Conditions {
+    public record Conditions(Optional<ContextAwarePredicate> player, List<Block> whitelist)
+            implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<BrushPrimitiveCauldronCriteria.Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC
+                                EntityPredicate.ADVANCEMENT_CODEC
                                         .optionalFieldOf("player")
                                         .forGetter(BrushPrimitiveCauldronCriteria.Conditions::player),
                                 Block.CODEC.codec().listOf().fieldOf("whitelist")
@@ -36,19 +36,19 @@ public class BrushPrimitiveCauldronCriteria extends AbstractCriterion<BrushPrimi
                         .apply(instance, BrushPrimitiveCauldronCriteria.Conditions::new)
         );
 
-        public static AdvancementCriterion<BrushPrimitiveCauldronCriteria.Conditions> create() {
+        public static Criterion<BrushPrimitiveCauldronCriteria.Conditions> create() {
             return create(null, List.of());
         }
 
-        public static AdvancementCriterion<BrushPrimitiveCauldronCriteria.Conditions> create(List<Block> whitelist) {
+        public static Criterion<BrushPrimitiveCauldronCriteria.Conditions> create(List<Block> whitelist) {
             return create(null, whitelist);
         }
 
-        public static AdvancementCriterion<BrushPrimitiveCauldronCriteria.Conditions> create(
-                @Nullable LootContextPredicate playerPredicate,
+        public static Criterion<BrushPrimitiveCauldronCriteria.Conditions> create(
+                @Nullable ContextAwarePredicate playerPredicate,
                 List<Block> whitelist
         ) {
-            return GenesisCriteria.BRUSH_PRIMITIVE_CAULDRON.create(
+            return GenesisCriteria.BRUSH_PRIMITIVE_CAULDRON.createCriterion(
                     new BrushPrimitiveCauldronCriteria.Conditions(Optional.ofNullable(playerPredicate), whitelist)
             );
         }

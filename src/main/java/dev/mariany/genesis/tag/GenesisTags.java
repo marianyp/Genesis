@@ -1,12 +1,12 @@
 package dev.mariany.genesis.tag;
 
 import dev.mariany.genesis.Genesis;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.structure.Structure;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class GenesisTags {
     public static final class Items {
@@ -30,19 +30,21 @@ public class GenesisTags {
 
         public static final TagKey<Item> FURNACES = createTag("furnaces");
 
-        public static final TagKey<Item> HEALTHY_STEW_CONTENTS = createTag("healthy_stew_contents");
-
         public static final TagKey<Item> FROM_SWORD_CAST = createTag("from_sword_cast");
         public static final TagKey<Item> FROM_SHOVEL_CAST = createTag("from_shovel_cast");
         public static final TagKey<Item> FROM_PICKAXE_CAST = createTag("from_pickaxe_cast");
         public static final TagKey<Item> FROM_AXE_CAST = createTag("from_axe_cast");
         public static final TagKey<Item> FROM_HOE_CAST = createTag("from_hoe_cast");
+        public static final TagKey<Item> FROM_SPEAR_CAST = createTag("from_spear_cast");
         public static final TagKey<Item> FROM_SHIELD_CAST = createTag("from_shield_cast");
         public static final TagKey<Item> FROM_ANVIL_CAST = createTag("from_anvil_cast");
         public static final TagKey<Item> FROM_TOTEM_CAST = createTag("from_totem_cast");
 
+        public static final TagKey<Item> WEAPON_AGE_RESTRICTED_WEAPONS = createTag("weapon_age_restricted_weapons");
+        public static final TagKey<Item> CAUSES_HUNGER = createTag("causes_hunger");
+
         private static TagKey<Item> createTag(String name) {
-            return TagKey.of(RegistryKeys.ITEM, Genesis.id(name));
+            return TagKey.create(Registries.ITEM, Genesis.id(name));
         }
     }
 
@@ -50,7 +52,7 @@ public class GenesisTags {
         public static final TagKey<Block> BOAR_SPAWNABLE_ON = createTag("boar_spawnable_on");
 
         private static TagKey<Block> createTag(String name) {
-            return TagKey.of(RegistryKeys.BLOCK, Genesis.id(name));
+            return TagKey.create(Registries.BLOCK, Genesis.id(name));
         }
     }
 
@@ -58,7 +60,7 @@ public class GenesisTags {
         public static final TagKey<Structure> ON_DEEP_DARK_EXPLORER_MAPS = createTag("on_deep_dark_explorer_maps");
 
         private static TagKey<Structure> createTag(String name) {
-            return TagKey.of(RegistryKeys.STRUCTURE, Genesis.id(name));
+            return TagKey.create(Registries.STRUCTURE, Genesis.id(name));
         }
     }
 
@@ -66,7 +68,7 @@ public class GenesisTags {
         public static final TagKey<Biome> ON_PALE_GARDEN_EXPLORER_MAPS = createTag("on_pale_garden_explorer_maps");
 
         private static TagKey<Biome> createTag(String name) {
-            return TagKey.of(RegistryKeys.BIOME, Genesis.id(name));
+            return TagKey.create(Registries.BIOME, Genesis.id(name));
         }
     }
 }

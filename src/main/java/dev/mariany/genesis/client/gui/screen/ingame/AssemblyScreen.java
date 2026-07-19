@@ -11,28 +11,28 @@ import dev.mariany.genesis.screen.slot.AssemblyInputSlot;
 import dev.mariany.genesis.screen.slot.AssemblyPatternSlot;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.ScreenPos;
-import net.minecraft.client.gui.screen.ingame.RecipeBookScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.navigation.ScreenPosition;
+import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
-public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
+public class AssemblyScreen extends AbstractRecipeBookScreen<AssemblyScreenHandler> {
     private static final Identifier TEXTURE = Genesis.id("textures/gui/container/assembly_table.png");
     private static final Identifier SLOT_TEXTURE = Genesis.id("container/assembly/slots");
     private static final Identifier DISABLED_SLOT_TEXTURE = Genesis.id("container/assembly/locked_slots");
 
-    private static final Text CAST_SLOT_TOOLTIP = Text.translatable(
+    private static final Component CAST_SLOT_TOOLTIP = Component.translatable(
             "container.genesis.assembly_table.cast_tooltip"
     );
 
@@ -45,7 +45,7 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
     @Nullable
     private Item previousPattern = Items.AIR;
 
-    public AssemblyScreen(AssemblyScreenHandler handler, PlayerInventory inventory, Text title) {
+    public AssemblyScreen(AssemblyScreenHandler handler, Inventory inventory, Component title) {
         this(new AssemblyRecipeBookWidget(handler), handler, inventory, title);
 
     }
@@ -53,8 +53,8 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
     private AssemblyScreen(
             AssemblyRecipeBookWidget assemblyRecipeBookWidget,
             AssemblyScreenHandler handler,
-            PlayerInventory inventory,
-            Text title
+            Inventory inventory,
+            Component title
     ) {
         super(handler, assemblyRecipeBookWidget, inventory, title);
         this.assemblyRecipeBookWidget = assemblyRecipeBookWidget;
@@ -64,17 +64,18 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
     protected void init() {
         super.init();
 
-        this.titleX = 29;
+        this.titleLabelX = 29;
         this.previousPattern = Items.AIR;
 
-        this.handler.onAssemblyPatternChange(inventory -> updateRecipeBookState());
+        this.menu.onAssemblyPatternChange(this::updateRecipeBookState);
+
         this.updateRecipeBookState();
     }
 
     private void updateRecipeBookState() {
         getRecipeBook().ifPresent(
                 toggleableRecipeBookWidget -> {
-                    Optional<AssemblyPatternItem> optionalAssemblyPatternItem = this.handler.getAssemblyPatternItem();
+                    Optional<AssemblyPatternItem> optionalAssemblyPatternItem = this.menu.getAssemblyPatternItem();
                     boolean enabled = optionalAssemblyPatternItem.isPresent();
 
                     toggleableRecipeBookWidget.setEnabled(enabled);
@@ -86,19 +87,24 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
                         this.previousPattern = pattern;
                     }
 
-                    if (!enabled && this.assemblyRecipeBookWidget.isOpen()) {
-                        this.assemblyRecipeBookWidget.close();
-                        this.x = this.assemblyRecipeBookWidget.findLeftEdge(this.width, this.backgroundWidth);
-                        ScreenPos buttonPos = this.getRecipeBookButtonPos();
-                        toggleableRecipeBookWidget.setPosition(buttonPos.x(), buttonPos.y());
-                        this.onRecipeBookToggled();
+                    if (enabled || !this.assemblyRecipeBookWidget.isVisible()) {
+                        return;
                     }
+
+                    this.assemblyRecipeBookWidget.close();
+
+                    this.leftPos = this.assemblyRecipeBookWidget.updateScreenPosition(this.width, this.imageWidth);
+
+                    ScreenPosition buttonPos = this.getRecipeBookButtonPosition();
+                    toggleableRecipeBookWidget.setPosition(buttonPos.x(), buttonPos.y());
+
+                    this.onRecipeBookButtonClick();
                 }
         );
     }
 
     private Optional<ToggleableRecipeBookWidget> getRecipeBook() {
-        for (Drawable drawable : ((ScreenAccessor) this).genesis$drawables()) {
+        for (Renderable drawable : ((ScreenAccessor) this).genesis$renderables()) {
             if (drawable instanceof ToggleableRecipeBookWidget toggleableRecipeBookWidget) {
                 return Optional.of(toggleableRecipeBookWidget);
             }
@@ -108,67 +114,72 @@ public class AssemblyScreen extends RecipeBookScreen<AssemblyScreenHandler> {
     }
 
     @Override
-    protected ScreenPos getRecipeBookButtonPos() {
-        return new ScreenPos(this.x + 5, this.height / 2 - 49);
+    protected ScreenPosition getRecipeBookButtonPosition() {
+        return new ScreenPosition(this.leftPos + 5, this.height / 2 - 49);
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {
-        int y = (this.height - this.backgroundHeight) / 2;
+    public void extractBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+        super.extractBackground(context, mouseX, mouseY, deltaTicks);
+        int y = (this.height - this.imageHeight) / 2;
 
-        context.drawTexture(
+        context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 TEXTURE,
-                this.x,
+                this.leftPos,
                 y,
                 0F,
                 0F,
-                this.backgroundWidth,
-                this.backgroundHeight,
+                this.imageWidth,
+                this.imageHeight,
                 256,
                 256
         );
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        super.render(context, mouseX, mouseY, deltaTicks);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+        super.extractRenderState(context, mouseX, mouseY, deltaTicks);
         this.renderSlotTooltip(context, mouseX, mouseY);
     }
 
-    private void renderSlotTooltip(DrawContext context, int mouseX, int mouseY) {
-        if (this.focusedSlot instanceof AssemblyPatternSlot assemblyPatternSlot && assemblyPatternSlot.isEmpty()) {
-            context.drawOrderedTooltip(
-                    this.textRenderer,
-                    this.textRenderer.wrapLines(CAST_SLOT_TOOLTIP, 115),
-                    mouseX,
-                    mouseY
-            );
+    private void renderSlotTooltip(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+        if (!(this.hoveredSlot instanceof AssemblyPatternSlot assemblyPatternSlot) || !assemblyPatternSlot.isEmpty()) {
+            return;
         }
+
+        context.setTooltipForNextFrame(
+                this.font,
+                this.font.split(CAST_SLOT_TOOLTIP, 115),
+                mouseX,
+                mouseY
+        );
     }
 
     @Override
-    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
-        super.drawForeground(context, mouseX, mouseY);
+    protected void extractLabels(GuiGraphicsExtractor context, int mouseX, int mouseY) {
+        super.extractLabels(context, mouseX, mouseY);
 
-        if (this.handler.getCraftingPattern().isPresent()) {
-            for (Slot slot : this.handler.slots) {
-                if (slot instanceof AssemblyInputSlot assemblyInputSlot) {
-                    this.drawSlot(context, assemblyInputSlot, assemblyInputSlot.isEnabled());
-                }
+        if (this.menu.getCraftingPattern().isEmpty()) {
+            return;
+        }
+
+        for (Slot slot : this.menu.slots) {
+            if (slot instanceof AssemblyInputSlot assemblyInputSlot) {
+                this.drawSlot(context, assemblyInputSlot, assemblyInputSlot.isActive());
             }
         }
     }
 
-    private void drawSlot(DrawContext context, AssemblyInputSlot slot, boolean enabled) {
+    private void drawSlot(GuiGraphicsExtractor context, AssemblyInputSlot slot, boolean enabled) {
         Identifier texture = enabled ? SLOT_TEXTURE : DISABLED_SLOT_TEXTURE;
 
-        int index = slot.getIndex();
+        int index = slot.getContainerSlot();
 
         int u = (index % SLOTS_PER_ROW) * SLOT_SIZE;
         int v = (index / SLOTS_PER_ROW) * SLOT_SIZE;
 
-        context.drawGuiTexture(
+        context.blitSprite(
                 RenderPipelines.GUI_TEXTURED,
                 texture,
                 SLOTS_TEXTURE_SIZE,

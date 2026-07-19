@@ -2,64 +2,66 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.tag.GenesisTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GenesisBlockTagProvider extends FabricTagProvider.BlockTagProvider {
-    public GenesisBlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
+    public GenesisBlockTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        valueLookupBuilder(GenesisTags.Blocks.BOAR_SPAWNABLE_ON)
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
+        tag(GenesisTags.Blocks.BOAR_SPAWNABLE_ON)
                 .addOptionalTag(BlockTags.ANIMALS_SPAWNABLE_ON)
                 .addOptionalTag(BlockTags.SAND)
                 .addOptionalTag(BlockTags.SNOW)
                 .addOptionalTag(BlockTags.BADLANDS_TERRACOTTA)
-                .add(
-                        Blocks.DIRT,
-                        Blocks.GRASS_BLOCK,
-                        Blocks.PODZOL,
-                        Blocks.COARSE_DIRT,
-                        Blocks.ROOTED_DIRT,
-                        Blocks.MOSS_BLOCK,
-                        Blocks.PALE_MOSS_BLOCK,
-                        Blocks.MUD,
-                        Blocks.MUDDY_MANGROVE_ROOTS
-                );
+                .add(key(Blocks.DIRT))
+                .add(key(Blocks.GRASS_BLOCK))
+                .add(key(Blocks.PODZOL))
+                .add(key(Blocks.COARSE_DIRT))
+                .add(key(Blocks.ROOTED_DIRT))
+                .add(key(Blocks.MOSS_BLOCK))
+                .add(key(Blocks.PALE_MOSS_BLOCK))
+                .add(key(Blocks.MUD))
+                .add(key(Blocks.MUDDY_MANGROVE_ROOTS));
 
-        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(
-                GenesisBlocks.CLAY_KILN,
-                GenesisBlocks.KILN,
-                GenesisBlocks.CLAY_CAULDRON,
-                GenesisBlocks.TERRACOTTA_CAULDRON,
-                GenesisBlocks.DIRT_TERRACOTTA_CAULDRON,
-                GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON,
-                GenesisBlocks.RAW_COAL_BLOCK,
-                GenesisBlocks.RAW_DIAMOND_BLOCK,
-                GenesisBlocks.RAW_EMERALD_BLOCK,
-                GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK,
-                GenesisBlocks.RAW_NETHERITE_BLOCK,
-                GenesisBlocks.RAW_REDSTONE_BLOCK
-        );
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(key(GenesisBlocks.CLAY_KILN))
+                .add(key(GenesisBlocks.KILN))
+                .add(key(GenesisBlocks.CLAY_CAULDRON))
+                .add(key(GenesisBlocks.TERRACOTTA_CAULDRON))
+                .add(key(GenesisBlocks.DIRT_TERRACOTTA_CAULDRON))
+                .add(key(GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON))
+                .add(key(GenesisBlocks.RAW_COAL_BLOCK))
+                .add(key(GenesisBlocks.RAW_DIAMOND_BLOCK))
+                .add(key(GenesisBlocks.RAW_EMERALD_BLOCK))
+                .add(key(GenesisBlocks.RAW_LAPIS_LAZULI_BLOCK))
+                .add(key(GenesisBlocks.RAW_NETHERITE_BLOCK))
+                .add(key(GenesisBlocks.RAW_REDSTONE_BLOCK));
 
-        valueLookupBuilder(BlockTags.AXE_MINEABLE).add(GenesisBlocks.ASSEMBLY_TABLE);
+        tag(BlockTags.MINEABLE_WITH_AXE).add(key(GenesisBlocks.ASSEMBLY_TABLE));
 
         supportExternalMod("visualworkbench:unaltered_workbenches", GenesisBlocks.ASSEMBLY_TABLE);
     }
 
     private void supportExternalMod(String tag, Block block) {
-        getTagBuilder(TagKey.of(RegistryKeys.BLOCK, Identifier.of(tag)))
-                .add(block.getRegistryEntry().registryKey().getValue());
+        getOrCreateRawBuilder(TagKey.create(Registries.BLOCK, Identifier.parse(tag)))
+                .addElement(key(block).identifier());
+    }
+
+    private static ResourceKey<Block> key(Block block) {
+        return block.builtInRegistryHolder().key();
     }
 }

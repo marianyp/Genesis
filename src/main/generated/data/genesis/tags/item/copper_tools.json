@@ -4,6 +4,11 @@
     "minecraft:copper_shovel",
     "minecraft:copper_pickaxe",
     "minecraft:copper_axe",
-    "minecraft:copper_hoe"
+    "minecraft:copper_hoe",
+    "minecraft:copper_spear",
+    {
+      "id": "farmersdelight:copper_knife",
+      "required": false
+    }
   ]
 }

@@ -4,21 +4,21 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.custom.FilledPrimitiveCauldronBlockEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BrushItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Arm;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BrushItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,62 +28,66 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BrushItem.class)
 public abstract class BrushItemMixin {
     @Shadow
-    protected abstract HitResult getHitResult(PlayerEntity user);
+    protected abstract HitResult calculateHitResult(Player user);
 
     @WrapOperation(
-            method = "usageTick", at = @At(
+            method = "onUseTick", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/item/BrushItem;addDustParticles(Lnet/minecraft/world/World;Lnet/minecraft/util/hit/BlockHitResult;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Arm;)V"
+            target = "Lnet/minecraft/world/item/BrushItem;spawnDustParticles(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/HumanoidArm;)V"
     )
     )
     public void wrapAddDustParticles(
             BrushItem brushItem,
-            World world,
+            Level level,
             BlockHitResult hitResult,
             BlockState state,
-            Vec3d userRotation,
-            Arm arm,
+            Vec3 userRotation,
+            HumanoidArm arm,
             Operation<Void> original
     ) {
-        boolean topSide = hitResult.getSide() == Direction.UP;
+        boolean topSide = hitResult.getDirection() == Direction.UP;
 
         if (topSide && state.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
-            BlockState containingBlock = filledPrimitiveCauldronBlock.getParticleBlock().getDefaultState();
-            original.call(brushItem, world, hitResult, containingBlock, userRotation, arm);
+            BlockState containingBlock = filledPrimitiveCauldronBlock.getParticleBlock().defaultBlockState();
+            original.call(brushItem, level, hitResult, containingBlock, userRotation, arm);
         } else {
-            original.call(brushItem, world, hitResult, state, userRotation, arm);
+            original.call(brushItem, level, hitResult, state, userRotation, arm);
         }
     }
 
     @Inject(
-            method = "usageTick",
+            method = "onUseTick",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;getBlockEntity(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/entity/BlockEntity;"
+                    target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"
             )
     )
     private void injectUsageTick(
-            World world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci
+            Level level,
+            LivingEntity user,
+            ItemStack stack,
+            int remainingUseTicks,
+            CallbackInfo ci
     ) {
-        if (user instanceof PlayerEntity playerEntity) {
-            HitResult hitResult = this.getHitResult(playerEntity);
+        if (user instanceof Player playerEntity) {
+            HitResult hitResult = this.calculateHitResult(playerEntity);
 
             if (hitResult instanceof BlockHitResult blockHitResult) {
                 BlockPos blockPos = blockHitResult.getBlockPos();
 
-                if (world instanceof ServerWorld serverWorld) {
-                    BlockEntity blockEntity = world.getBlockEntity(blockPos);
+                if (level instanceof ServerLevel serverLevel) {
+                    BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
                     if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                        if (blockHitResult.getSide() == Direction.UP) {
-                            if (filledPrimitiveCauldronBlockEntity.brush(serverWorld, playerEntity, stack)) {
-                                ItemStack offhandStack = playerEntity.getEquippedStack(EquipmentSlot.OFFHAND);
+                        if (blockHitResult.getDirection() == Direction.UP) {
+                            if (filledPrimitiveCauldronBlockEntity.brush(serverLevel, playerEntity, stack)) {
+                                ItemStack offhandStack = playerEntity.getItemBySlot(EquipmentSlot.OFFHAND);
                                 EquipmentSlot equipmentSlot = stack.equals(offhandStack) ?
                                         EquipmentSlot.OFFHAND :
                                         EquipmentSlot.MAINHAND;
 
-                                stack.damage(1, playerEntity, equipmentSlot);
-                                user.stopUsingItem();
+                                stack.hurtAndBreak(1, playerEntity, equipmentSlot);
+                                user.releaseUsingItem();
                             }
                         }
                     }

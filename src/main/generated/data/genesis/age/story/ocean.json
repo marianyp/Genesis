@@ -10,11 +10,10 @@
       "translate": "age.genesis.story.ocean.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:elder_guardian_spawn_egg"
     },
     "title": {
-      "translate": "age.genesis.ocean"
+      "translate": "age.genesis.story.ocean"
     }
   },
   "items": [

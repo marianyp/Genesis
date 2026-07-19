@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "genesis:blank_clay_cast",
+    "F": "minecraft:flint"
+  },
+  "pattern": [
+    " F",
+    "C "
+  ],
+  "result": {
+    "id": "genesis:clay_spear_cast"
+  }
+}

@@ -1,41 +1,45 @@
 package dev.mariany.genesis.entity.ai.goal;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
-import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.jetbrains.annotations.Nullable;
 
-public class DestroyCropsGoal extends MoveToTargetPosGoal {
-    private final MobEntity stepAndDestroyMob;
+public class DestroyCropsGoal extends MoveToBlockGoal {
+    private final Mob stepAndDestroyMob;
 
-    public DestroyCropsGoal(PathAwareEntity mob, double speed, int maxYDifference) {
+    public DestroyCropsGoal(PathfinderMob mob, double speed, int maxYDifference) {
         super(mob, speed, 24, maxYDifference);
 
         this.stepAndDestroyMob = mob;
     }
 
     @Override
-    public double getDesiredDistanceToTarget() {
+    public double acceptedDistance() {
         return 0;
     }
 
     @Override
-    public boolean canStart() {
-        if (!getServerWorld(this.stepAndDestroyMob).getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+    public boolean canUse() {
+        ServerLevel serverLevel = getServerLevel(this.stepAndDestroyMob);
+        GameRules gameRules = serverLevel.getGameRules();
+
+        if (!gameRules.get(GameRules.MOB_GRIEFING)) {
             return false;
         }
 
-        return this.findTargetPos();
+        return this.findNearestBlock();
     }
 
     @Override
@@ -47,19 +51,19 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     public void tick() {
         super.tick();
 
-        World world = this.stepAndDestroyMob.getEntityWorld();
-        BlockPos mobPos = this.stepAndDestroyMob.getBlockPos();
-        BlockPos cropBlockPos = this.adjustPositionToCrop(mobPos, world);
+        Level level = this.stepAndDestroyMob.level();
+        BlockPos mobPos = this.stepAndDestroyMob.blockPosition();
+        BlockPos cropBlockPos = this.adjustPositionToCrop(mobPos, level);
 
         if (cropBlockPos != null) {
-            world.breakBlock(cropBlockPos, false, this.stepAndDestroyMob);
+            level.destroyBlock(cropBlockPos, false, this.stepAndDestroyMob);
         }
     }
 
     @Nullable
-    private BlockPos adjustPositionToCrop(BlockPos originalPos, BlockView world) {
+    private BlockPos adjustPositionToCrop(BlockPos originalPos, BlockGetter world) {
         BlockPos[] positions = new BlockPos[]{
-                originalPos.down(),
+                originalPos.below(),
                 originalPos.west(),
                 originalPos.east(),
                 originalPos.north(),
@@ -84,8 +88,8 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     }
 
     @Nullable
-    private BlockPos checkPositionAndAbove(BlockPos pos, BlockView world) {
-        BlockPos above = pos.up();
+    private BlockPos checkPositionAndAbove(BlockPos pos, BlockGetter world) {
+        BlockPos above = pos.above();
         BlockState state = world.getBlockState(pos);
         BlockState aboveState = world.getBlockState(above);
 
@@ -101,10 +105,10 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     }
 
     @Override
-    protected boolean isTargetPos(WorldView world, BlockPos pos) {
-        Chunk chunk = world.getChunk(
-                ChunkSectionPos.getSectionCoord(pos.getX()),
-                ChunkSectionPos.getSectionCoord(pos.getZ()),
+    protected boolean isValidTarget(LevelReader level, BlockPos pos) {
+        ChunkAccess chunk = level.getChunk(
+                SectionPos.blockToSectionCoord(pos.getX()),
+                SectionPos.blockToSectionCoord(pos.getZ()),
                 ChunkStatus.FULL,
                 false
         );
@@ -113,7 +117,7 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
             return false;
         }
 
-        BlockPos above = pos.up();
+        BlockPos above = pos.above();
         BlockState state = chunk.getBlockState(pos);
         BlockState aboveState = chunk.getBlockState(above);
 
@@ -121,6 +125,6 @@ public class DestroyCropsGoal extends MoveToTargetPosGoal {
     }
 
     private boolean isValidState(BlockState state) {
-        return state.getBlock() instanceof CropBlock cropBlock && cropBlock.isMature(state);
+        return state.getBlock() instanceof CropBlock cropBlock && cropBlock.isMaxAge(state);
     }
 }

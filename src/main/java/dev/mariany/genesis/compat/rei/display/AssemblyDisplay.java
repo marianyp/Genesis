@@ -16,12 +16,11 @@ import me.shedaniel.rei.api.common.entry.InputIngredient;
 import me.shedaniel.rei.api.common.util.CollectionUtils;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.ItemLike;
 import java.util.*;
 
 public class AssemblyDisplay extends BasicDisplay implements CraftingDisplay {
@@ -48,18 +47,18 @@ public class AssemblyDisplay extends BasicDisplay implements CraftingDisplay {
                             )
                             .apply(instance, AssemblyDisplay::new)
             ),
-            PacketCodec.tuple(
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()),
+            StreamCodec.composite(
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()),
                     AssemblyDisplay::getInputEntriesWithoutPattern,
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()),
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()),
                     AssemblyDisplay::getOutputEntries,
-                    PacketCodecs.optional(Identifier.PACKET_CODEC),
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC),
                     AssemblyDisplay::getDisplayLocation,
                     EntryIngredient.streamCodec(),
                     AssemblyDisplay::getPatterns,
-                    PacketCodecs.INTEGER,
+                    ByteBufCodecs.INT,
                     AssemblyDisplay::getWidth,
-                    PacketCodecs.INTEGER,
+                    ByteBufCodecs.INT,
                     AssemblyDisplay::getHeight,
                     AssemblyDisplay::new
             )
@@ -69,7 +68,7 @@ public class AssemblyDisplay extends BasicDisplay implements CraftingDisplay {
     private final int width;
     private final int height;
 
-    public AssemblyDisplay(RecipeEntry<AssemblyRecipe> recipe) {
+    public AssemblyDisplay(RecipeHolder<AssemblyRecipe> recipe) {
         this(
                 CollectionUtils.map(
                         recipe.value().getIngredients(),
@@ -78,10 +77,10 @@ public class AssemblyDisplay extends BasicDisplay implements CraftingDisplay {
                                 .orElse(EntryIngredient.empty())
                 ),
                 List.of(EntryIngredients.of(recipe.value().craft())),
-                Optional.of(recipe.id().getValue()),
+                Optional.of(recipe.id().identifier()),
                 EntryIngredients.ofItems(recipe.value().getPatterns()
                         .stream()
-                        .map(assemblyPatternItem -> (ItemConvertible) assemblyPatternItem)
+                        .map(assemblyPatternItem -> (ItemLike) assemblyPatternItem)
                         .toList()
                 ),
                 recipe.value().getWidth(),

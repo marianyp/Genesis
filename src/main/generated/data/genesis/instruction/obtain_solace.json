@@ -1,0 +1,29 @@
+{
+  "parent": "genesis:use_kiln",
+  "criteria": {
+    "obtained_solace": {
+      "conditions": {
+        "effects": {
+          "genesis:solace": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.obtain_solace.description"
+    },
+    "icon": {
+      "id": "minecraft:cooked_chicken"
+    },
+    "title": {
+      "translate": "instruction.genesis.obtain_solace"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_solace"
+    ]
+  ]
+}

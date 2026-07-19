@@ -1,30 +1,33 @@
 package dev.mariany.genesis.world.gen;
 
-import dev.mariany.genesis.entity.GenesisEntities;
+import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.entity.GenesisEntityTypes;
 import dev.mariany.genesis.entity.custom.mob.BoarEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnLocationTypes;
-import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.world.Heightmap;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public class GenesisEntitySpawns {
-    public static void addSpawns() {
+    private GenesisEntitySpawns() {
+    }
+
+    public static void bootstrap() {
+        Genesis.bootstrapLog("Entity Spawns");
+
         BiomeModifications.addSpawn(
-                BiomeSelectors.spawnsOneOf(EntityType.SPIDER),
-                SpawnGroup.MONSTER,
-                GenesisEntities.BOAR,
-                55,
+                BiomeSelectors.spawnsOneOf(EntityTypes.SPIDER),
+                MobCategory.MONSTER,
+                GenesisEntityTypes.BOAR,
+                40,
                 3,
                 4
         );
 
-        SpawnRestriction.register(
-                GenesisEntities.BOAR,
-                SpawnLocationTypes.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+        SpawnPlacements.register(
+                GenesisEntityTypes.BOAR,
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 BoarEntity::canSpawn
         );
     }

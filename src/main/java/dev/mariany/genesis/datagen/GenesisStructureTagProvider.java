@@ -1,25 +1,25 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.tag.GenesisTags;
-import net.minecraft.data.DataOutput;
-import net.minecraft.data.tag.SimpleTagProvider;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.gen.structure.Structure;
-import net.minecraft.world.gen.structure.StructureKeys;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GenesisStructureTagProvider extends SimpleTagProvider<Structure> {
+public class GenesisStructureTagProvider extends FabricTagsProvider<Structure> {
     public GenesisStructureTagProvider(
-            DataOutput output,
-            CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture
+            FabricPackOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture
     ) {
-        super(output, RegistryKeys.STRUCTURE, registriesFuture);
+        super(output, Registries.STRUCTURE, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        this.builder(GenesisTags.Structures.ON_DEEP_DARK_EXPLORER_MAPS).add(StructureKeys.ANCIENT_CITY);
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
+        this.tag(GenesisTags.Structures.ON_DEEP_DARK_EXPLORER_MAPS).add(BuiltinStructures.ANCIENT_CITY);
     }
 }

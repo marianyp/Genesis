@@ -1,32 +1,45 @@
 {
-  "parent": "genesis:craft_assembly_table",
+  "parent": "genesis:cook_clay_spear_cast",
   "criteria": {
-    "obtained_wooden_tool": {
+    "wooden_spear_crafted": {
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": "#genesis:wooden_tools"
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:crafted",
+                    "stat": "minecraft:wooden_spear",
+                    "value": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
     "description": {
-      "translate": "instruction.genesis.craft_wooden_tool.description"
+      "translate": "instruction.genesis.craft_wooden_spear.description"
     },
     "icon": {
-      "count": 1,
-      "id": "minecraft:wooden_pickaxe"
+      "id": "minecraft:wooden_spear"
     },
     "title": {
-      "translate": "instruction.genesis.craft_wooden_tool"
+      "translate": "instruction.genesis.craft_wooden_spear"
     }
   },
   "requirements": [
     [
-      "obtained_wooden_tool"
+      "wooden_spear_crafted"
     ]
   ]
 }

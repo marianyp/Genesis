@@ -1,15 +1,29 @@
 {
   "parent": "genesis:dust_terracotta_cauldron",
   "criteria": {
-    "obtained_blank_clay_cast": {
+    "blank_clay_cast_crafted": {
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": "genesis:blank_clay_cast"
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:crafted",
+                    "stat": "genesis:blank_clay_cast",
+                    "value": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -17,7 +31,6 @@
       "translate": "instruction.genesis.craft_blank_clay_cast.description"
     },
     "icon": {
-      "count": 1,
       "id": "genesis:blank_clay_cast"
     },
     "title": {
@@ -26,7 +39,7 @@
   },
   "requirements": [
     [
-      "obtained_blank_clay_cast"
+      "blank_clay_cast_crafted"
     ]
   ]
 }

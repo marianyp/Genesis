@@ -1,0 +1,28 @@
+{
+  "parent": "genesis:craft_clay_spear_cast",
+  "criteria": {
+    "spear_cast_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:spear_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "genesis:spear_cast"
+    },
+    "title": {
+      "translate": "instruction.genesis.cook_clay_spear_cast"
+    }
+  },
+  "requirements": [
+    [
+      "spear_cast_obtained"
+    ]
+  ]
+}

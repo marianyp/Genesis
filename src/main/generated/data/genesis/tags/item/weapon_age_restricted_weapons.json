@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:axes",
+      "required": false
+    },
+    {
+      "id": "#minecraft:swords",
+      "required": false
+    }
+  ]
+}

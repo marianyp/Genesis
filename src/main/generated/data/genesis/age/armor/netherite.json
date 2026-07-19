@@ -10,11 +10,10 @@
       "translate": "age.genesis.armor.netherite.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:netherite_chestplate"
     },
     "title": {
-      "translate": "age.genesis.netherite"
+      "translate": "age.genesis.armor.netherite"
     }
   },
   "items": [

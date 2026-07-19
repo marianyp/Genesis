@@ -3,12 +3,12 @@ package dev.mariany.genesis.recipe.display;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.display.RecipeDisplay;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
 
@@ -21,30 +21,35 @@ public record AssemblyCraftingRecipeDisplay(
 ) implements RecipeDisplay {
     public static final MapCodec<AssemblyCraftingRecipeDisplay> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                            Codec.INT.fieldOf("width").forGetter(AssemblyCraftingRecipeDisplay::width),
-                            Codec.INT.fieldOf("height").forGetter(AssemblyCraftingRecipeDisplay::height),
-                            SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(AssemblyCraftingRecipeDisplay::ingredients),
-                            SlotDisplay.CODEC.fieldOf("result").forGetter(AssemblyCraftingRecipeDisplay::result),
-                            SlotDisplay.CODEC.fieldOf("crafting_station").forGetter(AssemblyCraftingRecipeDisplay::craftingStation)
-                    )
-                    .apply(instance, AssemblyCraftingRecipeDisplay::new)
+                                        Codec.INT.fieldOf("width").forGetter(AssemblyCraftingRecipeDisplay::width),
+                                        Codec.INT.fieldOf("height").forGetter(AssemblyCraftingRecipeDisplay::height),
+                                        SlotDisplay.CODEC.listOf()
+                                                         .fieldOf("ingredients")
+                                                         .forGetter(AssemblyCraftingRecipeDisplay::ingredients),
+                                        SlotDisplay.CODEC.fieldOf("result").forGetter(AssemblyCraftingRecipeDisplay::result),
+                                        SlotDisplay.CODEC.fieldOf("crafting_station")
+                                                         .forGetter(AssemblyCraftingRecipeDisplay::craftingStation)
+                                )
+                                .apply(instance, AssemblyCraftingRecipeDisplay::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, AssemblyCraftingRecipeDisplay> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.VAR_INT,
-            AssemblyCraftingRecipeDisplay::width,
-            PacketCodecs.VAR_INT,
-            AssemblyCraftingRecipeDisplay::height,
-            SlotDisplay.PACKET_CODEC.collect(PacketCodecs.toList()),
-            AssemblyCraftingRecipeDisplay::ingredients,
-            SlotDisplay.PACKET_CODEC,
-            AssemblyCraftingRecipeDisplay::result,
-            SlotDisplay.PACKET_CODEC,
-            AssemblyCraftingRecipeDisplay::craftingStation,
-            AssemblyCraftingRecipeDisplay::new
-    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, AssemblyCraftingRecipeDisplay> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.VAR_INT,
+                    AssemblyCraftingRecipeDisplay::width,
+                    ByteBufCodecs.VAR_INT,
+                    AssemblyCraftingRecipeDisplay::height,
+                    SlotDisplay.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                    AssemblyCraftingRecipeDisplay::ingredients,
+                    SlotDisplay.STREAM_CODEC,
+                    AssemblyCraftingRecipeDisplay::result,
+                    SlotDisplay.STREAM_CODEC,
+                    AssemblyCraftingRecipeDisplay::craftingStation,
+                    AssemblyCraftingRecipeDisplay::new
+            );
 
-    public static final RecipeDisplay.Serializer<AssemblyCraftingRecipeDisplay> SERIALIZER = new RecipeDisplay.Serializer<>(CODEC, PACKET_CODEC);
+    public static final RecipeDisplay.Type<AssemblyCraftingRecipeDisplay> SERIALIZER =
+            new RecipeDisplay.Type<>(CODEC, STREAM_CODEC);
 
     public AssemblyCraftingRecipeDisplay {
         if (ingredients.size() != width * height) {
@@ -53,12 +58,13 @@ public record AssemblyCraftingRecipeDisplay(
     }
 
     @Override
-    public RecipeDisplay.Serializer<AssemblyCraftingRecipeDisplay> serializer() {
+    public RecipeDisplay.Type<AssemblyCraftingRecipeDisplay> type() {
         return SERIALIZER;
     }
 
     @Override
-    public boolean isEnabled(FeatureSet features) {
-        return this.ingredients.stream().allMatch(ingredient -> ingredient.isEnabled(features)) && RecipeDisplay.super.isEnabled(features);
+    public boolean isEnabled(FeatureFlagSet enabledFeatures) {
+        return this.ingredients.stream().allMatch(ingredient -> ingredient.isEnabled(enabledFeatures)) &&
+                RecipeDisplay.super.isEnabled(enabledFeatures);
     }
 }

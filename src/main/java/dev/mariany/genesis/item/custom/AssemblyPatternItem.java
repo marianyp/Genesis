@@ -1,14 +1,14 @@
 package dev.mariany.genesis.item.custom;
 
 import dev.mariany.genesis.recipe.CraftingPattern;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class AssemblyPatternItem extends Item {
     private final CraftingPattern craftingPattern;
     private final TagKey<Item> crafts;
 
-    public AssemblyPatternItem(CraftingPattern craftingPattern, TagKey<Item> crafts, Settings settings) {
+    public AssemblyPatternItem(CraftingPattern craftingPattern, TagKey<Item> crafts, Properties settings) {
         super(settings);
         this.craftingPattern = craftingPattern;
         this.crafts = crafts;

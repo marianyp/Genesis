@@ -1,15 +1,29 @@
 {
-  "parent": "genesis:cook_tool_cast",
+  "parent": "genesis:cook_clay_pickaxe_cast",
   "criteria": {
-    "obtained_assembly_table": {
+    "assembly_table_crafted": {
       "conditions": {
-        "items": [
+        "player": [
           {
-            "items": "genesis:assembly_table"
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "stats": [
+                  {
+                    "type": "minecraft:crafted",
+                    "stat": "genesis:assembly_table",
+                    "value": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -17,7 +31,6 @@
       "translate": "instruction.genesis.craft_assembly_table.description"
     },
     "icon": {
-      "count": 1,
       "id": "genesis:assembly_table"
     },
     "title": {
@@ -26,7 +39,7 @@
   },
   "requirements": [
     [
-      "obtained_assembly_table"
+      "assembly_table_crafted"
     ]
   ]
 }

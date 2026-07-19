@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_clay_spear_cast": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:clay_spear_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis:spear_cast_from_blasting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_clay_spear_cast"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis:spear_cast_from_blasting"
+    ]
+  }
+}

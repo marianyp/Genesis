@@ -4,84 +4,101 @@ import com.mojang.serialization.MapCodec;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.block.entity.custom.KilnBlockEntity;
 import dev.mariany.genesis.stat.GenesisStats;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class KilnBlock extends BlockWithEntity {
-    public static final MapCodec<KilnBlock> CODEC = createCodec(KilnBlock::new);
+public class KilnBlock extends BaseEntityBlock {
+    public static final MapCodec<KilnBlock> CODEC = simpleCodec(KilnBlock::new);
 
-    public KilnBlock(Settings settings) {
+    public KilnBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new KilnBlockEntity(pos, state);
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(world, type);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level,
+            BlockState state,
+            BlockEntityType<T> type
+    ) {
+        return validateTicker(level, type);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
-            this.openScreen(world, pos, player);
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            BlockHitResult hit
+    ) {
+        if (!level.isClientSide()) {
+            this.openScreen(level, pos, player);
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
-    protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+    protected void openScreen(Level level, BlockPos pos, Player player) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof KilnBlockEntity) {
-            player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
-            player.incrementStat(GenesisStats.INTERACT_WITH_KILN);
+            player.openMenu((MenuProvider) blockEntity);
+            player.awardStat(GenesisStats.INTERACT_WITH_KILN);
         }
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        ItemScatterer.onStateReplaced(state, world, pos);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean moved) {
+        Containers.updateNeighboursAfterDestroy(state, level, pos);
     }
 
     @Override
-    protected boolean hasComparatorOutput(BlockState state) {
+    protected boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> validateTicker(
-            World world, BlockEntityType<T> givenType
+            Level level,
+            BlockEntityType<T> givenType
     ) {
-        return world instanceof ServerWorld serverWorld
-                ? validateTicker(givenType, (BlockEntityType<? extends KilnBlockEntity>) GenesisBlockEntities.KILN, (worldx, pos, state, blockEntity) -> KilnBlockEntity.tick(serverWorld, pos, state, blockEntity))
+        return level instanceof ServerLevel
+                ? createTickerHelper(givenType, GenesisBlockEntities.KILN, KilnBlock::tick)
                 : null;
+    }
+
+    private static void tick(Level level, BlockPos pos, BlockState state, KilnBlockEntity kilnBlockEntity) {
+        if (level instanceof ServerLevel serverLevel) {
+            KilnBlockEntity.tick(serverLevel, pos, state, kilnBlockEntity);
+        }
     }
 }

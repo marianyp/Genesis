@@ -4,57 +4,57 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.client.gui.screen.ingame.AssemblyScreen;
 import dev.mariany.genesis.client.gui.widget.ToggleableRecipeBookWidget;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.ScreenPos;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.ingame.RecipeBookScreen;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.navigation.ScreenPosition;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(RecipeBookScreen.class)
-public abstract class RecipeBookScreenMixin<T extends ScreenHandler> extends HandledScreen<T> {
-    public RecipeBookScreenMixin(T handler, PlayerInventory inventory, Text title) {
+@Mixin(AbstractRecipeBookScreen.class)
+public abstract class RecipeBookScreenMixin<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+    public RecipeBookScreenMixin(T handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
     }
 
     @Shadow
-    protected abstract ScreenPos getRecipeBookButtonPos();
+    protected abstract ScreenPosition getRecipeBookButtonPosition();
 
     @Shadow
     @Final
-    private RecipeBookWidget<?> recipeBook;
+    private RecipeBookComponent<?> recipeBookComponent;
 
     @Shadow
-    protected abstract void onRecipeBookToggled();
+    protected abstract void onRecipeBookButtonClick();
 
     @WrapOperation(
-            method = "addRecipeBook",
+            method = "initButton",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screen/ingame/RecipeBookScreen;addDrawableChild(Lnet/minecraft/client/gui/Element;)Lnet/minecraft/client/gui/Element;"
+                    target = "Lnet/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen;addRenderableWidget(Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;"
             )
     )
-    private Element wrapAddRecipeBook(RecipeBookScreen<?> screen, Element element, Operation<Element> original) {
-        ScreenPos screenPos = this.getRecipeBookButtonPos();
+    private GuiEventListener wrapAddRecipeBook(AbstractRecipeBookScreen<?> screen, GuiEventListener element, Operation<GuiEventListener> original) {
+        ScreenPosition screenPos = this.getRecipeBookButtonPosition();
 
-        if (((RecipeBookScreen<?>) (Object) this) instanceof AssemblyScreen) {
+        if (((AbstractRecipeBookScreen<?>) (Object) this) instanceof AssemblyScreen) {
             return original.call(screen, new ToggleableRecipeBookWidget(
                             screenPos.x(),
                             screenPos.y(),
                             button -> {
-                                this.recipeBook.toggleOpen();
-                                this.x = this.recipeBook.findLeftEdge(this.width, this.backgroundWidth);
+                                this.recipeBookComponent.toggleVisibility();
+                                this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
 
-                                ScreenPos buttonPos = this.getRecipeBookButtonPos();
+                                ScreenPosition buttonPos = this.getRecipeBookButtonPosition();
                                 button.setPosition(buttonPos.x(), buttonPos.y());
 
-                                this.onRecipeBookToggled();
+                                this.onRecipeBookButtonClick();
                             }
                     )
             );

@@ -1,4 +1,4 @@
-// 1.21.10	-999999999-01-01T00:00:00	Genesis/Model Definitions
+// 26.2	-999999999-01-01T00:00:00	Genesis/Model Definitions
 f3230f32deff1fba19283b47e0dc764a225931fa assets/genesis/blockstates/assembly_table.json
 42cf88b7ad4fcd9788ae9bbc6888104328166963 assets/genesis/blockstates/raw_coal_block.json
 5fb47f37c61de76e2efa861ede6b38b158e28da2 assets/genesis/blockstates/raw_diamond_block.json
@@ -17,11 +17,11 @@ ac2313d836aa3830a16baf128633a0dbcfa12365 assets/genesis/items/clay_anvil_cast.js
 86f8d0c0fd9409c4a794a3f5ea842518a1908568 assets/genesis/items/clay_pickaxe_cast.json
 9593bf926471204af67c9b521fbbfc4dccb7b4f5 assets/genesis/items/clay_shield_cast.json
 b46d28487539db58ff583e78505bc3c872451058 assets/genesis/items/clay_shovel_cast.json
+872c05e79802277f92ecaa8b2effa6287906cb86 assets/genesis/items/clay_spear_cast.json
 f7217435400f05436daaf314495cc366d5891634 assets/genesis/items/clay_sword_cast.json
 c65f2c2fd472dd26551fb0dced6a75113c8175a9 assets/genesis/items/clay_totem_cast.json
 27fd7bc96b52a92b6f93ef8dda28ea3f7b04103b assets/genesis/items/enchanted_honey_bottle.json
 194fdac3902cab6842d50015eefa558a4c5f07a5 assets/genesis/items/flints.json
-6ebdf0ada7805711624fd258bba65dbd273c920c assets/genesis/items/healthy_stew.json
 bfee30481ef696e86dbcda94cf45db6b1cea8394 assets/genesis/items/hoe_cast.json
 eb1dbe45543070dfba80b5ae001ab253fa82805f assets/genesis/items/pickaxe_cast.json
 aa7190e7f85328358f4a11d628f38e3fcf2b431f assets/genesis/items/raw_coal.json
@@ -38,6 +38,7 @@ b124d5e916bb9fc6d4ec7a83cdaed9e10f85b477 assets/genesis/items/raw_redstone.json
 c463ca8662df86562cb83802ff95e90df48e6ac1 assets/genesis/items/raw_redstone_block.json
 d2c069d850e926dc0fcf6e774a371dbae1823ba3 assets/genesis/items/shield_cast.json
 e9fbbc3dbdc108be19e5685c60e81c1b322baeb2 assets/genesis/items/shovel_cast.json
+f2f58a7ac39f71fd5f8078334effd9e633d4e06f assets/genesis/items/spear_cast.json
 0ffdb6ee05382ada219dbcf08f82af3ed5c7e6b6 assets/genesis/items/sword_cast.json
 1b33e7b7799efb5fee411dd197f34d4854f87adb assets/genesis/items/totem_cast.json
 d915c8be01af23232f2ccb6bfa34b0afc2419546 assets/genesis/models/block/assembly_table.json
@@ -57,10 +58,10 @@ c20b6f5d6c72a40be27838f3ae2779834f16add7 assets/genesis/models/item/clay_anvil_c
 94e44178e641d34cf8907aac2c5644c2666ddfdf assets/genesis/models/item/clay_pickaxe_cast.json
 67ef06ae70bd9f78391053f1b0fdcd8c03bf8e86 assets/genesis/models/item/clay_shield_cast.json
 de404cf7f5cab7088a839028692dad2e79c1119f assets/genesis/models/item/clay_shovel_cast.json
+4e9c268adff9c2b5a118397a2b6fcf87a98f0e92 assets/genesis/models/item/clay_spear_cast.json
 21c2bdead60918363837b1c1eada5a055a39f552 assets/genesis/models/item/clay_sword_cast.json
 f2df5a6e26b48fa8cdbe09b62451b136f6269f8b assets/genesis/models/item/clay_totem_cast.json
 3e3866c1a6f4d80781f0b96994138c01ba28f260 assets/genesis/models/item/enchanted_honey_bottle.json
-4a6550e44affd98657282b69de22c560ec758ebe assets/genesis/models/item/healthy_stew.json
 5de3dd1d74185862c3646342d186a2aaa18e120f assets/genesis/models/item/hoe_cast.json
 197a3db8d25dcb4ae8a4f272fe7cdd618fdc5e9a assets/genesis/models/item/pickaxe_cast.json
 d535b19d19c4bffbad0bd4ca48a8d782a43c7b94 assets/genesis/models/item/raw_coal.json
@@ -71,5 +72,6 @@ df1cd02ebf0ce15900dabc70b01a457147dd255a assets/genesis/models/item/raw_emerald.
 95ec72a6e72931411ccbbc279d864d9b2c503bfd assets/genesis/models/item/raw_redstone.json
 a87c55572b8989295838bc56d3667cf645498228 assets/genesis/models/item/shield_cast.json
 a83d29147f1cd59c1eeaf03d58e8095f6574a59d assets/genesis/models/item/shovel_cast.json
+ded10611e6a46e99cc04970d831fd2caad9364fd assets/genesis/models/item/spear_cast.json
 8d38d4840b68da6831beeafe2d0cdb450e0c0a73 assets/genesis/models/item/sword_cast.json
 7cfcfb08c75650a95adb42c89650e437dcbecf65 assets/genesis/models/item/totem_cast.json

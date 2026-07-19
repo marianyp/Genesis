@@ -1,16 +1,16 @@
 package dev.mariany.genesis.screen.slot;
 
 import dev.mariany.genesis.screen.AssemblyScreenHandler;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class AssemblyInputSlot extends Slot {
     private final AssemblyScreenHandler assemblyScreenHandler;
 
     public AssemblyInputSlot(
             AssemblyScreenHandler assemblyScreenHandler,
-            Inventory inventory,
+            Container inventory,
             int index,
             int x,
             int y
@@ -20,32 +20,32 @@ public class AssemblyInputSlot extends Slot {
     }
 
     public boolean canInsert() {
-        return !this.assemblyScreenHandler.isInputSlotDisabled(this.id);
+        return !this.assemblyScreenHandler.isInputSlotDisabled(this.index);
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isActive() {
         return this.canInsert();
     }
 
     @Override
-    public int getMaxItemCount() {
+    public int getMaxStackSize() {
         return 1;
     }
 
     @Override
-    public boolean canInsert(ItemStack stack) {
-        return this.canInsert() && super.canInsert(stack);
+    public boolean mayPlace(ItemStack stack) {
+        return this.canInsert() && super.mayPlace(stack);
     }
 
     @Override
-    public void markDirty() {
-        super.markDirty();
-        this.assemblyScreenHandler.onContentChanged(this.inventory);
+    public void setChanged() {
+        super.setChanged();
+        this.assemblyScreenHandler.slotsChanged(this.container);
     }
 
     @Override
-    public boolean canBeHighlighted() {
-        return this.canInsert() && super.canBeHighlighted();
+    public boolean isHighlightable() {
+        return this.canInsert() && super.isHighlightable();
     }
 }

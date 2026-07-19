@@ -1,11 +1,10 @@
 {
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:leather_chestplate"
     },
     "title": {
-      "translate": "age.genesis.leather"
+      "translate": "age.genesis.armor.leather"
     }
   }
 }

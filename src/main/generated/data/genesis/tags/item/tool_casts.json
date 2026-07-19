@@ -4,6 +4,7 @@
     "genesis:shovel_cast",
     "genesis:pickaxe_cast",
     "genesis:axe_cast",
-    "genesis:hoe_cast"
+    "genesis:hoe_cast",
+    "genesis:spear_cast"
   ]
 }

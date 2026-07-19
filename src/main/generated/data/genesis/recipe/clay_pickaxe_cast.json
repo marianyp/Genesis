@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "C": "genesis:blank_clay_cast",
     "F": "minecraft:flint"
@@ -10,7 +9,6 @@
     " C "
   ],
   "result": {
-    "count": 1,
     "id": "genesis:clay_pickaxe_cast"
   }
 }

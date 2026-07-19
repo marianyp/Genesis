@@ -5,65 +5,73 @@ import dev.mariany.genesis.client.gui.screen.recipebook.KilnRecipeBookWidget;
 import dev.mariany.genesis.screen.KilnScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.ScreenPos;
-import net.minecraft.client.gui.screen.ingame.RecipeBookScreen;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.client.recipebook.RecipeBookType;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeBookCategories;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.navigation.ScreenPosition;
+import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.SearchRecipeBookCategory;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
 
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class KilnScreen extends RecipeBookScreen<KilnScreenHandler> {
-    private static final Identifier LIT_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/lit_progress");
-    private static final Identifier BURN_PROGRESS_TEXTURE = Identifier.ofVanilla("container/furnace/burn_progress");
+public class KilnScreen extends AbstractRecipeBookScreen<KilnScreenHandler> {
+    private static final Identifier LIT_PROGRESS_TEXTURE =
+            Identifier.withDefaultNamespace("container/furnace/lit_progress");
+
+    private static final Identifier BURN_PROGRESS_TEXTURE =
+            Identifier.withDefaultNamespace("container/furnace/burn_progress");
+
     private static final Identifier BACKGROUND = Genesis.id("textures/gui/container/kiln.png");
-    private static final Text TOGGLE_SMELTABLE_TEXT = Text.translatable("gui.recipebook.toggleRecipes.smeltable");
-    private static final List<RecipeBookWidget.Tab> TABS = List.of(
-            new RecipeBookWidget.Tab(RecipeBookType.FURNACE),
-            new RecipeBookWidget.Tab(Items.PORKCHOP, RecipeBookCategories.FURNACE_FOOD),
-            new RecipeBookWidget.Tab(Items.STONE, RecipeBookCategories.FURNACE_BLOCKS),
-            new RecipeBookWidget.Tab(Items.LAVA_BUCKET, Items.EMERALD, RecipeBookCategories.FURNACE_MISC)
+
+    private static final Component TOGGLE_SMELTABLE_TEXT =
+            Component.translatable("gui.recipebook.toggleRecipes.smeltable");
+
+    private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
+            new RecipeBookComponent.TabInfo(SearchRecipeBookCategory.FURNACE),
+            new RecipeBookComponent.TabInfo(Items.PORKCHOP, RecipeBookCategories.FURNACE_FOOD),
+            new RecipeBookComponent.TabInfo(Items.STONE, RecipeBookCategories.FURNACE_BLOCKS),
+            new RecipeBookComponent.TabInfo(Items.LAVA_BUCKET, Items.EMERALD, RecipeBookCategories.FURNACE_MISC)
     );
 
-    public KilnScreen(KilnScreenHandler handler, PlayerInventory inventory, Text title) {
+    public KilnScreen(KilnScreenHandler handler, Inventory inventory, Component title) {
         super(handler, new KilnRecipeBookWidget(handler, TOGGLE_SMELTABLE_TEXT, TABS), inventory, title);
     }
 
     @Override
-    protected ScreenPos getRecipeBookButtonPos() {
-        return new ScreenPos(this.x + 20, this.height / 2 - 49);
+    protected ScreenPosition getRecipeBookButtonPosition() {
+        return new ScreenPosition(this.leftPos + 20, this.height / 2 - 49);
     }
 
     @Override
-    protected void drawBackground(DrawContext context, float deltaTicks, int mouseX, int mouseY) {
-        int x = this.x;
-        int y = this.y;
+    public void extractBackground(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+        super.extractBackground(context, mouseX, mouseY, deltaTicks);
+        int x = this.leftPos;
+        int y = this.topPos;
 
         // Draw Background
-        context.drawTexture(
+        context.blit(
                 RenderPipelines.GUI_TEXTURED,
                 BACKGROUND,
                 x,
                 y,
                 0.0F,
                 0.0F,
-                this.backgroundWidth,
-                this.backgroundHeight,
+                this.imageWidth,
+                this.imageHeight,
                 256,
                 256
         );
 
         // Draw Fire
-        if (this.handler.isBurning()) {
-            context.drawGuiTexture(
+        if (this.menu.isBurning()) {
+            context.blitSprite(
                     RenderPipelines.GUI_TEXTURED,
                     LIT_PROGRESS_TEXTURE,
                     14,
@@ -78,8 +86,9 @@ public class KilnScreen extends RecipeBookScreen<KilnScreenHandler> {
         }
 
         // Draw Progress
-        int progress = MathHelper.ceil(this.handler.getCookProgress() * 24F);
-        context.drawGuiTexture(
+        int progress = Mth.ceil(this.menu.getCookProgress() * 24F);
+
+        context.blitSprite(
                 RenderPipelines.GUI_TEXTURED,
                 BURN_PROGRESS_TEXTURE,
                 24,

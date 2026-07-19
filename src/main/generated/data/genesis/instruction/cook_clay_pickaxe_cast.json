@@ -1,0 +1,28 @@
+{
+  "parent": "genesis:craft_clay_pickaxe_cast",
+  "criteria": {
+    "pickaxe_cast_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": "genesis:pickaxe_cast"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "genesis:pickaxe_cast"
+    },
+    "title": {
+      "translate": "instruction.genesis.cook_clay_pickaxe_cast"
+    }
+  },
+  "requirements": [
+    [
+      "pickaxe_cast_obtained"
+    ]
+  ]
+}

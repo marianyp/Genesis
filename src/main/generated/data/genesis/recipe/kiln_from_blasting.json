@@ -1,6 +1,5 @@
 {
   "type": "minecraft:blasting",
-  "category": "blocks",
   "cookingtime": 300,
   "experience": 0.3,
   "ingredient": "genesis:clay_kiln",

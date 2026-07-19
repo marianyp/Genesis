@@ -1,72 +1,71 @@
 package dev.mariany.genesis.datagen;
 
-import dev.mariany.genesis.entity.GenesisEntities;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
-import net.minecraft.loot.function.FurnaceSmeltLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.registry.RegistryWrapper;
-import org.jetbrains.annotations.NotNull;
+import dev.mariany.genesis.entity.GenesisEntityTypes;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootSubProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GenesisEntityLootTableGenerator extends FabricEntityLootTableProvider {
+public class GenesisEntityLootTableGenerator extends FabricEntityLootSubProvider {
     public GenesisEntityLootTableGenerator(
-            FabricDataOutput output,
-            @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup
+            FabricPackOutput output,
+            CompletableFuture<HolderLookup.Provider> registryLookup
     ) {
         super(output, registryLookup);
     }
 
     @Override
     public void generate() {
-        this.register(
-                GenesisEntities.BOAR,
-                LootTable.builder()
-                        .pool(
-                                LootPool.builder()
-                                        .rolls(ConstantLootNumberProvider.create(1F))
-                                        .with(
-                                                ItemEntry.builder(Items.LEATHER)
-                                                        .apply(
-                                                                SetCountLootFunction.builder(
-                                                                        UniformLootNumberProvider.create(1F, 2F)
-                                                                )
-                                                        )
-                                                        .apply(EnchantedCountIncreaseLootFunction.builder(
+        this.add(
+                GenesisEntityTypes.BOAR,
+                LootTable.lootTable()
+                         .withPool(
+                                 LootPool.lootPool()
+                                         .setRolls(ConstantValue.exactly(1F))
+                                         .add(
+                                                 LootItem.lootTableItem(Items.LEATHER)
+                                                         .apply(
+                                                                 SetItemCountFunction.setCount(
+                                                                         UniformGenerator.between(1F, 2F)
+                                                                 )
+                                                         )
+                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(
                                                                         this.registries,
-                                                                        UniformLootNumberProvider.create(0F, 1F)
+                                                                        UniformGenerator.between(0F, 1F)
                                                                 )
-                                                        )
-                                        )
-                        )
-                        .pool(
-                                LootPool.builder()
-                                        .rolls(ConstantLootNumberProvider.create(1.0F))
-                                        .with(
-                                                ItemEntry.builder(Items.PORKCHOP)
-                                                        .apply(SetCountLootFunction.builder(
-                                                                        UniformLootNumberProvider.create(0F, 1F)
+                                                         )
+                                         )
+                         )
+                         .withPool(
+                                 LootPool.lootPool()
+                                         .setRolls(ConstantValue.exactly(1.0F))
+                                         .add(
+                                                 LootItem.lootTableItem(Items.PORKCHOP)
+                                                         .apply(SetItemCountFunction.setCount(
+                                                                        UniformGenerator.between(0F, 1F)
                                                                 )
-                                                        )
-                                                        .apply(FurnaceSmeltLootFunction.builder().conditionally(
-                                                                        this.createSmeltLootCondition()
+                                                         )
+                                                         .apply(SmeltItemFunction.smelted().when(
+                                                                        this.shouldSmeltLoot()
                                                                 )
-                                                        )
-                                                        .apply(EnchantedCountIncreaseLootFunction.builder(
+                                                         )
+                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(
                                                                         this.registries,
-                                                                        UniformLootNumberProvider.create(0F, 1F)
+                                                                        UniformGenerator.between(0F, 1F)
                                                                 )
-                                                        )
-                                        )
-                        )
+                                                         )
+                                         )
+                         )
         );
     }
 }

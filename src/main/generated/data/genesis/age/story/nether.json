@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:story/garden",
+  "parent": "genesis:story/pale",
   "criteria": {
     "has_enchanted": {
       "trigger": "minecraft:enchanted_item"
@@ -13,11 +13,10 @@
       "translate": "age.genesis.story.nether.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:zombified_piglin_spawn_egg"
     },
     "title": {
-      "translate": "age.genesis.nether"
+      "translate": "age.genesis.story.nether"
     }
   },
   "requires_parent": false

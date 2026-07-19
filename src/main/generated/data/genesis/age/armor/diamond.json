@@ -9,7 +9,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
+              "minecraft:equipment": {
                 "chest": {
                   "items": "minecraft:iron_chestplate"
                 }
@@ -28,7 +28,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
+              "minecraft:equipment": {
                 "feet": {
                   "items": "minecraft:iron_boots"
                 }
@@ -47,7 +47,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
+              "minecraft:equipment": {
                 "head": {
                   "items": "minecraft:iron_helmet"
                 }
@@ -66,7 +66,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
+              "minecraft:equipment": {
                 "legs": {
                   "items": "minecraft:iron_leggings"
                 }
@@ -83,11 +83,10 @@
       "translate": "age.genesis.armor.diamond.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:diamond_chestplate"
     },
     "title": {
-      "translate": "age.genesis.diamond"
+      "translate": "age.genesis.armor.diamond"
     }
   },
   "items": [

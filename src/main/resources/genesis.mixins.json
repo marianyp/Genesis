@@ -6,13 +6,13 @@
     "BrewingRecipeRegistryBuilderMixin",
     "BrewingRecipeRegistryMixin",
     "BrewingStandBlockEntityMixin",
-    "BrewingStandScreenHandlerPotionSlotMixin",
+    "BrewingStandMenuPotionSlotMixin",
     "BrushItemMixin",
+    "ConsumableMixin",
     "GameRulesMixin",
-    "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "SchemasMixin",
+    "ServerLevelMixin",
     "ServerRecipeManagerMixin",
     "accessor.ShapedRecipeAccessor"
   ],
@@ -23,8 +23,8 @@
     "requireAnnotations": true
   },
   "client": [
-    "GameOptionsMixin",
     "RecipeBookScreenMixin",
+    "accessor.AbstractContainerScreenAccessor",
     "accessor.GhostRecipeAccessor",
     "accessor.RecipeBookWidgetAccessor",
     "accessor.ScreenAccessor"

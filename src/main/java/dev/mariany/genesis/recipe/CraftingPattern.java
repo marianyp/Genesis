@@ -39,6 +39,12 @@ public record CraftingPattern(int patternBits) {
             false, true, false
     });
 
+    public static final CraftingPattern SPEAR = fromGrid(new boolean[]{
+            false, false, true,
+            false, true, false,
+            true, false, false
+    });
+
     public static final CraftingPattern SHIELD = fromGrid(new boolean[]{
             true, true, true,
             true, true, true,

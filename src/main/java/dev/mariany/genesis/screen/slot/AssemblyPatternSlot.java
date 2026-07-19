@@ -2,32 +2,43 @@ package dev.mariany.genesis.screen.slot;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import dev.mariany.genesis.screen.AssemblyScreenHandler;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class AssemblyPatternSlot extends Slot {
+    private final AssemblyScreenHandler assemblyScreenHandler;
+
     public AssemblyPatternSlot(
-            Inventory inventory,
+            AssemblyScreenHandler assemblyScreenHandler,
+            Container inventory,
             int index,
             int x,
             int y
     ) {
         super(inventory, index, x, y);
+        this.assemblyScreenHandler = assemblyScreenHandler;
     }
 
     public boolean isEmpty() {
-        return this.inventory.isEmpty();
+        return this.container.isEmpty();
     }
 
     @Override
-    public boolean canInsert(ItemStack stack) {
-        return super.canInsert(stack) && stack.getItem() instanceof AssemblyPatternItem;
+    public boolean mayPlace(ItemStack stack) {
+        return super.mayPlace(stack) && stack.getItem() instanceof AssemblyPatternItem;
     }
 
     @Override
-    public Identifier getBackgroundSprite() {
+    public void setChanged() {
+        super.setChanged();
+        this.assemblyScreenHandler.slotsChanged(this.container);
+    }
+
+    @Override
+    public Identifier getNoItemIcon() {
         return Genesis.id("container/assembly/cast");
     }
 }

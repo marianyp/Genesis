@@ -2,123 +2,166 @@ package dev.mariany.genesis.item.custom;
 
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.Items;
-import net.minecraft.item.consume.UseAction;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
 public class FlintsItem extends Item {
-    public FlintsItem(Settings settings) {
+    public FlintsItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        if (world instanceof ServerWorld serverWorld && remainingUseTicks >= 0 && user instanceof PlayerEntity playerEntity) {
-            Random random = playerEntity.getRandom();
+    public void onUseTick(Level level, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        if (level instanceof ServerLevel serverLevel && remainingUseTicks >= 0 && user instanceof Player playerEntity) {
+            RandomSource random = playerEntity.getRandom();
             HitResult hitResult = this.getHitResult(playerEntity);
+
             if (hitResult instanceof BlockHitResult blockHitResult && hitResult.getType() == HitResult.Type.BLOCK) {
-                int maxUseTime = this.getMaxUseTime(stack, user);
+                int maxUseTime = this.getUseDuration(stack, user);
                 int middlePoint = maxUseTime / 20 / 2;
                 int progress = maxUseTime - remainingUseTicks + 1;
 
                 if (progress == middlePoint) {
                     BlockPos pos = blockHitResult.getBlockPos();
-                    BlockPos abovePos = pos.up();
-                    BlockState state = serverWorld.getBlockState(pos);
-                    BlockState aboveState = serverWorld.getBlockState(abovePos);
-                    List<ItemEntity> sticks = getSticks(serverWorld, abovePos);
+                    BlockPos abovePos = pos.above();
+                    BlockState state = serverLevel.getBlockState(pos);
+                    BlockState aboveState = serverLevel.getBlockState(abovePos);
+                    List<ItemEntity> sticks = getSticks(serverLevel, abovePos);
+
                     int stickCount = sticks.stream()
-                            .map(stick -> stick.getStack().getCount())
-                            .mapToInt(Integer::intValue)
-                            .sum();
-                    VoxelShape shape = state.getCollisionShape(world, pos);
-                    Box box = shape.getBoundingBox();
+                                           .map(stick -> stick.getItem().getCount())
+                                           .mapToInt(Integer::intValue)
+                                           .sum();
+
+                    VoxelShape shape = state.getCollisionShape(level, pos);
+                    AABB box = shape.bounds();
+
                     double smokePosition = abovePos.getY() - 1 + box.maxY + 0.25;
-                    int damage = stack.getDamage();
-                    boolean shouldLight = playerEntity.isCreative() || damage > 0 && (random.nextBoolean() || (damage + 1) >= stack.getMaxDamage());
+                    int damage = stack.getDamageValue();
+                    boolean shouldLight = playerEntity.isCreative() ||
+                            damage > 0 && (random.nextBoolean() || (damage + 1) >= stack.getMaxDamage());
                     boolean lit = false;
 
                     if (stickCount >= 4) {
-                        if (shouldLight && aboveState.isReplaceable()) {
+                        if (shouldLight && aboveState.canBeReplaced()) {
                             sticks.forEach(itemEntity -> itemEntity.remove(Entity.RemovalReason.DISCARDED));
-                            serverWorld.setBlockState(abovePos, Blocks.CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, true));
+                            serverLevel.setBlockAndUpdate(
+                                    abovePos,
+                                    Blocks.CAMPFIRE.defaultBlockState()
+                                                   .setValue(CampfireBlock.LIT, true)
+                            );
                             lit = true;
                         }
                     } else if (state.getBlock() instanceof CampfireBlock) {
-                        boolean isCampfireLit = state.get(CampfireBlock.LIT, false);
+                        boolean isCampfireLit = state.getValueOrElse(CampfireBlock.LIT, false);
 
                         if (!isCampfireLit && shouldLight) {
-                            serverWorld.setBlockState(pos, state.with(CampfireBlock.LIT, true));
+                            serverLevel.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, true));
                             lit = true;
                         }
                     }
 
                     if (lit) {
-                        if (playerEntity instanceof ServerPlayerEntity serverPlayer) {
+                        if (playerEntity instanceof ServerPlayer serverPlayer) {
                             GenesisCriteria.FIRE_STARTED.trigger(serverPlayer);
                         }
 
-                        serverWorld.playSound(null, abovePos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.35F, 1F);
+                        serverLevel.playSound(
+                                null,
+                                abovePos,
+                                SoundEvents.FIRECHARGE_USE,
+                                SoundSource.BLOCKS,
+                                0.35F,
+                                1F
+                        );
                     }
 
-                    serverWorld.spawnParticles(ParticleTypes.SMOKE, abovePos.getX() + 0.5, smokePosition, abovePos.getZ() + 0.5, 2, 0, 0, 0, 0.04);
-                    serverWorld.playSound(null, abovePos, GenesisSoundEvents.FLINTS, SoundCategory.BLOCKS, 1F, random.nextFloat() * 0.4F + 0.8F);
+                    serverLevel.sendParticles(
+                            ParticleTypes.LAVA,
+                            abovePos.getX() + 0.5,
+                            smokePosition,
+                            abovePos.getZ() + 0.5,
+                            2,
+                            0,
+                            0,
+                            0,
+                            0.04
+                    );
 
-                    stack.damage(1, playerEntity, playerEntity.getActiveHand());
+                    serverLevel.playSound(
+                            null,
+                            abovePos,
+                            GenesisSoundEvents.FLINTS,
+                            SoundSource.BLOCKS,
+                            1F,
+                            random.nextFloat() * 0.4F + 0.8F
+                    );
+
+                    stack.hurtAndBreak(1, playerEntity, playerEntity.getUsedItemHand());
                 }
             }
         }
     }
 
-    private List<ItemEntity> getSticks(World world, BlockPos pos) {
-        return world.getEntitiesByClass(ItemEntity.class, new Box(pos), itemEntity -> itemEntity.isAlive() && itemEntity.getStack().getItem() == Items.STICK);
+    private List<ItemEntity> getSticks(Level level, BlockPos pos) {
+        return level.getEntitiesOfClass(
+                ItemEntity.class,
+                new AABB(pos),
+                itemEntity -> itemEntity.isAlive() && itemEntity.getItem().getItem() == Items.STICK
+        );
     }
 
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+    public int getUseDuration(ItemStack stack, LivingEntity user) {
         return 175;
     }
 
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BLOCK;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.BLOCK;
     }
 
-    private HitResult getHitResult(PlayerEntity user) {
-        return ProjectileUtil.getCollision(user, EntityPredicates.CAN_HIT, user.getBlockInteractionRange());
+    private HitResult getHitResult(Player user) {
+        return ProjectileUtil.getHitResultOnViewVector(
+                user,
+                EntitySelector.CAN_BE_PICKED,
+                user.blockInteractionRange()
+        );
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity playerEntity = context.getPlayer();
+    public InteractionResult useOn(UseOnContext context) {
+        Player playerEntity = context.getPlayer();
+
         if (playerEntity != null && this.getHitResult(playerEntity).getType() == HitResult.Type.BLOCK) {
-            playerEntity.setCurrentHand(context.getHand());
+            playerEntity.startUsingItem(context.getHand());
         }
 
-        return ActionResult.CONSUME;
+        return InteractionResult.CONSUME;
     }
 }

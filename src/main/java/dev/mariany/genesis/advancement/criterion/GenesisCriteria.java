@@ -1,35 +1,39 @@
 package dev.mariany.genesis.advancement.criterion;
 
 import dev.mariany.genesis.Genesis;
-import net.minecraft.advancement.criterion.Criterion;
-import net.minecraft.advancement.criterion.TickCriterion;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.advancements.triggers.CriterionTrigger;
+import net.minecraft.advancements.triggers.PlayerTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class GenesisCriteria {
     public static final ItemBrokenCriterion ITEM_BROKEN = register("item_broken", new ItemBrokenCriterion());
-    public static final TickCriterion FIRE_STARTED = register(
+
+    public static final PlayerTrigger FIRE_STARTED = register(
             "fire_started",
-            new TickCriterion()
+            new PlayerTrigger()
     );
+
     public static final BrushPrimitiveCauldronCriteria BRUSH_PRIMITIVE_CAULDRON = register(
             "brush_primitive_cauldron",
             new BrushPrimitiveCauldronCriteria()
     );
+
     public static final CookWithKilnCriteria COOK_WITH_KILN = register(
             "cook_with_kiln",
             new CookWithKilnCriteria()
     );
-    public static final TickCriterion COMPLETE_MONUMENT = register(
+
+    public static final PlayerTrigger COMPLETE_MONUMENT = register(
             "complete_monument",
-            new TickCriterion()
+            new PlayerTrigger()
     );
 
-    public static <T extends Criterion<?>> T register(String name, T criterion) {
-        return Registry.register(Registries.CRITERION, Genesis.id(name), criterion);
+    public static <T extends CriterionTrigger<?>> T register(String name, T criterion) {
+        return Registry.register(BuiltInRegistries.TRIGGER_TYPES, Genesis.id(name), criterion);
     }
 
     public static void bootstrap() {
-        Genesis.LOGGER.info("Registering Criteria for " + Genesis.MOD_ID);
+        Genesis.bootstrapLog("Criteria");
     }
 }

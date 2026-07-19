@@ -3,26 +3,31 @@ package dev.mariany.genesis.recipe;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
 import dev.mariany.genesis.mixin.accessor.ShapedRecipeAccessor;
 import dev.mariany.genesis.recipe.display.AssemblyCraftingRecipeDisplay;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.display.RecipeDisplay;
-import net.minecraft.recipe.display.SlotDisplay;
-
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import java.util.List;
 
 public class AssemblyRecipe extends ShapedRecipe {
-    final RawShapedRecipe raw;
+    final ShapedRecipePattern raw;
     final ItemStack result;
     final List<AssemblyPatternItem> patterns;
 
     public AssemblyRecipe(ShapedRecipe recipe, List<AssemblyPatternItem> patterns) {
         this(
-                recipe.getGroup(),
-                recipe.getCategory(),
+                recipe.group(),
+                recipe.category(),
                 ((ShapedRecipeAccessor) recipe).genesis$raw(),
-                ((ShapedRecipeAccessor) recipe).genesis$result(),
+                ((ShapedRecipeAccessor) recipe).genesis$result().create(),
                 recipe.showNotification(),
                 patterns
         );
@@ -30,13 +35,18 @@ public class AssemblyRecipe extends ShapedRecipe {
 
     private AssemblyRecipe(
             String group,
-            CraftingRecipeCategory category,
-            RawShapedRecipe raw,
+            CraftingBookCategory category,
+            ShapedRecipePattern raw,
             ItemStack result,
             boolean showNotification,
             List<AssemblyPatternItem> patterns
     ) {
-        super(group, category, raw, result, showNotification);
+        super(
+                new Recipe.CommonInfo(showNotification),
+                new CraftingRecipe.CraftingBookInfo(category, group),
+                raw,
+                ItemStackTemplate.fromStack(result)
+        );
 
         this.raw = raw;
         this.result = result;
@@ -57,20 +67,20 @@ public class AssemblyRecipe extends ShapedRecipe {
     }
 
     @Override
-    public List<RecipeDisplay> getDisplays() {
+    public List<RecipeDisplay> display() {
         return List.of(
                 new AssemblyCraftingRecipeDisplay(
-                        this.raw.getWidth(),
-                        this.raw.getHeight(),
+                        this.raw.width(),
+                        this.raw.height(),
                         this.raw
-                                .getIngredients()
+                                .ingredients()
                                 .stream()
                                 .map(ingredient -> ingredient
-                                        .map(Ingredient::toDisplay)
-                                        .orElse(SlotDisplay.EmptySlotDisplay.INSTANCE)
+                                        .map(Ingredient::display)
+                                        .orElse(SlotDisplay.Empty.INSTANCE)
                                 )
                                 .toList(),
-                        new SlotDisplay.StackSlotDisplay(this.result),
+                        new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromStack(this.result)),
                         new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
                 )
         );

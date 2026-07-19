@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "E": "minecraft:emerald",
     "G": "minecraft:gold_ingot"
@@ -11,7 +10,6 @@
     "GGG"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:totem_of_undying"
   }
 }
