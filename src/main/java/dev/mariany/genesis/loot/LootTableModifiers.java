@@ -2,6 +2,7 @@ package dev.mariany.genesis.loot;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.item.GenesisItems;
+import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
@@ -155,13 +157,9 @@ public class LootTableModifiers {
                     .add(LootItem.lootTableItem(GenesisItems.CLAY_SHIELD_CAST))
                     .add(LootItem.lootTableItem(GenesisItems.CLAY_ANVIL_CAST)));
         } else if (SINGLE_COMMON_CAST_MAP.contains(key)) {
-            tableBuilder.modifyPools(builder -> builder
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_SWORD_CAST))
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_SHOVEL_CAST))
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_PICKAXE_CAST))
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_AXE_CAST))
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_HOE_CAST))
-                    .add(LootItem.lootTableItem(GenesisItems.CLAY_SPEAR_CAST)));
+            tableBuilder.modifyPools(
+                    builder -> builder.add(TagEntry.expandTag(GenesisTags.Items.CLAY_TOOL_CASTS))
+            );
         } else {
             return false;
         }

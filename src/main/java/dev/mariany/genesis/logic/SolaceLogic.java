@@ -8,6 +8,7 @@ import dev.mariany.genesis.world.level.gamerules.GenesisGameRules;
 import dev.mariany.genesis.world.level.gamerules.SyncedGameRule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -58,7 +59,9 @@ public class SolaceLogic {
     }
 
     private static boolean isFullHealth(LivingEntity livingEntity) {
-        return livingEntity.getHealth() >= livingEntity.getMaxHealth();
+        int health = Mth.ceil(livingEntity.getHealth());
+        float maxHealth = livingEntity.getMaxHealth();
+        return health >= maxHealth;
     }
 
     private void onEntityConsume(LivingEntity entity, ItemStack stack) {

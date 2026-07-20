@@ -21,8 +21,10 @@ For more information or guidance on datapack customization, [please visit the wi
 
 ### Credits
 
-*   uhmbyee - Programmer, Art
-*   Cebularz - Art
+*   uhmbyee - Programmer, Artist
+*   Cebularz - Artist
+
+Thanks to Lemonszz for inspiring the tiredness feature from their mod [Sleep Rework](https://www.curseforge.com/minecraft/mc-mods/sleep-rework).
 
 ### Media
 
