@@ -5,7 +5,6 @@ import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -135,10 +134,6 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
         }
 
         LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(this.lootTable);
-
-        if (brusher instanceof ServerPlayer serverPlayerEntity) {
-            CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayerEntity, this.lootTable);
-        }
 
         LootParams lootParams = new LootParams.Builder(level)
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition))
