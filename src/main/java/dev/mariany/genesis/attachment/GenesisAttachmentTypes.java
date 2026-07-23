@@ -14,6 +14,7 @@ public class GenesisAttachmentTypes {
                     .initializer(() -> 0)
                     .persistent(Codec.INT)
                     .syncWith(ByteBufCodecs.INT, AttachmentSyncPredicate.targetOnly())
+                    .copyOnDeath()
     );
 
     public static void bootstrap() {
