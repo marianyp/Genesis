@@ -39,7 +39,7 @@ public class SyncedGameRule<T> {
     private void onServerStarted(MinecraftServer server) {
         GameRules gameRules = server.getGameRules();
         T value = gameRules.get(this.gameRule);
-        this.setValue(value);
+        this.setValue(value, server);
     }
 
     private void onPlayerJoin(ServerGamePacketListenerImpl listener, PacketSender sender, MinecraftServer server) {
@@ -47,7 +47,7 @@ public class SyncedGameRule<T> {
     }
 
     private void onGameRuleChange(T value, MinecraftServer server) {
-        this.setValue(value);
+        this.setValue(value, server);
     }
 
     public void setValue(T value) {
