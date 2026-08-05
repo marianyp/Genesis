@@ -3,6 +3,7 @@ package dev.mariany.genesis.block.custom.cauldron;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -80,16 +81,18 @@ public class PrimitiveCauldronBlock extends Block {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand
     ) {
-        ItemStack stack = player.getItemInHand(hand);
+        ItemStack stack = livingEntity.getItemInHand(hand);
 
-        if (this.behaviorMap != null) {
-            for (PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorEntry entry : behaviorMap.entries()) {
-                if (entry.ingredient().test(stack)) {
-                    return Optional.ofNullable(entry.behavior().interact(state, level, pos, player, hand, stack));
-                }
+        if (this.behaviorMap == null) {
+            return Optional.empty();
+        }
+
+        for (PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorEntry entry : behaviorMap.entries()) {
+            if (entry.ingredient().test(stack)) {
+                return Optional.ofNullable(entry.behavior().interact(state, level, pos, livingEntity, hand, stack));
             }
         }
 

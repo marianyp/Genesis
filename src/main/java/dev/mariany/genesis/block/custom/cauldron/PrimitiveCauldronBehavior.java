@@ -15,6 +15,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +45,7 @@ public interface PrimitiveCauldronBehavior {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack
     );
@@ -90,16 +91,20 @@ public interface PrimitiveCauldronBehavior {
     static InteractionResult fillCauldron(
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack,
             BlockState state,
             SoundEvent soundEvent
     ) {
         if (!level.isClientSide()) {
-            stack.consume(1, player);
-            player.awardStat(Stats.FILL_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            stack.consume(1, livingEntity);
+
+            if (livingEntity instanceof Player player) {
+                player.awardStat(Stats.FILL_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
+
             level.setBlockAndUpdate(pos, state);
             level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1F, 1F);
             level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
@@ -112,14 +117,14 @@ public interface PrimitiveCauldronBehavior {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack
     ) {
         return fillCauldron(
                 level,
                 pos,
-                player,
+                livingEntity,
                 hand,
                 stack,
                 GenesisBlocks.DIRT_TERRACOTTA_CAULDRON.defaultBlockState(),
@@ -131,14 +136,14 @@ public interface PrimitiveCauldronBehavior {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack
     ) {
         return fillCauldron(
                 level,
                 pos,
-                player,
+                livingEntity,
                 hand,
                 stack,
                 GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON.defaultBlockState(),
@@ -150,14 +155,14 @@ public interface PrimitiveCauldronBehavior {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack
     ) {
         return fillCauldron(
                 level,
                 pos,
-                player,
+                livingEntity,
                 hand,
                 stack,
                 GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON.defaultBlockState(),
@@ -169,14 +174,14 @@ public interface PrimitiveCauldronBehavior {
             BlockState state,
             Level level,
             BlockPos pos,
-            Player player,
+            LivingEntity livingEntity,
             InteractionHand hand,
             ItemStack stack
     ) {
         return fillCauldron(
                 level,
                 pos,
-                player,
+                livingEntity,
                 hand,
                 stack,
                 GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON.defaultBlockState(),
