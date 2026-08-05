@@ -26,6 +26,11 @@ public class GenesisGameRules {
             .category(GameRuleCategory.MOBS)
             .buildAndRegister(Genesis.id("highlight_elder_guardians"));
 
+    public static final GameRule<Boolean> RESPAWN_RESETS_TIREDNESS = GameRuleBuilder
+            .forBoolean(false)
+            .category(GameRuleCategory.PLAYER)
+            .buildAndRegister(Genesis.id("respawn_resets_tiredness"));
+
     public static void bootstrap() {
         Genesis.bootstrapLog("Game Rules");
     }

@@ -6,13 +6,16 @@ import dev.mariany.genesis.packet.clientbound.UpdateTirednessLogicPayload;
 import dev.mariany.genesis.world.level.gamerules.GenesisGameRules;
 import dev.mariany.genesis.world.level.gamerules.SyncedGameRule;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.gamerules.GameRules;
 import org.jetbrains.annotations.Nullable;
 
 public class TirednessLogic {
@@ -39,15 +42,31 @@ public class TirednessLogic {
         resetPlayerTiredness(player);
     }
 
-    private static void resetPlayerTiredness(Player player) {
-        player.setAttached(GenesisAttachmentTypes.AWAKE_TICKS, 0);
-    }
-
     public void bootstrap() {
         Genesis.bootstrapLog("Tiredness Logic");
         this.syncedMinimumDaysBeforeSleeping.bootstrap();
+        ServerPlayerEvents.AFTER_RESPAWN.register(TirednessLogic::onPlayerRespawn);
         ServerTickEvents.END_SERVER_TICK.register(this::onEndServerTick);
         EntitySleepEvents.ALLOW_SLEEPING.register(this::onAllowSleeping);
+    }
+
+    private static void onPlayerRespawn(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean alive) {
+        if (alive) {
+            return;
+        }
+
+        ServerLevel serverLevel = newPlayer.level();
+        GameRules gameRules = serverLevel.getGameRules();
+
+        if (!gameRules.get(GenesisGameRules.RESPAWN_RESETS_TIREDNESS)) {
+            return;
+        }
+
+        resetPlayerTiredness(oldPlayer);
+    }
+
+    private static void resetPlayerTiredness(Player player) {
+        player.setAttached(GenesisAttachmentTypes.AWAKE_TICKS, 0);
     }
 
     private void onEndServerTick(MinecraftServer server) {
