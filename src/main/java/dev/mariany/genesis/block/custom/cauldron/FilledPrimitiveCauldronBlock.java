@@ -90,7 +90,7 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
 
     @Override
     protected VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
-        return PrimitiveCauldronBlock.RAYCAST_SHAPE;
+        return PrimitiveCauldronBlock.INTERACTION_SHAPE;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class PrimitiveCauldronBlock extends Block {
             Shapes.box(0.125, 0, 0.875, 0.875, 0.8125, 1)
     );
 
-    public static final VoxelShape RAYCAST_SHAPE = Block.column(12.0, 1.0, 13.0);
+    public static final VoxelShape INTERACTION_SHAPE = Block.column(12.0, 1.0, 13.0);
 
     @Nullable
     protected final PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorMap behaviorMap;
@@ -59,7 +59,7 @@ public class PrimitiveCauldronBlock extends Block {
             BlockGetter world,
             BlockPos pos
     ) {
-        return RAYCAST_SHAPE;
+        return INTERACTION_SHAPE;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PrimitiveCauldronBlock extends Block {
         return result.orElseGet(() -> super.useItemOn(stack, state, level, pos, player, hand, hit));
     }
 
-    private Optional<InteractionResult> attemptInteract(
+    public Optional<InteractionResult> attemptInteract(
             BlockState state,
             Level level,
             BlockPos pos,

@@ -3,10 +3,13 @@ package dev.mariany.genesis.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
+import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.custom.FilledPrimitiveCauldronBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,16 +28,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Optional;
+
 @Mixin(BrushItem.class)
 public abstract class BrushItemMixin {
     @Shadow
     protected abstract HitResult calculateHitResult(Player user);
 
     @WrapOperation(
-            method = "onUseTick", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/item/BrushItem;spawnDustParticles(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/HumanoidArm;)V"
-    )
+            method = "onUseTick",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/BrushItem;spawnDustParticles(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/HumanoidArm;)V"
+            )
     )
     public void wrapAddDustParticles(
             BrushItem brushItem,
@@ -64,35 +70,70 @@ public abstract class BrushItemMixin {
     )
     private void injectUsageTick(
             Level level,
-            LivingEntity user,
+            LivingEntity livingEntity,
             ItemStack stack,
             int remainingUseTicks,
             CallbackInfo ci
     ) {
-        if (user instanceof Player playerEntity) {
-            HitResult hitResult = this.calculateHitResult(playerEntity);
+        if (!(livingEntity instanceof Player player)) {
+            return;
+        }
 
-            if (hitResult instanceof BlockHitResult blockHitResult) {
-                BlockPos blockPos = blockHitResult.getBlockPos();
+        HitResult hitResult = this.calculateHitResult(player);
 
-                if (level instanceof ServerLevel serverLevel) {
-                    BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        if (!(hitResult instanceof BlockHitResult blockHitResult)) {
+            return;
+        }
 
-                    if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                        if (blockHitResult.getDirection() == Direction.UP) {
-                            if (filledPrimitiveCauldronBlockEntity.brush(serverLevel, playerEntity, stack)) {
-                                ItemStack offhandStack = playerEntity.getItemBySlot(EquipmentSlot.OFFHAND);
-                                EquipmentSlot equipmentSlot = stack.equals(offhandStack) ?
-                                        EquipmentSlot.OFFHAND :
-                                        EquipmentSlot.MAINHAND;
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
 
-                                stack.hurtAndBreak(1, playerEntity, equipmentSlot);
-                                user.releaseUsingItem();
-                            }
-                        }
-                    }
-                }
+        if (blockHitResult.getDirection() != Direction.UP) {
+            return;
+        }
+
+        BlockPos pos = blockHitResult.getBlockPos();
+
+        BlockState state = serverLevel.getBlockState(pos);
+
+        ItemStack offhandStack = player.getItemBySlot(EquipmentSlot.OFFHAND);
+
+        InteractionHand interactionHand = ItemStack.matches(stack, offhandStack)
+                ? InteractionHand.OFF_HAND
+                : InteractionHand.MAIN_HAND;
+
+        if (state.getBlock() instanceof PrimitiveCauldronBlock primitiveCauldronBlock) {
+            InteractionHand oppositeInteractionHand = interactionHand == InteractionHand.MAIN_HAND ?
+                    InteractionHand.OFF_HAND :
+                    InteractionHand.MAIN_HAND;
+
+            Optional<InteractionResult> optionalInteractionResult = primitiveCauldronBlock.attemptInteract(
+                    state,
+                    serverLevel,
+                    pos,
+                    player,
+                    oppositeInteractionHand
+            );
+
+            if (optionalInteractionResult.map(InteractionResult::consumesAction).orElse(false)) {
+                livingEntity.releaseUsingItem();
+                player.swing(oppositeInteractionHand);
+                return;
             }
         }
+
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        if (!(blockEntity instanceof FilledPrimitiveCauldronBlockEntity cauldron)) {
+            return;
+        }
+
+        if (!cauldron.brush(serverLevel, player, stack)) {
+            return;
+        }
+
+        stack.hurtAndBreak(1, player, interactionHand);
+        livingEntity.releaseUsingItem();
     }
 }
