@@ -2,37 +2,17 @@ package dev.mariany.genesis.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.mariany.genesis.client.gui.screen.ingame.AssemblyScreen;
-import dev.mariany.genesis.client.gui.widget.ToggleableRecipeBookWidget;
+import dev.mariany.genesis.client.event.RecipeBookScreenEvents;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.navigation.ScreenPosition;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(AbstractRecipeBookScreen.class)
-public abstract class RecipeBookScreenMixin<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    public RecipeBookScreenMixin(T handler, Inventory inventory, Component title) {
-        super(handler, inventory, title);
-    }
-
-    @Shadow
-    protected abstract ScreenPosition getRecipeBookButtonPosition();
-
-    @Shadow
-    @Final
-    private RecipeBookComponent<?> recipeBookComponent;
-
-    @Shadow
-    protected abstract void onRecipeBookButtonClick();
-
+public abstract class RecipeBookScreenMixin {
     @WrapOperation(
             method = "initButton",
             at = @At(
@@ -40,26 +20,19 @@ public abstract class RecipeBookScreenMixin<T extends AbstractContainerMenu> ext
                     target = "Lnet/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen;addRenderableWidget(Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;"
             )
     )
-    private GuiEventListener wrapAddRecipeBook(AbstractRecipeBookScreen<?> screen, GuiEventListener element, Operation<GuiEventListener> original) {
-        ScreenPosition screenPos = this.getRecipeBookButtonPosition();
+    private <T extends GuiEventListener & Renderable & NarratableEntry> GuiEventListener wrapAddRenderableWidget(
+            AbstractRecipeBookScreen<?> screen,
+            T button,
+            Operation<T> original
+    ) {
+        Renderable widget;
 
-        if (((AbstractRecipeBookScreen<?>) (Object) this) instanceof AssemblyScreen) {
-            return original.call(screen, new ToggleableRecipeBookWidget(
-                            screenPos.x(),
-                            screenPos.y(),
-                            button -> {
-                                this.recipeBookComponent.toggleVisibility();
-                                this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-
-                                ScreenPosition buttonPos = this.getRecipeBookButtonPosition();
-                                button.setPosition(buttonPos.x(), buttonPos.y());
-
-                                this.onRecipeBookButtonClick();
-                            }
-                    )
-            );
+        if (button instanceof AbstractWidget abstractWidget) {
+            widget = RecipeBookScreenEvents.MODIFY_BUTTON.invoker().modify(screen, abstractWidget);
+        } else {
+            widget = button;
         }
 
-        return original.call(screen, element);
+        return original.call(screen, widget);
     }
 }

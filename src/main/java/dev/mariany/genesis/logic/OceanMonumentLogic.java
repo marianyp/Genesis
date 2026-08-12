@@ -17,7 +17,10 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OceanMonumentLogic {
+public final class OceanMonumentLogic {
+    private OceanMonumentLogic() {
+    }
+
     public static void bootstrap() {
         Genesis.bootstrapLog("Ocean Monument Logic");
         EntityEvents.BEFORE_ENTITY_DEATH.register(OceanMonumentLogic::onEntityDeath);

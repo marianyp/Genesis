@@ -2,8 +2,7 @@ package dev.mariany.genesis.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import dev.mariany.genesis.logic.BrushLogic;
-import net.minecraft.server.level.ServerLevel;
+import dev.mariany.genesis.event.item.BrushEvents;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +40,7 @@ public abstract class BrushItemMixin {
             HumanoidArm arm,
             Operation<Void> original
     ) {
-        BlockState particleState = BrushLogic.getParticleState(hitResult, state);
+        BlockState particleState = BrushEvents.MODIFY_PARTICLE_STATE.invoker().modify(hitResult, state);
         original.call(brushItem, level, hitResult, particleState, userRotation, arm);
     }
 
@@ -59,18 +58,10 @@ public abstract class BrushItemMixin {
             int remainingUseTicks,
             CallbackInfo ci
     ) {
-        if (!(level instanceof ServerLevel serverLevel)) {
-            return;
-        }
-
         if (!(livingEntity instanceof Player player)) {
             return;
         }
 
-        if (!(this.calculateHitResult(player) instanceof BlockHitResult blockHitResult)) {
-            return;
-        }
-
-        BrushLogic.onUseTick(serverLevel, player, stack, blockHitResult);
+        BrushEvents.USE_TICK.invoker().onUseTick(level, player, stack, this.calculateHitResult(player));
     }
 }

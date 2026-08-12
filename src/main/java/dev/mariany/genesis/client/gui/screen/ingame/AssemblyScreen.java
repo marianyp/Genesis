@@ -1,6 +1,7 @@
 package dev.mariany.genesis.client.gui.screen.ingame;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.client.gui.AssemblySlotTextures;
 import dev.mariany.genesis.client.gui.screen.recipebook.AssemblyRecipeBookWidget;
 import dev.mariany.genesis.client.gui.widget.ToggleableRecipeBookWidget;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
@@ -29,16 +30,9 @@ import java.util.Optional;
 @Environment(EnvType.CLIENT)
 public class AssemblyScreen extends AbstractRecipeBookScreen<AssemblyScreenHandler> {
     private static final Identifier TEXTURE = Genesis.id("textures/gui/container/assembly_table.png");
-    private static final Identifier SLOT_TEXTURE = Genesis.id("container/assembly/slots");
-    private static final Identifier DISABLED_SLOT_TEXTURE = Genesis.id("container/assembly/locked_slots");
-
     private static final Component CAST_SLOT_TOOLTIP = Component.translatable(
             "container.genesis.assembly_table.cast_tooltip"
     );
-
-    private static final int SLOTS_PER_ROW = 3;
-    private static final int SLOTS_TEXTURE_SIZE = 54;
-    private static final int SLOT_SIZE = 18;
 
     private final AssemblyRecipeBookWidget assemblyRecipeBookWidget;
 
@@ -172,24 +166,6 @@ public class AssemblyScreen extends AbstractRecipeBookScreen<AssemblyScreenHandl
     }
 
     private void drawSlot(GuiGraphicsExtractor context, AssemblyInputSlot slot, boolean enabled) {
-        Identifier texture = enabled ? SLOT_TEXTURE : DISABLED_SLOT_TEXTURE;
-
-        int index = slot.getContainerSlot();
-
-        int u = (index % SLOTS_PER_ROW) * SLOT_SIZE;
-        int v = (index / SLOTS_PER_ROW) * SLOT_SIZE;
-
-        context.blitSprite(
-                RenderPipelines.GUI_TEXTURED,
-                texture,
-                SLOTS_TEXTURE_SIZE,
-                SLOTS_TEXTURE_SIZE,
-                u,
-                v,
-                slot.x - 1,
-                slot.y - 1,
-                SLOT_SIZE,
-                SLOT_SIZE
-        );
+        AssemblySlotTextures.draw(context, slot.getContainerSlot(), !enabled, slot.x, slot.y);
     }
 }

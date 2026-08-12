@@ -1,8 +1,10 @@
 package dev.mariany.genesis.logic;
 
+import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.block.custom.cauldron.FilledPrimitiveCauldronBlock;
 import dev.mariany.genesis.block.custom.cauldron.PrimitiveCauldronBlock;
 import dev.mariany.genesis.block.entity.custom.FilledPrimitiveCauldronBlockEntity;
+import dev.mariany.genesis.event.item.BrushEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -10,9 +12,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.Optional;
 
@@ -20,7 +24,13 @@ public final class BrushLogic {
     private BrushLogic() {
     }
 
-    public static BlockState getParticleState(BlockHitResult hitResult, BlockState state) {
+    public static void bootstrap() {
+        Genesis.bootstrapLog("Brush Logic");
+        BrushEvents.MODIFY_PARTICLE_STATE.register(BrushLogic::getParticleState);
+        BrushEvents.USE_TICK.register(BrushLogic::onUseTick);
+    }
+
+    private static BlockState getParticleState(BlockHitResult hitResult, BlockState state) {
         if (hitResult.getDirection() != Direction.UP) {
             return state;
         }
@@ -32,12 +42,16 @@ public final class BrushLogic {
         return state;
     }
 
-    public static void onUseTick(
-            ServerLevel serverLevel,
+    private static void onUseTick(
+            Level level,
             LivingEntity livingEntity,
             ItemStack stack,
-            BlockHitResult blockHitResult
+            HitResult hitResult
     ) {
+        if (!(level instanceof ServerLevel serverLevel) || !(hitResult instanceof BlockHitResult blockHitResult)) {
+            return;
+        }
+
         if (blockHitResult.getDirection() != Direction.UP) {
             return;
         }
@@ -88,7 +102,7 @@ public final class BrushLogic {
             return;
         }
 
-        if (!filledPrimitiveCauldronBlockEntity.brush(serverLevel, livingEntity, stack)) {
+        if (!filledPrimitiveCauldronBlockEntity.sift(serverLevel, livingEntity, stack)) {
             return;
         }
 

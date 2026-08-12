@@ -37,12 +37,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
-    private static final String BRUSHES_NBT_KEY = "brushes";
-    private static final int MAX_BRUSHES = 3;
+    private static final String SIFT_COUNT_NBT_KEY = "sifts";
+    private static final int REQUIRED_SIFTS = 3;
     private static final int WITHOUT_BRUSH_DELAY = 10;
 
-    private int brushesCount;
-    private long nextBrushTime;
+    private int siftCount;
+    private long nextSiftTime;
     private ItemStack item = ItemStack.EMPTY;
 
     @Nullable
@@ -69,14 +69,14 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
         return null;
     }
 
-    public boolean brush(ServerLevel level, LivingEntity brusher, ItemStack brush) {
-        return brush(level, brusher, brush, false);
+    public boolean sift(ServerLevel level, LivingEntity sifter, ItemStack brush) {
+        return sift(level, sifter, brush, false);
     }
 
-    public boolean brush(ServerLevel level, LivingEntity brusher, ItemStack brush, boolean sound) {
+    public boolean sift(ServerLevel level, LivingEntity sifter, ItemStack brush, boolean sound) {
         long worldTime = level.getGameTime();
 
-        if (worldTime < this.nextBrushTime) {
+        if (worldTime < this.nextSiftTime) {
             return false;
         }
 
@@ -84,23 +84,23 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
 
         if (currentState.getBlock() instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
             BlockState particleBlockState = filledPrimitiveCauldronBlock.getParticleBlock().defaultBlockState();
-            this.addBlockBreakParticles(level, worldPosition, particleBlockState);
+            this.addBlockBreakParticles(level, this.worldPosition, particleBlockState);
         }
 
         int delay = brush.getItem() instanceof BrushItem ? 1 : WITHOUT_BRUSH_DELAY;
-        this.nextBrushTime = worldTime + delay;
+        this.nextSiftTime = worldTime + delay;
         int previousDustedLevel = this.getDustedLevel();
 
-        ++this.brushesCount;
+        ++this.siftCount;
 
-        boolean finished = this.brushesCount >= MAX_BRUSHES;
+        boolean finished = this.siftCount >= REQUIRED_SIFTS;
 
         if (finished || sound) {
             playSound(finished);
         }
 
         if (finished) {
-            this.finishBrushing(level, brusher, brush);
+            this.finishSifting(level, sifter, brush);
             return true;
         }
 
@@ -124,11 +124,11 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
             SoundEvent soundEvent = finished ? filledPrimitiveCauldronBlock.getBrushCompletedSound() :
                     filledPrimitiveCauldronBlock.getBrushSound();
 
-            this.level.playSound(null, worldPosition, soundEvent, SoundSource.BLOCKS);
+            this.level.playSound(null, this.worldPosition, soundEvent, SoundSource.BLOCKS);
         }
     }
 
-    private void generateItem(ServerLevel level, LivingEntity brusher, ItemStack brush) {
+    private void generateItem(ServerLevel level, LivingEntity sifter, ItemStack brush) {
         if (this.lootTable == null) {
             return;
         }
@@ -137,12 +137,12 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
 
         LootParams lootParams = new LootParams.Builder(level)
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition))
-                .withLuck(brusher.getLuck())
-                .withParameter(LootContextParams.THIS_ENTITY, brusher)
+                .withLuck(sifter.getLuck())
+                .withParameter(LootContextParams.THIS_ENTITY, sifter)
                 .withParameter(LootContextParams.TOOL, brush)
                 .create(LootContextParamSets.ARCHAEOLOGY);
 
-        ObjectArrayList<ItemStack> loot = lootTable.getRandomItems(lootParams, brusher.getRandom().nextLong());
+        ObjectArrayList<ItemStack> loot = lootTable.getRandomItems(lootParams, sifter.getRandom().nextLong());
 
         this.item = switch (loot.size()) {
             case 0 -> ItemStack.EMPTY;
@@ -160,26 +160,26 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
         this.setChanged();
     }
 
-    private void finishBrushing(ServerLevel level, LivingEntity brusher, ItemStack brush) {
+    private void finishSifting(ServerLevel level, LivingEntity sifter, ItemStack brush) {
         Block baseBlock = Blocks.AIR;
 
         if (this.getBlockState().getBlock() instanceof BrushableBlock brushableBlock) {
             baseBlock = brushableBlock.getTurnsInto();
 
             if (brushableBlock instanceof FilledPrimitiveCauldronBlock filledPrimitiveCauldronBlock) {
-                if (brusher instanceof ServerPlayer serverPlayer) {
-                    GenesisCriteria.BRUSH_PRIMITIVE_CAULDRON.trigger(serverPlayer, filledPrimitiveCauldronBlock);
+                if (sifter instanceof ServerPlayer serverPlayer) {
+                    GenesisCriteria.SIFT_PRIMITIVE_CAULDRON.trigger(serverPlayer, filledPrimitiveCauldronBlock);
                 }
             }
         }
 
         level.setBlock(this.worldPosition, baseBlock.defaultBlockState(), Block.UPDATE_ALL);
 
-        this.spawnItem(level, brusher, brush);
+        this.spawnItem(level, sifter, brush);
     }
 
-    private void spawnItem(ServerLevel level, LivingEntity brusher, ItemStack brush) {
-        this.generateItem(level, brusher, brush);
+    private void spawnItem(ServerLevel level, LivingEntity sifter, ItemStack brush) {
+        this.generateItem(level, sifter, brush);
 
         if (this.item.isEmpty()) {
             return;
@@ -223,7 +223,7 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag nbtCompound = super.getUpdateTag(registries);
 
-        nbtCompound.putInt(BRUSHES_NBT_KEY, this.brushesCount);
+        nbtCompound.putInt(SIFT_COUNT_NBT_KEY, this.siftCount);
 
         return nbtCompound;
     }
@@ -235,18 +235,17 @@ public class FilledPrimitiveCauldronBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(ValueInput view) {
         super.loadAdditional(view);
-        this.brushesCount = view.read(BRUSHES_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT).orElse(0);
+        this.siftCount = view.read(SIFT_COUNT_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT).orElse(0);
     }
 
     @Override
     protected void saveAdditional(ValueOutput view) {
         super.saveAdditional(view);
-
-        view.store(BRUSHES_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT, this.brushesCount);
+        view.store(SIFT_COUNT_NBT_KEY, ExtraCodecs.NON_NEGATIVE_INT, this.siftCount);
     }
 
     private int getDustedLevel() {
-        return this.brushesCount;
+        return this.siftCount;
     }
 
     public ItemStack getItem() {

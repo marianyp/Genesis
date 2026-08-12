@@ -26,12 +26,10 @@ public class GenesisBrewingRecipes {
         return RECIPES.stream().toList();
     }
 
-    public static List<Item> getPotionBypasses() {
-        return RECIPES.stream().flatMap(brewItemRecipe -> Stream.of(
-                                                brewItemRecipe.from(),
-                                                brewItemRecipe.to()
-                                        )
-        ).toList();
+    public static List<Item> getIngredients() {
+        return RECIPES.stream()
+                      .flatMap(brewItemRecipe -> Stream.of(brewItemRecipe.from(), brewItemRecipe.to()))
+                      .toList();
     }
 
     public static void bootstrap() {

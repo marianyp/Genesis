@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "dev.mariany.genesis.mixin.compat.jei",
+  "plugin": "dev.mariany.genesis.mixin.compat.jei.JEIMixinConfigPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "client": [
+    "RecipeSortUtilMixin"
+  ]
+}

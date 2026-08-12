@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.StructureTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -84,6 +85,10 @@ public class LootTableModifiers {
             return;
         }
 
+        if (addStarterItems(key, tableBuilder)) {
+            return;
+        }
+
         if (addTrialChamberMaps(key, tableBuilder)) {
             return;
         }
@@ -93,6 +98,20 @@ public class LootTableModifiers {
         }
 
         addEnchantedHoneyBottles(key, tableBuilder);
+    }
+
+    private static boolean addStarterItems(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
+        if (!key.equals(BuiltInLootTables.SPAWN_BONUS_CHEST)) {
+            return false;
+        }
+
+        tableBuilder.withPool(uniformItemPool(Items.CLAY_BALL, 5, 10)).withPool(uniformItemPool(Items.FLINT, 4, 8));
+
+        return true;
+    }
+
+    private static LootPool.Builder uniformItemPool(Item item, float min, float max) {
+        return LootPool.lootPool().setRolls(UniformGenerator.between(min, max)).add(LootItem.lootTableItem(item));
     }
 
     private static boolean addTrialChamberMaps(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
@@ -119,11 +138,12 @@ public class LootTableModifiers {
     private static LootPoolSingletonContainer.Builder<?> buildTrialChamberMap() {
         return LootItem.lootTableItem(Items.MAP)
                        .apply(
-                               ExplorationMapFunction.makeExplorationMap()
-                                                     .setDestination(StructureTags.ON_TRIAL_CHAMBERS_MAPS)
-                                                     .setMapDecoration(MapDecorationTypes.TRIAL_CHAMBERS)
-                                                     .setZoom((byte) 2)
-                                                     .setSkipKnownStructures(false)
+                               ExplorationMapFunction
+                                       .makeExplorationMap()
+                                       .setDestination(StructureTags.ON_TRIAL_CHAMBERS_MAPS)
+                                       .setMapDecoration(MapDecorationTypes.TRIAL_CHAMBERS)
+                                       .setZoom((byte) 2)
+                                       .setSkipKnownStructures(false)
                        )
                        .apply(
                                SetNameFunction.setName(

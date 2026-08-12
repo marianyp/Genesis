@@ -15,6 +15,9 @@
   "icon": "assets/genesis/icon.png",
   "environment": "*",
   "entrypoints": {
+    "preLaunch": [
+      "dev.mariany.genesis.GenesisPreLaunch"
+    ],
     "main": [
       "dev.mariany.genesis.Genesis"
     ],
@@ -29,10 +32,14 @@
     ],
     "rei_common": [
       "dev.mariany.genesis.compat.rei.GenesisREIPlugin"
+    ],
+    "jei_mod_plugin": [
+      "dev.mariany.genesis.compat.jei.GenesisJEIPlugin"
     ]
   },
   "mixins": [
-    "genesis.mixins.json"
+    "genesis.mixins.json",
+    "genesis-jei.mixins.json"
   ],
   "accessWidener": "genesis.accesswidener",
   "depends": {

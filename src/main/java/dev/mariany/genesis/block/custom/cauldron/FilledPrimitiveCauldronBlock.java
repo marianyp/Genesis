@@ -54,7 +54,14 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
                 Shapes.box(0.875, 0, 0, 1, 0.8125, 1),
                 Shapes.box(0.125, 0, 0, 0.875, 0.8125, 0.125),
                 Shapes.box(0.125, 0, 0.875, 0.875, 0.8125, 1),
-                Shapes.box(0.125, 0.0625, 0.125, 0.875, 0.75 - (0.1875 * dusted), 0.875)
+                Shapes.box(
+                        0.125,
+                        0.0625,
+                        0.125,
+                        0.875,
+                        0.75 - (0.1875 * dusted),
+                        0.875
+                )
         );
     }
 
@@ -73,7 +80,7 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
                 BlockEntity blockEntity = level.getBlockEntity(pos);
 
                 if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                    filledPrimitiveCauldronBlockEntity.brush(serverLevel, player, stack, true);
+                    filledPrimitiveCauldronBlockEntity.sift(serverLevel, player, stack, true);
                 }
             }
 

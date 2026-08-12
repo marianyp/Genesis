@@ -1,6 +1,6 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.recipe.brew.GenesisBrewingRecipes;
+import dev.mariany.genesis.event.brewing.BrewingEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,12 +12,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BrewingStandBlockEntityMixin {
     @Inject(method = "canPlaceItem", at = @At(value = "HEAD"), cancellable = true)
     public void injectIsValid(int slot, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        BrewingStandBlockEntity brewingStandBlockEntity = ((BrewingStandBlockEntity) (Object) this);
+        BrewingStandBlockEntity brewingStandBlockEntity = (BrewingStandBlockEntity) (Object) this;
 
-        if (slot != 3 && slot != 4 && brewingStandBlockEntity.getItem(slot).isEmpty()) {
-            if (GenesisBrewingRecipes.getPotionBypasses().contains(stack.getItem())) {
-                cir.setReturnValue(true);
-            }
+        boolean allowed = BrewingEvents.ALLOW_INPUT.invoker().allow(
+                brewingStandBlockEntity,
+                slot,
+                stack
+        );
+
+        if (!allowed) {
+            return;
         }
+
+        cir.setReturnValue(true);
     }
 }

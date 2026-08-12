@@ -9,7 +9,7 @@ import dev.mariany.genesisframework.age.Age;
 import dev.mariany.genesisframework.age.AgeEntry;
 import dev.mariany.genesisframework.age.AgeItemTraits;
 import dev.mariany.genesisframework.datagen.AgeProvider;
-import dev.mariany.genesisframework.item.ItemTrait;
+import dev.mariany.genesisframework.item.trait.ItemTrait;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;

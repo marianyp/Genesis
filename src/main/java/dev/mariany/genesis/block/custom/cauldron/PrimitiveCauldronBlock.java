@@ -27,7 +27,7 @@ public class PrimitiveCauldronBlock extends Block {
             Shapes.box(0.125, 0, 0.875, 0.875, 0.8125, 1)
     );
 
-    public static final VoxelShape INTERACTION_SHAPE = Block.column(12.0, 1.0, 13.0);
+    public static final VoxelShape INTERACTION_SHAPE = Block.column(12, 1, 13);
 
     @Nullable
     protected final PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorMap behaviorMap;

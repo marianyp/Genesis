@@ -31,7 +31,6 @@ public class TirednessWidget extends AbstractWidget {
         this.pointSupplier = pointSupplier;
 
         this.updatePosition();
-        this.setTooltip(createTooltip());
     }
 
     @Override
@@ -41,6 +40,19 @@ public class TirednessWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        if (isHidden()) {
+            this.setTooltip(null);
+            return;
+        }
+
+        this.update(graphics);
+    }
+
+    private static boolean isHidden() {
+        return getMinimumTicksBeforeSleeping() <= 0;
+    }
+
+    private void update(GuiGraphicsExtractor graphics) {
         this.updatePosition();
         this.setTooltip(createTooltip());
         this.blitSprite(graphics);
@@ -83,13 +95,17 @@ public class TirednessWidget extends AbstractWidget {
     }
 
     private static float getProgress(@NotNull Player player) {
-        int minimumTicksBeforeSleeping = Genesis.TIREDNESS_LOGIC.getMinimumTicksBeforeSleeping();
+        int minimumTicksBeforeSleeping = getMinimumTicksBeforeSleeping();
 
         if (minimumTicksBeforeSleeping <= 0) {
             return 1;
         }
 
         return (float) getAwakeTicks(player) / minimumTicksBeforeSleeping;
+    }
+
+    private static int getMinimumTicksBeforeSleeping() {
+        return Genesis.TIREDNESS_LOGIC.getMinimumTicksBeforeSleeping();
     }
 
     private static int getAwakeTicks(Player player) {

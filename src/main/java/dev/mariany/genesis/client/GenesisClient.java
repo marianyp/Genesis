@@ -1,10 +1,12 @@
 package dev.mariany.genesis.client;
 
 import dev.mariany.genesis.Genesis;
+import dev.mariany.genesis.client.gui.screen.AssemblyRecipeBookHandler;
 import dev.mariany.genesis.client.gui.screen.GenesisWidgets;
 import dev.mariany.genesis.client.gui.screen.ingame.AssemblyScreen;
 import dev.mariany.genesis.client.gui.screen.ingame.KilnScreen;
 import dev.mariany.genesis.client.particle.SolaceParticle;
+import dev.mariany.genesis.client.recipe.display.ClientRecipeDisplayRegistry;
 import dev.mariany.genesis.client.render.entity.BoarEntityRenderer;
 import dev.mariany.genesis.client.render.entity.model.GenesisModelLayers;
 import dev.mariany.genesis.config.ConfigHandler;
@@ -22,6 +24,8 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 
 @Environment(EnvType.CLIENT)
 public class GenesisClient implements ClientModInitializer {
+    public static final ClientRecipeDisplayRegistry RECIPE_DISPLAY_REGISTRY = new ClientRecipeDisplayRegistry();
+
     private static final ConfigHandler<GenesisClientConfig> CONFIG_HANDLER = new ConfigHandler<>(
             Genesis.MOD_ID + "-client",
             new GenesisClientConfig()
@@ -38,10 +42,13 @@ public class GenesisClient implements ClientModInitializer {
         ClientBoundPackets.register();
         GenesisModelLayers.bootstrap();
         GenesisWidgets.bootstrap();
+        AssemblyRecipeBookHandler.bootstrap();
 
         registerEntityRenderer();
         registerScreenHandlers();
         registerParticles();
+
+        RECIPE_DISPLAY_REGISTRY.bootstrap();
     }
 
     private static void registerEntityRenderer() {

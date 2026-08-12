@@ -1,6 +1,5 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.event.entity.EntityEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -25,10 +24,8 @@ public class ConsumableMixin {
 
     @Inject(method = "canConsume", at = @At(value = "HEAD"), cancellable = true)
     public void injectCanConsume(LivingEntity livingEntity, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (!Genesis.SOLACE_LOGIC.canEat(livingEntity, stack)) {
-            return;
+        if (EntityEvents.ALLOW_ENTITY_CONSUME.invoker().allow(livingEntity, stack)) {
+            cir.setReturnValue(true);
         }
-
-        cir.setReturnValue(true);
     }
 }

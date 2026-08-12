@@ -2,6 +2,7 @@ package dev.mariany.genesis.screen;
 
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
+import dev.mariany.genesis.recipe.AssemblyRecipe;
 import dev.mariany.genesis.recipe.CraftingPattern;
 import dev.mariany.genesis.recipe.GenesisRecipeTypes;
 import dev.mariany.genesis.screen.slot.AssemblyInputSlot;
@@ -36,9 +37,24 @@ import java.util.Optional;
 public class AssemblyScreenHandler extends AbstractCraftingMenu {
     private final static int SIZE = 3;
 
+    public static final int CRAFTING_SLOT_START_INDEX = 0;
+    public static final int CRAFTING_SLOT_COUNT = SIZE * SIZE;
+    public static final int PATTERN_SLOT_INDEX = CRAFTING_SLOT_START_INDEX + CRAFTING_SLOT_COUNT;
+    public static final int PATTERN_SLOT_COUNT = 1;
+    public static final int RESULT_SLOT_INDEX = PATTERN_SLOT_INDEX + PATTERN_SLOT_COUNT;
+    public static final int RESULT_SLOT_COUNT = 1;
+    public static final int INVENTORY_SLOT_START_INDEX = RESULT_SLOT_INDEX + RESULT_SLOT_COUNT;
+    public static final int MAIN_INVENTORY_SLOT_COUNT = 27;
+    public static final int HOTBAR_SLOT_COUNT = 9;
+    public static final int INVENTORY_SLOT_COUNT = MAIN_INVENTORY_SLOT_COUNT + HOTBAR_SLOT_COUNT;
+    public static final int HOTBAR_SLOT_START_INDEX = INVENTORY_SLOT_START_INDEX + MAIN_INVENTORY_SLOT_COUNT;
+
+    private static final int PATTERN_CONTAINER_SLOT_INDEX = 0;
+    private static final int RESULT_CONTAINER_SLOT_INDEX = 0;
+
     private final ContainerLevelAccess context;
     private final Player player;
-    private final SimpleContainer assemblyPatternInventory = new SimpleContainer(1);
+    private final SimpleContainer assemblyPatternInventory = new SimpleContainer(PATTERN_SLOT_COUNT);
     private final AssemblyPatternSlot assemblyPatternSlot;
     private final ResultSlot resultSlot;
     private final List<Runnable> assemblyPatternChangeListeners = new ArrayList<>();
@@ -118,11 +134,16 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
                 }
             }
 
-            this.resultSlots.setItem(0, result);
-            this.setRemoteSlot(10, result);
+            this.resultSlots.setItem(RESULT_CONTAINER_SLOT_INDEX, result);
+            this.setRemoteSlot(RESULT_SLOT_INDEX, result);
 
             serverPlayer.connection.send(
-                    new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 10, result)
+                    new ClientboundContainerSetSlotPacket(
+                            this.containerId,
+                            this.incrementStateId(),
+                            RESULT_SLOT_INDEX,
+                            result
+                    )
             );
         }
     }
@@ -158,7 +179,7 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         AssemblyPatternSlot assemblyPatternSlot = new AssemblyPatternSlot(
                 this,
                 this.assemblyPatternInventory,
-                0,
+                PATTERN_CONTAINER_SLOT_INDEX,
                 28,
                 35
         );
@@ -174,7 +195,7 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
                 player,
                 this.craftSlots,
                 this.resultSlots,
-                0,
+                RESULT_CONTAINER_SLOT_INDEX,
                 x,
                 y
         ) {
@@ -182,7 +203,9 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
             public void onTake(Player player, ItemStack stack) {
                 super.onTake(player, stack);
 
-                AssemblyScreenHandler.this.assemblyPatternInventory.getItem(0).shrink(1);
+                AssemblyScreenHandler.this.assemblyPatternInventory
+                        .getItem(PATTERN_CONTAINER_SLOT_INDEX)
+                        .shrink(1);
                 AssemblyScreenHandler.this.assemblyPatternInventory.setChanged();
 
                 AssemblyScreenHandler.this.notifyAssemblyPatternChangeListeners();
@@ -241,7 +264,10 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
 
     @Override
     public List<Slot> getInputGridSlots() {
-        return this.slots.subList(0, 9);
+        return this.slots.subList(
+                CRAFTING_SLOT_START_INDEX,
+                CRAFTING_SLOT_START_INDEX + CRAFTING_SLOT_COUNT
+        );
     }
 
     @Override
@@ -282,6 +308,7 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         updateResult(level, recipe);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RecipeBookMenu.PostPlaceAction handlePlacement(
             boolean craftAll,
@@ -329,6 +356,162 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         }
     }
 
+    public void quickCraft(RecipeHolder<AssemblyRecipe> recipe) {
+        if (!(this.player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
+        Inventory inventory = serverPlayer.getInventory();
+        ItemStack currentPattern = this.assemblyPatternSlot.getItem();
+
+        if (isValidPattern(currentPattern, recipe)) {
+            this.handlePlacement(
+                    false,
+                    serverPlayer.hasInfiniteMaterials(),
+                    recipe,
+                    serverPlayer.level(),
+                    inventory
+            );
+
+            return;
+        }
+
+        int patternInventorySlot = findPatternInventorySlot(inventory, recipe);
+
+        if (patternInventorySlot == Inventory.NOT_FOUND_INDEX) {
+            return;
+        }
+
+        ItemStack newPattern = inventory.removeItem(patternInventorySlot, 1);
+        StackedItemContents availableItems = new StackedItemContents();
+
+        inventory.fillStackedContents(availableItems);
+        this.fillCraftSlotsStackedContents(availableItems);
+
+        if (!availableItems.canCraft(recipe.value(), null)) {
+            restoreInventoryItem(inventory, patternInventorySlot, newPattern);
+            return;
+        }
+
+        ItemStack oldPattern = this.assemblyPatternInventory.getItem(PATTERN_CONTAINER_SLOT_INDEX);
+        if (!canFitPatternChange(inventory, oldPattern, newPattern)) {
+            restoreInventoryItem(inventory, patternInventorySlot, newPattern);
+            return;
+        }
+
+        this.assemblyPatternInventory.removeItemNoUpdate(PATTERN_CONTAINER_SLOT_INDEX);
+
+        this.assemblyPatternSlot.set(newPattern);
+
+        dropOrPlaceInInventory(serverPlayer, oldPattern);
+
+        this.handlePlacement(
+                false,
+                serverPlayer.hasInfiniteMaterials(),
+                recipe,
+                serverPlayer.level(),
+                inventory
+        );
+    }
+
+    private static boolean isValidPattern(ItemStack stack, RecipeHolder<AssemblyRecipe> recipe) {
+        return recipe.value().getPatterns().stream().anyMatch(stack::is);
+    }
+
+    private static int findPatternInventorySlot(Inventory inventory, RecipeHolder<AssemblyRecipe> recipe) {
+        for (int slot = 0; slot < Inventory.INVENTORY_SIZE; slot++) {
+            if (isValidPattern(inventory.getItem(slot), recipe)) {
+                return slot;
+            }
+        }
+
+        return Inventory.NOT_FOUND_INDEX;
+    }
+
+    private static void restoreInventoryItem(Inventory inventory, int slot, ItemStack stack) {
+        ItemStack inventoryStack = inventory.getItem(slot);
+
+        if (inventoryStack.isEmpty()) {
+            inventory.setItem(slot, stack);
+        } else {
+            inventoryStack.grow(stack.getCount());
+        }
+    }
+
+    private boolean canFitPatternChange(
+            Inventory inventory,
+            ItemStack oldPattern,
+            ItemStack newPattern
+    ) {
+        List<ItemStack> returnedStacks = new ArrayList<>();
+        returnedStacks.add(oldPattern);
+
+        CraftingPattern craftingPattern = ((AssemblyPatternItem) newPattern.getItem()).getCraftingPattern();
+
+        for (int slot = 0; slot < this.craftSlots.getContainerSize(); slot++) {
+            if (craftingPattern.isSlotDisabled(slot)) {
+                returnedStacks.add(this.craftSlots.getItem(slot));
+            }
+        }
+
+        return canFit(inventory, returnedStacks);
+    }
+
+    private static boolean canFit(Inventory inventory, List<ItemStack> returnedStacks) {
+        List<ItemStack> simulatedInventory = inventory
+                .getNonEquipmentItems()
+                .stream()
+                .map(ItemStack::copy)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+        for (ItemStack returnedStack : returnedStacks) {
+            if (!canFit(simulatedInventory, returnedStack)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean canFit(List<ItemStack> inventory, ItemStack returnedStack) {
+        if (returnedStack.isEmpty()) {
+            return true;
+        }
+
+        int remaining = returnedStack.getCount();
+
+        for (ItemStack inventoryStack : inventory) {
+            if (ItemStack.isSameItemSameComponents(inventoryStack, returnedStack)) {
+                int amount = Math.min(
+                        remaining,
+                        inventoryStack.getMaxStackSize() - inventoryStack.getCount()
+                );
+                inventoryStack.grow(amount);
+                remaining -= amount;
+            }
+
+            if (remaining <= 0) {
+                return true;
+            }
+        }
+
+        for (int slot = 0; slot < inventory.size(); slot++) {
+            if (!inventory.get(slot).isEmpty()) {
+                continue;
+            }
+
+            int amount = Math.min(remaining, returnedStack.getMaxStackSize());
+            inventory.set(slot, returnedStack.copyWithCount(amount));
+            remaining -= amount;
+
+            if (remaining <= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public void removed(Player player) {
         super.removed(player);
@@ -357,30 +540,52 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         originalStack = stackInSlot.copy();
 
 
-        if (index == 10) { // If the clicked slot is the result slot
+        if (index == RESULT_SLOT_INDEX) {
             stackInSlot.getItem().onCraftedBy(stackInSlot, player);
 
             // Try to insert into player inventory
-            if (!this.moveItemStackTo(stackInSlot, 11, 47, true)) {
+            if (!this.moveItemStackTo(
+                    stackInSlot,
+                    INVENTORY_SLOT_START_INDEX,
+                    INVENTORY_SLOT_START_INDEX + INVENTORY_SLOT_COUNT,
+                    true
+            )) {
                 return ItemStack.EMPTY;
             }
 
             selectedSlot.onQuickCraft(stackInSlot, originalStack);
-        } else if (index >= 11 && index < 47) { // If the clicked slot is in the player inventory
-            // Try to insert into input slots (0–8)
-            if (!this.moveItemStackTo(stackInSlot, 0, 9, false)) {
-                // Try special slot at index 9
-                Slot specialSlot = this.slots.get(9);
-                if (specialSlot.mayPlace(stackInSlot)) {
-                    if (!this.moveItemStackTo(stackInSlot, 9, 10, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
+        } else if (
+                index >= INVENTORY_SLOT_START_INDEX &&
+                        index < INVENTORY_SLOT_START_INDEX + INVENTORY_SLOT_COUNT
+        ) {
+            // Try to insert into crafting input slots
+            if (!this.moveItemStackTo(
+                    stackInSlot,
+                    CRAFTING_SLOT_START_INDEX,
+                    CRAFTING_SLOT_START_INDEX + CRAFTING_SLOT_COUNT,
+                    false
+            )) {
+                // Try the assembly pattern slot
+                Slot specialSlot = this.slots.get(PATTERN_SLOT_INDEX);
 
-                return ItemStack.EMPTY;
+                boolean movedToPatternSlot = specialSlot.mayPlace(stackInSlot) && this.moveItemStackTo(
+                        stackInSlot,
+                        PATTERN_SLOT_INDEX,
+                        RESULT_SLOT_INDEX,
+                        false
+                );
+
+                if (!movedToPatternSlot && !this.moveBetweenInventoryAndHotbar(stackInSlot, index)) {
+                    return ItemStack.EMPTY;
+                }
             }
-        } else if (index >= 0 && index <= 9) { // If the clicked slot is one of the input or special slots
-            if (!this.moveItemStackTo(stackInSlot, 11, 47, false)) {
+        } else if (index >= CRAFTING_SLOT_START_INDEX && index < RESULT_SLOT_INDEX) {
+            if (!this.moveItemStackTo(
+                    stackInSlot,
+                    INVENTORY_SLOT_START_INDEX,
+                    INVENTORY_SLOT_START_INDEX + INVENTORY_SLOT_COUNT,
+                    false
+            )) {
                 return ItemStack.EMPTY;
             }
         }
@@ -398,10 +603,28 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         selectedSlot.onTake(player, stackInSlot);
 
         // Drop leftover result if not inserted
-        if (index == 10) {
+        if (index == RESULT_SLOT_INDEX) {
             player.drop(stackInSlot, false);
         }
 
         return originalStack;
+    }
+
+    private boolean moveBetweenInventoryAndHotbar(ItemStack stack, int sourceSlotIndex) {
+        if (sourceSlotIndex < HOTBAR_SLOT_START_INDEX) {
+            return this.moveItemStackTo(
+                    stack,
+                    HOTBAR_SLOT_START_INDEX,
+                    INVENTORY_SLOT_START_INDEX + INVENTORY_SLOT_COUNT,
+                    false
+            );
+        }
+
+        return this.moveItemStackTo(
+                stack,
+                INVENTORY_SLOT_START_INDEX,
+                HOTBAR_SLOT_START_INDEX,
+                false
+        );
     }
 }

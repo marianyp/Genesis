@@ -32,15 +32,23 @@ public class AssemblyTableBlock extends CraftingTableBlock {
     @Override
     protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider(
-                (syncId, inventory, player) -> new AssemblyScreenHandler(
-                        syncId, inventory, ContainerLevelAccess.create(level, pos)
+                (syncId, inventory, _) -> new AssemblyScreenHandler(
+                        syncId,
+                        inventory,
+                        ContainerLevelAccess.create(level, pos)
                 ),
                 SCREEN_TITLE
         );
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            BlockHitResult hit
+    ) {
         if (!level.isClientSide()) {
             player.openMenu(state.getMenuProvider(level, pos));
             player.awardStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);

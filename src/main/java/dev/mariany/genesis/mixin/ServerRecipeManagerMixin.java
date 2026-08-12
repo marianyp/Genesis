@@ -1,6 +1,6 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.recipe.DynamicAssemblyRecipeProvider;
+import dev.mariany.genesis.event.recipe.RecipeEvents;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeMap;
@@ -17,7 +17,6 @@ public class ServerRecipeManagerMixin {
 
     @Inject(method = "finalizeRecipeLoading", at = @At("HEAD"))
     public void initialize(FeatureFlagSet features, CallbackInfo ci) {
-        DynamicAssemblyRecipeProvider dynamicAssemblyRecipeProvider = new DynamicAssemblyRecipeProvider();
-        this.recipes = dynamicAssemblyRecipeProvider.provide(recipes.values());
+        this.recipes = RecipeEvents.MODIFY_RECIPES.invoker().modify(this.recipes);
     }
 }

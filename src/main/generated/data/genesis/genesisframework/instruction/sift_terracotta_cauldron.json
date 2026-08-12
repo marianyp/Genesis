@@ -1,0 +1,27 @@
+{
+  "parent": "genesis:cook_terracotta_cauldron",
+  "criteria": {
+    "sifted_terracotta_cauldron": {
+      "conditions": {
+        "whitelist": []
+      },
+      "trigger": "genesis:sift_primitive_cauldron"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.sift_terracotta_cauldron.description"
+    },
+    "icon": {
+      "id": "genesis:dirt_terracotta_cauldron"
+    },
+    "title": {
+      "translate": "instruction.genesis.sift_terracotta_cauldron"
+    }
+  },
+  "requirements": [
+    [
+      "sifted_terracotta_cauldron"
+    ]
+  ]
+}

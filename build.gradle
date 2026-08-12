@@ -21,6 +21,10 @@ repositories {
     maven {
         url "https://maven.shedaniel.me"
     }
+
+    maven {
+        url "https://maven.blamejared.com"
+    }
 }
 
 loom {
@@ -30,6 +34,7 @@ loom {
 fabricApi {
     configureDataGeneration {
         client = true
+        modId = "genesis"
     }
 }
 
@@ -38,15 +43,22 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    // Genesis Framework
-    implementation "com.github.marianyp:genesis-framework:${project.genesis_framework_version}"
+    // Genesis Framework (Production)
+    implementation "com.github.marianyp:genesis-framework:v${project.genesis_framework_version}"
+
+    // Genesis Framework (Local)
+//    implementation "dev.mariany.genesisframework:genesisframework:${project.genesis_framework_version}"
 
     // Roughly Enough Items
-    runtimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+//    runtimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
     compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
-    compileOnly "dev.architectury:architectury-fabric:21.0.2"
+    compileOnly "dev.architectury:architectury-fabric:21.0.7"
+
+    // Just Enough Items
+//    runtimeOnly "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
 }
 
 processResources {

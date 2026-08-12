@@ -5,7 +5,7 @@ import dev.mariany.genesis.event.entity.EntityEvents;
 import dev.mariany.genesis.packet.clientbound.UpdateSolaceLogicPayload;
 import dev.mariany.genesis.world.effect.GenesisMobEffects;
 import dev.mariany.genesis.world.level.gamerules.GenesisGameRules;
-import dev.mariany.genesis.world.level.gamerules.SyncedGameRule;
+import dev.mariany.genesis.world.level.gamerules.NetworkedGameRuleState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
@@ -25,19 +25,19 @@ import net.minecraft.world.phys.AABB;
 import java.util.stream.Stream;
 
 public class SolaceLogic {
-    private final SyncedGameRule<Double> syncedCampfireRadius = new SyncedGameRule<>(
-            GenesisGameRules.SOLACE_CAMPFIRE_RADIUS,
-            0D,
+    private final NetworkedGameRuleState<Double> campfireRadiusState = new NetworkedGameRuleState<>(
+            () -> GenesisGameRules.SOLACE_CAMPFIRE_RADIUS,
             UpdateSolaceLogicPayload::new
     );
 
     public void setCampfireRadius(double campfireRadius) {
-        this.syncedCampfireRadius.setValue(campfireRadius);
+        this.campfireRadiusState.setValue(campfireRadius);
     }
 
     public void bootstrap() {
         Genesis.bootstrapLog("Solace Logic");
-        this.syncedCampfireRadius.bootstrap();
+        this.campfireRadiusState.bootstrap();
+        EntityEvents.ALLOW_ENTITY_CONSUME.register(this::canEat);
         EntityEvents.AFTER_ENTITY_CONSUME.register(this::onEntityConsume);
     }
 
@@ -142,7 +142,7 @@ public class SolaceLogic {
     }
 
     private double getCampfireRadius() {
-        return this.syncedCampfireRadius.getValue();
+        return this.campfireRadiusState.getValue();
     }
 
     private static boolean isCampfire(BlockState state) {

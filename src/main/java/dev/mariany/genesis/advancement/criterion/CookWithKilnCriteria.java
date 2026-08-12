@@ -30,10 +30,14 @@ public class CookWithKilnCriteria extends SimpleCriterionTrigger<CookWithKilnCri
             implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Conditions::player),
-                                Ingredient.CODEC.optionalFieldOf("item").forGetter(Conditions::ingredient)
-                        )
-                        .apply(instance, Conditions::new)
+                                            EntityPredicate.ADVANCEMENT_CODEC
+                                                    .optionalFieldOf("player")
+                                                    .forGetter(Conditions::player),
+                                            Ingredient.CODEC
+                                                    .optionalFieldOf("item")
+                                                    .forGetter(Conditions::ingredient)
+                                    )
+                                    .apply(instance, Conditions::new)
         );
 
         public static Criterion<Conditions> create(ItemLike item) {
@@ -52,12 +56,19 @@ public class CookWithKilnCriteria extends SimpleCriterionTrigger<CookWithKilnCri
             return create(null, ingredient);
         }
 
-        public static Criterion<Conditions> create(@Nullable ContextAwarePredicate playerPredicate, Ingredient ingredient) {
-            return GenesisCriteria.COOK_WITH_KILN.createCriterion(new Conditions(Optional.ofNullable(playerPredicate), Optional.of(ingredient)));
+        public static Criterion<Conditions> create(
+                @Nullable ContextAwarePredicate playerPredicate,
+                Ingredient ingredient
+        ) {
+            return GenesisCriteria.COOK_WITH_KILN.createCriterion(
+                    new Conditions(Optional.ofNullable(playerPredicate), Optional.of(ingredient))
+            );
         }
 
         public static Criterion<Conditions> create() {
-            return GenesisCriteria.COOK_WITH_KILN.createCriterion(new Conditions(Optional.empty(), Optional.empty()));
+            return GenesisCriteria.COOK_WITH_KILN.createCriterion(
+                    new Conditions(Optional.empty(), Optional.empty())
+            );
         }
 
         public boolean matches(ItemStack stack) {

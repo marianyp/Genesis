@@ -41,7 +41,6 @@
   "age.genesis.tools.stone": "돌",
   "age.genesis.tools.stone.description": "나무 도구를 내구도 소진으로 부수세요. 돌 도구가 해금됩니다.",
   "age.genesis.tools.wood": "나무",
-
   "block.genesis.assembly_table": "조립 작업대",
   "block.genesis.clay_cauldron": "점토 가마솥",
   "block.genesis.clay_kiln": "점토 가마",
@@ -57,76 +56,60 @@
   "block.genesis.soul_sand_terracotta_cauldron": "영혼 모래 테라코타 가마솥",
   "block.genesis.soul_soil_terracotta_cauldron": "영혼 흙 테라코타 가마솥",
   "block.genesis.terracotta_cauldron": "테라코타 가마솥",
-
   "block.minecraft.bed.genesis.tiredness": "아직은 잘 수 없습니다. 피곤하지 않습니다.",
-
-  "category.rei.genesis.assembly": "조립",
-
+  "category.genesis.assembly": "조립",
+  "recipe_transfer.genesis.missing_ingredients": "재료가 부족합니다",
+  "recipe_transfer.genesis.unknown_recipe": "이 레시피는 더 이상 사용할 수 없습니다",
+  "category.genesis.sifting": "체질",
   "container.genesis.assembly_table.cast_tooltip": "주형 추가",
   "container.genesis.assembly_table.title": "아이템 조립",
   "container.genesis.kiln": "가마",
-
   "effect.genesis.solace": "안식",
-
   "entity.genesis.boar": "멧돼지",
-
+  "entity.genesis.boar.description": "플레이어에게 돌진하고 작물을 파괴하는 적대적인 야생 돼지입니다. 가죽과 가끔 돼지고기를 떨어뜨립니다.",
   "filled_map.genesis.deep_dark": "깊은 어둠 탐험 지도",
   "filled_map.genesis.pale_garden": "창백한 정원 탐험 지도",
-
+  "gamerule.genesis.respawn_resets_tiredness": "부활 시 피로도 초기화",
+  "gamerule.genesis.respawn_resets_tiredness.description": "사망 시 플레이어의 피로도를 0으로 초기화할지 설정합니다.",
   "gamerule.genesis.highlight_elder_guardians": "엘더 가디언 강조",
   "gamerule.genesis.highlight_elder_guardians.description": "엘더 가디언 하나를 처치한 후 주변 엘더 가디언에게 발광 효과를 적용할지 설정합니다.",
-  "gamerule.genesis.minimum_days_before_sleeping": "잠자기까지 필요한 최소 날짜",
+  "gamerule.genesis.tiredness_rate": "피로도 증가율",
+  "gamerule.genesis.tiredness_rate.description": "플레이어가 피로해지는 데 걸리는 일수를 설정합니다. 플레이어 수면 비율 게임 규칙에 따라 조정됩니다.",
   "gamerule.genesis.ocean_monument_radius": "바다 신전 탐색 반경",
   "gamerule.genesis.ocean_monument_radius.description": "주변 엘더 가디언을 탐색하는 반경을 설정합니다.",
   "gamerule.genesis.solace_campfire_radius": "안식 모닥불 반경",
   "gamerule.genesis.solace_campfire_radius.description": "모닥불 근처에서 회복 효과를 받기 위해 필요한 반경을 설정합니다.",
-
   "gui.genesis.tiredness": "피로도: %s%%",
-
   "instruction.genesis.cook_clay_pickaxe_cast": "점토 곡괭이 주형을 모닥불에서 구우세요.",
   "instruction.genesis.cook_clay_spear_cast": "점토 창 주형을 모닥불에서 구우세요.",
   "instruction.genesis.cook_kiln": "점토 가마를 모닥불에서 구우세요.",
   "instruction.genesis.cook_terracotta_cauldron": "점토 가마솥을 모닥불에서 구우세요.",
-
   "instruction.genesis.craft_assembly_table": "조립 작업대를 제작하세요.",
   "instruction.genesis.craft_assembly_table.description": "제작대 하나를 제작 격자에 넣으세요.",
-
   "instruction.genesis.craft_blank_clay_cast": "빈 점토 주형을 제작하세요.",
   "instruction.genesis.craft_blank_clay_cast.description": "점토 9개를 사용하세요.",
-
   "instruction.genesis.craft_clay_cauldron": "점토 가마솥을 제작하세요.",
   "instruction.genesis.craft_clay_cauldron.description": "점토 5개를 사용하세요.",
-
   "instruction.genesis.craft_clay_kiln": "점토 가마를 제작하세요.",
   "instruction.genesis.craft_clay_kiln.description": "점토 8개를 사용하세요.",
-
   "instruction.genesis.craft_clay_pickaxe_cast": "점토 곡괭이 주형을 제작하세요.",
   "instruction.genesis.craft_clay_pickaxe_cast.description": "부싯돌 3개와 빈 점토 주형을 사용하세요.",
-
   "instruction.genesis.craft_clay_spear_cast": "점토 창 주형을 제작하세요.",
   "instruction.genesis.craft_clay_spear_cast.description": "부싯돌 1개와 빈 점토 주형을 사용하세요.",
-
   "instruction.genesis.craft_flints": "부싯돌을 제작하세요.",
   "instruction.genesis.craft_flints.description": "부싯돌 2개를 제작 격자에서 조합하세요.",
-
   "instruction.genesis.craft_wooden_pickaxe": "나무 곡괭이를 제작하세요.",
   "instruction.genesis.craft_wooden_pickaxe.description": "조립 작업대와 곡괭이 주형을 사용하세요.",
-
   "instruction.genesis.craft_wooden_spear": "나무 창을 제작하세요.",
   "instruction.genesis.craft_wooden_spear.description": "전투 단계에 도달하기 전까지 검과 도끼의 성능이 감소합니다.",
-
-  "instruction.genesis.dust_terracotta_cauldron": "테라코타 가마솥을 체질하세요.",
-  "instruction.genesis.dust_terracotta_cauldron.description": "흙 또는 자갈을 넣으세요. 붓을 사용하면 드롭 확률이 증가합니다.",
-
+  "instruction.genesis.sift_terracotta_cauldron": "테라코타 가마솥을 체질하세요.",
+  "instruction.genesis.sift_terracotta_cauldron.description": "흙 또는 자갈을 넣으세요. 붓을 사용하면 드롭 확률이 증가합니다.",
   "instruction.genesis.find_clay": "점토를 찾으세요.",
   "instruction.genesis.find_flint": "부싯돌을 찾으세요.",
-
   "instruction.genesis.make_campfire": "모닥불을 만드세요.",
   "instruction.genesis.make_campfire.description": "막대기 4개를 바닥에 던진 뒤 부싯돌로 불을 붙이세요.",
-
   "instruction.genesis.obtain_solace": "체력을 회복하세요.",
   "instruction.genesis.obtain_solace.description": "모닥불 근처에서 음식을 먹으세요. 날음식은 피하세요.",
-
   "instruction.genesis.use_kiln": "가마를 사용하세요.",
   "instruction.genesis.use_kiln.description": "가마 아래를 모닥불로 가열한 뒤 아이템을 제련하세요.",
   "item.genesis.anvil_cast": "모루 주형",
@@ -159,10 +142,51 @@
   "item.genesis.spear_cast": "창 주형",
   "item.genesis.sword_cast": "검 주형",
   "item.genesis.totem_cast": "토템 주형",
-
+  "lore.genesis.anvil_cast": "조립 작업대에서 모루를 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.assembly_table": "일회용 주형을 사용해 도구와 형태가 정해진 여러 아이템을 조립하는 특수 제작대입니다.",
+  "lore.genesis.axe_cast": "조립 작업대에서 도끼를 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.blank_clay_cast": "점토로 만든 빈 거푸집입니다. 부싯돌로 모양을 낸 뒤 구우면 조립 작업대용 주형이 됩니다.",
+  "lore.genesis.boar_spawn_egg": "플레이어에게 돌진하고 작물을 파괴하는 적대적인 멧돼지를 소환합니다.",
+  "lore.genesis.clay_anvil_cast": "모루 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 모루 주형이 됩니다.",
+  "lore.genesis.clay_axe_cast": "도끼 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 도끼 주형이 됩니다.",
+  "lore.genesis.clay_cauldron": "점토로 만든 굽지 않은 가마솥입니다. 모닥불이나 용광로에서 구우면 테라코타 가마솥이 됩니다.",
+  "lore.genesis.clay_hoe_cast": "괭이 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 괭이 주형이 됩니다.",
+  "lore.genesis.clay_kiln": "점토로 만든 굽지 않은 가마입니다. 모닥불이나 용광로에서 구우면 가마가 됩니다.",
+  "lore.genesis.clay_pickaxe_cast": "곡괭이 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 곡괭이 주형이 됩니다.",
+  "lore.genesis.clay_shield_cast": "방패 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 방패 주형이 됩니다.",
+  "lore.genesis.clay_shovel_cast": "삽 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 삽 주형이 됩니다.",
+  "lore.genesis.clay_spear_cast": "창 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 창 주형이 됩니다.",
+  "lore.genesis.clay_sword_cast": "검 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 검 주형이 됩니다.",
+  "lore.genesis.clay_totem_cast": "불사의 토템 모양의 굽지 않은 거푸집입니다. 모닥불이나 용광로에서 구우면 토템 주형이 됩니다.",
+  "lore.genesis.dirt_terracotta_cauldron": "흙이 담긴 테라코타 가마솥입니다. 손으로 체질하거나 솔을 사용하면 더 좋은 아이템을 얻을 수 있습니다.",
+  "lore.genesis.enchanted_honey_bottle": "15초 동안 재생 II 효과를 부여하고 독과 위더 효과를 치료합니다.",
+  "lore.genesis.flints": "땅에 떨어진 막대기 네 개에 사용하면 모닥불을 만들 수 있습니다.",
+  "lore.genesis.gravel_terracotta_cauldron": "자갈이 담긴 테라코타 가마솥입니다. 손으로 체질하거나 솔을 사용하면 더 좋은 아이템을 얻을 수 있습니다.",
+  "lore.genesis.hoe_cast": "조립 작업대에서 괭이를 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.kiln": "아래에 불이나 불붙은 모닥불을 두면 연료를 소모하지 않고 아이템을 제련합니다.",
+  "lore.genesis.pickaxe_cast": "조립 작업대에서 곡괭이를 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.raw_coal": "광석에서 떨어지는 정제되지 않은 석탄입니다. 제련해 석탄으로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_coal_block": "원석 석탄 아홉 개로 만든 조밀한 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.raw_diamond": "광석에서 떨어지는 가공하지 않은 다이아몬드입니다. 제련해 다이아몬드로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_diamond_block": "원석 다이아몬드 아홉 개로 만든 조밀한 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.raw_emerald": "광석에서 떨어지는 가공하지 않은 에메랄드입니다. 제련해 에메랄드로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_emerald_block": "원석 에메랄드 아홉 개로 만든 조밀한 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.raw_lapis_lazuli": "광석에서 떨어지는 정제되지 않은 청금석입니다. 제련해 청금석으로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_lapis_lazuli_block": "원석 청금석 아홉 개로 만든 조밀한 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.raw_netherite": "고대 잔해에서 얻은 정제되지 않은 네더라이트입니다. 제련해 네더라이트 파편으로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_netherite_block": "원석 네더라이트 아홉 개로 만든 폭발 저항성 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.raw_redstone": "광석에서 떨어지는 정제되지 않은 레드스톤입니다. 제련해 레드스톤 가루로 만들거나 아홉 개를 조합해 저장 블록으로 만들 수 있습니다.",
+  "lore.genesis.raw_redstone_block": "원석 레드스톤 아홉 개로 만든 조밀한 저장 블록입니다. 나중에 가공할 수 있도록 다시 분해할 수 있습니다.",
+  "lore.genesis.shield_cast": "조립 작업대에서 방패를 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.shovel_cast": "조립 작업대에서 삽을 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.soul_sand_terracotta_cauldron": "영혼 모래가 담긴 테라코타 가마솥입니다. 손으로 체질하거나 솔을 사용하면 더 좋은 아이템을 얻을 수 있습니다.",
+  "lore.genesis.soul_soil_terracotta_cauldron": "영혼 흙이 담긴 테라코타 가마솥입니다. 손으로 체질하거나 솔을 사용하면 더 좋은 아이템을 얻을 수 있습니다.",
+  "lore.genesis.spear_cast": "조립 작업대에서 창을 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.sword_cast": "조립 작업대에서 검을 제작할 때 사용하는 일회용 주형입니다.",
+  "lore.genesis.terracotta_cauldron": "흙, 자갈, 영혼 모래 또는 영혼 흙을 채운 뒤 내용물을 체질하세요. 솔을 사용하면 더 좋은 아이템을 얻을 수 있습니다.",
+  "lore.genesis.totem_cast": "조립 작업대에서 불사의 토템을 제작할 때 사용하는 일회용 주형입니다.",
   "stat.genesis.interact_with_assembly_table": "조립 작업대 사용 횟수",
   "stat.genesis.interact_with_kiln": "가마 사용 횟수",
-
   "subtitles.block.genesis.assembly_table.use": "조립 작업대 사용",
   "subtitles.entity.genesis.boar.ambient": "멧돼지가 울부짖음",
   "subtitles.entity.genesis.boar.angry": "멧돼지가 성난 울음",
@@ -172,7 +196,6 @@
   "subtitles.entity.genesis.boar.step": "멧돼지가 걸음",
   "subtitles.item.armor.equip_copper": "구리 방어구가 달그락거림",
   "subtitles.item.genesis.flints": "부싯돌이 부딪힘",
-
   "tag.item.genesis.causes_hunger": "허기를 유발하는 아이템",
   "tag.item.genesis.clay_tool_casts": "점토 도구 주형",
   "tag.item.genesis.copper_armor": "구리 방어구",

@@ -25,6 +25,7 @@
   "client": [
     "RecipeBookScreenMixin",
     "accessor.AbstractContainerScreenAccessor",
+    "accessor.AbstractRecipeBookScreenAccessor",
     "accessor.GhostRecipeAccessor",
     "accessor.RecipeBookWidgetAccessor",
     "accessor.ScreenAccessor"

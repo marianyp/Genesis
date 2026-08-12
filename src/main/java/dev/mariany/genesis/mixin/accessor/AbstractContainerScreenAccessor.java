@@ -11,4 +11,10 @@ public interface AbstractContainerScreenAccessor {
 
     @Accessor("topPos")
     int genesis$topPos();
+
+    @Accessor("leftPos")
+    void genesis$setLeftPos(int leftPos);
+
+    @Accessor("imageWidth")
+    int genesis$imageWidth();
 }

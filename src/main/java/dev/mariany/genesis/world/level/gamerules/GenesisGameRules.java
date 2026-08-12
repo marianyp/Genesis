@@ -6,10 +6,10 @@ import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.gamerules.GameRuleCategory;
 
 public class GenesisGameRules {
-    public static final GameRule<Double> MINIMUM_DAYS_BEFORE_SLEEPING = GameRuleBuilder
+    public static final GameRule<Double> TIREDNESS_RATE = GameRuleBuilder
             .forDouble(1)
             .category(GameRuleCategory.PLAYER)
-            .buildAndRegister(Genesis.id("minimum_days_before_sleeping"));
+            .buildAndRegister(Genesis.id("tiredness_rate"));
 
     public static final GameRule<Double> SOLACE_CAMPFIRE_RADIUS = GameRuleBuilder
             .forDouble(3.5)

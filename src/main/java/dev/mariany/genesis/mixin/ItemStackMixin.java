@@ -1,6 +1,6 @@
 package dev.mariany.genesis.mixin;
 
-import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
+import dev.mariany.genesis.event.item.ItemStackEvents;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,9 +25,6 @@ public class ItemStackMixin {
             CallbackInfo ci
     ) {
         ItemStack stack = ((ItemStack) (Object) this);
-
-        if (player != null && stack.isBroken()) {
-            GenesisCriteria.ITEM_BROKEN.trigger(player, stack);
-        }
+        ItemStackEvents.STACK_DAMAGED.invoker().onStackDamaged(stack, player);
     }
 }

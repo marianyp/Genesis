@@ -14,9 +14,9 @@ public class GenesisCriteria {
             new PlayerTrigger()
     );
 
-    public static final BrushPrimitiveCauldronCriteria BRUSH_PRIMITIVE_CAULDRON = register(
-            "brush_primitive_cauldron",
-            new BrushPrimitiveCauldronCriteria()
+    public static final SiftPrimitiveCauldronCriteria SIFT_PRIMITIVE_CAULDRON = register(
+            "sift_primitive_cauldron",
+            new SiftPrimitiveCauldronCriteria()
     );
 
     public static final CookWithKilnCriteria COOK_WITH_KILN = register(

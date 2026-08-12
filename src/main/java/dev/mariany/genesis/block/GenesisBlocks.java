@@ -203,25 +203,29 @@ public class GenesisBlocks {
     public static void bootstrap() {
         Genesis.bootstrapLog("Blocks");
 
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries -> {
-            entries.insertAfter(Items.CRAFTING_TABLE, ASSEMBLY_TABLE);
-            entries.insertBefore(Items.CAMPFIRE, CLAY_CAULDRON);
-            entries.insertAfter(CLAY_CAULDRON, TERRACOTTA_CAULDRON);
-            entries.insertAfter(TERRACOTTA_CAULDRON, DIRT_TERRACOTTA_CAULDRON);
-            entries.insertAfter(DIRT_TERRACOTTA_CAULDRON, GRAVEL_TERRACOTTA_CAULDRON);
-            entries.insertAfter(GRAVEL_TERRACOTTA_CAULDRON, SOUL_SAND_TERRACOTTA_CAULDRON);
-            entries.insertAfter(SOUL_SAND_TERRACOTTA_CAULDRON, SOUL_SOIL_TERRACOTTA_CAULDRON);
-            entries.insertAfter(SOUL_SOIL_TERRACOTTA_CAULDRON, CLAY_KILN);
-            entries.insertAfter(CLAY_KILN, KILN);
-        });
+        CreativeModeTabEvents
+                .modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS)
+                .register(entries -> {
+                    entries.insertAfter(Items.CRAFTING_TABLE, ASSEMBLY_TABLE);
+                    entries.insertBefore(Items.CAMPFIRE, CLAY_CAULDRON);
+                    entries.insertAfter(CLAY_CAULDRON, TERRACOTTA_CAULDRON);
+                    entries.insertAfter(TERRACOTTA_CAULDRON, DIRT_TERRACOTTA_CAULDRON);
+                    entries.insertAfter(DIRT_TERRACOTTA_CAULDRON, GRAVEL_TERRACOTTA_CAULDRON);
+                    entries.insertAfter(GRAVEL_TERRACOTTA_CAULDRON, SOUL_SAND_TERRACOTTA_CAULDRON);
+                    entries.insertAfter(SOUL_SAND_TERRACOTTA_CAULDRON, SOUL_SOIL_TERRACOTTA_CAULDRON);
+                    entries.insertAfter(SOUL_SOIL_TERRACOTTA_CAULDRON, CLAY_KILN);
+                    entries.insertAfter(CLAY_KILN, KILN);
+                });
 
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(entries -> {
-            entries.insertBefore(Items.RAW_IRON_BLOCK, RAW_NETHERITE_BLOCK);
-            entries.insertAfter(RAW_NETHERITE_BLOCK, RAW_COAL_BLOCK);
-            entries.insertAfter(RAW_COAL_BLOCK, RAW_DIAMOND_BLOCK);
-            entries.insertAfter(RAW_DIAMOND_BLOCK, RAW_EMERALD_BLOCK);
-            entries.insertAfter(RAW_EMERALD_BLOCK, RAW_LAPIS_LAZULI_BLOCK);
-            entries.insertAfter(RAW_LAPIS_LAZULI_BLOCK, RAW_REDSTONE_BLOCK);
-        });
+        CreativeModeTabEvents
+                .modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS)
+                .register(entries -> {
+                    entries.insertBefore(Items.RAW_IRON_BLOCK, RAW_NETHERITE_BLOCK);
+                    entries.insertAfter(RAW_NETHERITE_BLOCK, RAW_COAL_BLOCK);
+                    entries.insertAfter(RAW_COAL_BLOCK, RAW_DIAMOND_BLOCK);
+                    entries.insertAfter(RAW_DIAMOND_BLOCK, RAW_EMERALD_BLOCK);
+                    entries.insertAfter(RAW_EMERALD_BLOCK, RAW_LAPIS_LAZULI_BLOCK);
+                    entries.insertAfter(RAW_LAPIS_LAZULI_BLOCK, RAW_REDSTONE_BLOCK);
+                });
     }
 }

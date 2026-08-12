@@ -20,7 +20,7 @@ public class DestroyCropsGoal extends MoveToBlockGoal {
     private final Mob stepAndDestroyMob;
 
     public DestroyCropsGoal(PathfinderMob mob, double speed, int maxYDifference) {
-        super(mob, speed, 24, maxYDifference);
+        super(mob, speed, 8, maxYDifference);
 
         this.stepAndDestroyMob = mob;
     }

@@ -1,7 +1,7 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.advancement.criterion.BrushPrimitiveCauldronCriteria;
+import dev.mariany.genesis.advancement.criterion.SiftPrimitiveCauldronCriteria;
 import dev.mariany.genesis.advancement.criterion.CookWithKilnCriteria;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.block.GenesisBlocks;
@@ -100,20 +100,20 @@ public class GenesisInstructionProvider extends InstructionProvider {
                 .requireItem(GenesisBlocks.TERRACOTTA_CAULDRON)
                 .build(consumer, Genesis.id("cook_terracotta_cauldron"));
 
-        InstructionEntry dustTerracottaCauldron = Instruction.Builder
+        InstructionEntry siftTerracottaCauldron = Instruction.Builder
                 .create()
                 .parent(cookTerracottaCauldron)
                 .display(
                         GenesisBlocks.DIRT_TERRACOTTA_CAULDRON,
-                        Component.translatable("instruction.genesis.dust_terracotta_cauldron"),
-                        Component.translatable("instruction.genesis.dust_terracotta_cauldron.description")
+                        Component.translatable("instruction.genesis.sift_terracotta_cauldron"),
+                        Component.translatable("instruction.genesis.sift_terracotta_cauldron.description")
                 )
-                .criterion("dusted_terracotta_cauldron", BrushPrimitiveCauldronCriteria.Conditions.create())
-                .build(consumer, Genesis.id("dust_terracotta_cauldron"));
+                .criterion("sifted_terracotta_cauldron", SiftPrimitiveCauldronCriteria.Conditions.create())
+                .build(consumer, Genesis.id("sift_terracotta_cauldron"));
 
         InstructionEntry craftBlankClayCast = Instruction.Builder
                 .create()
-                .parent(dustTerracottaCauldron)
+                .parent(siftTerracottaCauldron)
                 .display(
                         GenesisItems.BLANK_CLAY_CAST,
                         Component.translatable("instruction.genesis.craft_blank_clay_cast"),
