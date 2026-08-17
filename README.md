@@ -16,8 +16,11 @@ For more information or guidance on datapack customization, [please visit the wi
 
 ### Mod Support
 
-*   [Biomes O' Plenty](https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty)
 *   [Farmer's Delight](https://www.curseforge.com/minecraft/mc-mods/farmers-delight-refabricated)
+*   [Biomes O' Plenty](https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty) (1.21.8 - 1.21.10)
+*   [JEI](https://www.curseforge.com/minecraft/mc-mods/jei) (26.2)
+*   [REI](https://www.curseforge.com/minecraft/mc-mods/roughly-enough-items) (26.2)
+*   [Item Descriptions](https://www.curseforge.com/minecraft/mc-mods/item-descriptions) (26.2)
 
 ### Credits
 
