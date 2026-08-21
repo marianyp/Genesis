@@ -1,29 +1,15 @@
 {
   "parent": "genesis:find_flint",
   "criteria": {
-    "flints_crafted": {
+    "flints_obtained": {
       "conditions": {
-        "player": [
+        "items": [
           {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:crafted",
-                    "stat": "genesis:flints",
-                    "value": {
-                      "min": 1
-                    }
-                  }
-                ]
-              }
-            }
+            "items": "genesis:flints"
           }
         ]
       },
-      "trigger": "minecraft:tick"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -39,7 +25,7 @@
   },
   "requirements": [
     [
-      "flints_crafted"
+      "flints_obtained"
     ]
   ]
 }

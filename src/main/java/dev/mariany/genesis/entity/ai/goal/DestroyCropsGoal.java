@@ -55,9 +55,11 @@ public class DestroyCropsGoal extends MoveToBlockGoal {
         BlockPos mobPos = this.stepAndDestroyMob.blockPosition();
         BlockPos cropBlockPos = this.adjustPositionToCrop(mobPos, level);
 
-        if (cropBlockPos != null) {
-            level.destroyBlock(cropBlockPos, false, this.stepAndDestroyMob);
+        if (cropBlockPos == null) {
+            return;
         }
+
+        level.destroyBlock(cropBlockPos, false, this.stepAndDestroyMob);
     }
 
     @Nullable

@@ -13,11 +13,10 @@ public class GenesisDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(GenesisAdvancementsOverrideProvider::new);
         pack.addProvider(GenesisAgeProvider::new);
-        pack.addProvider(GenesisBiomeTagProvider::new);
         pack.addProvider(GenesisBlockLootTableOverrideProvider::new);
         pack.addProvider(GenesisBlockLootTableProvider::new);
         pack.addProvider(GenesisBlockTagProvider::new);
-        pack.addProvider(GenesisDustingLootTableProvider::new);
+        pack.addProvider(GenesisSiftingLootTableProvider::new);
         pack.addProvider(GenesisEntityLootTableGenerator::new);
         pack.addProvider(GenesisEntityTypeTagProvider::new);
         pack.addProvider(GenesisInstructionProvider::new);

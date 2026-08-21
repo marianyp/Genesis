@@ -21,10 +21,10 @@ public class GenesisGameRules {
             .category(GameRuleCategory.MISC)
             .buildAndRegister(Genesis.id("ocean_monument_radius"));
 
-    public static final GameRule<Boolean> HIGHLIGHT_ELDER_GUARDIANS = GameRuleBuilder
+    public static final GameRule<Boolean> REVEAL_ELDER_GUARDIANS = GameRuleBuilder
             .forBoolean(true)
             .category(GameRuleCategory.MOBS)
-            .buildAndRegister(Genesis.id("highlight_elder_guardians"));
+            .buildAndRegister(Genesis.id("reveal_elder_guardians"));
 
     public static final GameRule<Boolean> RESPAWN_RESETS_TIREDNESS = GameRuleBuilder
             .forBoolean(false)

@@ -6,9 +6,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 public class GenesisLootTables {
-    public static final ResourceKey<LootTable> DIRT_DUSTING = register("dusting/dirt");
-    public static final ResourceKey<LootTable> GRAVEL_DUSTING = register("dusting/gravel");
-    public static final ResourceKey<LootTable> SOUL_SEDIMENT_DUSTING = register("dusting/soul_sediment");
+    public static final ResourceKey<LootTable> SIFTING_DIRT = register("sifting/dirt");
+    public static final ResourceKey<LootTable> SIFTING_GRAVEL = register("sifting/gravel");
+    public static final ResourceKey<LootTable> SIFTING_SOUL = register("sifting/soul");
 
     private static ResourceKey<LootTable> register(String id) {
         return ResourceKey.create(Registries.LOOT_TABLE, Genesis.id(id));

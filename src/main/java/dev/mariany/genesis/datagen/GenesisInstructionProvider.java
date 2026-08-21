@@ -1,11 +1,12 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.advancement.criterion.SiftPrimitiveCauldronCriteria;
 import dev.mariany.genesis.advancement.criterion.CookWithKilnCriteria;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
+import dev.mariany.genesis.advancement.criterion.SiftPrimitiveCauldronCriteria;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
+import dev.mariany.genesis.tag.GenesisTags;
 import dev.mariany.genesis.world.effect.GenesisMobEffects;
 import dev.mariany.genesisframework.datagen.InstructionProvider;
 import dev.mariany.genesisframework.instruction.Instruction;
@@ -15,7 +16,9 @@ import net.minecraft.advancements.predicates.MobEffectsPredicate;
 import net.minecraft.advancements.triggers.EffectsChangedTrigger;
 import net.minecraft.advancements.triggers.PlayerTrigger;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.Optional;
@@ -35,6 +38,8 @@ public class GenesisInstructionProvider extends InstructionProvider {
             HolderLookup.Provider registryLookup,
             Consumer<InstructionEntry> consumer
     ) {
+        HolderLookup.RegistryLookup<Item> itemLookup = registryLookup.lookupOrThrow(Registries.ITEM);
+
         InstructionEntry findFlint = Instruction.Builder
                 .create()
                 .parent(InstructionEntry.VIEW_AGES_INSTRUCTION_ID)
@@ -53,7 +58,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_flints"),
                         Component.translatable("instruction.genesis.craft_flints.description")
                 )
-                .requireCraft(GenesisItems.FLINTS)
+                .requireItem(GenesisItems.FLINTS)
                 .build(consumer, Genesis.id("make_flints"));
 
         InstructionEntry makeCampfire = Instruction.Builder
@@ -87,7 +92,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_clay_cauldron"),
                         Component.translatable("instruction.genesis.craft_clay_cauldron.description")
                 )
-                .requireCraft(GenesisBlocks.CLAY_CAULDRON)
+                .requireItem(GenesisBlocks.CLAY_CAULDRON)
                 .build(consumer, Genesis.id("craft_clay_cauldron"));
 
         InstructionEntry cookTerracottaCauldron = Instruction.Builder
@@ -119,7 +124,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_blank_clay_cast"),
                         Component.translatable("instruction.genesis.craft_blank_clay_cast.description")
                 )
-                .requireCraft(GenesisItems.BLANK_CLAY_CAST)
+                .requireItem(GenesisItems.BLANK_CLAY_CAST)
                 .build(consumer, Genesis.id("craft_blank_clay_cast"));
 
         InstructionEntry craftClayPickaxeCast = Instruction.Builder
@@ -130,7 +135,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_clay_pickaxe_cast"),
                         Component.translatable("instruction.genesis.craft_clay_pickaxe_cast.description")
                 )
-                .requireCraft(GenesisItems.CLAY_PICKAXE_CAST)
+                .requireItem(GenesisItems.CLAY_PICKAXE_CAST)
                 .build(consumer, Genesis.id("craft_clay_pickaxe_cast"));
 
         InstructionEntry cookClayPickaxeCast = Instruction.Builder
@@ -151,7 +156,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_assembly_table"),
                         Component.translatable("instruction.genesis.craft_assembly_table.description")
                 )
-                .requireCraft(GenesisBlocks.ASSEMBLY_TABLE)
+                .requireItem(GenesisBlocks.ASSEMBLY_TABLE)
                 .build(consumer, Genesis.id("craft_assembly_table"));
 
         InstructionEntry craftWoodenPickaxe = Instruction.Builder
@@ -162,7 +167,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_wooden_pickaxe"),
                         Component.translatable("instruction.genesis.craft_wooden_pickaxe.description")
                 )
-                .requireCraft(Items.WOODEN_PICKAXE)
+                .requireItem(itemLookup, GenesisTags.Items.WOODEN_PICKAXES)
                 .build(consumer, Genesis.id("craft_wooden_pickaxe"));
 
         InstructionEntry craftClaySpearCast = Instruction.Builder
@@ -173,7 +178,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_clay_spear_cast"),
                         Component.translatable("instruction.genesis.craft_clay_spear_cast.description")
                 )
-                .requireCraft(GenesisItems.CLAY_SPEAR_CAST)
+                .requireItem(GenesisItems.CLAY_SPEAR_CAST)
                 .build(consumer, Genesis.id("craft_clay_spear_cast"));
 
         InstructionEntry cookClaySpearCast = Instruction.Builder
@@ -194,7 +199,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_wooden_spear"),
                         Component.translatable("instruction.genesis.craft_wooden_spear.description")
                 )
-                .requireCraft(Items.WOODEN_SPEAR)
+                .requireItem(itemLookup, GenesisTags.Items.WOODEN_SPEARS)
                 .build(consumer, Genesis.id("craft_wooden_tool"));
 
         InstructionEntry craftClayKiln = Instruction.Builder
@@ -205,7 +210,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.craft_clay_kiln"),
                         Component.translatable("instruction.genesis.craft_clay_kiln.description")
                 )
-                .requireCraft(GenesisBlocks.CLAY_KILN)
+                .requireItem(GenesisBlocks.CLAY_KILN)
                 .build(consumer, Genesis.id("craft_clay_kiln"));
 
         InstructionEntry cookKiln = Instruction.Builder

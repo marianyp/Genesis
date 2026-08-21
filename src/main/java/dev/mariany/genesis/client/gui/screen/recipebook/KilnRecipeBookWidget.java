@@ -50,14 +50,19 @@ public class KilnRecipeBookWidget extends RecipeBookComponent<KilnScreenHandler>
         GhostRecipeAccessor ghostRecipe = ((GhostRecipeAccessor) _ghostRecipe);
         ghostRecipe.genesis$addResults(this.menu.getOutputSlot(), context, display.result());
 
-        if (display instanceof FurnaceRecipeDisplay furnaceRecipeDisplay) {
-            ghostRecipe.genesis$addInputs(this.menu.slots.get(0), context, furnaceRecipeDisplay.ingredient());
-            Slot slot = this.menu.slots.get(1);
-
-            if (slot.getItem().isEmpty()) {
-                ghostRecipe.genesis$addInputs(slot, context, furnaceRecipeDisplay.fuel());
-            }
+        if (!(display instanceof FurnaceRecipeDisplay furnaceRecipeDisplay)) {
+            return;
         }
+
+        ghostRecipe.genesis$addInputs(this.menu.slots.get(0), context, furnaceRecipeDisplay.ingredient());
+
+        Slot slot = this.menu.slots.get(1);
+
+        if (!slot.getItem().isEmpty()) {
+            return;
+        }
+
+        ghostRecipe.genesis$addInputs(slot, context, furnaceRecipeDisplay.fuel());
     }
 
     @Override

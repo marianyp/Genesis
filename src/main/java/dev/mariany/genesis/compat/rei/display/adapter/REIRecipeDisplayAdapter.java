@@ -20,6 +20,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 public class REIRecipeDisplayAdapter<D extends CraftingDisplay> {
@@ -39,6 +40,7 @@ public class REIRecipeDisplayAdapter<D extends CraftingDisplay> {
             Function<D, RecipeDisplayContents<EntryIngredient>> contents,
             Class<R> recipeClass,
             RecipeType<? super R> recipeType,
+            Predicate<RecipeHolder<R>> recipeFilter,
             Function<RecipeHolder<R>, D> displayFactory
     ) {
         this(
@@ -50,6 +52,7 @@ public class REIRecipeDisplayAdapter<D extends CraftingDisplay> {
                 registry -> registry
                         .<R, D>beginRecipeFiller(recipeClass)
                         .filterType(recipeType)
+                        .filter(recipeFilter)
                         .fill(displayFactory)
         );
     }

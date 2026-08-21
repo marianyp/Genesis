@@ -1,29 +1,15 @@
 {
   "parent": "genesis:sift_terracotta_cauldron",
   "criteria": {
-    "blank_clay_cast_crafted": {
+    "blank_clay_cast_obtained": {
       "conditions": {
-        "player": [
+        "items": [
           {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:crafted",
-                    "stat": "genesis:blank_clay_cast",
-                    "value": {
-                      "min": 1
-                    }
-                  }
-                ]
-              }
-            }
+            "items": "genesis:blank_clay_cast"
           }
         ]
       },
-      "trigger": "minecraft:tick"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -39,7 +25,7 @@
   },
   "requirements": [
     [
-      "blank_clay_cast_crafted"
+      "blank_clay_cast_obtained"
     ]
   ]
 }

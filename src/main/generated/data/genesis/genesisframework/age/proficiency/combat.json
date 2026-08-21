@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:skills/basic",
+  "parent": "genesis:proficiency/adventure",
   "criteria": {
     "killed_25_hostiles": {
       "conditions": {
@@ -28,13 +28,10 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.skills.combat.description"
+      "translate": "age.genesis.proficiency.combat.description"
     },
     "icon": {
       "id": "minecraft:iron_sword"
-    },
-    "title": {
-      "translate": "age.genesis.skills.combat"
     }
   },
   "item_traits": {

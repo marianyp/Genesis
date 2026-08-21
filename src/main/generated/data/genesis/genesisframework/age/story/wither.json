@@ -22,9 +22,6 @@
     },
     "icon": {
       "id": "minecraft:wither_spawn_egg"
-    },
-    "title": {
-      "translate": "age.genesis.story.wither"
     }
   },
   "items": [

@@ -24,6 +24,7 @@ public final class REIRecipeDisplayAdapters {
                     REIAssemblyDisplay::getContents,
                     AssemblyRecipe.class,
                     GenesisRecipeTypes.ASSEMBLY,
+                    recipe -> recipe.value().isPossible(),
                     REIAssemblyDisplay::new
             )
     );

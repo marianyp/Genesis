@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:skills/combat",
+  "parent": "genesis:proficiency/combat",
   "criteria": {
     "time_played": {
       "conditions": {
@@ -9,15 +9,9 @@
             "entity": "this",
             "predicate": {
               "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:custom",
-                    "stat": "minecraft:play_time",
-                    "value": {
-                      "min": 120000
-                    }
-                  }
-                ]
+                "level": {
+                  "min": 20
+                }
               }
             }
           }
@@ -28,13 +22,10 @@
   },
   "display": {
     "description": {
-      "translate": "age.genesis.skills.smelting.description"
+      "translate": "age.genesis.proficiency.smelting.description"
     },
     "icon": {
       "id": "minecraft:furnace"
-    },
-    "title": {
-      "translate": "age.genesis.skills.smelting"
     }
   },
   "items": [

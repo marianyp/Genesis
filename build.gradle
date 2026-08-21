@@ -25,6 +25,19 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
+
+    def modrinth = maven {
+        name = "Modrinth"
+        url = uri("https://api.modrinth.com/maven")
+    }
+
+    exclusiveContent {
+        forRepositories(modrinth)
+
+        filter {
+            includeGroup("maven.modrinth")
+        }
+    }
 }
 
 loom {
@@ -59,6 +72,13 @@ dependencies {
     // Just Enough Items
 //    runtimeOnly "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"
     compileOnly "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
+
+    // More Variants
+//    runtimeOnly "maven.modrinth:${project.more_stick_variants_project_id}:${project.more_stick_variants_version_id}"
+//    runtimeOnly "maven.modrinth:${project.more_tool_variants_project_id}:${project.more_tool_variants_version_id}"
+//    runtimeOnly "maven.modrinth:${project.more_weapon_variants_project_id}:${project.more_weapon_variants_version_id}"
+//    runtimeOnly "maven.modrinth:${project.more_smoker_variants_project_id}:${project.more_smoker_variants_version_id}"
+//    runtimeOnly "maven.modrinth:${project.more_shield_variants_project_id}:${project.more_shield_variants_version_id}"
 }
 
 processResources {

@@ -20,9 +20,6 @@ public class GenesisVillagerTradesTagsProvider extends FabricTagsProvider<Villag
 
     @Override
     protected void addTags(HolderLookup.Provider registries) {
-        tag(VillagerTradeTags.CARTOGRAPHER_LEVEL_2)
-                .add(GenesisVillagerTrades.CARTOGRAPHER_2_EMERALD_AND_COMPASS_PALE_GARDEN);
-
         tag(VillagerTradeTags.CARTOGRAPHER_LEVEL_3)
                 .add(GenesisVillagerTrades.CARTOGRAPHER_3_EMERALD_AND_COMPASS_DEEP_DARK);
     }

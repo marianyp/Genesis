@@ -56,19 +56,23 @@ public class KilnBlock extends BaseEntityBlock {
             Player player,
             BlockHitResult hit
     ) {
-        if (!level.isClientSide()) {
-            this.openScreen(level, pos, player);
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
 
+        this.openScreen(level, pos, player);
         return InteractionResult.SUCCESS;
     }
 
     protected void openScreen(Level level, BlockPos pos, Player player) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof KilnBlockEntity) {
-            player.openMenu((MenuProvider) blockEntity);
-            player.awardStat(GenesisStats.INTERACT_WITH_KILN);
+
+        if (!(blockEntity instanceof KilnBlockEntity)) {
+            return;
         }
+
+        player.openMenu((MenuProvider) blockEntity);
+        player.awardStat(GenesisStats.INTERACT_WITH_KILN);
     }
 
     @Override
@@ -97,8 +101,10 @@ public class KilnBlock extends BaseEntityBlock {
     }
 
     private static void tick(Level level, BlockPos pos, BlockState state, KilnBlockEntity kilnBlockEntity) {
-        if (level instanceof ServerLevel serverLevel) {
-            KilnBlockEntity.tick(serverLevel, pos, state, kilnBlockEntity);
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
         }
+
+        KilnBlockEntity.tick(serverLevel, pos, state, kilnBlockEntity);
     }
 }

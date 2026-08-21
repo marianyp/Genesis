@@ -7,10 +7,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BrushItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -66,6 +68,27 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
     }
 
     @Override
+    protected InteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hit
+    ) {
+        ItemStack offhandStack = player.getOffhandItem();
+
+        if (hand == InteractionHand.MAIN_HAND
+                && !(stack.getItem() instanceof BrushItem)
+                && offhandStack.getItem() instanceof BrushItem) {
+            return offhandStack.useOn(new UseOnContext(player, InteractionHand.OFF_HAND, hit));
+        }
+
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    }
+
+    @Override
     protected InteractionResult useWithoutItem(
             BlockState state,
             Level level,
@@ -75,19 +98,25 @@ public class FilledPrimitiveCauldronBlock extends BrushableBlock {
     ) {
         ItemStack stack = player.getMainHandItem();
 
-        if (!(stack.getItem() instanceof BrushItem) && hit.getDirection() == Direction.UP) {
-            if (level instanceof ServerLevel serverLevel) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (stack.getItem() instanceof BrushItem
+                || player.getOffhandItem().getItem() instanceof BrushItem
+                || hit.getDirection() != Direction.UP) {
+            return InteractionResult.PASS;
+        }
 
-                if (blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity) {
-                    filledPrimitiveCauldronBlockEntity.sift(serverLevel, player, stack, true);
-                }
-            }
-
+        if (!(level instanceof ServerLevel serverLevel)) {
             return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.PASS;
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        if (!(blockEntity instanceof FilledPrimitiveCauldronBlockEntity filledPrimitiveCauldronBlockEntity)) {
+            return InteractionResult.SUCCESS;
+        }
+
+        filledPrimitiveCauldronBlockEntity.sift(serverLevel, player, stack, true);
+
+        return InteractionResult.SUCCESS;
     }
 
     @Override

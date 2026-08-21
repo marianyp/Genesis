@@ -95,53 +95,54 @@ public class KilnScreenHandler extends RecipeBookMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack resultStack = ItemStack.EMPTY;
         Slot clickedSlot = this.slots.get(index);
 
-        if (clickedSlot.hasItem()) {
-            ItemStack clickedStack = clickedSlot.getItem();
-            resultStack = clickedStack.copy();
+        if (!clickedSlot.hasItem()) {
+            return ItemStack.EMPTY;
+        }
 
-            if (index == OUTPUT_SLOT) {
-                // Output slot to player inventory
-                if (!this.moveItemStackTo(clickedStack, 2, 38, true)) {
+        ItemStack clickedStack = clickedSlot.getItem();
+        ItemStack resultStack = clickedStack.copy();
+
+        if (index == OUTPUT_SLOT) {
+            // Output slot to player inventory
+            if (!this.moveItemStackTo(clickedStack, 2, 38, true)) {
+                return ItemStack.EMPTY;
+            }
+
+            clickedSlot.onQuickCraft(clickedStack, resultStack);
+        } else if (index != INPUT_SLOT) {
+            // From player inventory or hotbar
+            if (this.isSmeltable(clickedStack)) {
+                if (!this.moveItemStackTo(clickedStack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
-
-                clickedSlot.onQuickCraft(clickedStack, resultStack);
-            } else if (index != INPUT_SLOT) {
-                // From player inventory or hotbar
-                if (this.isSmeltable(clickedStack)) {
-                    if (!this.moveItemStackTo(clickedStack, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index >= 2 && index < 29) {
-                    // Main inventory to Hotbar
-                    if (!this.moveItemStackTo(clickedStack, 29, 38, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index >= 29 && index < 38) {
-                    // Hotbar to Main Inventory
-                    if (!this.moveItemStackTo(clickedStack, 2, 29, false)) {
-                        return ItemStack.EMPTY;
-                    }
+            } else if (index >= 2 && index < 29) {
+                // Main inventory to Hotbar
+                if (!this.moveItemStackTo(clickedStack, 29, 38, false)) {
+                    return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(clickedStack, 2, 38, false)) {
-                return ItemStack.EMPTY;
+            } else if (index >= 29 && index < 38) {
+                // Hotbar to Main Inventory
+                if (!this.moveItemStackTo(clickedStack, 2, 29, false)) {
+                    return ItemStack.EMPTY;
+                }
             }
-
-            if (clickedStack.isEmpty()) {
-                clickedSlot.setByPlayer(ItemStack.EMPTY);
-            } else {
-                clickedSlot.setChanged();
-            }
-
-            if (clickedStack.getCount() == resultStack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            clickedSlot.onTake(player, clickedStack);
+        } else if (!this.moveItemStackTo(clickedStack, 2, 38, false)) {
+            return ItemStack.EMPTY;
         }
+
+        if (clickedStack.isEmpty()) {
+            clickedSlot.setByPlayer(ItemStack.EMPTY);
+        } else {
+            clickedSlot.setChanged();
+        }
+
+        if (clickedStack.getCount() == resultStack.getCount()) {
+            return ItemStack.EMPTY;
+        }
+
+        clickedSlot.onTake(player, clickedStack);
 
         return resultStack;
     }

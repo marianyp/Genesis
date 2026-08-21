@@ -1,0 +1,49 @@
+{
+  "values": [
+    "minecraft:wooden_spear",
+    {
+      "id": "mstv-mweaponv:spruce_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_wooden_spear",
+      "required": false
+    }
+  ]
+}

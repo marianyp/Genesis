@@ -35,24 +35,30 @@ public class AssemblyRecipeBookWidget extends CraftingRecipeBookComponent {
     protected void fillGhostRecipe(GhostSlots ghostRecipe, RecipeDisplay display, ContextMap context) {
         super.fillGhostRecipe(ghostRecipe, display, context);
 
-        if (display instanceof AssemblyCraftingRecipeDisplay assemblyCraftingRecipeDisplay) {
-            List<Slot> list = this.menu.getInputGridSlots();
-
-            PlaceRecipeHelper.placeRecipe(
-                    this.menu.getGridWidth(),
-                    this.menu.getGridHeight(),
-                    assemblyCraftingRecipeDisplay.width(),
-                    assemblyCraftingRecipeDisplay.height(),
-                    assemblyCraftingRecipeDisplay.ingredients(),
-                    (slot, index, x, y) -> {
-                        if (list.get(index) instanceof AssemblyInputSlot assemblyInputSlot) {
-                            if (assemblyInputSlot.canInsert()) {
-                                ((GhostRecipeAccessor) ghostRecipe).genesis$addInputs(assemblyInputSlot, context, slot);
-                            }
-                        }
-                    }
-            );
+        if (!(display instanceof AssemblyCraftingRecipeDisplay assemblyCraftingRecipeDisplay)) {
+            return;
         }
+
+        List<Slot> list = this.menu.getInputGridSlots();
+
+        PlaceRecipeHelper.placeRecipe(
+                this.menu.getGridWidth(),
+                this.menu.getGridHeight(),
+                assemblyCraftingRecipeDisplay.width(),
+                assemblyCraftingRecipeDisplay.height(),
+                assemblyCraftingRecipeDisplay.ingredients(),
+                (slot, index, _, _) -> {
+                    if (!(list.get(index) instanceof AssemblyInputSlot assemblyInputSlot)) {
+                        return;
+                    }
+
+                    if (!assemblyInputSlot.canInsert()) {
+                        return;
+                    }
+
+                    ((GhostRecipeAccessor) ghostRecipe).genesis$addInputs(assemblyInputSlot, context, slot);
+                }
+        );
     }
 
     @Override
@@ -61,24 +67,27 @@ public class AssemblyRecipeBookWidget extends CraftingRecipeBookComponent {
     }
 
     private boolean canDisplay(RecipeDisplay display) {
-        if (this.menu instanceof AssemblyScreenHandler assemblyScreenHandler) {
-            ContextMap context = SlotDisplayContext.fromLevel(
-                    Objects.requireNonNull(this.minecraft.level)
-            );
+        if (!(this.menu instanceof AssemblyScreenHandler assemblyScreenHandler)) {
+            return false;
+        }
 
-            List<ItemStack> stacks = display.result().resolveForStacks(context);
+        if (!(display instanceof AssemblyCraftingRecipeDisplay assemblyCraftingRecipeDisplay)) {
+            return false;
+        }
 
-            Optional<AssemblyPatternItem> optionalAssemblyPatternItem = assemblyScreenHandler.getAssemblyPatternItem();
+        Optional<AssemblyPatternItem> optionalAssemblyPatternItem = assemblyScreenHandler.getAssemblyPatternItem();
 
-            if (optionalAssemblyPatternItem.isPresent()) {
-                AssemblyPatternItem assemblyPatternItem = optionalAssemblyPatternItem.get();
+        if (optionalAssemblyPatternItem.isEmpty()) {
+            return false;
+        }
 
-                for (ItemStack stack : stacks) {
-                    if (!stack.is(assemblyPatternItem.getCrafts())) {
-                        return false;
-                    }
-                }
-            } else {
+        ContextMap context = SlotDisplayContext.fromLevel(Objects.requireNonNull(this.minecraft.level));
+
+        List<ItemStack> stacks = display.result().resolveForStacks(context);
+        AssemblyPatternItem assemblyPatternItem = optionalAssemblyPatternItem.get();
+
+        for (ItemStack stack : stacks) {
+            if (!stack.is(assemblyPatternItem.getCrafts())) {
                 return false;
             }
         }
@@ -86,10 +95,6 @@ public class AssemblyRecipeBookWidget extends CraftingRecipeBookComponent {
         int width = this.menu.getGridWidth();
         int height = this.menu.getGridHeight();
 
-        if (display instanceof AssemblyCraftingRecipeDisplay assemblyCraftingRecipeDisplay) {
-            return width >= assemblyCraftingRecipeDisplay.width() && height >= assemblyCraftingRecipeDisplay.height();
-        }
-
-        return false;
+        return width >= assemblyCraftingRecipeDisplay.width() && height >= assemblyCraftingRecipeDisplay.height();
     }
 }

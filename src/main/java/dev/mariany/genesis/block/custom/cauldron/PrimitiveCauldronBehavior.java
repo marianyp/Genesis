@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -46,15 +45,15 @@ public interface PrimitiveCauldronBehavior {
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack
     );
 
     static void bootstrap() {
         Genesis.bootstrapLog("Primitive Cauldron Behaviors");
 
-        HolderGetter<Item> registryEntryLookup =
-                BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.ITEM);
+        HolderGetter<Item> registryEntryLookup = BuiltInRegistries.acquireBootstrapRegistrationLookup(
+                BuiltInRegistries.ITEM
+        );
 
         HolderSet.Named<Item> dirtItems = registryEntryLookup.getOrThrow(ItemTags.DIRT);
         HolderSet.Named<Item> gravelItems = registryEntryLookup.getOrThrow(ConventionalItemTags.GRAVELS);
@@ -62,127 +61,130 @@ public interface PrimitiveCauldronBehavior {
         EMPTY_CAULDRON_BEHAVIOR.entries().add(
                 new PrimitiveCauldronBehaviorEntry(
                         Ingredient.of(dirtItems),
-                        PrimitiveCauldronBehavior::tryFillWithDirt
+                        PrimitiveCauldronBehavior::interactWithDirt
                 )
         );
 
         EMPTY_CAULDRON_BEHAVIOR.entries().add(
                 new PrimitiveCauldronBehaviorEntry(
                         Ingredient.of(gravelItems),
-                        PrimitiveCauldronBehavior::tryFillWithGravel
+                        PrimitiveCauldronBehavior::interactWithGravel
                 )
         );
 
         EMPTY_CAULDRON_BEHAVIOR.entries().add(
                 new PrimitiveCauldronBehaviorEntry(
                         Ingredient.of(Blocks.SOUL_SAND),
-                        PrimitiveCauldronBehavior::tryFillWithSoulSand
+                        PrimitiveCauldronBehavior::interactWithSoulSand
                 )
         );
 
         EMPTY_CAULDRON_BEHAVIOR.entries().add(
                 new PrimitiveCauldronBehaviorEntry(
                         Ingredient.of(Blocks.SOUL_SOIL),
-                        PrimitiveCauldronBehavior::tryFillWithSoulSoil
+                        PrimitiveCauldronBehavior::interactWithSoulSoil
                 )
         );
     }
 
-    static InteractionResult fillCauldron(
+    static InteractionResult interactWithCauldron(
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack,
             BlockState state,
             SoundEvent soundEvent
     ) {
-        if (!level.isClientSide()) {
-            stack.consume(1, livingEntity);
-
-            if (livingEntity instanceof Player player) {
-                player.awardStat(Stats.FILL_CAULDRON);
-                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            }
-
-            level.setBlockAndUpdate(pos, state);
-            level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1F, 1F);
-            level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
-        }
-
+        fillCauldron(level, pos, livingEntity, stack, state, soundEvent);
         return InteractionResult.SUCCESS;
     }
 
-    private static InteractionResult tryFillWithDirt(
+    private static void fillCauldron(
+            Level level,
+            BlockPos pos,
+            LivingEntity livingEntity,
+            ItemStack stack,
+            BlockState state,
+            SoundEvent soundEvent
+    ) {
+        if (level.isClientSide()) {
+            return;
+        }
+
+        stack.consume(1, livingEntity);
+
+        if (livingEntity instanceof Player player) {
+            player.awardStat(Stats.FILL_CAULDRON);
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+        }
+
+        level.setBlockAndUpdate(pos, state);
+        level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1F, 1F);
+        level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+    }
+
+    private static InteractionResult interactWithDirt(
             BlockState state,
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack
     ) {
-        return fillCauldron(
+        return interactWithCauldron(
                 level,
                 pos,
                 livingEntity,
-                hand,
                 stack,
                 GenesisBlocks.DIRT_TERRACOTTA_CAULDRON.defaultBlockState(),
                 SoundEvents.GRAVEL_PLACE
         );
     }
 
-    private static InteractionResult tryFillWithGravel(
+    private static InteractionResult interactWithGravel(
             BlockState state,
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack
     ) {
-        return fillCauldron(
+        return interactWithCauldron(
                 level,
                 pos,
                 livingEntity,
-                hand,
                 stack,
                 GenesisBlocks.GRAVEL_TERRACOTTA_CAULDRON.defaultBlockState(),
                 SoundEvents.GRAVEL_PLACE
         );
     }
 
-    private static InteractionResult tryFillWithSoulSand(
+    private static InteractionResult interactWithSoulSand(
             BlockState state,
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack
     ) {
-        return fillCauldron(
+        return interactWithCauldron(
                 level,
                 pos,
                 livingEntity,
-                hand,
                 stack,
                 GenesisBlocks.SOUL_SAND_TERRACOTTA_CAULDRON.defaultBlockState(),
                 SoundEvents.SOUL_SAND_PLACE
         );
     }
 
-    private static InteractionResult tryFillWithSoulSoil(
+    private static InteractionResult interactWithSoulSoil(
             BlockState state,
             Level level,
             BlockPos pos,
             LivingEntity livingEntity,
-            InteractionHand hand,
             ItemStack stack
     ) {
-        return fillCauldron(
+        return interactWithCauldron(
                 level,
                 pos,
                 livingEntity,
-                hand,
                 stack,
                 GenesisBlocks.SOUL_SOIL_TERRACOTTA_CAULDRON.defaultBlockState(),
                 SoundEvents.SOUL_SOIL_PLACE

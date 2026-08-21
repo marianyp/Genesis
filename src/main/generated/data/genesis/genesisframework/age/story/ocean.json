@@ -1,5 +1,5 @@
 {
-  "parent": "genesis:story/nether",
+  "parent": "genesis:story/war",
   "criteria": {
     "complete_monument": {
       "trigger": "genesis:complete_monument"
@@ -11,9 +11,6 @@
     },
     "icon": {
       "id": "minecraft:elder_guardian_spawn_egg"
-    },
-    "title": {
-      "translate": "age.genesis.story.ocean"
     }
   },
   "items": [

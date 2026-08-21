@@ -5,6 +5,270 @@
     "minecraft:wooden_pickaxe",
     "minecraft:wooden_axe",
     "minecraft:wooden_hoe",
-    "minecraft:wooden_spear"
+    "minecraft:wooden_spear",
+    {
+      "id": "mstv-mtoolv:spruce_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_wooden_spear",
+      "required": false
+    }
   ]
 }

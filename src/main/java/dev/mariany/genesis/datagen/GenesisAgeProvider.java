@@ -2,7 +2,6 @@ package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
-import dev.mariany.genesis.advancement.criterion.ItemBrokenCriterion;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
 import dev.mariany.genesisframework.age.Age;
@@ -12,6 +11,7 @@ import dev.mariany.genesisframework.datagen.AgeProvider;
 import dev.mariany.genesisframework.item.trait.ItemTrait;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.*;
 import net.minecraft.core.HolderLookup;
@@ -19,7 +19,6 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -28,7 +27,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
@@ -42,22 +40,20 @@ public class GenesisAgeProvider extends AgeProvider {
     private static final Identifier ARMOR_COPPER = of(AgeCategory.ARMOR, "copper");
     private static final Identifier ARMOR_IRON = of(AgeCategory.ARMOR, "iron");
     private static final Identifier ARMOR_DIAMOND = of(AgeCategory.ARMOR, "diamond");
-    private static final Identifier ARMOR_NETHERITE = of(AgeCategory.ARMOR, "netherite");
 
     private static final Identifier TOOLS_WOOD = of(AgeCategory.TOOLS, "wood");
     private static final Identifier TOOLS_STONE = of(AgeCategory.TOOLS, "stone");
     private static final Identifier TOOLS_COPPER = of(AgeCategory.TOOLS, "copper");
     private static final Identifier TOOLS_IRON = of(AgeCategory.TOOLS, "iron");
     private static final Identifier TOOLS_DIAMOND = of(AgeCategory.TOOLS, "diamond");
-    private static final Identifier TOOLS_NETHERITE = of(AgeCategory.TOOLS, "netherite");
 
-    private static final Identifier SKILLS_BASIC = of(AgeCategory.SKILLS, "basic");
-    private static final Identifier SKILLS_SMELTING = of(AgeCategory.SKILLS, "smelting");
-    private static final Identifier SKILLS_COMBAT = of(AgeCategory.SKILLS, "combat");
+    private static final Identifier PROFICIENCY_ADVENTURE = of(AgeCategory.PROFICIENCY, "adventure");
+    private static final Identifier PROFICIENCY_SMELTING = of(AgeCategory.PROFICIENCY, "smelting");
+    private static final Identifier PROFICIENCY_COMBAT = of(AgeCategory.PROFICIENCY, "combat");
+    private static final Identifier PROFICIENCY_ARCANE = of(AgeCategory.PROFICIENCY, "arcane");
 
     private static final Identifier STORY_SURVIVAL = of(AgeCategory.STORY, "survival");
-    private static final Identifier STORY_PALE = of(AgeCategory.STORY, "pale");
-    private static final Identifier STORY_NETHER = of(AgeCategory.STORY, "nether");
+    private static final Identifier STORY_WAR = of(AgeCategory.STORY, "war");
     private static final Identifier STORY_OCEAN = of(AgeCategory.STORY, "ocean");
     private static final Identifier STORY_SCULK = of(AgeCategory.STORY, "sculk");
     private static final Identifier STORY_WITHER = of(AgeCategory.STORY, "wither");
@@ -71,19 +67,8 @@ public class GenesisAgeProvider extends AgeProvider {
             LOOT_ANCIENT_CITY_ICE_BOX_REQUIREMENT
     );
 
-    private static final int TICKS_PER_SECOND = 20;
-    private static final int SECONDS_PER_MINUTE = 60;
-    private static final int MINUTES_PER_DAY = 20;
-    private static final int TICKS_PER_DAY = TICKS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_DAY;
-
-    private static final int COPPER_ARMOR_AGE_DAYS = 10;
-    private static final int COPPER_ARMOR_AGE_TICKS = COPPER_ARMOR_AGE_DAYS * TICKS_PER_DAY;
-
-    private static final int SMELTING_SKILL_AGE_DAYS = 5;
-    private static final int SMELTING_SKILL_AGE_TICKS = SMELTING_SKILL_AGE_DAYS * TICKS_PER_DAY;
-
     private static Identifier of(AgeCategory category, String key) {
-        return Genesis.id(category.getSerializedName() + "/" + key);
+        return Genesis.id(category + "/" + key);
     }
 
     public GenesisAgeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
@@ -97,7 +82,7 @@ public class GenesisAgeProvider extends AgeProvider {
 
         generateArmorAges(itemLookup, consumer);
         generateToolAges(itemLookup, consumer);
-        generateSkillAges(itemLookup, consumer);
+        generateProficiencyAges(itemLookup, consumer);
         generateStoryAges(entityLookup, consumer);
     }
 
@@ -106,24 +91,22 @@ public class GenesisAgeProvider extends AgeProvider {
             Consumer<AgeEntry> consumer
     ) {
         Age.Builder.create()
-                   .display(Items.LEATHER_CHESTPLATE, Component.translatable("age.genesis.armor.leather"))
+                   .display(Items.LEATHER_CHESTPLATE)
                    .build(consumer, ARMOR_LEATHER);
 
         Age.Builder.create()
                    .display(
                            Items.COPPER_CHESTPLATE,
-                           Component.translatable("age.genesis.armor.copper"),
                            Component.translatable("age.genesis.armor.copper.description")
                    )
-                   .requireTimePlayed(COPPER_ARMOR_AGE_TICKS)
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR)))
+                   .requireLevel(MinMaxBounds.Ints.atLeast(25))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.COPPER_ARMOR))
                    .parent(ARMOR_LEATHER)
                    .build(consumer, ARMOR_COPPER);
 
         Age.Builder.create()
                    .display(
                            Items.IRON_CHESTPLATE,
-                           Component.translatable("age.genesis.armor.iron"),
                            Component.translatable("age.genesis.armor.iron.description")
                    )
                    .requireTrialWearing(
@@ -134,15 +117,14 @@ public class GenesisAgeProvider extends AgeProvider {
                            Items.COPPER_LEGGINGS,
                            Items.COPPER_BOOTS
                    )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR)))
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR)))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.IRON_ARMOR))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_ARMOR))
                    .parent(ARMOR_COPPER)
                    .build(consumer, ARMOR_IRON);
 
         Age.Builder.create()
                    .display(
                            Items.DIAMOND_CHESTPLATE,
-                           Component.translatable("age.genesis.armor.diamond"),
                            Component.translatable("age.genesis.armor.diamond.description")
                    )
                    .requireTrialWearing(
@@ -153,139 +135,95 @@ public class GenesisAgeProvider extends AgeProvider {
                            Items.IRON_LEGGINGS,
                            Items.IRON_BOOTS
                    )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_ARMOR)))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_ARMOR))
                    .parent(ARMOR_IRON)
                    .build(consumer, ARMOR_DIAMOND);
-
-        Age.Builder.create()
-                   .display(
-                           Items.NETHERITE_CHESTPLATE,
-                           Component.translatable("age.genesis.armor.netherite"),
-                           Component.translatable("age.genesis.armor.netherite.description")
-                   )
-                   .criterion(
-                           "completed_raid",
-                           CriteriaTriggers.RAID_WIN.createCriterion(
-                                   new PlayerTrigger.TriggerInstance(
-                                           Optional.empty()
-                                   )
-                           )
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_ARMOR)))
-                   .parent(ARMOR_DIAMOND)
-                   .build(consumer, ARMOR_NETHERITE);
     }
 
     private static void generateToolAges(HolderLookup.RegistryLookup<Item> itemLookup, Consumer<AgeEntry> consumer) {
         Age.Builder.create()
-                   .display(Items.WOODEN_PICKAXE, Component.translatable("age.genesis.tools.wood"))
+                   .display(Items.WOODEN_PICKAXE)
                    .build(consumer, TOOLS_WOOD);
 
         Age.Builder.create()
                    .display(
                            Items.STONE_PICKAXE,
-                           Component.translatable("age.genesis.tools.stone"),
                            Component.translatable("age.genesis.tools.stone.description")
                    )
-                   .criterion(
-                           "broken_wood",
-                           ItemBrokenCriterion.Conditions.create(
-                                   itemLookup.getOrThrow(GenesisTags.Items.WOODEN_TOOLS))
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS)))
+                   .requireBreak(itemLookup.getOrThrow(GenesisTags.Items.WOODEN_TOOLS))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
                    .parent(TOOLS_WOOD)
                    .build(consumer, TOOLS_STONE);
 
         Age.Builder.create()
                    .display(
                            Items.COPPER_PICKAXE,
-                           Component.translatable("age.genesis.tools.copper"),
                            Component.translatable("age.genesis.tools.copper.description")
                    )
-                   .criterion(
-                           "broken_stone",
-                           ItemBrokenCriterion.Conditions.create(
-                                   itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS)))
+                   .requireBreak(itemLookup.getOrThrow(GenesisTags.Items.STONE_TOOLS))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
                    .parent(TOOLS_STONE)
                    .build(consumer, TOOLS_COPPER);
 
         Age.Builder.create()
                    .display(
                            Items.IRON_PICKAXE,
-                           Component.translatable("age.genesis.tools.iron"),
                            Component.translatable("age.genesis.tools.iron.description")
                    )
-                   .criterion(
-                           "broken_copper",
-                           ItemBrokenCriterion.Conditions.create(
-                                   itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS)))
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_TOOLS)))
+                   .requireBreak(itemLookup.getOrThrow(GenesisTags.Items.COPPER_TOOLS))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.GOLDEN_TOOLS))
                    .parent(TOOLS_COPPER)
                    .build(consumer, TOOLS_IRON);
 
         Age.Builder.create()
                    .display(
                            Items.DIAMOND_PICKAXE,
-                           Component.translatable("age.genesis.tools.diamond"),
                            Component.translatable("age.genesis.tools.diamond.description")
                    )
-                   .criterion(
-                           "broken_iron",
-                           ItemBrokenCriterion.Conditions.create(
-                                   itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS)))
+                   .requireBreak(itemLookup.getOrThrow(GenesisTags.Items.IRON_TOOLS))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS))
                    .parent(TOOLS_IRON)
                    .build(consumer, TOOLS_DIAMOND);
-
-        Age.Builder.create()
-                   .display(
-                           Items.NETHERITE_PICKAXE,
-                           Component.translatable("age.genesis.tools.netherite"),
-                           Component.translatable("age.genesis.tools.netherite.description")
-                   )
-                   .criterion(
-                           "broken_diamond",
-                           ItemBrokenCriterion.Conditions.create(
-                                   itemLookup.getOrThrow(GenesisTags.Items.DIAMOND_TOOLS))
-                   )
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.NETHERITE_TOOLS)))
-                   .parent(TOOLS_DIAMOND)
-                   .build(consumer, TOOLS_NETHERITE);
     }
 
-    private static void generateSkillAges(HolderLookup.RegistryLookup<Item> itemLookup, Consumer<AgeEntry> consumer) {
+    private static void generateProficiencyAges(
+            HolderLookup.RegistryLookup<Item> itemLookup,
+            Consumer<AgeEntry> consumer
+    ) {
         Age.Builder.create()
-                   .display(Items.TARGET, Component.translatable("age.genesis.skills.basic"))
-                   .build(consumer, SKILLS_BASIC);
+                   .display(Items.COMPASS)
+                   .build(consumer, PROFICIENCY_ADVENTURE);
 
-        generateSkillsCombatAge(itemLookup, consumer);
+        generateProficiencyCombatAge(itemLookup, consumer);
 
         Age.Builder.create()
                    .display(
                            Items.FURNACE,
-                           Component.translatable("age.genesis.skills.smelting"),
-                           Component.translatable("age.genesis.skills.smelting.description")
+                           Component.translatable("age.genesis.proficiency.smelting.description")
                    )
-                   .parent(SKILLS_COMBAT)
+                   .parent(PROFICIENCY_COMBAT)
                    .parentOptional()
-                   .requireTimePlayed(SMELTING_SKILL_AGE_TICKS)
-                   .itemUnlock(Ingredient.of(itemLookup.getOrThrow(GenesisTags.Items.FURNACES)))
-                   .build(consumer, SKILLS_SMELTING);
+                   .requireLevel(MinMaxBounds.Ints.atLeast(20))
+                   .itemUnlock(itemLookup.getOrThrow(GenesisTags.Items.FURNACES))
+                   .build(consumer, PROFICIENCY_SMELTING);
+
+        Age.Builder.create()
+                   .display(
+                           Items.ENCHANTING_TABLE,
+                           Component.translatable("age.genesis.proficiency.arcane.description")
+                   )
+                   .parent(PROFICIENCY_SMELTING)
+                   .parentOptional()
+                   .criterion("has_enchanted", EnchantedItemTrigger.TriggerInstance.enchantedItem())
+                   .dimensionUnlock(Level.NETHER)
+                   .build(consumer, PROFICIENCY_ARCANE);
     }
 
-    private static void generateSkillsCombatAge(
+    private static void generateProficiencyCombatAge(
             HolderLookup.RegistryLookup<Item> itemLookup,
             Consumer<AgeEntry> consumer
     ) {
-        HolderSet.Named<Item> weaponAgeRestrictedWeapons = itemLookup.getOrThrow(
-                GenesisTags.Items.WEAPON_AGE_RESTRICTED_WEAPONS
-        );
-
         AttributeModifier attackDamageAttributeModifier = new AttributeModifier(
                 Genesis.id("weapon_age_attack_damage"),
                 -0.9,
@@ -297,21 +235,24 @@ public class GenesisAgeProvider extends AgeProvider {
                 .add(Attributes.ATTACK_DAMAGE, attackDamageAttributeModifier, EquipmentSlotGroup.ANY)
                 .build();
 
-        ItemTrait itemTrait = new ItemTrait(Ingredient.of(weaponAgeRestrictedWeapons), itemAttributeModifiers);
+        HolderSet.Named<Item> weaponAgeRestrictedWeapons = itemLookup.getOrThrow(
+                GenesisTags.Items.WEAPON_AGE_RESTRICTED_WEAPONS
+        );
+
+        ItemTrait itemTrait = new ItemTrait(weaponAgeRestrictedWeapons, itemAttributeModifiers);
 
         AgeItemTraits weaponItemTraits = AgeItemTraits.Builder.create().beforeDone(itemTrait).build();
 
         Age.Builder.create()
                    .display(
                            Items.IRON_SWORD,
-                           Component.translatable("age.genesis.skills.combat"),
-                           Component.translatable("age.genesis.skills.combat.description")
+                           Component.translatable("age.genesis.proficiency.combat.description")
                    )
-                   .parent(SKILLS_BASIC)
+                   .parent(PROFICIENCY_ADVENTURE)
                    .parentOptional()
                    .requireKillHostiles(25)
                    .itemTraits(weaponItemTraits)
-                   .build(consumer, SKILLS_COMBAT);
+                   .build(consumer, PROFICIENCY_COMBAT);
     }
 
     private static void generateStoryAges(
@@ -320,59 +261,43 @@ public class GenesisAgeProvider extends AgeProvider {
     ) {
 
         Age.Builder.create()
-                   .display(Items.CREEPER_SPAWN_EGG, Component.translatable("age.genesis.story.survival"))
+                   .display(Items.CREEPER_SPAWN_EGG)
                    .build(consumer, STORY_SURVIVAL);
 
         Age.Builder.create()
-                   .itemUnlock(Ingredient.of(GenesisItems.CLAY_SHIELD_CAST))
+                   .itemUnlock(GenesisItems.CLAY_SHIELD_CAST)
                    .parent(STORY_SURVIVAL)
                    .parentOptional()
                    .criterion(
-                           "killed_creaking",
-                           KilledTrigger.TriggerInstance.playerKilledEntity(
-                                   EntityPredicate.Builder.entity().of(entityLookup, EntityTypes.CREAKING)
+                           "completed_raid",
+                           CriteriaTriggers.RAID_WIN.createCriterion(
+                                   new PlayerTrigger.TriggerInstance(Optional.empty())
                            )
                    )
                    .display(
-                           Items.CREAKING_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.pale"),
-                           Component.translatable("age.genesis.story.pale.description")
+                           Items.RAVAGER_SPAWN_EGG,
+                           Component.translatable("age.genesis.story.war.description")
                    )
-                   .build(consumer, STORY_PALE);
+                   .build(consumer, STORY_WAR);
 
         Age.Builder.create()
-                   .dimensionUnlock(Level.NETHER)
-                   .parent(STORY_PALE)
-                   .parentOptional()
-                   .criterion("has_enchanted", EnchantedItemTrigger.TriggerInstance.enchantedItem())
-                   .display(
-                           Items.ZOMBIFIED_PIGLIN_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.nether"),
-                           Component.translatable("age.genesis.story.nether.description")
-                   )
-                   .build(consumer, STORY_NETHER);
-
-        Age.Builder.create()
-                   .itemUnlock(Ingredient.of(Items.TRIDENT))
-                   .parent(STORY_NETHER)
+                   .itemUnlock(Items.TRIDENT)
+                   .parent(STORY_WAR)
                    .parentOptional()
                    .criterion(
                            "complete_monument",
                            GenesisCriteria.COMPLETE_MONUMENT.createCriterion(
-                                   new PlayerTrigger.TriggerInstance(
-                                           Optional.empty()
-                                   )
+                                   new PlayerTrigger.TriggerInstance(Optional.empty())
                            )
                    )
                    .display(
                            Items.ELDER_GUARDIAN_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.ocean"),
                            Component.translatable("age.genesis.story.ocean.description")
                    )
                    .build(consumer, STORY_OCEAN);
 
         Age.Builder.create()
-                   .itemUnlock(Ingredient.of(GenesisItems.CLAY_ANVIL_CAST))
+                   .itemUnlock(GenesisItems.CLAY_ANVIL_CAST)
                    .parent(STORY_OCEAN)
                    .parentOptional()
                    .criterion(
@@ -386,7 +311,6 @@ public class GenesisAgeProvider extends AgeProvider {
                    .requirements(AdvancementRequirements.anyOf(ANCIENT_CITY_REQUIREMENTS))
                    .display(
                            Items.WARDEN_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.sculk"),
                            Component.translatable("age.genesis.story.sculk.description")
                    )
                    .build(consumer, STORY_SCULK);
@@ -394,7 +318,7 @@ public class GenesisAgeProvider extends AgeProvider {
         Age.Builder.create()
                    .parent(STORY_SCULK)
                    .parentOptional()
-                   .itemUnlock(Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE))
+                   .itemUnlock(Items.ENCHANTED_GOLDEN_APPLE)
                    .criterion(
                            "killed_wither",
                            KilledTrigger.TriggerInstance.playerKilledEntity(
@@ -403,7 +327,6 @@ public class GenesisAgeProvider extends AgeProvider {
                    )
                    .display(
                            Items.WITHER_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.wither"),
                            Component.translatable("age.genesis.story.wither.description")
                    )
                    .build(consumer, STORY_WITHER);
@@ -411,15 +334,13 @@ public class GenesisAgeProvider extends AgeProvider {
         Age.Builder.create()
                    .parent(STORY_WITHER)
                    .dimensionUnlock(Level.END)
-                   .itemUnlock(Ingredient.of(Items.ENDER_EYE))
-                   .requireAge(STORY_NETHER)
-                   .requireAge(STORY_PALE)
+                   .itemUnlock(Items.ENDER_EYE)
+                   .requireAge(STORY_WAR)
                    .requireAge(STORY_OCEAN)
                    .requireAge(STORY_SCULK)
                    .requireAge(STORY_WITHER)
                    .display(
                            Items.ENDER_DRAGON_SPAWN_EGG,
-                           Component.translatable("age.genesis.story.end"),
                            Component.translatable("age.genesis.story.end.description")
                    )
                    .build(consumer, STORY_END);
@@ -430,9 +351,9 @@ public class GenesisAgeProvider extends AgeProvider {
         return "Genesis Ages";
     }
 
-    enum AgeCategory implements StringRepresentable {
+    enum AgeCategory {
         ARMOR("armor"),
-        SKILLS("skills"),
+        PROFICIENCY("proficiency"),
         TOOLS("tools"),
         STORY("story");
 
@@ -443,7 +364,7 @@ public class GenesisAgeProvider extends AgeProvider {
         }
 
         @Override
-        public String getSerializedName() {
+        public String toString() {
             return this.name;
         }
     }

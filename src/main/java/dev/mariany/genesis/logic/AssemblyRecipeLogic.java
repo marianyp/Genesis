@@ -32,6 +32,7 @@ public final class AssemblyRecipeLogic {
 
     private static RecipeMap provide(RecipeMap recipes) {
         Collection<RecipeHolder<?>> oldRecipes = recipes.values();
+
         Map<ResourceKey<Recipe<?>>, RecipeHolder<AssemblyRecipe>> assemblyRecipes =
                 createAssemblyRecipesFrom(oldRecipes)
                         .stream()
@@ -45,7 +46,16 @@ public final class AssemblyRecipeLogic {
                 })
                 .toList();
 
-        Genesis.LOGGER.info("Created {} assembly recipes successfully!", assemblyRecipes.size());
+        assemblyRecipes
+                .values()
+                .stream()
+                .filter(recipe -> !recipe.value().isPossible())
+                .forEach(recipe -> Genesis.LOGGER.warn(
+                        "Found impossible assembly recipe '{}': no compatible pattern shape for recipe",
+                        recipe.id().identifier()
+                ));
+
+        Genesis.LOGGER.info("Created {} assembly recipes", assemblyRecipes.size());
 
         return RecipeMap.create(newRecipes);
     }

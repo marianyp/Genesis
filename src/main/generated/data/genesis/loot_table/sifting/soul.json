@@ -1,25 +1,25 @@
 {
+  "type": "minecraft:archaeology",
   "pools": [
     {
-      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:group",
           "children": [
             {
               "type": "minecraft:item",
-              "name": "minecraft:bone",
-              "weight": 50,
               "functions": [
                 {
-                  "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 0,
-                    "max": 1
-                  }
+                    "max": 1.0,
+                    "min": 0.0
+                  },
+                  "function": "minecraft:set_count"
                 }
-              ]
+              ],
+              "name": "minecraft:bone",
+              "weight": 50
             },
             {
               "type": "minecraft:item",
@@ -41,7 +41,7 @@
             {
               "condition": "minecraft:match_tool",
               "predicate": {
-                "items": "minecraft:brush"
+                "items": "#c:tools/brush"
               }
             }
           ]
@@ -51,18 +51,18 @@
           "children": [
             {
               "type": "minecraft:item",
-              "name": "minecraft:bone",
-              "weight": 80,
               "functions": [
                 {
-                  "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 0,
-                    "max": 1
-                  }
+                    "max": 1.0,
+                    "min": 0.0
+                  },
+                  "function": "minecraft:set_count"
                 }
-              ]
+              ],
+              "name": "minecraft:bone",
+              "weight": 80
             },
             {
               "type": "minecraft:item",
@@ -76,12 +76,12 @@
             },
             {
               "type": "minecraft:item",
-              "name": "minecraft:wither_skeleton_skull",
-              "weight": 1
+              "name": "minecraft:wither_skeleton_skull"
             }
           ]
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

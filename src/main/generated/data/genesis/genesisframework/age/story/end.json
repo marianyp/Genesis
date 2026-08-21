@@ -1,24 +1,6 @@
 {
   "parent": "genesis:story/wither",
   "criteria": {
-    "has_nether_story_age": {
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/nether": true
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:tick"
-    },
     "has_ocean_story_age": {
       "conditions": {
         "player": [
@@ -37,24 +19,6 @@
       },
       "trigger": "minecraft:tick"
     },
-    "has_pale_story_age": {
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/pale": true
-                }
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:tick"
-    },
     "has_sculk_story_age": {
       "conditions": {
         "player": [
@@ -65,6 +29,24 @@
               "minecraft:type_specific/player": {
                 "advancements": {
                   "genesis:age/story/sculk": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    },
+    "has_war_story_age": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {
+                "advancements": {
+                  "genesis:age/story/war": true
                 }
               }
             }
@@ -101,9 +83,6 @@
     },
     "icon": {
       "id": "minecraft:ender_dragon_spawn_egg"
-    },
-    "title": {
-      "translate": "age.genesis.story.end"
     }
   },
   "items": [

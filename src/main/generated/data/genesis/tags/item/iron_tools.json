@@ -9,6 +9,270 @@
     {
       "id": "farmersdelight:iron_knife",
       "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_iron_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_iron_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_iron_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_iron_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_iron_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_iron_spear",
+      "required": false
     }
   ]
 }

@@ -84,9 +84,6 @@
     },
     "icon": {
       "id": "minecraft:iron_chestplate"
-    },
-    "title": {
-      "translate": "age.genesis.armor.iron"
     }
   },
   "items": [

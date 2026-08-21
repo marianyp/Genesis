@@ -92,7 +92,7 @@ public class PrimitiveCauldronBlock extends Block {
 
         for (PrimitiveCauldronBehavior.PrimitiveCauldronBehaviorEntry entry : behaviorMap.entries()) {
             if (entry.ingredient().test(stack)) {
-                return Optional.ofNullable(entry.behavior().interact(state, level, pos, livingEntity, hand, stack));
+                return Optional.ofNullable(entry.behavior().interact(state, level, pos, livingEntity, stack));
             }
         }
 

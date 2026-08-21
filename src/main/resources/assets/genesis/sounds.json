@@ -205,6 +205,19 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.elder_guardian.reveal": {
+    "sounds": [
+      {
+        "name": "minecraft:block/bell/resonate",
+        "pitch": 0.85
+      },
+      {
+        "name": "minecraft:block/bell/resonate",
+        "pitch": 0.9
+      }
+    ],
+    "subtitle": "subtitles.entity.genesis.elder_guardian.reveal"
+  },
   "block.assembly_table.use": {
     "sounds": [
       "genesis:block/assembly_table/shatter"

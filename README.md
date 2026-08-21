@@ -6,8 +6,7 @@ This is especially relevant, for as the new Age system locks content for even co
 
 Additionally, to access The End and defeat the Ender Dragon, you must first:
 
-*   Go to the Nether
-*   Visit the Pale Garden
+*   Complete a Raid
 *   Complete an Ocean Monument
 *   Explore an Ancient City
 *   Kill the Wither

@@ -3,9 +3,11 @@ package dev.mariany.genesis.logic;
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
 import dev.mariany.genesis.event.entity.EntityEvents;
+import dev.mariany.genesis.sound.GenesisSoundEvents;
 import dev.mariany.genesis.world.level.gamerules.GenesisGameRules;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -63,11 +65,20 @@ public final class OceanMonumentLogic {
             return;
         }
 
-        boolean highlightElderGuardians = gameRules.get(GenesisGameRules.HIGHLIGHT_ELDER_GUARDIANS);
+        boolean revealElderGuardians = gameRules.get(GenesisGameRules.REVEAL_ELDER_GUARDIANS);
 
-        if (highlightElderGuardians) {
-            MobEffectInstance statusEffect = new MobEffectInstance(MobEffects.GLOWING, 300);
-            elders.forEach(elder -> elder.addEffect(statusEffect));
+        if (!revealElderGuardians) {
+            return;
         }
+
+        MobEffectInstance statusEffect = new MobEffectInstance(MobEffects.GLOWING, 300);
+        elders.forEach(elder -> elder.addEffect(statusEffect));
+
+        serverLevel.playSound(
+                null,
+                livingEntity.blockPosition(),
+                GenesisSoundEvents.ENTITY_ELDER_GUARDIAN_REVEAL,
+                SoundSource.NEUTRAL
+        );
     }
 }

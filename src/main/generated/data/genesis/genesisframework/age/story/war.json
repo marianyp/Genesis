@@ -1,0 +1,20 @@
+{
+  "parent": "genesis:story/survival",
+  "criteria": {
+    "completed_raid": {
+      "trigger": "minecraft:hero_of_the_village"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "age.genesis.story.war.description"
+    },
+    "icon": {
+      "id": "minecraft:ravager_spawn_egg"
+    }
+  },
+  "items": [
+    "genesis:clay_shield_cast"
+  ],
+  "requires_parent": false
+}

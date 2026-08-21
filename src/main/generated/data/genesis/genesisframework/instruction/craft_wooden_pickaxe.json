@@ -1,29 +1,15 @@
 {
   "parent": "genesis:craft_assembly_table",
   "criteria": {
-    "wooden_pickaxe_crafted": {
+    "wooden_pickaxes_obtained": {
       "conditions": {
-        "player": [
+        "items": [
           {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:crafted",
-                    "stat": "minecraft:wooden_pickaxe",
-                    "value": {
-                      "min": 1
-                    }
-                  }
-                ]
-              }
-            }
+            "items": "#genesis:wooden_pickaxes"
           }
         ]
       },
-      "trigger": "minecraft:tick"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -39,7 +25,7 @@
   },
   "requirements": [
     [
-      "wooden_pickaxe_crafted"
+      "wooden_pickaxes_obtained"
     ]
   ]
 }

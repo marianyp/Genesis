@@ -10,7 +10,6 @@
     "BrushItemMixin",
     "ConsumableMixin",
     "GameRulesMixin",
-    "ItemStackMixin",
     "LivingEntityMixin",
     "ServerLevelMixin",
     "ServerRecipeManagerMixin",

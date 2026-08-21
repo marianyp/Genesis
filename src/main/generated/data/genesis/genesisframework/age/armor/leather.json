@@ -2,9 +2,6 @@
   "display": {
     "icon": {
       "id": "minecraft:leather_chestplate"
-    },
-    "title": {
-      "translate": "age.genesis.armor.leather"
     }
   }
 }

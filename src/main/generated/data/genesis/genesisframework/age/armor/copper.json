@@ -9,15 +9,9 @@
             "entity": "this",
             "predicate": {
               "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:custom",
-                    "stat": "minecraft:play_time",
-                    "value": {
-                      "min": 240000
-                    }
-                  }
-                ]
+                "level": {
+                  "min": 25
+                }
               }
             }
           }
@@ -32,9 +26,6 @@
     },
     "icon": {
       "id": "minecraft:copper_chestplate"
-    },
-    "title": {
-      "translate": "age.genesis.armor.copper"
     }
   },
   "items": [

@@ -1,0 +1,49 @@
+{
+  "values": [
+    "minecraft:wooden_pickaxe",
+    {
+      "id": "mstv-mtoolv:spruce_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_wooden_pickaxe",
+      "required": false
+    }
+  ]
+}

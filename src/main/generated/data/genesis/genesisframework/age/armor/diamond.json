@@ -84,9 +84,6 @@
     },
     "icon": {
       "id": "minecraft:diamond_chestplate"
-    },
-    "title": {
-      "translate": "age.genesis.armor.diamond"
     }
   },
   "items": [

@@ -49,10 +49,12 @@ public class AssemblyTableBlock extends CraftingTableBlock {
             Player player,
             BlockHitResult hit
     ) {
-        if (!level.isClientSide()) {
-            player.openMenu(state.getMenuProvider(level, pos));
-            player.awardStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
         }
+
+        player.openMenu(state.getMenuProvider(level, pos));
+        player.awardStat(GenesisStats.INTERACT_WITH_ASSEMBLY_TABLE);
 
         return InteractionResult.SUCCESS;
     }

@@ -9,6 +9,270 @@
     {
       "id": "farmersdelight:diamond_knife",
       "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_diamond_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_diamond_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_diamond_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_diamond_spear",
+      "required": false
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
   "parent": "genesis:tools/stone",
   "criteria": {
-    "broken_stone": {
+    "item_broken": {
       "conditions": {
         "item": "#genesis:stone_tools"
       },
-      "trigger": "genesis:item_broken"
+      "trigger": "genesisframework:item_broken"
     }
   },
   "display": {
@@ -14,9 +14,6 @@
     },
     "icon": {
       "id": "minecraft:copper_pickaxe"
-    },
-    "title": {
-      "translate": "age.genesis.tools.copper"
     }
   },
   "items": [

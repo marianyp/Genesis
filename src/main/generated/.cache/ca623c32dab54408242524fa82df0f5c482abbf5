@@ -1,3 +1,4 @@
 // 26.2	-999999999-01-01T00:00:00	Genesis/minecraft:archaeology Loot Table
-7ce0838a7ee119930a5a64428d3c4983fcf55e2a data/genesis/loot_table/dusting/dirt.json
-b094678dfbf83f74a14ebfee8703b9ada9576563 data/genesis/loot_table/dusting/gravel.json
+7ce0838a7ee119930a5a64428d3c4983fcf55e2a data/genesis/loot_table/sifting/dirt.json
+b094678dfbf83f74a14ebfee8703b9ada9576563 data/genesis/loot_table/sifting/gravel.json
+7bee52f2d83583325218ba950080a8b4620c1cdd data/genesis/loot_table/sifting/soul.json

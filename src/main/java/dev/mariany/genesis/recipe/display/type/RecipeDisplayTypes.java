@@ -115,6 +115,7 @@ public final class RecipeDisplayTypes {
     private static List<AssemblyCraftingRecipeDisplay> provideAssemblyDisplays(Collection<RecipeHolder<?>> recipes) {
         return AssemblyRecipeLogic.createAssemblyRecipesFrom(recipes)
                 .stream()
+                .filter(recipe -> recipe.value().isPossible())
                 .map(recipe -> recipe.value().getDisplay())
                 .toList();
     }

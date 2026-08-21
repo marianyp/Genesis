@@ -9,6 +9,270 @@
     {
       "id": "farmersdelight:copper_knife",
       "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:spruce_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:birch_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:acacia_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:cherry_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:jungle_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:dark_oak_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:pale_oak_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:crimson_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:warped_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:mangrove_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:bamboo_copper_hoe",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:spruce_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:birch_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:acacia_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:cherry_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:jungle_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:dark_oak_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:pale_oak_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:crimson_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:warped_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:mangrove_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:bamboo_copper_spear",
+      "required": false
     }
   ]
 }

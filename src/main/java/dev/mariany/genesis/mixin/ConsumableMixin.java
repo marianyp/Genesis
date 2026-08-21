@@ -24,8 +24,10 @@ public class ConsumableMixin {
 
     @Inject(method = "canConsume", at = @At(value = "HEAD"), cancellable = true)
     public void injectCanConsume(LivingEntity livingEntity, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (EntityEvents.ALLOW_ENTITY_CONSUME.invoker().allow(livingEntity, stack)) {
-            cir.setReturnValue(true);
+        if (!EntityEvents.ALLOW_ENTITY_CONSUME.invoker().allow(livingEntity, stack)) {
+            return;
         }
+
+        cir.setReturnValue(true);
     }
 }

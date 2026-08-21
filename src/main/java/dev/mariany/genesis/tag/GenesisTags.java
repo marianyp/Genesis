@@ -1,21 +1,24 @@
 package dev.mariany.genesis.tag;
 
 import dev.mariany.genesis.Genesis;
+import net.fabricmc.fabric.api.tag.convention.v2.TagUtil;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class GenesisTags {
+    private GenesisTags() {
+    }
+
     public static final class Items {
         public static final TagKey<Item> LEATHER_ARMOR = createTag("leather_armor");
         public static final TagKey<Item> COPPER_ARMOR = createTag("copper_armor");
         public static final TagKey<Item> GOLDEN_ARMOR = createTag("golden_armor");
         public static final TagKey<Item> IRON_ARMOR = createTag("iron_armor");
         public static final TagKey<Item> DIAMOND_ARMOR = createTag("diamond_armor");
-        public static final TagKey<Item> NETHERITE_ARMOR = createTag("netherite_armor");
 
         public static final TagKey<Item> WOODEN_TOOLS = createTag("wooden_tools");
         public static final TagKey<Item> STONE_TOOLS = createTag("stone_tools");
@@ -23,7 +26,10 @@ public class GenesisTags {
         public static final TagKey<Item> GOLDEN_TOOLS = createTag("golden_tools");
         public static final TagKey<Item> IRON_TOOLS = createTag("iron_tools");
         public static final TagKey<Item> DIAMOND_TOOLS = createTag("diamond_tools");
-        public static final TagKey<Item> NETHERITE_TOOLS = createTag("netherite_tools");
+
+        public static final TagKey<Item> WOODEN_PICKAXES = createTag("wooden_pickaxes");
+        public static final TagKey<Item> WOODEN_SPEARS = createTag("wooden_spears");
+        public static final TagKey<Item> CAMPFIRE_FUEL = createTag("campfire_fuel");
 
         public static final TagKey<Item> CLAY_TOOL_CASTS = createTag("clay_tool_casts");
         public static final TagKey<Item> TOOL_CASTS = createTag("tool_casts");
@@ -40,8 +46,14 @@ public class GenesisTags {
         public static final TagKey<Item> FROM_ANVIL_CAST = createTag("from_anvil_cast");
         public static final TagKey<Item> FROM_TOTEM_CAST = createTag("from_totem_cast");
 
-        public static final TagKey<Item> WEAPON_AGE_RESTRICTED_WEAPONS = createTag("weapon_age_restricted_weapons");
         public static final TagKey<Item> CAUSES_HUNGER = createTag("causes_hunger");
+
+        public static final TagKey<Item> WEAPON_AGE_RESTRICTED_WEAPONS = createTag(
+                "weapon_age_restricted_weapons"
+        );
+
+        private Items() {
+        }
 
         private static TagKey<Item> createTag(String name) {
             return TagKey.create(Registries.ITEM, Genesis.id(name));
@@ -51,6 +63,9 @@ public class GenesisTags {
     public static final class Blocks {
         public static final TagKey<Block> BOAR_SPAWNABLE_ON = createTag("boar_spawnable_on");
 
+        private Blocks() {
+        }
+
         private static TagKey<Block> createTag(String name) {
             return TagKey.create(Registries.BLOCK, Genesis.id(name));
         }
@@ -59,16 +74,27 @@ public class GenesisTags {
     public static final class Structures {
         public static final TagKey<Structure> ON_DEEP_DARK_EXPLORER_MAPS = createTag("on_deep_dark_explorer_maps");
 
+        private Structures() {
+        }
+
         private static TagKey<Structure> createTag(String name) {
             return TagKey.create(Registries.STRUCTURE, Genesis.id(name));
         }
     }
 
-    public static final class Biomes {
-        public static final TagKey<Biome> ON_PALE_GARDEN_EXPLORER_MAPS = createTag("on_pale_garden_explorer_maps");
+    public static final class Conventional {
+        private Conventional() {
+        }
 
-        private static TagKey<Biome> createTag(String name) {
-            return TagKey.create(Registries.BIOME, Genesis.id(name));
+        public static final class Items {
+            public static final TagKey<Item> SMOKERS = createTag("smokers");
+
+            private Items() {
+            }
+
+            private static TagKey<Item> createTag(String name) {
+                return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(TagUtil.C_TAG_NAMESPACE, name));
+            }
         }
     }
 }

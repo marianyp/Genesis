@@ -114,9 +114,11 @@ public class TirednessLogic {
         int previousTirednessPercentage = getTirednessPercentage(previousAwakeTicks, minimumTicksBeforeSleeping);
         int tirednessPercentage = getTirednessPercentage(awakeTicks, minimumTicksBeforeSleeping);
 
-        if (previousTirednessPercentage != tirednessPercentage) {
-            this.syncTiredness(serverPlayer);
+        if (previousTirednessPercentage == tirednessPercentage) {
+            return;
         }
+
+        this.syncTiredness(serverPlayer);
     }
 
     private static int getTirednessPercentage(int awakeTicks, int minimumTicksBeforeSleeping) {

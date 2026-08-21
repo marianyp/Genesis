@@ -2,9 +2,6 @@
   "display": {
     "icon": {
       "id": "minecraft:wooden_pickaxe"
-    },
-    "title": {
-      "translate": "age.genesis.tools.wood"
     }
   }
 }

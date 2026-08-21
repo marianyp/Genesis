@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:stick",
+    {
+      "id": "#mstv-base:stick_variants",
+      "required": false
+    }
+  ]
+}

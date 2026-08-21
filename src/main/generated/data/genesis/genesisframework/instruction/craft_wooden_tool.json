@@ -1,29 +1,15 @@
 {
   "parent": "genesis:cook_clay_spear_cast",
   "criteria": {
-    "wooden_spear_crafted": {
+    "wooden_spears_obtained": {
       "conditions": {
-        "player": [
+        "items": [
           {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "stats": [
-                  {
-                    "type": "minecraft:crafted",
-                    "stat": "minecraft:wooden_spear",
-                    "value": {
-                      "min": 1
-                    }
-                  }
-                ]
-              }
-            }
+            "items": "#genesis:wooden_spears"
           }
         ]
       },
-      "trigger": "minecraft:tick"
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -39,7 +25,7 @@
   },
   "requirements": [
     [
-      "wooden_spear_crafted"
+      "wooden_spears_obtained"
     ]
   ]
 }

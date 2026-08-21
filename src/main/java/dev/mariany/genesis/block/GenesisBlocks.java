@@ -10,7 +10,6 @@ import dev.mariany.genesis.loot.GenesisLootTables;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -71,7 +70,7 @@ public class GenesisBlocks {
                     Blocks.DIRT,
                     SoundEvents.BRUSH_GRAVEL,
                     SoundEvents.BRUSH_GRAVEL_COMPLETED,
-                    GenesisLootTables.DIRT_DUSTING,
+                    GenesisLootTables.SIFTING_DIRT,
                     settings
             ),
             BlockBehaviour.Properties.ofFullCopy(TERRACOTTA_CAULDRON)
@@ -84,7 +83,7 @@ public class GenesisBlocks {
                     Blocks.GRAVEL,
                     SoundEvents.BRUSH_GRAVEL,
                     SoundEvents.BRUSH_GRAVEL_COMPLETED,
-                    GenesisLootTables.GRAVEL_DUSTING,
+                    GenesisLootTables.SIFTING_GRAVEL,
                     settings
             ),
             BlockBehaviour.Properties.ofFullCopy(TERRACOTTA_CAULDRON)
@@ -97,7 +96,7 @@ public class GenesisBlocks {
                     Blocks.SOUL_SAND,
                     SoundEvents.BRUSH_SAND,
                     SoundEvents.BRUSH_SAND_COMPLETED,
-                    GenesisLootTables.SOUL_SEDIMENT_DUSTING,
+                    GenesisLootTables.SIFTING_SOUL,
                     settings
             ),
             BlockBehaviour.Properties.ofFullCopy(TERRACOTTA_CAULDRON)
@@ -110,7 +109,7 @@ public class GenesisBlocks {
                     Blocks.SOUL_SAND,
                     SoundEvents.BRUSH_GRAVEL,
                     SoundEvents.BRUSH_GRAVEL_COMPLETED,
-                    GenesisLootTables.SOUL_SEDIMENT_DUSTING,
+                    GenesisLootTables.SIFTING_SOUL,
                     settings
             ),
             BlockBehaviour.Properties.ofFullCopy(TERRACOTTA_CAULDRON)

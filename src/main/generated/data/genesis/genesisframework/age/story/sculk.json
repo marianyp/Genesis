@@ -20,9 +20,6 @@
     },
     "icon": {
       "id": "minecraft:warden_spawn_egg"
-    },
-    "title": {
-      "translate": "age.genesis.story.sculk"
     }
   },
   "items": [
