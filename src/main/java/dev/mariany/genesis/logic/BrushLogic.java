@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -83,7 +84,7 @@ public final class BrushLogic {
         );
 
         if (optionalInteractionResult.map(InteractionResult::consumesAction).orElse(false)) {
-            livingEntity.swing(oppositeInteractionHand);
+            livingEntity.swing(oppositeInteractionHand, SwingAnimation.DEFAULT, true);
             return true;
         }
 

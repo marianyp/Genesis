@@ -1,9 +1,9 @@
 package dev.mariany.genesis.datagen;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.advancement.criterion.CookWithKilnCriteria;
+import dev.mariany.genesis.advancement.criterion.CookWithKilnTrigger;
 import dev.mariany.genesis.advancement.criterion.GenesisCriteria;
-import dev.mariany.genesis.advancement.criterion.SiftPrimitiveCauldronCriteria;
+import dev.mariany.genesis.advancement.criterion.SiftPrimitiveCauldronTrigger;
 import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import dev.mariany.genesis.tag.GenesisTags;
@@ -113,7 +113,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.sift_terracotta_cauldron"),
                         Component.translatable("instruction.genesis.sift_terracotta_cauldron.description")
                 )
-                .criterion("sifted_terracotta_cauldron", SiftPrimitiveCauldronCriteria.Conditions.create())
+                .criterion("sifted_terracotta_cauldron", SiftPrimitiveCauldronTrigger.Conditions.create())
                 .build(consumer, Genesis.id("sift_terracotta_cauldron"));
 
         InstructionEntry craftBlankClayCast = Instruction.Builder
@@ -231,7 +231,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         Component.translatable("instruction.genesis.use_kiln"),
                         Component.translatable("instruction.genesis.use_kiln.description")
                 )
-                .criterion("used_kiln", CookWithKilnCriteria.Conditions.create())
+                .criterion("used_kiln", CookWithKilnTrigger.Conditions.create())
                 .build(consumer, Genesis.id("use_kiln"));
 
         Instruction.Builder

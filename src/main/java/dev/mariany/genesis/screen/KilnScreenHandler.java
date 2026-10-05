@@ -155,6 +155,10 @@ public class KilnScreenHandler extends RecipeBookMenu {
             ServerLevel level,
             Inventory inventory
     ) {
+        if (!(recipe.value() instanceof AbstractCookingRecipe cookingRecipe)) {
+            return RecipeBookMenu.PostPlaceAction.NOTHING;
+        }
+
         final List<Slot> list = List.of(this.getSlot(0), this.getSlot(2));
 
         return ServerPlaceRecipe.placeRecipe(
@@ -183,7 +187,7 @@ public class KilnScreenHandler extends RecipeBookMenu {
                 List.of(this.getSlot(0)),
                 list,
                 inventory,
-                (RecipeHolder<AbstractCookingRecipe>) recipe,
+                new RecipeHolder<>(recipe.id(), cookingRecipe),
                 craftAll,
                 creative
         );

@@ -119,6 +119,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_wooden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_wooden_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_wooden_shovel",
       "required": false
     },
@@ -236,6 +252,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_wooden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_wooden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_wooden_spear",
       "required": false
     },
     {

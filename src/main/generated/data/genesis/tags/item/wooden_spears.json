@@ -30,6 +30,10 @@
       "required": false
     },
     {
+      "id": "mstv-mweaponv:poplar_wooden_spear",
+      "required": false
+    },
+    {
       "id": "mstv-mweaponv:crimson_wooden_spear",
       "required": false
     },

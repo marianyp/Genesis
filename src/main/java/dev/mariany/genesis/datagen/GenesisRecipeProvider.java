@@ -4,18 +4,20 @@ import dev.mariany.genesis.block.GenesisBlocks;
 import dev.mariany.genesis.item.GenesisItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.core.Holder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
@@ -32,16 +34,21 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
 
     @Override
     protected RecipeProvider createRecipeProvider(
-            HolderLookup.Provider registryLookup,
-            RecipeOutput exporter
+            HolderLookup.Provider registries,
+            BootstrapContext<Recipe<?>> recipes,
+            BootstrapContext<Advancement> advancements
     ) {
-        return new RecipeProvider(registryLookup, exporter) {
+        return new RecipeProvider(recipes, advancements) {
+            private final GenesisBrewingProvider brewingProvider = new GenesisBrewingProvider(this.output);
+
             private static String getCampfireItemPath(ItemLike item) {
                 return getItemName(item) + "_from_campfire_cooking";
             }
 
             @Override
             public void buildRecipes() {
+                this.brewingProvider.buildRecipes();
+
                 this.shapeless(RecipeCategory.TOOLS, GenesisItems.FLINTS)
                     .requires(Items.FLINT)
                     .requires(Items.FLINT)
@@ -173,8 +180,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
 
             private void offerSmeltingAndBlasting(ItemLike input, ItemLike output) {
                 Item outputItem = output.asItem();
-                Holder.Reference<Item> outputReference = outputItem.builtInRegistryHolder();
-                Optional<ResourceKey<Item>> optionalReferenceKey = outputReference.unwrapKey();
+                Optional<ResourceKey<Item>> optionalReferenceKey = BuiltInRegistries.ITEM.getResourceKey(outputItem);
 
                 if (optionalReferenceKey.isPresent()) {
                     Identifier outputId = optionalReferenceKey.get().identifier();
@@ -362,6 +368,7 @@ public class GenesisRecipeProvider extends FabricRecipeProvider {
                     .unlockedBy(getHasName(GenesisItems.BLANK_CLAY_CAST), has(GenesisItems.BLANK_CLAY_CAST))
                     .save(this.output);
             }
+
         };
     }
 

@@ -1,4 +1,4 @@
-// 26.2	-999999999-01-01T00:00:00	Genesis/Genesis Instructions
+// 26.3	-999999999-01-01T00:00:00	Genesis/Genesis Instructions
 180df1174a61e6d20b823796c750c1bd8da30525 data/genesis/genesisframework/instruction/cook_clay_pickaxe_cast.json
 2d9a46c911f32c38b87c46bde3b9acea1e1504fa data/genesis/genesisframework/instruction/cook_clay_spear_cast.json
 7cd023a516158e0f8fa1d889dfe4c4c77c3969fb data/genesis/genesisframework/instruction/cook_kiln.json
@@ -16,5 +16,5 @@ b0daa8ab22566d0f63a31f89f090dd20b1e7ef4f data/genesis/genesisframework/instructi
 e7f8941005b00f72c1a562ad8a6111cce7829a52 data/genesis/genesisframework/instruction/make_campfire.json
 ee81fb384870d2427a1b04e9c60acfba4b9210bb data/genesis/genesisframework/instruction/make_flints.json
 bec0c53276d71e0ae112396838bd1e17962c90c0 data/genesis/genesisframework/instruction/obtain_solace.json
-9791fb57337e8c1003945442de81208a31012627 data/genesis/genesisframework/instruction/sift_terracotta_cauldron.json
+f6c4b18617c5f7d0c749fff98363cab1ece31b22 data/genesis/genesisframework/instruction/sift_terracotta_cauldron.json
 112a712d4bedfe5ca12a949c0e7e6a688699b623 data/genesis/genesisframework/instruction/use_kiln.json

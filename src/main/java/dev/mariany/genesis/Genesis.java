@@ -14,8 +14,6 @@ import dev.mariany.genesis.packet.GenesisPackets;
 import dev.mariany.genesis.packet.serverbound.ServerBoundPackets;
 import dev.mariany.genesis.particle.GenesisParticleTypes;
 import dev.mariany.genesis.recipe.GenesisRecipeTypes;
-import dev.mariany.genesis.recipe.brew.BrewingRecipesHandler;
-import dev.mariany.genesis.recipe.brew.GenesisBrewingRecipes;
 import dev.mariany.genesis.recipe.display.GenesisRecipeDisplays;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import dev.mariany.genesis.sound.GenesisSoundEvents;
@@ -57,8 +55,6 @@ public class Genesis implements ModInitializer {
         GenesisAttachmentTypes.bootstrap();
         GenesisSoundEvents.bootstrap();
         GenesisItems.bootstrap();
-        GenesisBrewingRecipes.bootstrap();
-        BrewingRecipesHandler.bootstrap();
         GenesisScreenHandlers.bootstrap();
         GenesisBlocks.bootstrap();
         Genesis.PRIMITIVE_CAULDRON_LOOT.bootstrap();

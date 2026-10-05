@@ -2,9 +2,6 @@
   "parent": "genesis:cook_terracotta_cauldron",
   "criteria": {
     "sifted_terracotta_cauldron": {
-      "conditions": {
-        "whitelist": []
-      },
       "trigger": "genesis:sift_primitive_cauldron"
     }
   },

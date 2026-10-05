@@ -123,6 +123,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_copper_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_copper_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_copper_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_copper_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_copper_shovel",
       "required": false
     },
@@ -240,6 +256,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_copper_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_copper_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_copper_spear",
       "required": false
     },
     {

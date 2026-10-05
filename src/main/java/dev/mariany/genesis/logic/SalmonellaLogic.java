@@ -7,7 +7,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
@@ -35,7 +37,9 @@ public class SalmonellaLogic {
         HolderLookup.RegistryLookup<Item> items = lookupProvider.lookupOrThrow(Registries.ITEM);
         HolderSet.Named<Item> causesHungerItems = items.getOrThrow(GenesisTags.Items.CAUSES_HUNGER);
 
-        if (!causesHungerItems.contains(item.builtInRegistryHolder())) {
+        ResourceKey<Item> itemResourceKey = BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow();
+
+        if (!causesHungerItems.contains(items.getOrThrow(itemResourceKey))) {
             return;
         }
 

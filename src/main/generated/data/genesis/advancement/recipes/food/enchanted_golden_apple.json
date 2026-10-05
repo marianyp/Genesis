@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:enchanted_golden_apple"
+        "recipes": "genesis:enchanted_golden_apple"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

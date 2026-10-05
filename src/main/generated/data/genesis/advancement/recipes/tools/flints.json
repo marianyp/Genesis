@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:flints"
+        "recipes": "genesis:flints"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,73 +3,65 @@
   "criteria": {
     "has_ocean_story_age": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/ocean": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "genesis:age/story/ocean": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     },
     "has_sculk_story_age": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/sculk": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "genesis:age/story/sculk": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     },
     "has_war_story_age": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/war": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "genesis:age/story/war": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     },
     "has_wither_story_age": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "genesis:age/story/wither": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "genesis:age/story/wither": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     }

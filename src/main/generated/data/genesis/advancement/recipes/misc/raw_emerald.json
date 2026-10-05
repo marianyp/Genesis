@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:raw_emerald"
+        "recipes": "genesis:raw_emerald"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

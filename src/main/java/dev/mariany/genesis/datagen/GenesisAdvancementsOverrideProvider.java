@@ -12,6 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -28,20 +29,22 @@ public class GenesisAdvancementsOverrideProvider extends FabricAdvancementProvid
     @Override
     public void generateAdvancement(HolderLookup.Provider registryLookup, Consumer<AdvancementHolder> consumer) {
         Advancement.Builder.advancement()
-                .parent(Identifier.withDefaultNamespace("story/iron_tools"))
-                .display(
-                        GenesisItems.RAW_DIAMOND,
-                        Component.translatable("advancements.story.mine_diamond.title"),
-                        Component.translatable("advancements.story.mine_diamond.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
-                .addCriterion("raw_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(GenesisItems.RAW_DIAMOND))
-                .requirements(AdvancementRequirements.anyOf(List.of("diamond", "raw_diamond")))
-                .save(consumer, "story/mine_diamond");
+                           .parent(Identifier.withDefaultNamespace("story/iron_tools"))
+                           .display(
+                                   GenesisItems.RAW_DIAMOND,
+                                   Component.translatable("advancements.story.mine_diamond.title"),
+                                   Component.translatable("advancements.story.mine_diamond.description"),
+                                   AdvancementType.TASK,
+                                   true,
+                                   true,
+                                   false
+                           )
+                           .addCriterion("diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
+                           .addCriterion(
+                                   "raw_diamond",
+                                   InventoryChangeTrigger.TriggerInstance.hasItems(GenesisItems.RAW_DIAMOND)
+                           )
+                           .requirements(AdvancementRequirements.anyOf(List.of("diamond", "raw_diamond")))
+                           .save(consumer, Identifier.withDefaultNamespace("story/mine_diamond"));
     }
 }

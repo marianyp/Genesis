@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:raw_netherite"
+        "recipes": "genesis:raw_netherite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -123,6 +123,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_golden_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_golden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_golden_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_golden_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_golden_shovel",
       "required": false
     },
@@ -240,6 +256,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_golden_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_golden_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_golden_spear",
       "required": false
     },
     {

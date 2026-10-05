@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:clay_spear_cast"
+        "recipes": "genesis:clay_spear_cast"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

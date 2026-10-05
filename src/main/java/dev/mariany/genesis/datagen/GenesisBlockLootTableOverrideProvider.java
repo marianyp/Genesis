@@ -4,9 +4,7 @@ import dev.mariany.genesis.item.GenesisItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -14,11 +12,15 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisBlockLootTableOverrideProvider extends FabricBlockLootSubProvider {
-    public GenesisBlockLootTableOverrideProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public GenesisBlockLootTableOverrideProvider(
+            FabricPackOutput dataOutput,
+            CompletableFuture<HolderLookup.Provider> registryLookup
+    ) {
         super(dataOutput, registryLookup);
     }
 
@@ -43,17 +45,15 @@ public class GenesisBlockLootTableOverrideProvider extends FabricBlockLootSubPro
     }
 
     public LootTable.Builder createLapisOreDrops(Block drop) {
-        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistry = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-
         return this.createSilkTouchDispatchTable(
                 drop,
                 this.applyExplosionDecay(
                         drop,
                         LootItem.lootTableItem(GenesisItems.RAW_LAPIS_LAZULI)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4F, 9F)))
+                                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(4, 9)))
                                 .apply(
                                         ApplyBonusCount.addOreBonusCount(
-                                                enchantmentRegistry.getOrThrow(Enchantments.FORTUNE)
+                                                this.enchantments.getOrThrow(Enchantments.FORTUNE)
                                         )
                                 )
                 )
@@ -61,17 +61,15 @@ public class GenesisBlockLootTableOverrideProvider extends FabricBlockLootSubPro
     }
 
     public LootTable.Builder createRedstoneOreDrops(Block drop) {
-        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistry = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-
         return this.createSilkTouchDispatchTable(
                 drop,
                 this.applyExplosionDecay(
                         drop,
                         LootItem.lootTableItem(GenesisItems.RAW_REDSTONE)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4F, 5F)))
+                                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(4, 5)))
                                 .apply(
                                         ApplyBonusCount.addUniformBonusCount(
-                                                enchantmentRegistry.getOrThrow(Enchantments.FORTUNE)
+                                                this.enchantments.getOrThrow(Enchantments.FORTUNE)
                                         )
                                 )
                 )

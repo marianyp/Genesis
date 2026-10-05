@@ -6,7 +6,7 @@ import dev.mariany.genesis.recipe.display.RecipeDisplayTransfer;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
+import me.shedaniel.rei.api.common.display.Display;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class REIRecipeTransferHandler<
-        D extends CraftingDisplay,
+        D extends Display,
         M extends AbstractContainerMenu
         > implements TransferHandler {
     private final REIRecipeDisplayAdapter<D> adapter;

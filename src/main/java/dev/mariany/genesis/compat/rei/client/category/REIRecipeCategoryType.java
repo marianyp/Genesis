@@ -1,10 +1,10 @@
 package dev.mariany.genesis.compat.rei.client.category;
 
 import dev.mariany.genesis.compat.rei.display.adapter.REIRecipeDisplayAdapter;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
+import me.shedaniel.rei.api.common.display.Display;
 import org.jspecify.annotations.Nullable;
 
-public record REIRecipeCategoryType<D extends CraftingDisplay>(
+public record REIRecipeCategoryType<D extends Display>(
         REIRecipeDisplayAdapter<D> displayAdapter,
         CategoryFactory<D> categoryFactory
 ) {
@@ -21,7 +21,7 @@ public record REIRecipeCategoryType<D extends CraftingDisplay>(
     }
 
     @FunctionalInterface
-    public interface CategoryFactory<D extends CraftingDisplay> {
+    public interface CategoryFactory<D extends Display> {
         REIRecipeCategory<D> create(REIRecipeDisplayAdapter<D> adapter);
     }
 }

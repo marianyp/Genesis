@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:terracotta_cauldron_from_blasting"
+        "recipes": "genesis:terracotta_cauldron_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

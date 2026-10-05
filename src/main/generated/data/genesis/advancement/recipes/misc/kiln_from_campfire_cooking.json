@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:kiln_from_campfire_cooking"
+        "recipes": "genesis:kiln_from_campfire_cooking"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

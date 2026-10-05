@@ -3,19 +3,17 @@
   "criteria": {
     "time_played": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "level": {
-                  "min": 20
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "level": {
+                "min": 20
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     }

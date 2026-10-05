@@ -14,7 +14,7 @@ import java.util.List;
 @Mixin(targets = "mezz.jei.gui.recipes.RecipeSortUtil", remap = false)
 public abstract class RecipeSortUtilMixin {
     @ModifyReturnValue(
-            method = "sortRecipeCategories(Ljava/util/List;Lmezz/jei/api/recipe/transfer/IRecipeTransferManager;)Ljava/util/List;",
+            method = "sortRecipeCategories(Ljava/util/List;Lmezz/jei/common/transfer/RecipeTransferService;)Ljava/util/List;",
             at = @At("RETURN"),
             require = 0,
             remap = false

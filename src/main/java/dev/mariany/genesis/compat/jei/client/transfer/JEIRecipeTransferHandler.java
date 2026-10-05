@@ -5,9 +5,11 @@ import dev.mariany.genesis.recipe.display.RecipeDisplayTransfer;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.transfer.IRecipeTransferContext;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
+import mezz.jei.api.recipe.transfer.RecipeTransferResult;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.resources.ResourceKey;
@@ -56,12 +58,43 @@ public final class JEIRecipeTransferHandler<
     }
 
     @Override
+    @Nullable
+    public IRecipeTransferError transferRecipe(
+            IRecipeTransferContext<D, M> context,
+            boolean doTransfer
+    ) {
+        IRecipeTransferError error = this.transferRecipe(
+                context.getContainer(),
+                context.getRecipe(),
+                context.getRecipeSlots(),
+                doTransfer
+        );
+
+        if (error == null && doTransfer) {
+            context.completeRecipeTransfer(RecipeTransferResult.SUCCESS);
+        }
+
+        return error;
+    }
+
+    @Override
+    @Deprecated(forRemoval = true)
+    @SuppressWarnings("removal")
     public @Nullable IRecipeTransferError transferRecipe(
             M container,
             D recipe,
             IRecipeSlotsView recipeSlots,
             Player player,
             boolean maxTransfer,
+            boolean doTransfer
+    ) {
+        return this.transferRecipe(container, recipe, recipeSlots, doTransfer);
+    }
+
+    private @Nullable IRecipeTransferError transferRecipe(
+            M container,
+            D recipe,
+            IRecipeSlotsView recipeSlots,
             boolean doTransfer
     ) {
         Optional<ResourceKey<Recipe<?>>> recipeKey = this.transfer.findRecipeKey(

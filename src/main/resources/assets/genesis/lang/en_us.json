@@ -61,7 +61,6 @@
   "effect.genesis.solace": "Solace",
   "entity.genesis.boar": "Boar",
   "entity.genesis.boar.description": "A hostile wild pig that charges players and destroys crops. It drops leather and sometimes pork.",
-  "filled_map.genesis.deep_dark": "Deep Dark Explorer Map",
   "gamerule.genesis.reveal_elder_guardians": "Reveal Elder Guardians",
   "gamerule.genesis.reveal_elder_guardians.description": "Controls if killing a elder guardian will apply a glowing effect to the remaining elder guardians.",
   "gamerule.genesis.ocean_monument_radius": "Ocean Monument Radius",
@@ -192,6 +191,7 @@
   "subtitles.entity.genesis.elder_guardian.reveal": "Elder guardians revealed",
   "subtitles.item.armor.equip_copper": "Copper armor clanks",
   "subtitles.item.genesis.flints": "Flints click",
+  "tag.item.genesis.campfire_fuel": "Campfire Fuel",
   "tag.item.genesis.causes_hunger": "Causes Hunger",
   "tag.item.genesis.clay_tool_casts": "Clay Tool Casts",
   "tag.item.genesis.copper_armor": "Copper Armor",
@@ -218,5 +218,7 @@
   "tag.item.genesis.stone_tools": "Stone Tools",
   "tag.item.genesis.tool_casts": "Tool Casts",
   "tag.item.genesis.weapon_age_restricted_weapons": "Weapon Age Restricted Weapons",
+  "tag.item.genesis.wooden_pickaxes": "Wooden Pickaxes",
+  "tag.item.genesis.wooden_spears": "Wooden Spears",
   "tag.item.genesis.wooden_tools": "Wooden Tools"
 }

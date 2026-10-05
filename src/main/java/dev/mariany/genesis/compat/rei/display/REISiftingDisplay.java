@@ -7,9 +7,10 @@ import dev.mariany.genesis.recipe.display.SiftingRecipeDisplay;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
+import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
+import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
@@ -17,7 +18,7 @@ import net.minecraft.resources.Identifier;
 import java.util.List;
 import java.util.Optional;
 
-public class REISiftingDisplay extends DefaultCraftingDisplay {
+public class REISiftingDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
     public static final DisplaySerializer<REISiftingDisplay> SERIALIZER = DisplaySerializer.of(
             RecordCodecBuilder.mapCodec(instance -> instance.group(
                             EntryIngredient.codec()
@@ -79,11 +80,6 @@ public class REISiftingDisplay extends DefaultCraftingDisplay {
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return REIRecipeDisplayAdapters.SIFTING.categoryIdentifier();
-    }
-
-    @Override
-    public boolean isShapeless() {
-        return false;
     }
 
     @Override

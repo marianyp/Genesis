@@ -14,17 +14,9 @@ repositories {
     mavenLocal()
     mavenCentral()
 
-    maven {
-        url 'https://jitpack.io'
-    }
-
-    maven {
-        url "https://maven.shedaniel.me"
-    }
-
-    maven {
-        url "https://maven.blamejared.com"
-    }
+    maven {url = 'https://jitpack.io'}
+    maven {url = "https://maven.shedaniel.me"}
+    maven {url = "https://maven.blamejared.com"}
 
     def modrinth = maven {
         name = "Modrinth"
@@ -65,7 +57,6 @@ dependencies {
     // Roughly Enough Items
 //    runtimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
     compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
     compileOnly "dev.architectury:architectury-fabric:21.0.7"
 

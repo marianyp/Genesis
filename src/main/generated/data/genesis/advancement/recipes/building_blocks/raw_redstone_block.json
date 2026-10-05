@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:raw_redstone_block"
+        "recipes": "genesis:raw_redstone_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

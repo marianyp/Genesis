@@ -8,12 +8,17 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.plugins.PluginManager;
 import me.shedaniel.rei.api.common.registry.ReloadStage;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.common.BuiltinPlugin;
+import net.minecraft.resources.Identifier;
 
 public class GenesisClientREIPlugin implements REIClientPlugin {
+    private static final CategoryIdentifier<?> SMELTING_CATEGORY = CategoryIdentifier.of(
+            Identifier.withDefaultNamespace("plugins/smelting")
+    );
+
     private final REIRecipeDisplayOrdering recipeDisplayOrdering = new REIRecipeDisplayOrdering();
 
     @Override
@@ -32,7 +37,7 @@ public class GenesisClientREIPlugin implements REIClientPlugin {
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
-        registry.addWorkstations(BuiltinPlugin.SMELTING, EntryStacks.of(GenesisBlocks.KILN));
+        registry.addWorkstations(SMELTING_CATEGORY, EntryStacks.of(GenesisBlocks.KILN));
         REIRecipeDisplays.registerCategories(registry);
     }
 

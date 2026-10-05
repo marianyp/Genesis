@@ -6,37 +6,26 @@ import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.StructureTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
-import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LootTableModifiers {
     private static final Map<ResourceKey<LootTable>, Float> CAST_MAP = new HashMap<>();
     private static final Map<ResourceKey<LootTable>, Float> RARE_CAST_MAP = new HashMap<>();
     private static final List<ResourceKey<LootTable>> SINGLE_RARE_CAST_MAP = new ArrayList<>();
     private static final List<ResourceKey<LootTable>> SINGLE_COMMON_CAST_MAP = new ArrayList<>();
-    private static final List<ResourceKey<LootTable>> VILLAGE_HOUSE_LOOT_TABLES = new ArrayList<>();
     private static final Map<ResourceKey<LootTable>, Float> SPAWNS_ENCHANTED_HONEY_BOTTLES = new HashMap<>();
 
     static {
@@ -61,11 +50,6 @@ public class LootTableModifiers {
         SINGLE_COMMON_CAST_MAP.add(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY);
         SINGLE_COMMON_CAST_MAP.add(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON);
 
-        VILLAGE_HOUSE_LOOT_TABLES.add(BuiltInLootTables.VILLAGE_DESERT_HOUSE);
-        VILLAGE_HOUSE_LOOT_TABLES.add(BuiltInLootTables.VILLAGE_SAVANNA_HOUSE);
-        VILLAGE_HOUSE_LOOT_TABLES.add(BuiltInLootTables.VILLAGE_SNOWY_HOUSE);
-        VILLAGE_HOUSE_LOOT_TABLES.add(BuiltInLootTables.VILLAGE_TAIGA_HOUSE);
-
         SPAWNS_ENCHANTED_HONEY_BOTTLES.put(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_COMMON, 0.4F);
         SPAWNS_ENCHANTED_HONEY_BOTTLES.put(BuiltInLootTables.RUINED_PORTAL, 0.6F);
     }
@@ -85,79 +69,28 @@ public class LootTableModifiers {
             return;
         }
 
+        HolderLookup.RegistryLookup<Item> items = holder.lookupOrThrow(Registries.ITEM);
+
+        if (addCastLootTables(items, key, tableBuilder)) {
+            return;
+        }
+
         if (addStarterItems(key, tableBuilder)) {
-            return;
-        }
-
-        if (addTrialChamberMaps(key, tableBuilder)) {
-            return;
-        }
-
-        if (addCastLootTables(key, tableBuilder)) {
             return;
         }
 
         addEnchantedHoneyBottles(key, tableBuilder);
     }
 
-    private static boolean addStarterItems(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
-        if (!key.equals(BuiltInLootTables.SPAWN_BONUS_CHEST)) {
-            return false;
-        }
-
-        tableBuilder.withPool(uniformItemPool(Items.CLAY_BALL, 5, 10)).withPool(uniformItemPool(Items.FLINT, 4, 8));
-
-        return true;
-    }
-
-    private static LootPool.Builder uniformItemPool(Item item, float min, float max) {
-        return LootPool.lootPool().setRolls(UniformGenerator.between(min, max)).add(LootItem.lootTableItem(item));
-    }
-
-    private static boolean addTrialChamberMaps(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
-        if (key.equals(BuiltInLootTables.VILLAGE_CARTOGRAPHER)) {
-            tableBuilder.withPool(
-                    LootPool.lootPool()
-                            .setRolls(UniformGenerator.between(0, 1))
-                            .add(buildTrialChamberMap())
-            );
-        } else if (VILLAGE_HOUSE_LOOT_TABLES.contains(key)) {
-            tableBuilder.withPool(
-                    LootPool.lootPool()
-                            .setRolls(UniformGenerator.between(0, 1))
-                            .add(EmptyLootItem.emptyItem().setWeight(2))
-                            .add(buildTrialChamberMap().setWeight(1))
-            );
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static LootPoolSingletonContainer.Builder<?> buildTrialChamberMap() {
-        return LootItem.lootTableItem(Items.MAP)
-                       .apply(
-                               ExplorationMapFunction
-                                       .makeExplorationMap()
-                                       .setDestination(StructureTags.ON_TRIAL_CHAMBERS_MAPS)
-                                       .setMapDecoration(MapDecorationTypes.TRIAL_CHAMBERS)
-                                       .setZoom((byte) 2)
-                                       .setSkipKnownStructures(false)
-                       )
-                       .apply(
-                               SetNameFunction.setName(
-                                       Component.translatable("filled_map.trial_chambers"),
-                                       SetNameFunction.Target.ITEM_NAME
-                               )
-                       );
-    }
-
-    private static boolean addCastLootTables(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
+    private static boolean addCastLootTables(
+            HolderLookup.RegistryLookup<Item> items,
+            ResourceKey<LootTable> key,
+            LootTable.Builder tableBuilder
+    ) {
         if (CAST_MAP.containsKey(key)) {
             tableBuilder.withPool(
                     LootPool.lootPool()
-                            .setRolls(UniformGenerator.between(0, 1))
+                            .setRolls(ContextIntProviders.between(0, 1))
                             .add(LootItem.lootTableItem(GenesisItems.CLAY_SHIELD_CAST))
                             .add(LootItem.lootTableItem(GenesisItems.CLAY_ANVIL_CAST))
                             .when(LootItemRandomChanceCondition.randomChance(CAST_MAP.get(key)))
@@ -165,7 +98,7 @@ public class LootTableModifiers {
         } else if (RARE_CAST_MAP.containsKey(key)) {
             tableBuilder.withPool(
                     LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1))
+                            .setRolls(ContextIntProviders.exactly(1))
                             .add(LootItem.lootTableItem(GenesisItems.CLAY_TOTEM_CAST).setWeight(3))
                             .add(LootItem.lootTableItem(GenesisItems.CLAY_SHIELD_CAST))
                             .add(LootItem.lootTableItem(GenesisItems.CLAY_ANVIL_CAST))
@@ -177,14 +110,29 @@ public class LootTableModifiers {
                     .add(LootItem.lootTableItem(GenesisItems.CLAY_SHIELD_CAST))
                     .add(LootItem.lootTableItem(GenesisItems.CLAY_ANVIL_CAST)));
         } else if (SINGLE_COMMON_CAST_MAP.contains(key)) {
-            tableBuilder.modifyPools(
-                    builder -> builder.add(TagEntry.expandTag(GenesisTags.Items.CLAY_TOOL_CASTS))
-            );
+            tableBuilder.modifyPools(builder -> builder.add(
+                    TagEntry.expandTag(items.getOrThrow(GenesisTags.Items.CLAY_TOOL_CASTS))
+            ));
         } else {
             return false;
         }
 
         return true;
+    }
+
+    private static boolean addStarterItems(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
+        if (!key.equals(BuiltInLootTables.SPAWN_BONUS_CHEST)) {
+            return false;
+        }
+
+        tableBuilder.withPool(uniformItemPool(Items.CLAY_BALL, 5, 10))
+                    .withPool(uniformItemPool(Items.FLINT, 4, 8));
+
+        return true;
+    }
+
+    private static LootPool.Builder uniformItemPool(Item item, int min, int max) {
+        return LootPool.lootPool().setRolls(ContextIntProviders.between(min, max)).add(LootItem.lootTableItem(item));
     }
 
     private static void addEnchantedHoneyBottles(ResourceKey<LootTable> key, LootTable.Builder tableBuilder) {
@@ -201,11 +149,11 @@ public class LootTableModifiers {
         tableBuilder.withPool(
                 LootPool
                         .lootPool()
-                        .setRolls(UniformGenerator.between(0, 1))
+                        .setRolls(ContextIntProviders.between(0, 1))
                         .add(
                                 LootItem
                                         .lootTableItem(GenesisItems.ENCHANTED_HONEY_BOTTLE)
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(2, 4)))
                         )
                         .when(LootItemRandomChanceCondition.randomChance(chance))
         );
@@ -218,7 +166,7 @@ public class LootTableModifiers {
 
         tableBuilder.modifyPools(builder -> builder.add(
                 LootItem.lootTableItem(GenesisItems.ENCHANTED_HONEY_BOTTLE)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(2, 4)))
                         .setWeight(40)
         ));
 

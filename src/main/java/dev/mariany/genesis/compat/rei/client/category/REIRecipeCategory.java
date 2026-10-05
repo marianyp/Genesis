@@ -11,18 +11,18 @@ import me.shedaniel.rei.api.client.gui.widgets.Arrow;
 import me.shedaniel.rei.api.client.gui.widgets.Slot;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.client.categories.crafting.DefaultCraftingCategory;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class REIRecipeCategory<D extends CraftingDisplay> extends DefaultCraftingCategory {
+public class REIRecipeCategory<D extends Display> implements DisplayCategory<D> {
     private final REIRecipeDisplayAdapter<D> adapter;
     private final RecipeDisplayCategory category;
     private final RecipeDisplayViewport viewport;
@@ -34,7 +34,7 @@ public class REIRecipeCategory<D extends CraftingDisplay> extends DefaultCraftin
     }
 
     @Override
-    public CategoryIdentifier<? extends CraftingDisplay> getCategoryIdentifier() {
+    public CategoryIdentifier<? extends D> getCategoryIdentifier() {
         return this.adapter.categoryIdentifier();
     }
 
@@ -49,7 +49,7 @@ public class REIRecipeCategory<D extends CraftingDisplay> extends DefaultCraftin
     }
 
     @Override
-    public int getDisplayWidth(CraftingDisplay craftingDisplay) {
+    public int getDisplayWidth(D display) {
         return this.viewport.width();
     }
 
@@ -59,7 +59,7 @@ public class REIRecipeCategory<D extends CraftingDisplay> extends DefaultCraftin
     }
 
     @Override
-    public List<Widget> setupDisplay(CraftingDisplay craftingDisplay, Rectangle bounds) {
+    public List<Widget> setupDisplay(D display, Rectangle bounds) {
         RecipeDisplayLayout layout = this.category.layout();
         Point layoutOrigin = this.getLayoutOrigin(bounds);
 
@@ -69,16 +69,12 @@ public class REIRecipeCategory<D extends CraftingDisplay> extends DefaultCraftin
 
         this.drawArrow(layoutOrigin, widgets::add);
 
-        if (this.adapter.supports(craftingDisplay)) {
-            D display = this.adapter.cast(craftingDisplay);
+        List<RecipeDisplayLayout.PopulatedSlot<EntryIngredient>> populatedSlots = layout.populate(
+                this.adapter.recipeWidth(display),
+                this.adapter.contents(display)
+        );
 
-            List<RecipeDisplayLayout.PopulatedSlot<EntryIngredient>> populatedSlots = layout.populate(
-                    this.adapter.recipeWidth(display),
-                    this.adapter.contents(display)
-            );
-
-            this.setupRecipe(display, layoutOrigin, populatedSlots, widgets);
-        }
+        this.setupRecipe(display, layoutOrigin, populatedSlots, widgets);
 
         return widgets;
     }

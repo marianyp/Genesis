@@ -1,18 +1,18 @@
-// 26.2	-999999999-01-01T00:00:00	Genesis/Genesis Ages
-8cf68b5ff4a7c8f36a6b4e074a176283b01c622a data/genesis/genesisframework/age/armor/copper.json
-81d1f2a360ce477550527b70fdafff56206aed91 data/genesis/genesisframework/age/armor/diamond.json
-d17d4ab9e979eaf7908b512d4d791ab9e7f0a07b data/genesis/genesisframework/age/armor/iron.json
+// 26.3	-999999999-01-01T00:00:00	Genesis/Genesis Ages
+75d86e1ab3b564c7dea61c3f1ea6e147a05e03db data/genesis/genesisframework/age/armor/copper.json
+31f40f966fd3afb28430bccb3c3760a4c5ee5894 data/genesis/genesisframework/age/armor/diamond.json
+db5cd8edcf2b89abe6f0586986c9128d9c6bf6fd data/genesis/genesisframework/age/armor/iron.json
 15ff94de0962c91ca889858cab11615512c0d09c data/genesis/genesisframework/age/armor/leather.json
 9bfe489b2166e6e2fe84a62a9dd5ba8c72db9ac7 data/genesis/genesisframework/age/proficiency/adventure.json
 6e36657005aacbecfdb6741ae4820f5b273f4e0a data/genesis/genesisframework/age/proficiency/arcane.json
-df694d78d8ccb250ba47e59c79842fa2f4f7ecdb data/genesis/genesisframework/age/proficiency/combat.json
-fa995516061f96d473a8033600ac0358033cefae data/genesis/genesisframework/age/proficiency/smelting.json
-e3fc21987f206549c0626d21dcdef45b9b7f85c4 data/genesis/genesisframework/age/story/end.json
+80d03731850a384cb5f468b705ee75ecfbe84b4d data/genesis/genesisframework/age/proficiency/combat.json
+13a7efab508ad46d3000a29a394a2127a028e19d data/genesis/genesisframework/age/proficiency/smelting.json
+6609238866cb9e168cbaa165eb03d58078f8d781 data/genesis/genesisframework/age/story/end.json
 db460e26783c93b606fe0d93cf96d5119f7d3bd1 data/genesis/genesisframework/age/story/ocean.json
-03d00ff325f5bfca645ec0f9ae976e45b353284e data/genesis/genesisframework/age/story/sculk.json
+55834411b06b53af958160c161bb3c563b1c3ef0 data/genesis/genesisframework/age/story/sculk.json
 3a4721ae9f394ea2f9d7f944600d75bcd32d6201 data/genesis/genesisframework/age/story/survival.json
 7cbac738b999554babc0490bccd4a015aa12945c data/genesis/genesisframework/age/story/war.json
-6fcacc0d18292072b35cd761e72187af7a01233f data/genesis/genesisframework/age/story/wither.json
+d077c735e0562a3f45174f39ac16422c31491fe9 data/genesis/genesisframework/age/story/wither.json
 1667f3bd242bc0bb45da3843c9f9b40e5b0c42cf data/genesis/genesisframework/age/tools/copper.json
 4c5ca7a72e7e042e923f576848fe36bf568d7b34 data/genesis/genesisframework/age/tools/diamond.json
 a67e744227a3ba9ed289a62b592295ff2641ded4 data/genesis/genesisframework/age/tools/iron.json

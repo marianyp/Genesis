@@ -10,8 +10,8 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 public final class REIRecipeDisplays {
@@ -24,7 +24,7 @@ public final class REIRecipeDisplays {
                 .forEach(type -> registerCategory(registry, type));
     }
 
-    private static <D extends CraftingDisplay> void registerCategory(
+    private static <D extends Display> void registerCategory(
             CategoryRegistry registry,
             REIRecipeCategoryType<D> categoryType
     ) {
@@ -32,7 +32,7 @@ public final class REIRecipeDisplays {
         registerWorkstations(registry, categoryType.displayAdapter());
     }
 
-    private static <D extends CraftingDisplay> void registerWorkstations(
+    private static <D extends Display> void registerWorkstations(
             CategoryRegistry registry,
             REIRecipeDisplayAdapter<D> adapter
     ) {

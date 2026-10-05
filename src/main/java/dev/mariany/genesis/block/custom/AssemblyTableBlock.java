@@ -1,6 +1,5 @@
 package dev.mariany.genesis.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import dev.mariany.genesis.screen.AssemblyScreenHandler;
 import dev.mariany.genesis.stat.GenesisStats;
 import net.minecraft.core.BlockPos;
@@ -17,13 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class AssemblyTableBlock extends CraftingTableBlock {
-    public static final MapCodec<AssemblyTableBlock> CODEC = simpleCodec(AssemblyTableBlock::new);
     private static final Component SCREEN_TITLE = Component.translatable("container.genesis.assembly_table.title");
-
-    @Override
-    public MapCodec<AssemblyTableBlock> codec() {
-        return CODEC;
-    }
 
     public AssemblyTableBlock(BlockBehaviour.Properties settings) {
         super(settings);

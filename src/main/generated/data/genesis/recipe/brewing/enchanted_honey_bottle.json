@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:brewing",
+  "input": {
+    "item": "minecraft:honey_bottle"
+  },
+  "output": {
+    "id": "genesis:enchanted_honey_bottle"
+  },
+  "reagent": {
+    "item": "minecraft:glistering_melon_slice"
+  }
+}

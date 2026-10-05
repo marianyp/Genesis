@@ -2,21 +2,39 @@ package dev.mariany.genesis.mixin;
 
 import dev.mariany.genesis.event.recipe.RecipeEvents;
 import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeMap;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collection;
+
 @Mixin(RecipeManager.class)
 public class ServerRecipeManagerMixin {
     @Shadow
+    @Final
+    @Mutable
     private RecipeMap recipes;
 
+    @Shadow
+    @Final
+    @Mutable
+    private Collection<RecipeHolder<?>> learnableRecipes;
+
     @Inject(method = "finalizeRecipeLoading", at = @At("HEAD"))
-    public void initialize(FeatureFlagSet features, CallbackInfo ci) {
+    private void injectFinalizeRecipeLoading(FeatureFlagSet enabledFlags, CallbackInfo ci) {
         this.recipes = RecipeEvents.MODIFY_RECIPES.invoker().modify(this.recipes);
+
+        this.learnableRecipes = this.recipes
+                .values()
+                .stream()
+                .filter(recipe -> !recipe.value().isSpecial())
+                .toList();
     }
 }

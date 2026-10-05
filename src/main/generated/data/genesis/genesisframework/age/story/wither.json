@@ -3,15 +3,13 @@
   "criteria": {
     "killed_wither": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "minecraft:wither"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "minecraft:wither"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

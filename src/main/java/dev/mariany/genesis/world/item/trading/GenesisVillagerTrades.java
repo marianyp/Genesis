@@ -1,123 +1,60 @@
 package dev.mariany.genesis.world.item.trading;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.tag.GenesisTags;
-import net.minecraft.advancements.predicates.DataComponentMatchers;
-import net.minecraft.advancements.predicates.ItemPredicate;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.tags.StructureTags;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
+import net.minecraft.world.item.trading.VillagerTrades;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.saveddata.maps.MapDecorationType;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
-import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.functions.DiscardItem;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
+import net.minecraft.world.level.storage.loot.functions.FilteredFunction;
 
-import java.util.List;
-import java.util.Optional;
-
-public class GenesisVillagerTrades {
-    public static final ResourceKey<VillagerTrade> CARTOGRAPHER_3_EMERALD_AND_COMPASS_DEEP_DARK = resourceKey(
-            "cartographer/3/emerald_and_compass_deep_dark"
+public final class GenesisVillagerTrades {
+    public static final ResourceKey<VillagerTrade> CARTOGRAPHER_3_EMERALD_AND_COMPASS_DEEP_DARK = ResourceKey.create(
+            Registries.VILLAGER_TRADE,
+            Genesis.id("cartographer/3/emerald_and_compass_deep_dark")
     );
 
+    private GenesisVillagerTrades() {
+    }
+
     public static void bootstrap(BootstrapContext<VillagerTrade> context) {
-        HolderGetter<Item> itemGetter = context.lookup(Registries.ITEM);
+        HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
+        context.register(CARTOGRAPHER_3_EMERALD_AND_COMPASS_DEEP_DARK, createAncientCityMapTrade(structures));
+    }
 
-        register(
-                context,
-                CARTOGRAPHER_3_EMERALD_AND_COMPASS_DEEP_DARK,
-                createStructureMapTrade(
-                        itemGetter,
-                        "deep_dark",
-                        13,
+    private static VillagerTrade createAncientCityMapTrade(HolderGetter<Structure> structures) {
+        HolderSet.Named<Structure> destination = structures.getOrThrow(StructureTags.ON_ANCIENT_CITY_MAPS);
+
+        ExplorationMapFunction.Builder explorationMapFunctionBuilder = ExplorationMapFunction
+                .makeExplorationMap(destination)
+                .setMapDecoration(MapDecorationTypes.ANCIENT_CITY)
+                .setSkipKnownStructures(true);
+
+        FilteredFunction.Builder filteredFunctionBuilder = FilteredFunction
+                .filtered(VillagerTrades.anyValidMap().build())
+                .onFail(DiscardItem.discardItem().build());
+
+        return VillagerTrade
+                .builder(
+                        new TradeCost(Items.EMERALD, 13),
+                        new TradeCost(Items.COMPASS, 1),
+                        new ItemStackTemplate(Items.BURIED_ANCIENT_CITY_MAP),
+                        12,
                         10,
-                        GenesisTags.Structures.ON_DEEP_DARK_EXPLORER_MAPS,
-                        MapDecorationTypes.RED_X
+                        0.2F
                 )
-        );
-    }
-
-    private static ResourceKey<VillagerTrade> resourceKey(final String path) {
-        return ResourceKey.create(Registries.VILLAGER_TRADE, Genesis.id(path));
-    }
-
-    private static void register(
-            BootstrapContext<VillagerTrade> context,
-            ResourceKey<VillagerTrade> resourceKey,
-            VillagerTrade villagerTrade
-    ) {
-        context.register(resourceKey, villagerTrade);
-    }
-
-    private static VillagerTrade createStructureMapTrade(
-            HolderGetter<Item> itemGetter,
-            String translationKey,
-            int emeraldCost,
-            int xp,
-            TagKey<Structure> structureTagKey,
-            Holder<MapDecorationType> mapDecoration
-    ) {
-        return createMapTrade(
-                itemGetter,
-                translationKey,
-                emeraldCost,
-                xp,
-                ExplorationMapFunction
-                        .makeExplorationMap()
-                        .setDestination(structureTagKey)
-                        .setMapDecoration(mapDecoration)
-                        .setSearchRadius(100)
-                        .setSkipKnownStructures(true)
-                        .build()
-        );
-    }
-
-    private static VillagerTrade createMapTrade(
-            HolderGetter<Item> items,
-            String id,
-            int emeraldCost,
-            int xp,
-            LootItemFunction lootItemConditionalFunction
-    ) {
-        return new VillagerTrade(
-                new TradeCost(Items.EMERALD, emeraldCost),
-                Optional.of(new TradeCost(Items.COMPASS, 1)),
-                new ItemStackTemplate(Items.MAP),
-                12,
-                xp,
-                0.2F,
-                Optional.empty(),
-                List.of(
-                        lootItemConditionalFunction,
-                        SetNameFunction.setName(
-                                Component.translatable("filled_map." + Genesis.id(id).toLanguageKey()),
-                                SetNameFunction.Target.ITEM_NAME
-                        ).build(),
-                        FilteredFunction
-                                .filtered(
-                                        new ItemPredicate.Builder()
-                                                .of(items, Items.FILLED_MAP)
-                                                .withComponents(
-                                                        DataComponentMatchers.Builder
-                                                                .components()
-                                                                .any(DataComponents.MAP_ID)
-                                                                .build()
-                                                )
-                                                .build()
-                                )
-                                .onFail(Optional.of(DiscardItem.discardItem().build()))
-                                .build()
-                )
-        );
+                .addModifier(explorationMapFunctionBuilder)
+                .addModifier(filteredFunctionBuilder)
+                .build();
     }
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:lapis_lazuli_from_blasting_raw_lapis_lazuli"
+        "recipes": "genesis:lapis_lazuli_from_blasting_raw_lapis_lazuli"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -7,7 +7,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class GenesisTags {
     private GenesisTags() {
@@ -68,17 +67,6 @@ public class GenesisTags {
 
         private static TagKey<Block> createTag(String name) {
             return TagKey.create(Registries.BLOCK, Genesis.id(name));
-        }
-    }
-
-    public static final class Structures {
-        public static final TagKey<Structure> ON_DEEP_DARK_EXPLORER_MAPS = createTag("on_deep_dark_explorer_maps");
-
-        private Structures() {
-        }
-
-        private static TagKey<Structure> createTag(String name) {
-            return TagKey.create(Registries.STRUCTURE, Genesis.id(name));
         }
     }
 

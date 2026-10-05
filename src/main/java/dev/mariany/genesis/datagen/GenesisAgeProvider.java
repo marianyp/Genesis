@@ -29,6 +29,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,11 +80,12 @@ public class GenesisAgeProvider extends AgeProvider {
     public void generateAges(HolderLookup.Provider registries, Consumer<AgeEntry> consumer) {
         HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
         HolderLookup.RegistryLookup<EntityType<?>> entityLookup = registries.lookupOrThrow(Registries.ENTITY_TYPE);
+        HolderLookup.RegistryLookup<LootTable> lootTableLookup = registries.lookupOrThrow(Registries.LOOT_TABLE);
 
         generateArmorAges(itemLookup, consumer);
         generateToolAges(itemLookup, consumer);
         generateProficiencyAges(itemLookup, consumer);
-        generateStoryAges(entityLookup, consumer);
+        generateStoryAges(entityLookup, lootTableLookup, consumer);
     }
 
     private static void generateArmorAges(
@@ -257,6 +259,7 @@ public class GenesisAgeProvider extends AgeProvider {
 
     private static void generateStoryAges(
             HolderLookup.RegistryLookup<EntityType<?>> entityLookup,
+            HolderLookup.RegistryLookup<LootTable> lootTableLookup,
             Consumer<AgeEntry> consumer
     ) {
 
@@ -302,11 +305,15 @@ public class GenesisAgeProvider extends AgeProvider {
                    .parentOptional()
                    .criterion(
                            LOOT_ANCIENT_CITY_REQUIREMENT,
-                           LootTableTrigger.TriggerInstance.lootTableUsed(BuiltInLootTables.ANCIENT_CITY)
+                           LootTableTrigger.TriggerInstance.lootTableUsed(
+                                   lootTableLookup.getOrThrow(BuiltInLootTables.ANCIENT_CITY)
+                           )
                    )
                    .criterion(
                            LOOT_ANCIENT_CITY_ICE_BOX_REQUIREMENT,
-                           LootTableTrigger.TriggerInstance.lootTableUsed(BuiltInLootTables.ANCIENT_CITY_ICE_BOX)
+                           LootTableTrigger.TriggerInstance.lootTableUsed(
+                                   lootTableLookup.getOrThrow(BuiltInLootTables.ANCIENT_CITY_ICE_BOX)
+                           )
                    )
                    .requirements(AdvancementRequirements.anyOf(ANCIENT_CITY_REQUIREMENTS))
                    .display(

@@ -11,7 +11,6 @@ import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.registry.display.ServerDisplayRegistry;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -23,7 +22,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
-public class REIRecipeDisplayAdapter<D extends CraftingDisplay> {
+public class REIRecipeDisplayAdapter<D extends Display> {
     private final RecipeDisplayType<?> displayType;
     private final CategoryIdentifier<D> categoryIdentifier;
     private final DisplaySerializer<D> serializer;
@@ -100,12 +99,12 @@ public class REIRecipeDisplayAdapter<D extends CraftingDisplay> {
         return this.displayClass.cast(display);
     }
 
-    public int recipeWidth(CraftingDisplay display) {
-        return this.recipeWidth.applyAsInt(this.displayClass.cast(display));
+    public int recipeWidth(D display) {
+        return this.recipeWidth.applyAsInt(display);
     }
 
-    public RecipeDisplayContents<EntryIngredient> contents(CraftingDisplay display) {
-        return this.contents.apply(this.displayClass.cast(display));
+    public RecipeDisplayContents<EntryIngredient> contents(D display) {
+        return this.contents.apply(display);
     }
 
     public void registerSerializer(DisplaySerializerRegistry registry) {

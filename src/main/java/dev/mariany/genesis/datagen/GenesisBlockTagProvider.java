@@ -5,6 +5,7 @@ import dev.mariany.genesis.tag.GenesisTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -62,6 +63,6 @@ public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvide
     }
 
     private static ResourceKey<Block> key(Block block) {
-        return block.builtInRegistryHolder().key();
+        return BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow();
     }
 }

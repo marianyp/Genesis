@@ -6,16 +6,13 @@ import dev.mariany.genesis.compat.rei.display.adapter.REIRecipeDisplayAdapters;
 import dev.mariany.genesis.recipe.AssemblyRecipe;
 import dev.mariany.genesis.recipe.display.AssemblyCraftingRecipeDisplay;
 import dev.mariany.genesis.recipe.display.RecipeDisplayContents;
-import dev.mariany.genesis.recipe.display.type.RecipeDisplayTypes;
-import dev.mariany.genesis.recipe.display.RecipeDisplayLayout;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
+import me.shedaniel.rei.api.common.display.SimpleGridMenuDisplay;
+import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.EntryStack;
-import me.shedaniel.rei.api.common.entry.InputIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
@@ -26,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class REIAssemblyDisplay extends DefaultCraftingDisplay {
-    private static final RecipeDisplayLayout LAYOUT = RecipeDisplayTypes.ASSEMBLY.category().layout();
-
+public class REIAssemblyDisplay extends BasicDisplay implements SimpleGridMenuDisplay {
     public static final DisplaySerializer<REIAssemblyDisplay> SERIALIZER = DisplaySerializer.of(
             RecordCodecBuilder.mapCodec(instance -> instance
                     .group(
@@ -157,11 +152,6 @@ public class REIAssemblyDisplay extends DefaultCraftingDisplay {
     }
 
     @Override
-    public boolean isShapeless() {
-        return false;
-    }
-
-    @Override
     public int getWidth() {
         return this.width;
     }
@@ -182,46 +172,4 @@ public class REIAssemblyDisplay extends DefaultCraftingDisplay {
         return this.inputs;
     }
 
-    @Override
-    public List<InputIngredient<EntryStack<?>>> getInputIngredients(int craftingWidth, int craftingHeight) {
-        List<InputIngredient<EntryStack<?>>> ingredients = new ArrayList<>(craftingWidth * craftingHeight);
-
-        for (int i = 0, n = craftingWidth * craftingHeight; i < n; i++) {
-            ingredients.add(InputIngredient.empty(i));
-        }
-
-        LAYOUT.populate(getInputWidth(craftingWidth, craftingHeight), getContents())
-              .stream()
-              .filter(RecipeDisplayLayout.PopulatedSlot::isCraftingInput)
-              .filter(slot -> slot.slot().index() < ingredients.size())
-              .filter(slot -> slot.content().isPresent() && !slot.content().get().isEmpty())
-              .forEach(slot -> {
-                  int index = slot.slot().index();
-                  ingredients.set(index, InputIngredient.of(index, index, slot.content().get()));
-              });
-
-        return ingredients;
-    }
-
-    @Override
-    public List<EntryIngredient> getOrganisedInputEntries(int menuWidth, int menuHeight) {
-        List<EntryIngredient> entries = new ArrayList<>(menuWidth * menuHeight);
-
-        for (int i = 0; i < menuWidth * menuHeight; i++) {
-            entries.add(EntryIngredient.empty());
-        }
-
-        LAYOUT.populate(getInputWidth(menuWidth, menuHeight), getContents())
-              .stream()
-              .filter(RecipeDisplayLayout.PopulatedSlot::isCraftingInput)
-              .filter(slot -> slot.slot().index() < entries.size())
-              .forEach(slot -> slot
-                      .content()
-                      .ifPresent(content -> entries.set(slot.slot().index(), content))
-              );
-
-        entries.add(this.patterns);
-
-        return entries;
-    }
 }

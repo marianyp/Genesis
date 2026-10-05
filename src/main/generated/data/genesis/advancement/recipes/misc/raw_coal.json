@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:raw_coal"
+        "recipes": "genesis:raw_coal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

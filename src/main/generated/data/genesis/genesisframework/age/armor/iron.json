@@ -4,76 +4,68 @@
     "trial_completed_with_chest": {
       "conditions": {
         "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "chest": {
-                  "items": "minecraft:copper_chestplate"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "chest": {
+                "items": "minecraft:copper_chestplate"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_feet": {
       "conditions": {
         "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "feet": {
-                  "items": "minecraft:copper_boots"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "feet": {
+                "items": "minecraft:copper_boots"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_head": {
       "conditions": {
         "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "head": {
-                  "items": "minecraft:copper_helmet"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "head": {
+                "items": "minecraft:copper_helmet"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "genesisframework:complete_trial_spawner"
     },
     "trial_completed_with_legs": {
       "conditions": {
         "ominous": false,
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "legs": {
-                  "items": "minecraft:copper_leggings"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "legs": {
+                "items": "minecraft:copper_leggings"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "genesisframework:complete_trial_spawner"
     }

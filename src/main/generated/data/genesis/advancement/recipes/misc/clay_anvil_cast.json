@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:clay_anvil_cast"
+        "recipes": "genesis:clay_anvil_cast"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

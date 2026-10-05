@@ -63,7 +63,6 @@
   "effect.genesis.solace": "Consolo",
   "entity.genesis.boar": "Javali",
   "entity.genesis.boar.description": "Um porco selvagem hostil que investe contra jogadores e destrói plantações. Ele deixa couro e, às vezes, carne de porco.",
-  "filled_map.genesis.deep_dark": "Mapa do Explorador da Escuridão Profunda",
   "gamerule.genesis.respawn_resets_tiredness": "Renascer Redefine o Cansaço",
   "gamerule.genesis.respawn_resets_tiredness.description": "Controla se morrer redefine o cansaço do jogador para 0.",
   "gamerule.genesis.reveal_elder_guardians": "Revelar Guardiões Anciões",
@@ -192,6 +191,7 @@
   "subtitles.entity.genesis.elder_guardian.reveal": "Guardiões Anciões revelados",
   "subtitles.item.armor.equip_copper": "Armadura de cobre tilinta",
   "subtitles.item.genesis.flints": "Pederneiras estalam",
+  "tag.item.genesis.campfire_fuel": "Combustível de Fogueira",
   "tag.item.genesis.causes_hunger": "Causa Fome",
   "tag.item.genesis.clay_tool_casts": "Moldes de Ferramentas de Argila",
   "tag.item.genesis.copper_armor": "Armadura de Cobre",
@@ -218,5 +218,7 @@
   "tag.item.genesis.stone_tools": "Ferramentas de Pedra",
   "tag.item.genesis.tool_casts": "Moldes de Ferramentas",
   "tag.item.genesis.weapon_age_restricted_weapons": "Armas Restritas pela Era de Combate",
+  "tag.item.genesis.wooden_pickaxes": "Picaretas de Madeira",
+  "tag.item.genesis.wooden_spears": "Lanças de Madeira",
   "tag.item.genesis.wooden_tools": "Ferramentas de Madeira"
 }

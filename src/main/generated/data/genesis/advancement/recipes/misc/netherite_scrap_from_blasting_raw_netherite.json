@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:netherite_scrap_from_blasting_raw_netherite"
+        "recipes": "genesis:netherite_scrap_from_blasting_raw_netherite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

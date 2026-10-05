@@ -2,7 +2,7 @@
   "required": false,
   "package": "dev.mariany.genesis.mixin.compat.jei",
   "plugin": "dev.mariany.genesis.mixin.compat.jei.JEIMixinConfigPlugin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "injectors": {
     "defaultRequire": 0
   },

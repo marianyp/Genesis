@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:assembly_table"
+        "recipes": "genesis:assembly_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

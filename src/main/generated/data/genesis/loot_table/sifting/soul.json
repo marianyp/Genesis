@@ -8,16 +8,14 @@
           "children": [
             {
               "type": "minecraft:item",
-              "functions": [
-                {
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 1.0,
-                    "min": 0.0
-                  },
-                  "function": "minecraft:set_count"
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": {
+                  "type": "minecraft:uniform",
+                  "max": 1,
+                  "min": 0
                 }
-              ],
+              },
               "name": "minecraft:bone",
               "weight": 50
             },
@@ -37,30 +35,26 @@
               "weight": 5
             }
           ],
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "items": "#c:tools/brush"
-              }
+          "condition": {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#c:tools/brush"
             }
-          ]
+          }
         },
         {
           "type": "minecraft:group",
           "children": [
             {
               "type": "minecraft:item",
-              "functions": [
-                {
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 1.0,
-                    "min": 0.0
-                  },
-                  "function": "minecraft:set_count"
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": {
+                  "type": "minecraft:uniform",
+                  "max": 1,
+                  "min": 0
                 }
-              ],
+              },
               "name": "minecraft:bone",
               "weight": 80
             },
@@ -81,7 +75,7 @@
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ]
 }

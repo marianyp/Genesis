@@ -119,6 +119,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_stone_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_stone_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_stone_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_stone_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_stone_shovel",
       "required": false
     },
@@ -236,6 +252,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_stone_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_stone_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_stone_spear",
       "required": false
     },
     {
@@ -399,6 +423,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_deepslate_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_deepslate_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_deepslate_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_deepslate_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_deepslate_shovel",
       "required": false
     },
@@ -524,6 +564,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_deepslate_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_deepslate_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_deepslate_spear",
       "required": false
     },
     {
@@ -687,6 +735,22 @@
       "required": false
     },
     {
+      "id": "mstv-mtoolv:poplar_blackstone_shovel",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_blackstone_pickaxe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_blackstone_axe",
+      "required": false
+    },
+    {
+      "id": "mstv-mtoolv:poplar_blackstone_hoe",
+      "required": false
+    },
+    {
       "id": "mstv-mtoolv:crimson_blackstone_shovel",
       "required": false
     },
@@ -812,6 +876,14 @@
     },
     {
       "id": "mstv-mweaponv:pale_oak_blackstone_spear",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_blackstone_sword",
+      "required": false
+    },
+    {
+      "id": "mstv-mweaponv:poplar_blackstone_spear",
       "required": false
     },
     {

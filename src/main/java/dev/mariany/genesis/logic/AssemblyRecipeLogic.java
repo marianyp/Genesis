@@ -1,24 +1,24 @@
 package dev.mariany.genesis.logic;
 
+import com.mojang.serialization.Lifecycle;
 import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.event.recipe.RecipeEvents;
 import dev.mariany.genesis.item.custom.AssemblyPatternItem;
+import dev.mariany.genesis.mixin.accessor.ShapedRecipeAccessor;
 import dev.mariany.genesis.recipe.AssemblyRecipe;
+import net.minecraft.core.MappedRegistry;
+import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class AssemblyRecipeLogic {
@@ -30,8 +30,8 @@ public final class AssemblyRecipeLogic {
         RecipeEvents.MODIFY_RECIPES.register(AssemblyRecipeLogic::provide);
     }
 
-    private static RecipeMap provide(RecipeMap recipes) {
-        Collection<RecipeHolder<?>> oldRecipes = recipes.values();
+    private static RecipeMap provide(RecipeMap currentRecipes) {
+        Collection<RecipeHolder<?>> oldRecipes = currentRecipes.values();
 
         Map<ResourceKey<Recipe<?>>, RecipeHolder<AssemblyRecipe>> assemblyRecipes =
                 createAssemblyRecipesFrom(oldRecipes)
@@ -57,7 +57,18 @@ public final class AssemblyRecipeLogic {
 
         Genesis.LOGGER.info("Created {} assembly recipes", assemblyRecipes.size());
 
-        return RecipeMap.create(newRecipes);
+        MappedRegistry<Recipe<?>> modifiedRegistry = new MappedRegistry<>(
+                Registries.RECIPE,
+                Lifecycle.stable()
+        );
+
+        newRecipes.forEach(recipe -> modifiedRegistry.register(
+                recipe.id(),
+                recipe.value(),
+                RegistrationInfo.BUILT_IN
+        ));
+
+        return RecipeMap.create(modifiedRegistry.freeze());
     }
 
     public static List<RecipeHolder<AssemblyRecipe>> createAssemblyRecipesFrom(
@@ -73,7 +84,11 @@ public final class AssemblyRecipeLogic {
 
             List<AssemblyPatternItem> validPatterns = patterns
                     .stream()
-                    .filter(pattern -> getShapedRecipeResult(shapedRecipe).is(pattern.getCrafts()))
+                    .filter(pattern -> BuiltInRegistries.ITEM
+                            .get(pattern.getCrafts())
+                            .map(tag -> tag.contains(getShapedRecipeResult(shapedRecipe).item()))
+                            .orElse(false)
+                    )
                     .toList();
 
             if (!validPatterns.isEmpty()) {
@@ -98,8 +113,8 @@ public final class AssemblyRecipeLogic {
                 : Optional.empty();
     }
 
-    private static ItemStack getShapedRecipeResult(ShapedRecipe shapedRecipe) {
-        return shapedRecipe.assemble(CraftingInput.EMPTY);
+    private static ItemStackTemplate getShapedRecipeResult(ShapedRecipe shapedRecipe) {
+        return ((ShapedRecipeAccessor) shapedRecipe).genesis$result();
     }
 
     private static RecipeHolder<AssemblyRecipe> createAssemblyRecipe(

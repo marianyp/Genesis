@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:totem_of_undying"
+        "recipes": "genesis:totem_of_undying"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

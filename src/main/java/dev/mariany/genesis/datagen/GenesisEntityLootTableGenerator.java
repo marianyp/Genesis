@@ -11,8 +11,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -31,38 +31,42 @@ public class GenesisEntityLootTableGenerator extends FabricEntityLootSubProvider
                 LootTable.lootTable()
                          .withPool(
                                  LootPool.lootPool()
-                                         .setRolls(ConstantValue.exactly(1F))
+                                         .setRolls(ContextIntProviders.exactly(1))
                                          .add(
                                                  LootItem.lootTableItem(Items.LEATHER)
                                                          .apply(
                                                                  SetItemCountFunction.setCount(
-                                                                         UniformGenerator.between(1F, 2F)
+                                                                         ContextIntProviders.between(1, 2)
                                                                  )
                                                          )
-                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(
-                                                                        this.registries,
-                                                                        UniformGenerator.between(0F, 1F)
-                                                                )
+                                                         .apply(
+                                                                 EnchantedCountIncreaseFunction.lootingMultiplier(
+                                                                         this.enchantments,
+                                                                         ContextFloatProviders.between(0, 1)
+                                                                 )
                                                          )
                                          )
                          )
                          .withPool(
                                  LootPool.lootPool()
-                                         .setRolls(ConstantValue.exactly(1.0F))
+                                         .setRolls(ContextIntProviders.exactly(1))
                                          .add(
                                                  LootItem.lootTableItem(Items.PORKCHOP)
-                                                         .apply(SetItemCountFunction.setCount(
-                                                                        UniformGenerator.between(0F, 1F)
-                                                                )
+                                                         .apply(
+                                                                 SetItemCountFunction.setCount(
+                                                                         ContextIntProviders.between(0, 1)
+                                                                 )
                                                          )
-                                                         .apply(SmeltItemFunction.smelted().when(
-                                                                        this.shouldSmeltLoot()
-                                                                )
+                                                         .apply(
+                                                                 SmeltItemFunction
+                                                                         .smelted()
+                                                                         .when(this.shouldSmeltLoot())
                                                          )
-                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(
-                                                                        this.registries,
-                                                                        UniformGenerator.between(0F, 1F)
-                                                                )
+                                                         .apply(
+                                                                 EnchantedCountIncreaseFunction.lootingMultiplier(
+                                                                         this.enchantments,
+                                                                         ContextFloatProviders.between(0, 1)
+                                                                 )
                                                          )
                                          )
                          )

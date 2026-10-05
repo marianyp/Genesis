@@ -3,13 +3,13 @@
   "criteria": {
     "loot_ancient_city": {
       "conditions": {
-        "loot_table": "minecraft:chests/ancient_city"
+        "loot_tables": "minecraft:chests/ancient_city"
       },
       "trigger": "minecraft:player_generates_container_loot"
     },
     "loot_ancient_city_ice_box": {
       "conditions": {
-        "loot_table": "minecraft:chests/ancient_city_ice_box"
+        "loot_tables": "minecraft:chests/ancient_city_ice_box"
       },
       "trigger": "minecraft:player_generates_container_loot"
     }

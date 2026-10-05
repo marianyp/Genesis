@@ -5,7 +5,6 @@ import dev.mariany.genesis.item.custom.AssemblyPatternItem;
 import dev.mariany.genesis.mixin.accessor.ShapedRecipeAccessor;
 import dev.mariany.genesis.recipe.display.AssemblyCraftingRecipeDisplay;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -24,7 +23,7 @@ public class AssemblyRecipe extends ShapedRecipe {
 
     final Identifier identifier;
     final ShapedRecipePattern raw;
-    final ItemStack result;
+    final ItemStackTemplate result;
     final List<AssemblyPatternItem> patterns;
 
     public AssemblyRecipe(Identifier identifier, ShapedRecipe recipe, List<AssemblyPatternItem> patterns) {
@@ -33,7 +32,7 @@ public class AssemblyRecipe extends ShapedRecipe {
                 recipe.group(),
                 recipe.category(),
                 ((ShapedRecipeAccessor) recipe).genesis$raw(),
-                ((ShapedRecipeAccessor) recipe).genesis$result().create(),
+                ((ShapedRecipeAccessor) recipe).genesis$result(),
                 recipe.showNotification(),
                 patterns
         );
@@ -44,7 +43,7 @@ public class AssemblyRecipe extends ShapedRecipe {
             String group,
             CraftingBookCategory category,
             ShapedRecipePattern raw,
-            ItemStack result,
+            ItemStackTemplate result,
             boolean showNotification,
             List<AssemblyPatternItem> patterns
     ) {
@@ -52,7 +51,7 @@ public class AssemblyRecipe extends ShapedRecipe {
                 new Recipe.CommonInfo(showNotification),
                 new CraftingRecipe.CraftingBookInfo(category, group),
                 raw,
-                ItemStackTemplate.fromStack(result)
+                result
         );
 
         this.identifier = identifier;
@@ -128,7 +127,7 @@ public class AssemblyRecipe extends ShapedRecipe {
                         )
                         .toList(),
                 new SlotDisplay.Composite(slotDisplays),
-                new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromStack(this.result)),
+                new SlotDisplay.ItemStackSlotDisplay(this.result),
                 new SlotDisplay.ItemSlotDisplay(GenesisBlocks.ASSEMBLY_TABLE.asItem())
         );
     }

@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
@@ -99,9 +100,9 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
                 player instanceof ServerPlayer serverPlayerEntity && serverPlayerEntity.hasDisconnected();
 
         if (removed || disconnected) {
-            player.drop(stack, false);
+            player.drop(stack, false, Prediction.SERVER_ONLY);
         } else if (player instanceof ServerPlayer) {
-            player.getInventory().placeItemBackInInventory(stack);
+            player.getInventory().placeItemBackInInventory(stack, Prediction.SERVER_ONLY);
         }
     }
 
@@ -604,7 +605,7 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
 
         // Drop leftover result if not inserted
         if (index == RESULT_SLOT_INDEX) {
-            player.drop(stackInSlot, false);
+            player.drop(stackInSlot, false, Prediction.SERVER_ONLY);
         }
 
         return originalStack;

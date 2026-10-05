@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:brewing",
+  "input": {
+    "item": "minecraft:honey_bottle"
+  },
+  "output": {
+    "id": "minecraft:ominous_bottle"
+  },
+  "reagent": {
+    "item": "minecraft:fermented_spider_eye"
+  }
+}

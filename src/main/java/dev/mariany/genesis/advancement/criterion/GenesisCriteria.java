@@ -9,14 +9,14 @@ import net.minecraft.core.registries.BuiltInRegistries;
 public class GenesisCriteria {
     public static final PlayerTrigger FIRE_STARTED = register("fire_started", new PlayerTrigger());
 
-    public static final SiftPrimitiveCauldronCriteria SIFT_PRIMITIVE_CAULDRON = register(
+    public static final SiftPrimitiveCauldronTrigger SIFT_PRIMITIVE_CAULDRON = register(
             "sift_primitive_cauldron",
-            new SiftPrimitiveCauldronCriteria()
+            new SiftPrimitiveCauldronTrigger()
     );
 
-    public static final CookWithKilnCriteria COOK_WITH_KILN = register(
+    public static final CookWithKilnTrigger COOK_WITH_KILN = register(
             "cook_with_kiln",
-            new CookWithKilnCriteria()
+            new CookWithKilnTrigger()
     );
 
     public static final PlayerTrigger COMPLETE_MONUMENT = register("complete_monument", new PlayerTrigger());

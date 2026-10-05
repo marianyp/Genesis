@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "genesis:clay_kiln"
+        "recipes": "genesis:clay_kiln"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

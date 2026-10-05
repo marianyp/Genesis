@@ -2,7 +2,7 @@ package dev.mariany.genesis.compat.rei.client.category;
 
 import dev.mariany.genesis.compat.rei.display.adapter.REIRecipeDisplayAdapter;
 import dev.mariany.genesis.compat.rei.display.adapter.REIRecipeDisplayAdapters;
-import me.shedaniel.rei.plugin.common.displays.crafting.CraftingDisplay;
+import me.shedaniel.rei.api.common.display.Display;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ public final class REIRecipeCategoryTypes {
     private REIRecipeCategoryTypes() {
     }
 
-    private static <T extends CraftingDisplay> void register(
+    private static <T extends Display> void register(
             REIRecipeDisplayAdapter<T> displayAdapter
     ) {
         register(displayAdapter, null);
     }
 
-    private static <T extends CraftingDisplay> void register(
+    private static <T extends Display> void register(
             REIRecipeDisplayAdapter<T> displayAdapter,
             REIRecipeCategoryType.@Nullable CategoryFactory<T> categoryFactory
     ) {

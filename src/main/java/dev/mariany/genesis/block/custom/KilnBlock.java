@@ -1,6 +1,5 @@
 package dev.mariany.genesis.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import dev.mariany.genesis.block.entity.GenesisBlockEntities;
 import dev.mariany.genesis.block.entity.custom.KilnBlockEntity;
 import dev.mariany.genesis.stat.GenesisStats;
@@ -22,15 +21,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnBlock extends BaseEntityBlock {
-    public static final MapCodec<KilnBlock> CODEC = simpleCodec(KilnBlock::new);
-
     public KilnBlock(Properties settings) {
         super(settings);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override
