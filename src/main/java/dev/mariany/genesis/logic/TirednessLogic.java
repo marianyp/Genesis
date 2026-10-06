@@ -150,7 +150,7 @@ public class TirednessLogic {
     }
 
     private void onRespawn(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean alive) {
-        this.syncTiredness(newPlayer);
+        this.syncTiredness(oldPlayer);
     }
 
     private void onChangeLevel(ServerPlayer serverPlayer, ServerLevel origin, ServerLevel destination) {
