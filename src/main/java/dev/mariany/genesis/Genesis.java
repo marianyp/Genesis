@@ -33,6 +33,7 @@ public class Genesis implements ModInitializer {
 
     public static final TirednessLogic TIREDNESS_LOGIC = new TirednessLogic();
     public static final SolaceLogic SOLACE_LOGIC = new SolaceLogic();
+    public static final CelebrationLogic CELEBRATION_LOGIC = new CelebrationLogic();
 
     public static final PrimitiveCauldronLoot PRIMITIVE_CAULDRON_LOOT = new PrimitiveCauldronLoot();
 
@@ -67,6 +68,7 @@ public class Genesis implements ModInitializer {
         GenesisStats.bootstrap();
         LootTableModifiers.bootstrap();
         GenesisParticleTypes.bootstrap();
+        Genesis.CELEBRATION_LOGIC.bootstrap();
         OceanMonumentLogic.bootstrap();
         GenesisMobEffects.bootstrap();
         Genesis.SOLACE_LOGIC.bootstrap();
