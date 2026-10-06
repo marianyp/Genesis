@@ -4,6 +4,7 @@ import dev.mariany.genesis.Genesis;
 import dev.mariany.genesis.attachment.GenesisAttachmentTypes;
 import dev.mariany.genesis.event.level.ServerLevelEvents;
 import dev.mariany.genesis.packet.clientbound.UpdateTirednessLogicPayload;
+import dev.mariany.genesis.tag.GenesisTags;
 import dev.mariany.genesis.world.level.gamerules.GameRuleState;
 import dev.mariany.genesis.world.level.gamerules.GenesisGameRules;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -131,11 +132,13 @@ public class TirednessLogic {
 
     @Nullable
     private Player.BedSleepingProblem onAllowSleeping(Player player, BlockPos pos) {
-        return canSleep(player) ? null : TirednessLogic.BED_SLEEPING_PROBLEM;
+        return canSleep(player, pos) ? null : TirednessLogic.BED_SLEEPING_PROBLEM;
     }
 
-    private boolean canSleep(Player player) {
-        return player.isCreative() || getAwakeTicks(player) >= this.getMinimumTicksBeforeSleeping();
+    private boolean canSleep(Player player, BlockPos pos) {
+        return player.isCreative()
+                || getAwakeTicks(player) >= this.getMinimumTicksBeforeSleeping()
+                || player.level().getBlockState(pos).is(GenesisTags.Blocks.BYPASSES_TIREDNESS);
     }
 
     private static int getAwakeTicks(Player player) {

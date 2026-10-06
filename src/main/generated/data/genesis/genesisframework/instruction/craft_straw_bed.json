@@ -1,0 +1,31 @@
+{
+  "parent": "genesis:obtain_solace",
+  "criteria": {
+    "straw_bed_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:straw_bed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "instruction.genesis.craft_straw_bed.description"
+    },
+    "icon": {
+      "id": "minecraft:straw_bed"
+    },
+    "title": {
+      "translate": "instruction.genesis.craft_straw_bed"
+    }
+  },
+  "requirements": [
+    [
+      "straw_bed_obtained"
+    ]
+  ]
+}

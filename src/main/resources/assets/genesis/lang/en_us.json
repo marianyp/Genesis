@@ -90,6 +90,8 @@
   "instruction.genesis.craft_clay_spear_cast.description": "Use 1 Flint and a Blank Clay Cast.",
   "instruction.genesis.craft_flints": "Craft Flints",
   "instruction.genesis.craft_flints.description": "Combine 2 Flint in a Crafting Grid.",
+  "instruction.genesis.craft_straw_bed": "Craft a Straw Bed",
+  "instruction.genesis.craft_straw_bed.description": "You can now only sleep when you're tired. However, Straw Beds let you sleep no matter how tired you are.",
   "instruction.genesis.craft_wooden_pickaxe": "Craft a Wooden Pickaxe",
   "instruction.genesis.craft_wooden_pickaxe.description": "Use the Assembly Table and Pickaxe Cast.",
   "instruction.genesis.craft_wooden_spear": "Craft a Wooden Spear",

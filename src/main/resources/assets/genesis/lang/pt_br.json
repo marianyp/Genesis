@@ -92,6 +92,8 @@
   "instruction.genesis.craft_clay_spear_cast.description": "usando 1 Pederneira e um Molde de Argila em Branco.",
   "instruction.genesis.craft_flints": "Junte 2 Pederneiras",
   "instruction.genesis.craft_flints.description": "na grade de criação.",
+  "instruction.genesis.craft_straw_bed": "Crie uma Cama de Palha",
+  "instruction.genesis.craft_straw_bed.description": "Agora você só pode dormir quando estiver cansado. No entanto, Camas de Palha permitem que você durma independentemente do seu nível de cansaço.",
   "instruction.genesis.craft_wooden_pickaxe": "Crie uma Picareta de Madeira",
   "instruction.genesis.craft_wooden_pickaxe.description": "usando a Mesa de Montagem e o Molde de Picareta.",
   "instruction.genesis.craft_wooden_spear": "Crie uma Lança de Madeira",
