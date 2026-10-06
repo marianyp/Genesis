@@ -138,14 +138,10 @@ public class SolaceLogic {
 
         Stream<BlockState> states = entity.level().getBlockStatesIfLoaded(box);
 
-        return states.anyMatch(SolaceLogic::isCampfire);
+        return states.anyMatch(CampfireBlock::isLitCampfire);
     }
 
     private double getCampfireRadius() {
         return this.campfireRadiusState.getValue();
-    }
-
-    private static boolean isCampfire(BlockState state) {
-        return state.getBlock() instanceof CampfireBlock;
     }
 }
