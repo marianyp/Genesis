@@ -48,7 +48,6 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
     public static final int MAIN_INVENTORY_SLOT_COUNT = 27;
     public static final int HOTBAR_SLOT_COUNT = 9;
     public static final int INVENTORY_SLOT_COUNT = MAIN_INVENTORY_SLOT_COUNT + HOTBAR_SLOT_COUNT;
-    public static final int HOTBAR_SLOT_START_INDEX = INVENTORY_SLOT_START_INDEX + MAIN_INVENTORY_SLOT_COUNT;
 
     private static final int PATTERN_CONTAINER_SLOT_INDEX = 0;
     private static final int RESULT_CONTAINER_SLOT_INDEX = 0;
@@ -576,7 +575,7 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
                         false
                 );
 
-                if (!movedToPatternSlot && !this.moveBetweenInventoryAndHotbar(stackInSlot, index)) {
+                if (!movedToPatternSlot) {
                     return ItemStack.EMPTY;
                 }
             }
@@ -611,21 +610,4 @@ public class AssemblyScreenHandler extends AbstractCraftingMenu {
         return originalStack;
     }
 
-    private boolean moveBetweenInventoryAndHotbar(ItemStack stack, int sourceSlotIndex) {
-        if (sourceSlotIndex < HOTBAR_SLOT_START_INDEX) {
-            return this.moveItemStackTo(
-                    stack,
-                    HOTBAR_SLOT_START_INDEX,
-                    INVENTORY_SLOT_START_INDEX + INVENTORY_SLOT_COUNT,
-                    false
-            );
-        }
-
-        return this.moveItemStackTo(
-                stack,
-                INVENTORY_SLOT_START_INDEX,
-                HOTBAR_SLOT_START_INDEX,
-                false
-        );
-    }
 }
