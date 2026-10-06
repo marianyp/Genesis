@@ -38,7 +38,7 @@ public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvide
                 .add(key(Blocks.MUD))
                 .add(key(Blocks.MUDDY_MANGROVE_ROOTS));
 
-        tag(GenesisTags.Blocks.BYPASSES_TIREDNESS).add(key(Blocks.STRAW_BED));
+        tag(GenesisTags.Blocks.PARTIAL_REST_BEDS).add(key(Blocks.STRAW_BED));
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(key(GenesisBlocks.CLAY_KILN))

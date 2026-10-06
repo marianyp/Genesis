@@ -18,6 +18,7 @@ import dev.mariany.genesis.screen.GenesisScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -37,18 +38,19 @@ public class GenesisClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        CONFIG_HANDLER.loadConfig();
+        GenesisClient.CONFIG_HANDLER.loadConfig();
 
         ClientBoundPackets.register();
         GenesisModelLayers.bootstrap();
         GenesisWidgets.bootstrap();
         AssemblyRecipeBookHandler.bootstrap();
 
-        registerEntityRenderer();
-        registerScreenHandlers();
-        registerParticles();
+        GenesisClient.registerEntityRenderer();
+        GenesisClient.registerScreenHandlers();
+        GenesisClient.registerParticles();
+        GenesisClient.registerTooltips();
 
-        RECIPE_DISPLAY_REGISTRY.bootstrap();
+        GenesisClient.RECIPE_DISPLAY_REGISTRY.bootstrap();
     }
 
     private static void registerEntityRenderer() {
@@ -62,5 +64,19 @@ public class GenesisClient implements ClientModInitializer {
 
     private static void registerParticles() {
         ParticleProviderRegistry.getInstance().register(GenesisParticleTypes.SOLACE, SolaceParticle.Provider::new);
+    }
+
+    private static void registerTooltips() {
+        ItemTooltipCallback.EVENT.register(
+                (
+                        stack,
+                        _,
+                        _,
+                        lines
+                ) -> Genesis.TIREDNESS_LOGIC.appendTooltip(
+                        stack,
+                        lines
+                )
+        );
     }
 }

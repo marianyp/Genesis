@@ -234,7 +234,7 @@ public class GenesisInstructionProvider extends InstructionProvider {
                 .criterion("used_kiln", CookWithKilnTrigger.Conditions.create())
                 .build(consumer, Genesis.id("use_kiln"));
 
-        InstructionEntry obtainSolace = Instruction.Builder
+        Instruction.Builder
                 .create()
                 .parent(useKiln)
                 .display(
@@ -251,17 +251,6 @@ public class GenesisInstructionProvider extends InstructionProvider {
                         )
                 )
                 .build(consumer, Genesis.id("obtain_solace"));
-
-        Instruction.Builder
-                .create()
-                .parent(obtainSolace)
-                .display(
-                        Items.STRAW_BED,
-                        Component.translatable("instruction.genesis.craft_straw_bed"),
-                        Component.translatable("instruction.genesis.craft_straw_bed.description")
-                )
-                .requireItem(Items.STRAW_BED)
-                .build(consumer, Genesis.id("craft_straw_bed"));
     }
 
     @Override
