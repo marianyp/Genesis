@@ -30,9 +30,8 @@ public final class GenesisJEIPlugin implements IModPlugin {
     private static final Identifier PLUGIN_ID = Genesis.id("jei_plugin");
 
     private final JEIRecipeDisplayOrdering recipeDisplayOrdering = new JEIRecipeDisplayOrdering();
-    private final Runnable refreshListener = this::refreshRecipes;
-
     private final List<RecipeHolder<CraftingRecipe>> hiddenRecipes = new ArrayList<>();
+    private final Runnable refreshListener = this::refreshRecipes;
 
     @Nullable
     private IJeiRuntime runtime;

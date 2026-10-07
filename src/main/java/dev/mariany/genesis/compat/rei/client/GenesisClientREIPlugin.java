@@ -32,6 +32,7 @@ public class GenesisClientREIPlugin implements REIClientPlugin {
         }
 
         CategoryRegistry registry = manager.get(CategoryRegistry.class);
+
         this.recipeDisplayOrdering.apply(registry);
     }
 
