@@ -1,9 +1,7 @@
 package dev.mariany.genesis.packet.clientbound;
 
 import dev.mariany.genesis.Genesis;
-import dev.mariany.genesis.attachment.GenesisAttachmentTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.Minecraft;
 
 public final class ClientBoundPackets {
     private ClientBoundPackets() {
@@ -39,14 +37,6 @@ public final class ClientBoundPackets {
             ClientPlayNetworking.Context context
     ) {
         Genesis.TIREDNESS_LOGIC.setMinimumTicksBeforeSleeping(payload.minimumTicksBeforeSleeping());
-        updateAwakeTicks(context.client(), payload.awakeTicks());
-    }
-
-    private static void updateAwakeTicks(Minecraft client, int awakeTicks) {
-        if (client.player == null) {
-            return;
-        }
-
-        client.player.setAttached(GenesisAttachmentTypes.AWAKE_TICKS, awakeTicks);
+        Genesis.TIREDNESS_LOGIC.setAwakeTicks(context.player(), payload.awakeTicks());
     }
 }

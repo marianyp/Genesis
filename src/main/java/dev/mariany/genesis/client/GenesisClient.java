@@ -12,6 +12,7 @@ import dev.mariany.genesis.client.render.entity.model.GenesisModelLayers;
 import dev.mariany.genesis.config.ConfigHandler;
 import dev.mariany.genesis.config.GenesisClientConfig;
 import dev.mariany.genesis.entity.GenesisEntityTypes;
+import dev.mariany.genesis.logic.TirednessLogic;
 import dev.mariany.genesis.packet.clientbound.ClientBoundPackets;
 import dev.mariany.genesis.particle.GenesisParticleTypes;
 import dev.mariany.genesis.screen.GenesisScreenHandlers;
@@ -73,7 +74,7 @@ public class GenesisClient implements ClientModInitializer {
                         _,
                         _,
                         lines
-                ) -> Genesis.TIREDNESS_LOGIC.appendTooltip(
+                ) -> TirednessLogic.appendTooltip(
                         stack,
                         lines
                 )

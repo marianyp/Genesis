@@ -11,7 +11,6 @@ import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,16 +39,12 @@ public class TirednessWidget extends AbstractWidget {
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        if (isHidden()) {
+        if (Genesis.TIREDNESS_LOGIC.isDisabled()) {
             this.setTooltip(null);
             return;
         }
 
         this.update(graphics);
-    }
-
-    private static boolean isHidden() {
-        return getMinimumTicksBeforeSleeping() <= 0;
     }
 
     private void update(GuiGraphicsExtractor graphics) {
@@ -84,28 +79,16 @@ public class TirednessWidget extends AbstractWidget {
     }
 
     private static Component getComponent() {
-        Player player = Minecraft.getInstance().player;
-        return getComponent(player);
+        return getComponent(Minecraft.getInstance().player);
     }
 
     private static Component getComponent(@Nullable Player player) {
-        float progress = player == null ? 0 : getProgress(player);
-        int percentage = Mth.floor(progress * 100);
+        int percentage = player == null ? 0 : getTirednessPercentage(player);
         return Component.translatable("gui.genesis.tiredness", percentage);
     }
 
-    private static float getProgress(@NotNull Player player) {
-        int minimumTicksBeforeSleeping = getMinimumTicksBeforeSleeping();
-
-        if (minimumTicksBeforeSleeping <= 0) {
-            return 1;
-        }
-
-        return (float) getAwakeTicks(player) / minimumTicksBeforeSleeping;
-    }
-
-    private static int getMinimumTicksBeforeSleeping() {
-        return Genesis.TIREDNESS_LOGIC.getMinimumTicksBeforeSleeping();
+    private static int getTirednessPercentage(@NotNull Player player) {
+        return Genesis.TIREDNESS_LOGIC.getTirednessPercentage(getAwakeTicks(player));
     }
 
     private static int getAwakeTicks(Player player) {

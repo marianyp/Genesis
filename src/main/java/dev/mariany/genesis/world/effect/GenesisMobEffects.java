@@ -8,12 +8,17 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class GenesisMobEffects {
+    public static final Holder<MobEffect> POORLY_RESTED = register(
+            "poorly_rested",
+            new PoorlyRestedMobEffect(MobEffectCategory.NEUTRAL, 0xFFFFFF)
+    );
+
     public static final Holder<MobEffect> SOLACE = register(
             "solace",
             new SolaceMobEffect(MobEffectCategory.BENEFICIAL, 13458603)
     );
 
-    private static Holder<MobEffect> register(final String name, final MobEffect mobEffect) {
+    private static <T extends MobEffect> Holder<T> register(String name, T mobEffect) {
         return Registry.registerForHolder(
                 BuiltInRegistries.MOB_EFFECT,
                 Genesis.id(name),

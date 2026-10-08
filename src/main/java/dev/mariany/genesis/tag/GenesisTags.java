@@ -61,7 +61,8 @@ public class GenesisTags {
 
     public static final class Blocks {
         public static final TagKey<Block> BOAR_SPAWNABLE_ON = createTag("boar_spawnable_on");
-        public static final TagKey<Block> PARTIAL_REST_BEDS = createTag("partial_rest_beds");
+        public static final TagKey<Block> POOR_SLEEP_QUALITY = createTag("poor_sleep_quality");
+        public static final TagKey<Block> VERY_POOR_SLEEP_QUALITY = createTag("very_poor_sleep_quality");
 
         private Blocks() {
         }

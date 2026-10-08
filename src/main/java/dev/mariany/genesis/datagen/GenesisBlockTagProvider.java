@@ -10,10 +10,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
@@ -38,7 +40,8 @@ public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvide
                 .add(key(Blocks.MUD))
                 .add(key(Blocks.MUDDY_MANGROVE_ROOTS));
 
-        tag(GenesisTags.Blocks.PARTIAL_REST_BEDS).add(key(Blocks.STRAW_BED));
+        tag(GenesisTags.Blocks.POOR_SLEEP_QUALITY).add(key(Blocks.STRAW_BED));
+        supportExternalMod(GenesisTags.Blocks.VERY_POOR_SLEEP_QUALITY, "farmersdelight:straw_bed");
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(key(GenesisBlocks.CLAY_KILN))
@@ -62,6 +65,19 @@ public class GenesisBlockTagProvider extends FabricTagsProvider.BlockTagsProvide
     private void supportExternalMod(String tag, Block block) {
         getOrCreateRawBuilder(TagKey.create(Registries.BLOCK, Identifier.parse(tag)))
                 .addElement(key(block).identifier());
+    }
+
+    private void supportExternalMod(TagKey<Block> tag, String item) {
+        Identifier id = Identifier.parse(item);
+        this.supportExternalMod(tag, id.getNamespace(), List.of(id.getPath()));
+    }
+
+    private void supportExternalMod(TagKey<Block> tag, String modName, List<String> items) {
+        TagBuilder tagBuilder = this.getOrCreateRawBuilder(tag);
+
+        for (String item : items) {
+            tagBuilder.addOptionalElement(Identifier.fromNamespaceAndPath(modName, item));
+        }
     }
 
     private static ResourceKey<Block> key(Block block) {
