@@ -13,16 +13,11 @@ public final class JEIRecipeDisplays {
     private JEIRecipeDisplays() {
     }
 
-    public static void registerCategoriesAndPriorities(IRecipeCategoryRegistration registration) {
-        registerCategories(registration);
-        registerPriorities();
-    }
-
-    private static void registerCategories(IRecipeCategoryRegistration registration) {
+    public static void registerCategories(IRecipeCategoryRegistration registration) {
         ALL.forEach(adapter -> adapter.registerCategory(registration));
     }
 
-    private static void registerPriorities() {
+    public static void registerPriorities() {
         ALL.forEach(JEIRecipeDisplayAdapter::registerPriority);
     }
 

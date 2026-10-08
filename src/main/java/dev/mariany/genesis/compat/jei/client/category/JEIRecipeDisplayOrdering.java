@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 public class JEIRecipeDisplayOrdering extends RecipeDisplayOrdering<IRecipeCategory<?>, Identifier> {
-    public JEIRecipeDisplayOrdering() {
+    public static final JEIRecipeDisplayOrdering INSTANCE = new JEIRecipeDisplayOrdering();
+
+    private JEIRecipeDisplayOrdering() {
         super(BuiltInRegistries.RECIPE_TYPE::getKey);
     }
 

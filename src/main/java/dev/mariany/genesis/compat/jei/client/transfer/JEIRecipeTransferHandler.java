@@ -80,7 +80,8 @@ public final class JEIRecipeTransferHandler<
     @Override
     @Deprecated(forRemoval = true)
     @SuppressWarnings("removal")
-    public @Nullable IRecipeTransferError transferRecipe(
+    @Nullable
+    public IRecipeTransferError transferRecipe(
             M container,
             D recipe,
             IRecipeSlotsView recipeSlots,
@@ -91,7 +92,8 @@ public final class JEIRecipeTransferHandler<
         return this.transferRecipe(container, recipe, recipeSlots, doTransfer);
     }
 
-    private @Nullable IRecipeTransferError transferRecipe(
+    @Nullable
+    private IRecipeTransferError transferRecipe(
             M container,
             D recipe,
             IRecipeSlotsView recipeSlots,

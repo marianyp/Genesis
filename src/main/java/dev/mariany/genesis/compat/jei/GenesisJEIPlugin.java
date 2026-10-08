@@ -26,12 +26,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @JeiPlugin
-public final class GenesisJEIPlugin implements IModPlugin {
+public class GenesisJEIPlugin implements IModPlugin {
     private static final Identifier PLUGIN_ID = Genesis.id("jei_plugin");
 
-    private final JEIRecipeDisplayOrdering recipeDisplayOrdering = new JEIRecipeDisplayOrdering();
     private final List<RecipeHolder<CraftingRecipe>> hiddenRecipes = new ArrayList<>();
     private final Runnable refreshListener = this::refreshRecipes;
+
+    public GenesisJEIPlugin() {
+        JEIRecipeDisplayOrdering.INSTANCE.bootstrap();
+        JEIRecipeDisplays.registerPriorities();
+    }
 
     @Nullable
     private IJeiRuntime runtime;
@@ -43,8 +47,7 @@ public final class GenesisJEIPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        this.recipeDisplayOrdering.bootstrap();
-        JEIRecipeDisplays.registerCategoriesAndPriorities(registration);
+        JEIRecipeDisplays.registerCategories(registration);
     }
 
     @Override
