@@ -5,6 +5,7 @@ import dev.mariany.genesis.Genesis;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class GenesisAttachmentTypes {
     public static final AttachmentType<List<UUID>> CELEBRATION_PARTICIPANTS = AttachmentRegistry.create(
             Genesis.id("celebration_participants"),
             builder -> builder.initializer(List::of).persistent(Codec.list(UUIDUtil.CODEC))
+    );
+
+    public static final AttachmentType<List<MobEffectInstance>> POORLY_RESTED_EFFECTS = AttachmentRegistry.create(
+            Genesis.id("poorly_rested_effects"),
+            builder -> builder.persistent(MobEffectInstance.CODEC.listOf())
     );
 
     public static void bootstrap() {

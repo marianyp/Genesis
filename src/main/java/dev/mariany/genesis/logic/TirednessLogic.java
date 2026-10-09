@@ -153,7 +153,7 @@ public class TirednessLogic {
         this.minimumTicksBeforeSleeping = this.calculateMinimumTicksBeforeSleeping();
 
         ServerPlayerEvents.JOIN.register(this::onPlayerJoin);
-        ServerPlayerEvents.AFTER_RESPAWN.register(this::onRespawn);
+        ServerPlayerEvents.COPY_FROM.register(this::onCopyFrom);
         ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register(this::onChangeLevel);
         ServerTickEvents.END_SERVER_TICK.register(this::onEndServerTick);
         EntitySleepEvents.ALLOW_SLEEPING.register(this::onAllowSleeping);
@@ -186,8 +186,24 @@ public class TirednessLogic {
         this.syncTiredness(player);
     }
 
-    private void onRespawn(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean alive) {
+    private void onCopyFrom(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean alive) {
+        if (!alive) {
+            applyPoorlyRestedEffects(oldPlayer, newPlayer);
+        }
+
         this.syncTiredness(oldPlayer);
+    }
+
+    private static void applyPoorlyRestedEffects(ServerPlayer oldPlayer, ServerPlayer newPlayer) {
+        List<MobEffectInstance> poorlyRestedEffects = oldPlayer.getAttached(
+                GenesisAttachmentTypes.POORLY_RESTED_EFFECTS
+        );
+
+        if (poorlyRestedEffects == null) {
+            return;
+        }
+
+        poorlyRestedEffects.forEach(newPlayer::addEffect);
     }
 
     private void onChangeLevel(ServerPlayer serverPlayer, ServerLevel origin, ServerLevel destination) {
@@ -255,13 +271,17 @@ public class TirednessLogic {
 
     @Nullable
     private Player.BedSleepingProblem onAllowSleeping(Player player, BlockPos pos) {
+        if (this.isDisabled()) {
+            return null;
+        }
+
         BlockState bed = player.level().getBlockState(pos);
 
         if (player.hasEffect(GenesisMobEffects.POORLY_RESTED) && isPoorSleepQuality(bed)) {
             return POORLY_RESTED_SLEEPING_PROBLEM;
         }
 
-        return canSleep(player) ? null : TIREDNESS_SLEEPING_PROBLEM;
+        return this.canSleep(player) ? null : TIREDNESS_SLEEPING_PROBLEM;
     }
 
     private static boolean isPoorSleepQuality(BlockState bed) {
@@ -287,13 +307,16 @@ public class TirednessLogic {
     }
 
     private void onPlayerWake(Player player) {
-        adjustPoorlyRestedEffect(player);
+        this.adjustPoorlyRestedEffect(player);
         this.applyTirednessReductionAfterSleep(player);
         clearLastUsedBed(player);
     }
 
-    private static void adjustPoorlyRestedEffect(Player player) {
-        int adjustment = getLastUsedBed(player).flatMap(TirednessLogic::getPoorlyRestedEffectLevel).orElse(-1);
+    private void adjustPoorlyRestedEffect(Player player) {
+        int adjustment = this.isDisabled() ?
+                -Integer.MAX_VALUE :
+                getLastUsedBed(player).flatMap(TirednessLogic::getPoorlyRestedEffectLevel).orElse(-1);
+
         adjustPoorlyRestedEffect(player, adjustment);
     }
 
@@ -350,6 +373,7 @@ public class TirednessLogic {
                 .orElse(1F);
 
         int awakeTicks = this.calculateAwakeTicks(player, reductionFactor);
+
         this.setAwakeTicks(player, awakeTicks);
     }
 
